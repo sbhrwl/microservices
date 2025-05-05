@@ -4,7 +4,7 @@
 - For Spring Boot use below command to **create a `.jar`** file.
   - `./mvnw clean package` or
   - `./gradlew build` 
-## Create a Dockerfile in your project root
+## Create Dockerfile in your project root
 - [Dockerfile](Dockerfile)
 ## Build Docker image
 ```bash
