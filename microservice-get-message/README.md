@@ -2,13 +2,13 @@
 - `RESTful API endpoint` to generate a greeting message based on time of the day.
 ## How to run
 - Build 
-```bash
-mvn clean install
-```
+  ```bash
+  mvn clean install
+  ```
 - Run
-```bash
-mvn spring-boot:run
-```
+  ```bash
+  mvn spring-boot:run
+  ```
 ## Test
 - API 
 
