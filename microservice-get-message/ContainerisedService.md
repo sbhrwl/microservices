@@ -10,13 +10,6 @@
 ```bash
 docker build -t microservice-get-message .
 ```
-### Build and tag
-```
-docker build -t image_name:tag .
-
-docker build -t microservice-get-message:v1.0.0 .
-docker build -t microservice-get-message:latest .
-```
 ## Run Docker image as a Docker container
 ### Option 1
 - `docker run` command
