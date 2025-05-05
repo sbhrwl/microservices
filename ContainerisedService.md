@@ -12,20 +12,20 @@
 * **Build the Docker image**
   * Run:
   ```bash
-  docker build -t my-spring-app .
+  docker build -t microservice-get-message .
   ```
 
 * **Build and tag**
   ```
   docker build -t image_name:tag .
   
-  docker build -t my-spring-app:v1.0.0 .
-  docker build -t my-spring-app:latest .
+  docker build -t microservice-get-message:v1.0.0 .
+  docker build -t microservice-get-message:latest .
   ```
 * **Run the container**
   * **Option 1**: `docker run` command
   ```bash
-  docker run -p 8080:9999 my-spring-app
+  docker run -p 8080:9999 microservice-get-message
   ```
   * **Option 2**: `docker-compose.yml` followed by `docker-compose up`
   ```
@@ -33,7 +33,7 @@
   
   services:
     java-app:
-      image: my-spring-app        # use the already built image
+      image: microservice-get-message        # use the already built image
       ports:
         - "8080:9999"             # map container port to host
       restart: unless-stopped
