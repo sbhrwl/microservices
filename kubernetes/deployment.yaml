@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-get-message
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: microservice-get-message
+  template:
+    metadata:
+      labels:
+        app: microservice-get-message
+    spec:
+      containers:
+        - name: microservice-get-message
+          image: sbhrwldocker/microservice-get-message:v1.0.0
+          ports:
+            - containerPort: 9999
