@@ -3,7 +3,7 @@
 - [Push image to a Docker registry](#push-image-to-a-docker-registry)
 - [Deploy Docker images on Kubernetes](#deploy-docker-images-on-kubernetes)
 - [Logs](#logs)
-- [Access the App](#access-the-app)
+- [Test](#test)
 - [Delete deployment](#delete-deployment)
 ## Build and tag Docker image
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
