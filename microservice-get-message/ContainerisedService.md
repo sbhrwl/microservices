@@ -6,7 +6,7 @@
   - `./gradlew build` 
 ## Create a Dockerfile in your project root
 - [Dockerfile](Dockerfile)
-## Build the Docker image
+## Build Docker image
 ```bash
 docker build -t microservice-get-message .
 ```
