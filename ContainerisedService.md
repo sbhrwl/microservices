@@ -35,7 +35,7 @@
     java-app:
       image: my-spring-app        # use the already built image
       ports:
-        - "8080:8080"             # map container port to host
+        - "8080:9999"             # map container port to host
       restart: unless-stopped
   ```
 * **Verify it's running**
