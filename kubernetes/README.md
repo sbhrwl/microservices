@@ -147,7 +147,7 @@ PS C:\Git\kubernetes>
 ```
 ## Access the App
 - When using `NodePort` service:
-  `localhost:30080/message/generate`
+  - `http://localhost:30080/message/generate`
 - When using `port forwarding`:
   - `kubectl port-forward` for local access
 - When using `LoadBalancer` service:
