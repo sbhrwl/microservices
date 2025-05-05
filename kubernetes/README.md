@@ -84,7 +84,7 @@ PS C:\Git\kubernetes>
     - On Docker Desktop, it may expose it on localhost with a high port
 
 ## Delete deployment
-- This will delete
+- Delete whole deployment at once
   - The `Deployment` (which controls the pods)
   - The `Service` (NodePort or LoadBalancer)
   - Any `pods` created via the deployment
@@ -94,7 +94,6 @@ PS C:\Git\kubernetes>
 - Delete each resource individually
   ```
   kubectl delete deployment my-app
-
   kubectl delete service my-app-service
   ```
 - Check what’s running
