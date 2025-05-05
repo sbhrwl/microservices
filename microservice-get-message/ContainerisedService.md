@@ -7,9 +7,9 @@
 ## Create Dockerfile in your project root
 - [Dockerfile](Dockerfile)
 ## Build Docker image
-```bash
-docker build -t microservice-get-message .
-```
+  ```bash
+  docker build -t microservice-get-message .
+  ```
 ## Run Docker image as a Docker container
 ### Option 1
 - `docker run` command
