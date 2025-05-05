@@ -1,8 +1,5 @@
 # Introduction
-- This project is a basic Spring Boot REST API that generates a greeting message based on the time of day.
-## Features
-- RESTful API endpoint to generate a greeting message.
-- Simple and lightweight implementation using Spring Boot.
+- `RESTful API endpoint` to generate a greeting message based on time of the day.
 ## How to run
 - Build 
 ```bash
