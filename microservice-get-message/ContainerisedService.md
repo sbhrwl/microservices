@@ -10,7 +10,7 @@
 ```bash
 docker build -t microservice-get-message .
 ```
-## Build and tag
+### Build and tag
 ```
 docker build -t image_name:tag .
 
