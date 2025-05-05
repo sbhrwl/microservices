@@ -93,8 +93,8 @@ PS C:\Git\kubernetes>
     ```
 - Delete each resource individually
   ```
-  kubectl delete deployment my-app
-  kubectl delete service my-app-service
+  kubectl delete deployment microservice-get-message
+  kubectl delete service microservice-get-message-service
   ```
 - Check what’s running
   ```
