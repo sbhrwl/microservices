@@ -40,16 +40,15 @@ v1.0.0: digest: sha256:fe592eff3d7759ee65554658b2f254a6daebf18ecd9ad72caee27c2e2
 ```
 ## Deploy Docker images on Kubernetes
 - [Kubernetes commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/k8scommands/README.md)
-- Write a Kubernetes Deployment YAML
-  - Create a file called [`deployment.yaml`](deployment.yaml)
-  - Add a [`service.yaml`](service.yaml) to expose the App
-  - **Combined**: [`deployment-microservice-get-message.yaml`](deployment-microservice-get-message.yaml)
+- Write a Kubernetes [`deployment-microservice-get-message.yaml`](deployment-microservice-get-message.yaml)
+  - [`deployment.yaml`](deployment.yaml)
+  - [`service.yaml`](service.yaml)
 - Deploy to Kubernetes
 ```bash
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml  # if using the service
-
 kubectl apply -f deployment-microservice-get-message.yaml
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
 ```
 - Check status
 ```bash
