@@ -46,55 +46,56 @@ v1.0.0: digest: sha256:fe592eff3d7759ee65554658b2f254a6daebf18ecd9ad72caee27c2e2
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: my-app
+      name: microservice-get-message
     spec:
       replicas: 2
       selector:
         matchLabels:
-          app: my-app
+          app: microservice-get-message
       template:
         metadata:
           labels:
-            app: my-app
+            app: microservice-get-message
         spec:
           containers:
-            - name: my-app
-              image: your-username/microservice-get-message:v1.0.0
+            - name: microservice-get-message
+              image: sbhrwldocker/microservice-get-message:v1.0.0
               ports:
-                - containerPort: 80
+                - containerPort: 9999
     ```
-- Add a `Service` to expose the App
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-app-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: my-app
-  ports:
-    - port: 80
-      targetPort: 80
-```
+  - Add a `Service` to expose the App
+    ```yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: microservice-get-message-service
+    spec:
+      type: NodePort
+      selector:
+        app: microservice-get-message
+      ports:
+        - port: 9999
+          targetPort: 9999
+          nodePort: 30080 # NodePort service so you can easily access the app at http://localhost:30080/message/generate
+    ```
 - **Combined**: `deployment-microservice-get-message.yaml`
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: microservice-get-message
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-app
+      app: microservice-get-message
   template:
     metadata:
       labels:
-        app: my-app
+        app: microservice-get-message
     spec:
       containers:
-        - name: my-app
+        - name: microservice-get-message
           image: sbhrwldocker/microservice-get-message:v1.0.0
           ports:
             - containerPort: 9999
@@ -102,11 +103,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-app-service
+  name: microservice-get-message-service
 spec:
   type: NodePort
   selector:
-    app: my-app
+    app: microservice-get-message
   ports:
     - port: 9999
       targetPort: 9999
