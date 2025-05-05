@@ -35,5 +35,5 @@ services:
       - "8080:9999"             # map container port to host
     restart: unless-stopped
 ```
-## Verify it's running
-  * Send Get request from Postman `http://localhost:8080/message/generate`
+## Test
+- Send `GET` request from **Postman** `http://localhost:8080/message/generate`
