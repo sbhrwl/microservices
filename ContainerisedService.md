@@ -1,4 +1,4 @@
-# Create a container for the app
+# Run service as a Docker container
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 * **Build your Spring Boot app**
   * Run: `./mvnw clean package` or `./gradlew build` to **create** a `.jar` file.
