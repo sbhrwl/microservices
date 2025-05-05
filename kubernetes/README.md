@@ -84,20 +84,20 @@ PS C:\Git\kubernetes>
     - On Docker Desktop, it may expose it on localhost with a high port
 
 ## Delete deployment
-```
-kubectl delete -f deployment-microservice-get-message.yaml
-```
 - This will delete
   - The `Deployment` (which controls the pods)
   - The `Service` (NodePort or LoadBalancer)
   - Any `pods` created via the deployment
+    ```
+    kubectl delete -f deployment-microservice-get-message.yaml
+    ```
 - Delete each resource individually
-```
-kubectl delete deployment my-app
+  ```
+  kubectl delete deployment my-app
 
-kubectl delete service my-app-service
-```
+  kubectl delete service my-app-service
+  ```
 - Check what’s running
-```
-kubectl get all
-```
+  ```
+  kubectl get all
+  ```
