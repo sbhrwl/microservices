@@ -6,11 +6,6 @@
   - `./gradlew build` 
 ## Create a Dockerfile in your project root
 - [Dockerfile](Dockerfile)
-```dockerfile
-FROM openjdk:17-jdk-slim
-COPY target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
-```
 ## Build the Docker image
 ```bash
 docker build -t microservice-get-message .
