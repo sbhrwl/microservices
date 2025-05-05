@@ -84,7 +84,7 @@ PS C:\Git\kubernetes>
   ```
   kubectl delete -f deployment-microservice-get-message.yaml
   ```
-  - This deletes `Deployment` (which controls the pods), `Service` (NodePort or LoadBalancer) and any `pods` created via the deployment
+  - This deletes `Deployment` (which controls the pods), `Service` (NodePort or LoadBalancer) and `pods` created via the deployment
 - Delete each resource individually
   ```
   kubectl delete deployment microservice-get-message
