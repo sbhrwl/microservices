@@ -9,6 +9,7 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
+## Test
 - API 
 
 | Method  | URL (test from postman)                                     | PowerShell Command | Output                                 |
