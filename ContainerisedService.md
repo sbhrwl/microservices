@@ -23,11 +23,11 @@
   docker build -t my-spring-app:latest .
   ```
 * **Run the container**
-  * Option 1: `docker run` command
+  * **Option 1**: `docker run` command
   ```bash
   docker run -p 8080:9999 my-spring-app
   ```
-  * Option 2: `docker-compose.yml` followed by `docker-compose up`
+  * **Option 2**: `docker-compose.yml` followed by `docker-compose up`
   ```
   version: "3.9"
   
