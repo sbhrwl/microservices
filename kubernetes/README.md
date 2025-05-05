@@ -81,12 +81,10 @@ PS C:\Git\kubernetes>
 
 ## Delete deployment
 - Delete whole deployment at once
-  - The `Deployment` (which controls the pods)
-  - The `Service` (NodePort or LoadBalancer)
-  - Any `pods` created via the deployment
-    ```
-    kubectl delete -f deployment-microservice-get-message.yaml
-    ```
+```
+kubectl delete -f deployment-microservice-get-message.yaml
+```
+  - This deletes `Deployment` (which controls the pods), `Service` (NodePort or LoadBalancer) and any `pods` created via the deployment
 - Delete each resource individually
   ```
   kubectl delete deployment microservice-get-message
