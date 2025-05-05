@@ -164,6 +164,7 @@ kubectl delete -f deployment-microservice-get-message.yaml
 - Delete each resource individually
 ```
 kubectl delete deployment my-app
+
 kubectl delete service my-app-service
 ```
 - Check what’s running
