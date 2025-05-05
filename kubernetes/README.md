@@ -70,7 +70,7 @@ d69cc750d567   a125ff44039c   "java -jar /app.jar"   About a minute ago   Up Abo
 cfca32df0dbe   a125ff44039c   "java -jar /app.jar"   About a minute ago   Up About a minute             k8s_my-app_my-app-6496c86b4-nqk6r_default_136d83e1-7a5c-4bfc-95f5-a0df988c9c48_0
 PS C:\Git\kubernetes>
 ```
-## Access the App
+## Test
 - When using `NodePort` service:
   - `http://localhost:30080/message/generate`
 - When using `port forwarding`:
