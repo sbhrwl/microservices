@@ -1,5 +1,5 @@
 # Deploying Docker image to Kubernetes
-- [Build Docker image](#build-the-docker-image)
+- [Build and tag Docker image](#build-and-tag-docker-image)
 - [Push image to Docker registry](#push-image-to-docker-registry)
 - [Deploy Docker images on Kubernetes](#deploy-docker-images-on-kubernetes)
 - [Logs](#logs)
