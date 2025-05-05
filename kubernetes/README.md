@@ -5,13 +5,9 @@
 - [Logs](#logs)
 - [Access the App](#access-the-app)
 - [Delete deployment](#delete-deployment)
-## Build Docker image
+## Build and tag Docker image
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 ```bash
-docker build -t microservice-get-message .
-```
-- **Build and tag**
-```
 docker build -t image_name:tag .
 
 docker build -t microservice-get-message:v1.0.0 .
@@ -21,7 +17,7 @@ docker build -t microservice-get-message:latest .
 docker build -t sbhrwldocker/microservice-get-message:v1.0.0 .
 ```
 
-## Push image to a Docker registry
+## Push image to Docker registry
 - [Options for publishing images](options/README.md)
 ```
 docker push your-username-on-docker/microservice-get-message:v1.0.0
