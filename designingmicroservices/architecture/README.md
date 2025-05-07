@@ -1,7 +1,6 @@
 # Architecture
 - [Request](#request)
 - [Response](#response)
-- [Services](#services)
 ## Request
 <img src="images/request.jpg">
 
