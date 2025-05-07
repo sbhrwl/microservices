@@ -1,5 +1,5 @@
 # Goals of transition
-* This will help guide the service boundaries and design principles we choose. What's motivating your shift to microservices?
+* Motivation for shift to microservices
   * Better scalability?
   * Independent deployments?
   * Fault isolation?
