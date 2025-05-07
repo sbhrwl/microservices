@@ -7,4 +7,5 @@
 ## API contract
 - [POST](post/README.md)
 - [Kafka topic](kafkatopic/README.md)
+- [DB schema](dbschema/README.md)
 - [GET](get/README.md)
