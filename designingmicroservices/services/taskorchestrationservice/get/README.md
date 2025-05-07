@@ -1,40 +1,12 @@
 # GET
-Here’s a clear API contract for the `GET /tasks/{taskId}` endpoint, which is exposed by **TaskOrchestrationService** to let upstream services (like `CommandOrchestratorService`) or users query task status and device-level progress.
+- [Endpoint](#endpoint)
+- [Response](#response)
+  - [Response codes](#response-codes)
+## Endpoint
+- `GET /tasks/{taskId}`
+  - Retrieve the status and details of a specific task by `taskId`, including per-device command state if available.
 
----
-
-## 🔎 `GET /tasks/{taskId}`
-
-### ✅ Purpose
-
-Retrieve the status and details of a specific task by `taskId`, including per-device command state if available.
-
----
-
-### 🔗 Endpoint
-
-```
-GET /tasks/{taskId}
-```
-
-### 🔄 Path Parameters
-
-| Parameter | Type   | Description                   |
-| --------- | ------ | ----------------------------- |
-| taskId    | string | Unique identifier of the task |
-
----
-
-### 📥 Example Request
-
-```
-GET /tasks/task-7890
-```
-
----
-
-### 📤 Response: 200 OK
-
+## Response
 ```json
 {
   "taskId": "task-7890",
@@ -63,16 +35,10 @@ GET /tasks/task-7890
 }
 ```
 
----
-
-### 🔁 Response Codes
+### Response codes
 
 | Code | Description                              |
 | ---- | ---------------------------------------- |
 | 200  | Task found and returned                  |
 | 404  | Task not found                           |
 | 500  | Internal server error (e.g., DB failure) |
-
----
-
-Would you like me to define the **internal schema** or collection layout this endpoint will use?
