@@ -1,17 +1,10 @@
 # GET
 - [Endpoint](#endpoint)
 - [Response](#response)
+  - [Response codes](#response-codes)
 ## Endpoint
-- `/commands/{taskId}`
+- `GET /commands/{taskId}`
   - `taskId`: Unique ID of the command task as path variable
-
-| Attribute     | Value                                       |
-| ------------- | ------------------------------------------- |
-| Method        | `GET`                                       |
-| Endpoint      | `/commands/{taskId}`                        |
-| Description   | Fetch the status of a specific command task |
-| Auth Required | Yes                                         |
-| Produces      | `application/json`                          |
 
 ## Response
 ```json
@@ -41,3 +34,11 @@
   ]
 }
 ```
+
+### Response codes
+
+| Code | Description                              |
+| ---- | ---------------------------------------- |
+| 200  | Task for creating commands found and returned |
+| 404  | Task for creating commands not found          |
+| 500  | Internal server error                         |
