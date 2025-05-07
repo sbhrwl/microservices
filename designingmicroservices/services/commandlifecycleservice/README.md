@@ -19,6 +19,4 @@
 | `device.responses`       | 🔽 Subscribe | DLMS device response (raw or decoded)                    |
 | `orchestrator.responses` | 🔼 Publish   | Parsed, structured response payload for upstream systems |
 
- In your current design, the command payload (XML) is not stored—just streamed directly to the Protocol Adapter.
-
 ## [XML generation](xmlgeneration/README.md)
