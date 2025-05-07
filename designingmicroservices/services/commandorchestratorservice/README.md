@@ -7,4 +7,5 @@
 * Subscribing to **responses** via Kafka (`orchestrator.responses`) and surfacing them back
 ## API contract
 - [POST](post/README.md)
+- [Kafka topic](kafkatopic/README.md)
 - [GET](get/README.md)
