@@ -1,9 +1,9 @@
 # Task Orchestration Service
 ## Responsibilities
-* Accepting **command requests** from upstream applications (e.g., `CommandOrchestratorService`)
-* Creating a **task entry** with metadata and list of devices
-* Publishing task metadata to Kafka (`task.created`) for downstream command generation
-* Optionally exposing task query API for monitoring/debugging
+* * Subscribing to **command requests** from `task.requested` Kafka topic (produced by `CommandOrchestratorService`)
+* Creating a **task** in the database, including device list and metadata
+* Publishing **task metadata** to Kafka (`task.created`) for downstream processing (command generation)
+
 ## API contract
 - [POST](post/README.md)
 - [Kafka topic](kafkatopic/README.md)
