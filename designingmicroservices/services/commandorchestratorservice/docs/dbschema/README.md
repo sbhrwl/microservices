@@ -63,3 +63,20 @@
   use commandorchestrator
   db.dropDatabase()
   ```
+
+## Create new user for database
+- Create a new user for the `commandorchestrator` Database
+  - Instead of using the root user, create a dedicated user for the commandorchestrator database.
+### Steps
+- Switch to the commandorchestrator database:
+  ```
+  use commandorchestrator
+  ```
+- Create a new user with readWrite permissions for the commandorchestrator database:
+  ```
+  db.createUser({
+      user: "command_user",
+      pwd: "command_pass",
+      roles: [{ role: "readWrite", db: "commandorchestrator" }]
+  })  
+  ```
