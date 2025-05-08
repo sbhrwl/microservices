@@ -7,7 +7,7 @@
 * Accept **command responses** from downstream services (via Kafka topic `orchestrator.responses`)
 
 ## API contract
-- [POST](post/README.md)
-- [Kafka topic](kafkatopic/README.md)
-- [DB schema](dbschema/README.md)
-- [GET](get/README.md)
+- [POST](docs/post/README.md)
+- [Kafka topic](docs/kafkatopic/README.md)
+- [DB schema](docs/dbschema/README.md)
+- [GET](docs/get/README.md)
