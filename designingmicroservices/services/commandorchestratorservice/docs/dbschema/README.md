@@ -37,11 +37,11 @@
   - If no documents are present, ensure your application is running correctly and that the KafkaProducerService is saving the CommandRequest to MongoDB.
 
 ## Creating a collection
-- Use the commandorchestrator database (this will create it if it doesn't already exist):
+- Use the `commandorchestrator` database (this will create it if it doesn't already exist):
   ```
   use commandorchestrator
   ```
-- Insert a sample document into the command_requests collection to create it
+- Insert a sample document into the `command_requests` collection to create it
   ```
   db.command_requests.insertOne({
       correlationId: "123456-abc",
