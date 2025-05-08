@@ -13,11 +13,13 @@
   "error": null
 }
 ```
-
 * `payloadSummary`: optional JSON blob (e.g., registers set, OBIS codes)
 * `responseRaw`: optional decoded response string (for troubleshooting)
 
-## 
+## Configuration
+- Check [`application.properties`](https://github.com/sbhrwl/microservices/blob/main/designingmicroservices/services/commandorchestratorservice/commandorchestrationservice/src/main/resources/application.properties) file.
+
+## Troubleshooting
 - The database `mydatabase` will not appear in the output of show dbs until it contains at least one document. 
 - MongoDB only creates a database when data is inserted into it.
 - How to Verify:
