@@ -11,3 +11,8 @@
 - [Kafka topic](docs/kafkatopic/README.md)
 - [DB schema](docs/dbschema/README.md)
 - [GET](docs/get/README.md)
+
+## Kafka setup
+- [`docker-compose.yml`](docker-compose.yml)
+- Run: `docker-compose up -d`
+- Varify: `docker-compose logs kafka`
