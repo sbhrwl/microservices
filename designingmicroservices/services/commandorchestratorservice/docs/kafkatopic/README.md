@@ -48,7 +48,7 @@
 ```
 
 ## Consumer group id
-- In [`application.properties`]() file, we have defined `spring.kafka.consumer.group-id` property.
+- In [`application.properties`](https://github.com/sbhrwl/microservices/blob/main/designingmicroservices/services/commandorchestratorservice/commandorchestrationservice/src/main/resources/application.properties) file, we have defined `spring.kafka.consumer.group-id` property.
   - This property specifies the consumer group ID for Kafka consumers in your application.
 - What is a **Consumer Group** in Kafka?
   - A consumer group is a group of Kafka consumers that work together to consume messages from Kafka topics. 
