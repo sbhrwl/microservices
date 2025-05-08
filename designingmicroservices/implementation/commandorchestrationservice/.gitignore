@@ -1,0 +1,45 @@
+# Maven target directory
+/target/
+
+# IntelliJ IDEA files
+/.idea/
+/*.iml
+
+# VS Code settings
+/.vscode/
+
+# Eclipse files
+/.classpath
+/.project
+/.settings/
+
+# Logs
+*.log
+/logs/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Compiled class files
+*.class
+
+# Generated files
+*.jar
+*.war
+*.ear
+
+# Test reports
+/test-output/
+
+# Spring Boot devtools
+/spring-boot-devtools.properties
+
+# Environment files
+.env
