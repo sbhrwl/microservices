@@ -1,3 +1,4 @@
+package com.example.postservice.controller;
 import com.example.postservice.model.CommandRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
