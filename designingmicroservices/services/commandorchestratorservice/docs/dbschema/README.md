@@ -20,7 +20,7 @@
 - Check [`application.properties`](https://github.com/sbhrwl/microservices/blob/main/designingmicroservices/services/commandorchestratorservice/commandorchestrationservice/src/main/resources/application.properties) file.
 
 ## Troubleshooting
-- The database `mydatabase` will not appear in the output of show dbs until it contains at least one document. 
+- The database `commandorchestrator` will not appear in the output of show dbs until it contains at least one document. 
 - MongoDB only creates a database when data is inserted into it.
 - How to Verify:
   - Ensure your application has successfully saved a CommandRequest document to the command_requests collection.
