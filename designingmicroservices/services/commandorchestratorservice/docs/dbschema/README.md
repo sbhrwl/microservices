@@ -58,3 +58,8 @@
     - `show dbs`
     - `use commandorchestrator`
     - `db.command_requests.find().pretty()`
+- Drop databse
+  ```
+  use commandorchestrator
+  db.dropDatabase()
+  ```
