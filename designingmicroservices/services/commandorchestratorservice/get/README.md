@@ -3,10 +3,22 @@
 - [Response](#response)
   - [Response codes](#response-codes)
 ## Endpoint
-- `GET /commands/{taskId}`
-  - `taskId`: Unique ID of the command task as path variable
+- `GET /commands/{commandId}`
 
 ## Response
+```json
+{
+  "commandId": "cmd-123456",
+  "deviceId": "meter-001",
+  "correlationId": "123456-abc",
+  "commandType": "SET_TOU",
+  "status": "SUCCESS",
+  "issuedAt": "2025-05-08T02:00:00Z",
+  "lastUpdated": "2025-05-08T02:01:10Z",
+  "error": null
+}
+```
+
 ```json
 {
   "taskId": "task-7890",
@@ -34,7 +46,6 @@
   ]
 }
 ```
-
 ### Response codes
 
 | Code | Description                              |
