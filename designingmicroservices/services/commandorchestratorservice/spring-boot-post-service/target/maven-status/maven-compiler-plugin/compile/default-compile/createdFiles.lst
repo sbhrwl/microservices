@@ -1,0 +1,4 @@
+com\example\postservice\model\CommandRequest$CommandParams.class
+CommandController.class
+com\example\postservice\model\CommandRequest.class
+com\example\postservice\PostServiceApplication.class
