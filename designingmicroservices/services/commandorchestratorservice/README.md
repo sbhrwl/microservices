@@ -25,12 +25,3 @@
   ```bash
   Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
   ```
-- **Configure** [`application.properties`](src\main\resources\application.properties):
-  ```properties
-  spring.data.mongodb.host=localhost
-  spring.data.mongodb.port=27017
-  spring.data.mongodb.database=mydatabase
-  spring.data.mongodb.username=root
-  spring.data.mongodb.password=root123
-  spring.data.mongodb.authentication-database=admin
-  ```
