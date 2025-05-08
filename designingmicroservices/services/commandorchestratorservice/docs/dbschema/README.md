@@ -35,3 +35,26 @@
     db.command_requests.find().pretty()
     ```
   - If no documents are present, ensure your application is running correctly and that the KafkaProducerService is saving the CommandRequest to MongoDB.
+
+## Creating a collection
+- Use the commandorchestrator database (this will create it if it doesn't already exist):
+  ```
+  use commandorchestrator
+  ```
+- Insert a sample document into the command_requests collection to create it
+  ```
+  db.command_requests.insertOne({
+      correlationId: "123456-abc",
+      requestedBy: "scheduler-service",
+      deviceIds: ["meter-001", "meter-002", "meter-003"],
+      commandType: "SET_TOU",
+      commandParams: {
+          touProfileId: "TOU-2025-WINTER"
+      },
+      scheduledAt: ISODate("2025-05-08T02:00:00Z")
+  })
+  ```
+  - Verify the Database and Collection
+    - `show dbs`
+    - `use commandorchestrator`
+    - `db.command_requests.find().pretty()`
