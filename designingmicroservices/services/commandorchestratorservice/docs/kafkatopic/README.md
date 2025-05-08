@@ -46,3 +46,23 @@
   }
 }
 ```
+
+## Consumer group id
+- In [`application.properties`]() file, we have defined `spring.kafka.consumer.group-id` property.
+  - This property specifies the consumer group ID for Kafka consumers in your application.
+- What is a **Consumer Group** in Kafka?
+  - A consumer group is a group of Kafka consumers that work together to consume messages from Kafka topics. 
+  - Each consumer in the group processes a subset of the partitions in the topic, ensuring that messages are processed in parallel without duplication.
+
+- Purpose of spring.kafka.consumer.group-id=command-orchestrator-group:
+  - **Group Identification**
+    - This property identifies the consumer group that your application belongs to. In this case, the group is named command-orchestrator-group.
+  - **Load Balancing**
+    - Kafka ensures that each partition of a topic is consumed by only one consumer in the group. 
+    - If multiple instances of your application are running, they will share the workload.
+  - **Offset Management**
+    - Kafka tracks the offsets (i.e., the position of the last consumed message) for each consumer group. 
+    - This allows consumers to resume from where they left off in case of a restart.
+- Example:
+  - If you have a Kafka topic with 3 partitions and 3 consumers in the command-orchestrator-group, each consumer will process messages from one partition.
+  - If a new consumer joins the group, Kafka will rebalance the partitions among the consumers.

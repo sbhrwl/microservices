@@ -1,14 +1,21 @@
 package com.example.postservice.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.ZonedDateTime;
 import java.util.List;
 
+@Document(collection = "command_requests")
 public class CommandRequest {
-    private String correlationId;
+
+    @Id
+    private String correlationId; // Use correlationId as the primary key
     private String requestedBy;
     private List<String> deviceIds;
     private String commandType;
     private CommandParams commandParams;
-    private String scheduledAt;
+    private ZonedDateTime scheduledAt;
 
     public String getCorrelationId() {
         return correlationId;
@@ -50,11 +57,11 @@ public class CommandRequest {
         this.commandParams = commandParams;
     }
 
-    public String getScheduledAt() {
+    public ZonedDateTime getScheduledAt() { // Updated getter
         return scheduledAt;
     }
 
-    public void setScheduledAt(String scheduledAt) {
+    public void setScheduledAt(ZonedDateTime scheduledAt) { // Updated setter
         this.scheduledAt = scheduledAt;
     }
 
