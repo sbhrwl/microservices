@@ -3,17 +3,16 @@
 - Each document represents the latest status of a single command sent to a device:
 ```json
 {
-  "command_id": "681dce4358cba50614cee672",
-  "requested_by": "userA",
-  "device_ids": [
+"command_type": "SET_TOU",
+"command_params": {
+    "tou_profile_id": "TOU-2025-TEST"
+},
+"device_ids": [
     "meter-001",
     "meter-002",
     "meter-003"
-  ],
-  "command_type": "SET_TOU",
-  "command_params": {
-    "tou_profile_id": "TOU-2025-TEST"
-  }
+],
+"requested_by": "userB"
 }
 ```
 
@@ -45,13 +44,13 @@
 - Insert a sample document into the `command_requests` collection to create it
   ```
   db.command_requests.insertOne({
-      commandId: "123456-abc",
-      requestedBy: "scheduler-service",
-      deviceIds: ["meter-001", "meter-002", "meter-003"],
       commandType: "SET_TOU",
       commandParams: {
           touProfileId: "TOU-2025-WINTER"
-      }
+      },
+      deviceIds: ["meter-001", "meter-002", "meter-003"],
+      requestedBy: "scheduler-service",
+      commandId: "681dce4358cba50614cee672",
   })
   ```
   - Verify the Database and Collection

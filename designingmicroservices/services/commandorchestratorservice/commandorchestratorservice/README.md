@@ -25,6 +25,6 @@ mvn spring-boot:run
       "meter-002",
       "meter-003"
     ],
-    "requested_by": "userA",
+    "requested_by": "userA"
   } 
   ```
