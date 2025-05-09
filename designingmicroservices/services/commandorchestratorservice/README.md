@@ -1,6 +1,7 @@
 # Command Orchestrator Service
 - [Responsibilities](#responsibilities)
 - [API contract](#api-contract)
+- [Implementation](commandorchestratorservice/README.md)
 ## Responsibilities
 * Accepting **command requests** from upstream applications
 * Sending requests to Kafka (`task.requested`)
