@@ -16,6 +16,14 @@
 - Create a [`docker-compose.yml`](kafkasetup/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Varify: `docker-compose logs kafka`
+- Log in to container via `Docker Desktop` or `console`
+  - `docker exec -it <kafka_container_id_or_name> /bin/bash`
+- Verify topics: `kafka-topics --bootstrap-server localhost:9092 --list`
+- View messages from a topic
+  - If you don’t want to read from the beginning but only new messages, omit the `--from-beginning` flag
+  ```
+  kafka-console-consumer --bootstrap-server localhost:9092 --topic task.requested --from-beginning --max-messages 10
+  ```
 ## MongoDB setup
 - Create a [`docker-compose.yml`](mongodbsetup/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
