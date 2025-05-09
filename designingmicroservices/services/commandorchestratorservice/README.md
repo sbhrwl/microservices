@@ -3,15 +3,10 @@
 - [API contract](#api-contract)
 - [Implementation](commandorchestratorservice/README.md)
 ## Responsibilities
-* Accepting **command requests** from upstream applications
-* Sending requests to Kafka (`task.requested`)
+* Accepting **command requests** from [upstream applications](docs/post/README.md)
+* Creating a record for requested command in [database](docs/dbschema/README.md)
+* Sending requests to [Kafka topic](docs/kafkatopic/README.md) (`task.requested`)
 * Accept **command responses** from downstream services (via Kafka topic `orchestrator.responses`)
-
-## API contract
-- [POST](docs/post/README.md)
-- [Kafka topic](docs/kafkatopic/README.md)
-- [DB schema](docs/dbschema/README.md)
-- [GET](docs/get/README.md)
 
 ## Kafka setup
 - Create a [`docker-compose.yml`](kafkasetup/docker-compose.yml)
