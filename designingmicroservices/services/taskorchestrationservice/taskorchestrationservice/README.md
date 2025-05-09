@@ -1,4 +1,12 @@
 # Task Orchestrator Service
+- [How to run](#how-to-run)
+- [Test](#test)
+- [Containerise application](#containerise-application)
+  - [Build your app](#build-your-app)
+  - [Create Dockerfile in your project root](#create-dockerfile-in-your-project-root)
+  - [Build Docker image](#build-docker-image)
+  - [Run Docker image as a Docker container](#run-docker-image-as-a-docker-container)
+  - [Test container](#test-container)
 ## How to run
 - Build 
 ```bash
@@ -18,3 +26,35 @@ mvn spring-boot:run
     ```
     2025-05-09 20:52:20.368  INFO 22532 --- [ntainer#0-0-C-1] c.o.t.service.KafkaConsumerService       : Received message from 'task.requested': {"command_id":"681e40d174e31943e23e7b56","requested_by":"userD","device_ids":["meter-001","meter-002","meter-003"],"command_type":"SET_TOU","command_params":{"tou_profile_id":"TOU-2025-TEST"}}
     ```
+
+## Containerise application
+- [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
+### Build your app
+- For Spring Boot use below command to **create a `.jar`** file.
+  - `mvn clean package` 
+### Create Dockerfile in your project root
+- [Dockerfile](Dockerfile)
+### Build Docker image
+```bash
+docker build -t taskorchestratorservice .
+```
+## Run Docker image as a Docker container
+### Option 1
+- `docker run` command
+  ```bash
+  docker run -p 8082:9092 taskorchestratorservice
+  ```
+### Option 2
+- `docker-compose.yml` followed by `docker-compose up`
+  ```
+  version: "3.9"
+  
+  services:
+    java-app:
+      image: taskorchestratorservice        # use the already built image
+      ports:
+        - "8082:9092"             # map container port to host
+      restart: unless-stopped
+  ```
+## Test container
+- Send `GET` request from **Postman** `http://localhost:8082/api/tasks`

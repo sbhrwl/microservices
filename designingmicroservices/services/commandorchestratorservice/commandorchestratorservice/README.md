@@ -1,4 +1,12 @@
 # Command Orchestrator Service
+- [How to run](#how-to-run)
+- [Test](#test)
+- [Containerise application](#containerise-application)
+  - [Build your app](#build-your-app)
+  - [Create Dockerfile in your project root](#create-dockerfile-in-your-project-root)
+  - [Build Docker image](#build-docker-image)
+  - [Run Docker image as a Docker container](#run-docker-image-as-a-docker-container)
+  - [Test container](#test-container)
 ## How to run
 - Build 
 ```bash
@@ -58,7 +66,7 @@ docker build -t commandorchestratorservice .
         - "8081:9091"             # map container port to host
       restart: unless-stopped
   ```
-## Test
+## Test container
 - Send `POST` request from **Postman** `localhost:8081/api/commands`
   ```json
   {
