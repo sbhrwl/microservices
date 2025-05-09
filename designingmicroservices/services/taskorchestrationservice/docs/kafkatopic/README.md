@@ -37,7 +37,7 @@
   ```json
   {
     "taskId": "task-7890",
-    "commandId": "req-20250508-1234",
+    "commandId": "681dce4358cba50614cee672",
     "commandType": "SET_TOU",
     "scheduledAt": "2025-05-08T02:00:00Z"
   }
