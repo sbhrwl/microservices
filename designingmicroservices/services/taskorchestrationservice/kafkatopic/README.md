@@ -12,15 +12,17 @@
 - **Incoming payload** produced by `CommandOrchestratorService`
   ```json
   {
-    "correlationId": "req-20250508-1234",
-    "commandType": "SET_TOU",
-    "scheduledAt": "2025-05-08T02:00:00Z",
-    "devices": [
+    "command_id": "681dce4358cba50614cee672",
+    "requested_by": "userA",
+    "device_ids": [
       "meter-001",
       "meter-002",
       "meter-003"
     ],
-    "requestedBy": "CommandOrchestratorService"
+    "command_type": "SET_TOU",
+    "command_params": {
+      "tou_profile_id": "TOU-2025-TEST"
+    }
   }
   ```
 
@@ -35,7 +37,7 @@
   ```json
   {
     "taskId": "task-7890",
-    "correlationId": "req-20250508-1234",
+    "commandId": "req-20250508-1234",
     "commandType": "SET_TOU",
     "scheduledAt": "2025-05-08T02:00:00Z"
   }
