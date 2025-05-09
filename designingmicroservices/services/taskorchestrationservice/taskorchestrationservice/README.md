@@ -9,7 +9,7 @@
   - [Run Docker image as a Docker container](#run-docker-image-as-a-docker-container)
   - [Test container](#test-container)
 ## Properties
-- [application.properties](src\main\resources\application.properties)
+- [application.properties](src/main/resources/application.properties)
 ## How to run
 - Build 
 ```bash
