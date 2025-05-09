@@ -1,6 +1,7 @@
 # Command Orchestrator Service
 - [Responsibilities](#responsibilities)
-- [API contract](#api-contract)
+- [Kafka setup](#kafka-setup)
+- [MongoDB setup][#mongodb-setup)
 - [Implementation](commandorchestratorservice/README.md)
 ## Responsibilities
 * Accepting **command requests** from [upstream applications](docs/post/README.md)
