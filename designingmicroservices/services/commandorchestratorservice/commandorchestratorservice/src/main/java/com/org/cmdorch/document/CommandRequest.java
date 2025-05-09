@@ -66,6 +66,17 @@ public class CommandRequest {
         this.commandParams = commandParams;
     }
 
+    @Override
+    public String toString() {
+        return "CommandRequest{" +
+                "correlationId='" + correlationId + '\'' +
+                ", requestedBy='" + requestedBy + '\'' +
+                ", deviceIds=" + deviceIds +
+                ", commandType='" + commandType + '\'' +
+                ", commandParams=" + commandParams +
+                '}';
+    }
+
     public static class CommandParams {
 
         @JsonProperty("tou_profile_id")
@@ -77,6 +88,13 @@ public class CommandRequest {
 
         public void setTouProfileId(String touProfileId) {
             this.touProfileId = touProfileId;
+        }
+
+        @Override
+        public String toString() {
+            return "CommandParams{" +
+                    "touProfileId='" + touProfileId + '\'' +
+                    '}';
         }
     }
 }

@@ -23,6 +23,10 @@ public class CommandController {
     @PostMapping
     public ResponseEntity<String> handleCommandRequest(@RequestBody CommandRequest commandRequest) {
         try {
+            // Log the deserialized CommandRequest object
+            logger.debug("Raw JSON payload received: {}", commandRequest);
+            logger.debug("Deserialized CommandRequest: {}", commandRequest);
+
             logger.info("Received Command Request: {}", commandRequest);
 
             // Process the command request (save to MongoDB and send to Kafka)

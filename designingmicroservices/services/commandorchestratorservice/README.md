@@ -34,3 +34,7 @@
   ```bash
   Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
   ```
+- To confirm the data, query the collection:
+  ```
+  db.command_requests.find().pretty()
+  ```
