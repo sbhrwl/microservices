@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CommandRequest {
 
     @Id
-    @JsonProperty("correlation_id") // Maps JSON property to this field
-    private String correlationId; // Use correlationId as the primary key
+    @JsonProperty("command_id") // Maps JSON property to this field
+    private String commandId; // Use commandId as the primary key
 
     @JsonProperty("requested_by")
     private String requestedBy;
@@ -26,12 +26,12 @@ public class CommandRequest {
     @JsonProperty("command_params")
     private CommandParams commandParams;
 
-    public String getCorrelationId() {
-        return correlationId;
+    public String getcommandId() {
+        return commandId;
     }
 
-    public void setCorrelationId(String correlationId) {
-        this.correlationId = correlationId;
+    public void setcommandId(String commandId) {
+        this.commandId = commandId;
     }
 
     public String getRequestedBy() {
@@ -69,7 +69,7 @@ public class CommandRequest {
     @Override
     public String toString() {
         return "CommandRequest{" +
-                "correlationId='" + correlationId + '\'' +
+                "commandId='" + commandId + '\'' +
                 ", requestedBy='" + requestedBy + '\'' +
                 ", deviceIds=" + deviceIds +
                 ", commandType='" + commandType + '\'' +

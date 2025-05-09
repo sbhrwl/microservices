@@ -10,7 +10,7 @@
 {
   "commandId": "cmd-123456",
   "deviceId": "meter-001",
-  "correlationId": "123456-abc",
+  "commandId": "123456-abc",
   "commandType": "SET_TOU",
   "status": "SUCCESS",
   "issuedAt": "2025-05-08T02:00:00Z",
@@ -22,7 +22,7 @@
 ```json
 {
   "taskId": "task-7890",
-  "correlationId": "123456-abc",
+  "commandId": "123456-abc",
   "requestedBy": "scheduler-service",
   "commandType": "SET_TOU",
   "scheduledAt": "2025-05-08T02:00:00Z",

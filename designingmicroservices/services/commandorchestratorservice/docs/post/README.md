@@ -17,7 +17,7 @@
 ## Request payload
 ```json
 {
-  "correlation_id": "681dce4358cba50614cee672",
+  "command_id": "681dce4358cba50614cee672",
   "requested_by": "user1",
   "device_ids": [
     "meter-001",

@@ -33,8 +33,8 @@ public class KafkaProducerService {
             // Log the payload being sent to Kafka
             logger.info("Sending payload to Kafka: {}", commandRequest);
 
-            kafkaTemplate.send(topicName, commandRequest.getCorrelationId(), commandRequest);
-            logger.info("Message sent to Kafka topic: {} with key: {}", topicName, commandRequest.getCorrelationId());
+            kafkaTemplate.send(topicName, commandRequest.getcommandId(), commandRequest);
+            logger.info("Message sent to Kafka topic: {} with key: {}", topicName, commandRequest.getcommandId());
         } catch (Exception e) {
             logger.error("Error processing CommandRequest: {}", e.getMessage(), e);
             throw e;

@@ -14,7 +14,7 @@
 ```json
 {
   "taskId": "task-7890",
-  "correlationId": "123456-abc",
+  "commandId": "123456-abc",
   "requestedBy": "scheduler-service",
   "deviceIds": ["meter-001", "meter-002", "meter-003"],
   "commandType": "SET_TOU",
@@ -31,7 +31,7 @@
   * **Type**: `Topic`
   * **Direction**: `Consume` (by CommandOrchestratorService)
   * **Purpose**: Receives final device-level command execution results (via TaskOrchestrationService)
-  * **Partition Key**: `correlationId` or `deviceId`
+  * **Partition Key**: `commandId` or `deviceId`
 
 ### Message format for response
 ```json
