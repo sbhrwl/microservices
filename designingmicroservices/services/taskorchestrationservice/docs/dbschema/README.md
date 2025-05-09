@@ -27,7 +27,7 @@
           "lastUpdated": "2025-05-08T02:01:12Z"
         },
         {
-          "deviceId": "meter-003",
+          "deviceId": "meter-002",
           "commandStatus": "FAILED",
           "error": "Timeout",
           "lastUpdated": "2025-05-08T02:03:05Z"
