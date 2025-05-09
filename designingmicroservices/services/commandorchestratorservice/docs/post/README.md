@@ -35,6 +35,7 @@
 
 ```json
 {
+  "command_id": "681dce4358cba50614cee672",
   "taskId": "task-7890",
   "status": "accepted",
   "message": "Command task created and sent for processing."
