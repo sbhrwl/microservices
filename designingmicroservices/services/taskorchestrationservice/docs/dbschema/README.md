@@ -13,7 +13,7 @@
     ```json
     {
       "taskId": "task-7890",
-      "correlationId": "req-20250508-1234",
+      "commandId": "681dce4358cba50614cee672",
       "commandType": "SET_TOU",
       "scheduledAt": "2025-05-08T02:00:00Z",
       "status": "IN_PROGRESS", // or QUEUED, COMPLETED, FAILED
@@ -55,7 +55,7 @@
 | Column           | Type      | Description                                |
 | ---------------- | --------- | ------------------------------------------ |
 | `task_id`        | VARCHAR   | Primary key (UUID or generated ID)         |
-| `correlation_id` | VARCHAR   | Correlates with upstream request           |
+| `command_id` | VARCHAR   | Correlates with upstream request           |
 | `command_type`   | VARCHAR   | Type of DLMS command (e.g. SET\_TOU)       |
 | `scheduled_at`   | TIMESTAMP | When command should be executed            |
 | `status`         | VARCHAR   | `QUEUED`, `IN_PROGRESS`, `COMPLETED`, etc. |
