@@ -50,6 +50,9 @@ mvn spring-boot:run
 ### Build Docker image
 ```bash
 docker build -t commandorchestratorservice .
+
+# For pushing image to Docker registry, build the image with the full tag directly
+docker build -t sbhrwldocker/commandorchestratorservice:v1.0.0 .
 ```
 ## Run Docker image as a Docker container
 ### Option 1
