@@ -14,7 +14,7 @@ mvn spring-boot:run
 ## Test
 - request "POST" `localhost:9999/api/commands`
 - with request body as JSON payload
-  ```
+  ```json
   {
     "command_id": "681dce4358cba50614cee672",
     "requested_by": "userA",
