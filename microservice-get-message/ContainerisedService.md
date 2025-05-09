@@ -15,6 +15,9 @@
 ## Build Docker image
 ```bash
 docker build -t microservice-get-message .
+
+# For pushing image to Docker registry, build the image with the full tag directly
+docker build -t sbhrwldocker/microservice-get-message:v1.0.0 .
 ```
 ## Run Docker image as a Docker container
 ### Option 1
