@@ -28,3 +28,49 @@ mvn spring-boot:run
     "requested_by": "userA"
   } 
   ```
+
+## Containerise application
+- [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
+### Build your app
+- For Spring Boot use below command to **create a `.jar`** file.
+  - `./mvnw clean package` 
+### Create Dockerfile in your project root
+- [Dockerfile](Dockerfile)
+### Build Docker image
+```bash
+docker build -t commandorchestratorservice .
+```
+## Run Docker image as a Docker container
+### Option 1
+- `docker run` command
+  ```bash
+  docker run -p 8081:9998 commandorchestratorservice
+  ```
+### Option 2
+- `docker-compose.yml` followed by `docker-compose up`
+  ```
+  version: "3.9"
+  
+  services:
+    java-app:
+      image: commandorchestratorservice        # use the already built image
+      ports:
+        - "8081:9998"             # map container port to host
+      restart: unless-stopped
+  ```
+## Test
+- Send `POST` request from **Postman** `localhost:8081/api/commands`
+  ```json
+  {
+    "requested_by": "userD",
+    "device_ids": [
+      "meter-001",
+      "meter-002",
+      "meter-003"
+    ],
+    "command_type": "SET_TOU",
+    "command_params": {
+      "tou_profile_id": "TOU-2025-TEST"
+    }
+  }
+  ```
