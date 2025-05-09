@@ -13,16 +13,17 @@
 ### Message format for request
 ```json
 {
-  "taskId": "task-7890",
-  "commandId": "123456-abc",
-  "requestedBy": "scheduler-service",
-  "deviceIds": ["meter-001", "meter-002", "meter-003"],
-  "commandType": "SET_TOU",
-  "commandParams": {
-    "touProfileId": "TOU-2025-WINTER"
-  },
-  "scheduledAt": "2025-05-08T02:00:00Z",
-  "createdAt": "2025-05-07T16:00:00Z"
+  "command_id": "681dce4358cba50614cee672",
+  "requested_by": "userA",
+  "device_ids": [
+    "meter-001",
+    "meter-002",
+    "meter-003"
+  ],
+  "command_type": "SET_TOU",
+  "command_params": {
+    "tou_profile_id": "TOU-2025-TEST"
+  }
 }
 ```
 
