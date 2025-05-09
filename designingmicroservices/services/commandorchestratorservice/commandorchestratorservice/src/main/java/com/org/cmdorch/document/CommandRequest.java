@@ -5,14 +5,25 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Document(collection = "command_requests")
 public class CommandRequest {
 
     @Id
+    @JsonProperty("correlation_id") // Maps JSON property to this field
     private String correlationId; // Use correlationId as the primary key
+
+    @JsonProperty("requested_by")
     private String requestedBy;
+
+    @JsonProperty("device_ids")
     private List<String> deviceIds;
+
+    @JsonProperty("command_type")
     private String commandType;
+
+    @JsonProperty("command_params")
     private CommandParams commandParams;
 
     public String getCorrelationId() {
@@ -56,6 +67,8 @@ public class CommandRequest {
     }
 
     public static class CommandParams {
+
+        @JsonProperty("tou_profile_id")
         private String touProfileId;
 
         public String getTouProfileId() {

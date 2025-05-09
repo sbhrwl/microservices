@@ -22,12 +22,17 @@ public class CommandController {
 
     @PostMapping
     public ResponseEntity<String> handleCommandRequest(@RequestBody CommandRequest commandRequest) {
-        logger.info("Received Command Request: {}", commandRequest);
+        try {
+            logger.info("Received Command Request: {}", commandRequest);
 
-        // Send the command request to Kafka
-        kafkaProducerService.sendCommandRequest(commandRequest);
+            // Process the command request (save to MongoDB and send to Kafka)
+            kafkaProducerService.processCommandRequest(commandRequest);
 
-        logger.info("Command successfully processed and sent to Kafka.");
-        return new ResponseEntity<>("Command sent to Kafka successfully", HttpStatus.OK);
+            logger.info("Command successfully processed and sent to Kafka.");
+            return new ResponseEntity<>("Command sent to Kafka successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error processing Command Request: {}", e.getMessage(), e);
+            return new ResponseEntity<>("Failed to process Command Request", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

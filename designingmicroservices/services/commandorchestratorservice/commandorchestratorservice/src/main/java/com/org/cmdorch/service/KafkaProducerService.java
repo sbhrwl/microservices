@@ -25,13 +25,23 @@ public class KafkaProducerService {
         this.commandRequestRepository = commandRequestRepository;
     }
 
-    public void sendCommandRequest(CommandRequest commandRequest) {
-        // Save to MongoDB
-        commandRequestRepository.save(commandRequest);
-        logger.info("CommandRequest saved to MongoDB: {}", commandRequest);
+    /**
+     * Processes a CommandRequest by saving it to MongoDB and sending it to Kafka.
+     *
+     * @param commandRequest the CommandRequest to process
+     */
+    public void processCommandRequest(CommandRequest commandRequest) {
+        try {
+            // Save to MongoDB
+            commandRequestRepository.save(commandRequest);
+            logger.info("CommandRequest saved to MongoDB: {}", commandRequest);
 
-        // Send to Kafka
-        kafkaTemplate.send(topicName, commandRequest.getCorrelationId(), commandRequest);
-        logger.info("Message sent to Kafka topic: {} with key: {}", topicName, commandRequest.getCorrelationId());
+            // Send to Kafka
+            kafkaTemplate.send(topicName, commandRequest.getCorrelationId(), commandRequest);
+            logger.info("Message sent to Kafka topic: {} with key: {}", topicName, commandRequest.getCorrelationId());
+        } catch (Exception e) {
+            logger.error("Error processing CommandRequest: {}", e.getMessage(), e);
+            throw e; // Re-throw the exception for higher-level handling
+        }
     }
 }
