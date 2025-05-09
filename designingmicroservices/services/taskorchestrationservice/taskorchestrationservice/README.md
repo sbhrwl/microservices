@@ -23,7 +23,7 @@ mvn spring-boot:run
 ```
 
 ## Test
-- `GET` `localhost:9999/api/tasks`
+- `GET` `localhost:9092/api/tasks`
 - Kafka consumer
   - Check console for consumer logs
     ```
