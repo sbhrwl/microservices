@@ -23,7 +23,7 @@ mvn spring-boot:run
 ```
 
 ## Test
-- request "POST" `localhost:9999/api/commands`
+- request "POST" `localhost:9091/api/commands`
 - with request body as JSON payload
   ```json
   {
