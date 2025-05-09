@@ -18,7 +18,7 @@
 ```json
 {
   "command_id": "681dce4358cba50614cee672",
-  "requested_by": "user1",
+  "requested_by": "userA",
   "device_ids": [
     "meter-001",
     "meter-002",
@@ -36,7 +36,7 @@
 ```json
 {
   "command_id": "681dce4358cba50614cee672",
-  "taskId": "task-7890",
+  "taskId": "678dce4358cba50614cee698",
   "status": "accepted",
   "message": "Command task created and sent for processing."
 }
