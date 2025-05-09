@@ -14,29 +14,29 @@ public class KafkaProducerService {
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
 
     private final KafkaTemplate<String, TaskRequest> kafkaTemplate;
-    private final TaskRequestRepository commandRequestRepository;
+    private final TaskRequestRepository taskRequestRepository;
 
     @Value("${spring.kafka.producer.topic}")
     private String topicName;
 
     public KafkaProducerService(KafkaTemplate<String, TaskRequest> kafkaTemplate,
-                                TaskRequestRepository commandRequestRepository) {
+                                TaskRequestRepository taskRequestRepository) {
         this.kafkaTemplate = kafkaTemplate;
-        this.commandRequestRepository = commandRequestRepository;
+        this.taskRequestRepository = taskRequestRepository;
     }
 
-    public void processCommandRequest(TaskRequest commandRequest) {
+    public void processTaskRequest(TaskRequest taskRequest) {
         try {
-            commandRequestRepository.save(commandRequest);
-            logger.info("CommandRequest saved to MongoDB: {}", commandRequest);
+            taskRequestRepository.save(taskRequest);
+            logger.info("TaskRequest saved to MongoDB: {}", taskRequest);
 
             // Log the payload being sent to Kafka
-            logger.info("Sending payload to Kafka: {}", commandRequest);
+            logger.info("Sending payload to Kafka: {}", taskRequest);
 
-            kafkaTemplate.send(topicName, commandRequest.getcommandId(), commandRequest);
-            logger.info("Message sent to Kafka topic: {} with key: {}", topicName, commandRequest.getcommandId());
+            kafkaTemplate.send(topicName, taskRequest.getTaskId(), taskRequest);
+            logger.info("Message sent to Kafka topic: {} with key: {}", topicName, taskRequest.getTaskId());
         } catch (Exception e) {
-            logger.error("Error processing CommandRequest: {}", e.getMessage(), e);
+            logger.error("Error processing TaskRequest: {}", e.getMessage(), e);
             throw e;
         }
     }

@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Document(collection = "command_requests")
+@Document(collection = "tasks")
 public class TaskRequest {
 
     @Id
-    @JsonProperty("command_id") // Maps JSON property to this field
-    private String commandId; // Use commandId as the primary key
+    @JsonProperty("task_id") // Maps JSON property to this field
+    private String taskId; // Use commandId as the primary key
 
     @JsonProperty("requested_by")
     private String requestedBy;
@@ -26,12 +26,12 @@ public class TaskRequest {
     @JsonProperty("command_params")
     private CommandParams commandParams;
 
-    public String getcommandId() {
-        return commandId;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setcommandId(String commandId) {
-        this.commandId = commandId;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getRequestedBy() {
@@ -69,7 +69,7 @@ public class TaskRequest {
     @Override
     public String toString() {
         return "CommandRequest{" +
-                "commandId='" + commandId + '\'' +
+                "taskId='" + taskId + '\'' +
                 ", requestedBy='" + requestedBy + '\'' +
                 ", deviceIds=" + deviceIds +
                 ", commandType='" + commandType + '\'' +

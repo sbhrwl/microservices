@@ -21,16 +21,16 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<String> handleCommandRequest(@RequestBody TaskRequest commandRequest) {
+    public ResponseEntity<String> handletaskRequest(@RequestBody TaskRequest taskRequest) {
         try {
-            // Log the deserialized CommandRequest object
-            logger.debug("Raw JSON payload received: {}", commandRequest);
-            logger.debug("Deserialized CommandRequest: {}", commandRequest);
+            // Log the deserialized TaskRequest object
+            logger.debug("Raw JSON payload received: {}", taskRequest);
+            logger.debug("Deserialized taskRequest: {}", taskRequest);
 
-            logger.info("Received Command Request: {}", commandRequest);
+            logger.info("Received Command Request: {}", taskRequest);
 
             // Process the command request (save to MongoDB and send to Kafka)
-            kafkaProducerService.processCommandRequest(commandRequest);
+            kafkaProducerService.processTaskRequest(taskRequest);
 
             logger.info("Command successfully processed and sent to Kafka.");
             return new ResponseEntity<>("Command sent to Kafka successfully", HttpStatus.OK);
