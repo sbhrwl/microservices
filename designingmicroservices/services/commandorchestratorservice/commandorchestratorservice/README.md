@@ -33,7 +33,7 @@ mvn spring-boot:run
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 ### Build your app
 - For Spring Boot use below command to **create a `.jar`** file.
-  - `./mvnw clean package` 
+  - `mvn clean package` 
 ### Create Dockerfile in your project root
 - [Dockerfile](Dockerfile)
 ### Build Docker image
@@ -44,7 +44,7 @@ docker build -t commandorchestratorservice .
 ### Option 1
 - `docker run` command
   ```bash
-  docker run -p 8081:9998 commandorchestratorservice
+  docker run -p 8081:9091 commandorchestratorservice
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
@@ -55,7 +55,7 @@ docker build -t commandorchestratorservice .
     java-app:
       image: commandorchestratorservice        # use the already built image
       ports:
-        - "8081:9998"             # map container port to host
+        - "8081:9091"             # map container port to host
       restart: unless-stopped
   ```
 ## Test

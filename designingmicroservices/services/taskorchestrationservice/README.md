@@ -9,7 +9,7 @@
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 ### Build your app
 - For Spring Boot use below command to **create a `.jar`** file.
-  - `./mvnw clean package` 
+  - `mvn clean package` 
 ### Create Dockerfile in your project root
 - [Dockerfile](Dockerfile)
 ### Build Docker image
@@ -20,7 +20,7 @@ docker build -t taskorchestratorservice .
 ### Option 1
 - `docker run` command
   ```bash
-  docker run -p 8082:9999 taskorchestratorservice
+  docker run -p 8082:9092 taskorchestratorservice
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
@@ -31,7 +31,7 @@ docker build -t taskorchestratorservice .
     java-app:
       image: taskorchestratorservice        # use the already built image
       ports:
-        - "8082:9998"             # map container port to host
+        - "8082:9092"             # map container port to host
       restart: unless-stopped
   ```
 ## Test
