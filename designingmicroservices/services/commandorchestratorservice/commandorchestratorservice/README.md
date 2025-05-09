@@ -16,16 +16,15 @@ mvn spring-boot:run
 - with request body as JSON payload
   ```json
   {
-    "command_id": "681dce4358cba50614cee672",
-    "requested_by": "userA",
+    "command_type": "SET_TOU",
+    "command_params": {
+      "tou_profile_id": "TOU-2025-TEST"
+    },
     "device_ids": [
       "meter-001",
       "meter-002",
       "meter-003"
     ],
-    "command_type": "SET_TOU",
-    "command_params": {
-      "tou_profile_id": "TOU-2025-TEST"
-    }
+    "requested_by": "userA",
   } 
   ```
