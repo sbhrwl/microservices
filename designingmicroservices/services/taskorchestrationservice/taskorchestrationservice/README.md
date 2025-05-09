@@ -1,4 +1,5 @@
 # Task Orchestrator Service
+- [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
 - [Containerise application](#containerise-application)
@@ -7,6 +8,8 @@
   - [Build Docker image](#build-docker-image)
   - [Run Docker image as a Docker container](#run-docker-image-as-a-docker-container)
   - [Test container](#test-container)
+## Properties
+- [application.properties](src\main\resources\application.properties)
 ## How to run
 - Build 
 ```bash
