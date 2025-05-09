@@ -1,5 +1,11 @@
 # Run service as a Docker container
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
+- [Build your app](#build-your-app)
+- [Create Dockerfile in your project root](#create-dockerfile-in-your-project-root)
+- [Build Docker image](#build-docker-image)
+- [Run Docker image as a Docker container](#run-docker-image-as-a-docker-container)
+- [Test container](#test-container)
+
 ## Build your app
 - For Spring Boot use below command to **create a `.jar`** file.
   - `./mvnw clean package` or
@@ -28,5 +34,5 @@ docker build -t microservice-get-message .
         - "8080:9999"             # map container port to host
       restart: unless-stopped
   ```
-## Test
+## Test container
 - Send `GET` request from **Postman** `http://localhost:8080/message/generate`
