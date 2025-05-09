@@ -38,7 +38,7 @@
 
 ### Index
 * `taskId` (unique, indexed)
-* `correlationId` (searchable)
+* `commanId` (searchable)
 * `devices.deviceId` (for fast lookup by device)
 
 ### Benefits
