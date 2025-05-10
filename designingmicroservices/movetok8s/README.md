@@ -1,4 +1,11 @@
 # Move to Kubernetes
+## Push images to Docker registry 
+```
+docker push sbhrwldocker/command-orchestration:latest
+
+docker push sbhrwldocker/task-orchestration:latest
+```
+
 - [`command-orchestration.yaml`](command-orchestration.yaml)
 - [`task-orchestration.yaml`](task-orchestration.yaml)
 - Combined: [`orchestration-services.yaml`](orchestration-services.yaml)
