@@ -1,6 +1,7 @@
 # Move to Kubernetes
 - [`command-orchestration.yaml`](command-orchestration.yaml)
 - [`task-orchestration.yaml`](task-orchestration.yaml)
+- [Combined: `orchestration-services.yaml`](`orchestration-services.yaml`)
 
 ## Apply
 ```bash
