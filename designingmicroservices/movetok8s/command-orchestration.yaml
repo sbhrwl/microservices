@@ -30,6 +30,9 @@ spec:
           value: admin
         - name: SPRING_DATA_MONGODB_DATABASE
           value: commandorchestrator
+        # Important: host.docker.internal does NOT work from inside Kubernetes pods.
+        # Replace with your host machine IP (e.g., 192.168.1.100) if Kafka is running on Docker Desktop.
+        # This allows the pod to reach the Kafka broker running on your host.
         - name: KAFKA_BOOTSTRAP_SERVERS
           value: host.docker.internal:29092
         - name: SERVER_PORT
