@@ -53,6 +53,8 @@ docker build -t command-orchestration .
 
 # For pushing image to Docker registry, build the image with the full tag directly
 docker build -t sbhrwldocker/command-orchestration:v1.0.0 .
+
+docker build -t sbhrwldocker/command-orchestration:latest .
 ```
 ## Run Docker image as a Docker container
 ### Option 1
