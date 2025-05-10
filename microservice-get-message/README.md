@@ -16,4 +16,4 @@
 
 | Method  | URL (test from postman)                                     | PowerShell Command | Output                                 |
 |:--------|:----------------------------------------|:-------------------|:--------------------|
-| GET     | `http://localhost:9999/message/generate`   |  `Invoke-RestMethod -Uri "http://localhost:9999/message/generate" -Method Get` | FROM GET-generateMessage Method             |
+| GET     | `http://localhost:9080/message/generate`   |  `Invoke-RestMethod -Uri "http://localhost:9080/message/generate" -Method Get` | FROM GET-generateMessage Method             |
