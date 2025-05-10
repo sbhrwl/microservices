@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: command-orchestration
-        image: your-dockerhub/commandorchestration:latest
+        image: sbhrwldocker/commandorchestration:latest
         ports:
         - containerPort: 9081
         env:
