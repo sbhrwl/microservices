@@ -22,7 +22,7 @@ docker build -t sbhrwldocker/microservice-get-message:v1.0.0 .
 ### Option 1
 - `docker run` command
   ```bash
-  docker run -p 8080:9999 microservice-get-message
+  docker run -p 8080:9080 microservice-get-message
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
@@ -33,7 +33,7 @@ docker build -t sbhrwldocker/microservice-get-message:v1.0.0 .
     java-app:
       image: microservice-get-message        # use the already built image
       ports:
-        - "8080:9999"             # map container port to host
+        - "8080:9080"             # map container port to host
       restart: unless-stopped
   ```
 ## Test container
