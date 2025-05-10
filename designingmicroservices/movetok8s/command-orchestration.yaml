@@ -14,16 +14,27 @@ spec:
     spec:
       containers:
       - name: command-orchestration
-        image: sbhrwldocker/commandorchestration:latest
+        image: sbhrwldocker/command-orchestration:latest
         ports:
         - containerPort: 9081
         env:
-        - name: SPRING_DATA_MONGODB_URI
-          value: mongodb://host.docker.internal:27017/yourdb
+        - name: MONGO_HOST
+          value: host.docker.internal
+        - name: MONGO_PORT
+          value: "27017"
+        - name: SPRING_DATA_MONGODB_USERNAME
+          value: root
+        - name: SPRING_DATA_MONGODB_PASSWORD
+          value: root123
+        - name: SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE
+          value: admin
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: commandorchestrator
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: host.docker.internal:9092
+          value: host.docker.internal:29092
         - name: SERVER_PORT
           value: "9081"
+
 ---
 apiVersion: v1
 kind: Service
