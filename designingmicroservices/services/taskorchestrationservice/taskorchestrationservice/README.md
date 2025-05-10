@@ -43,6 +43,8 @@ docker build -t task-orchestration .
 
 # For pushing image to Docker registry, build the image with the full tag directly
 docker build -t sbhrwldocker/task-orchestration:v1.0.0 .
+
+docker build -t sbhrwldocker/task-orchestration:latest .
 ```
 ## Run Docker image as a Docker container
 ### Option 1
