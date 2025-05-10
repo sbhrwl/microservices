@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: task-orchestration
-        image: your-dockerhub/taskorchestration:latest
+        image: sbhrwldocker/taskorchestration:latest
         ports:
         - containerPort: 9082
         env:
