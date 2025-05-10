@@ -11,7 +11,7 @@ docker push sbhrwldocker/task-orchestration:latest
 - Combined: [`orchestration-services.yaml`](orchestration-services.yaml)
 
 ## Apply
-- [Troubleshooting](https://github.com/sbhrwl/microservices/blob/main/kubernetes/README.md#deploy-docker-images-on-kubernetes)
+- [Status check for kubernetees pods and services](https://github.com/sbhrwl/microservices/blob/main/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ```bash
 kubectl apply -f command-orchestration.yaml
 kubectl apply -f task-orchestration.yaml
