@@ -3,6 +3,7 @@
   - [Download Helm binary](#download-helm-binary)
   - [Install Helm](#install-helm)
   - [Verify installation](#v-installation)
+- [Create Helm chart structure](#create-helm-chart-structure)
 ## Setup
 ### Download Helm binary
 1. Go to the official [Helm releases page](https://github.com/helm/helm/releases)
@@ -24,3 +25,12 @@
   ```bash
   version.BuildInfo{Version:"v3.14.0", ...}
   ```
+
+## Create Helm chart structure
+- Generate the basic `Helm chart directory`. 
+- Run this in your terminal:
+  ```
+  helm create command-orchestration
+  ```
+- This creates a directory called **command-orchestration** with default templates and values.
+
