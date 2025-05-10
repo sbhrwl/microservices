@@ -19,12 +19,12 @@
 
 ## Push image to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
-- [Other options for publishing images](options/README.md)
   ```
   docker push your-username-on-docker/microservice-get-message:v1.0.0
   
   docker push sbhrwldocker/microservice-get-message:v1.0.0
   ```
+- [Other options for publishing images](options/README.md)
 - Logs
   ```
   PS C:\Git\spring\SpringBoot\GreetingsMessage> docker push sbhrwldocker/microservice-get-message:v1.0.0
