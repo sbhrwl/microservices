@@ -7,6 +7,8 @@
 ```bash
 kubectl apply -f command-orchestration.yaml
 kubectl apply -f task-orchestration.yaml
+
+kubectl apply -f orchestration-services.yaml
 ```
 
 ## Access
