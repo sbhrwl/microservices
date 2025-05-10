@@ -19,7 +19,7 @@
 
 ## Push image to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
-- [Options for publishing images](options/README.md)
+- [Other options for publishing images](options/README.md)
   ```
   docker push your-username-on-docker/microservice-get-message:v1.0.0
   
