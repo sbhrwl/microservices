@@ -94,3 +94,8 @@ PS C:\Git\kubernetes>
   ```
   kubectl get all
   ```
+## Updating deployment
+- After changing your `deployment.yaml` files
+  - `kubectl apply -f your-file.yaml`
+  - `kubectl rollout restart deployment command-orchestration-deployment`
+  - `kubectl rollout restart deployment task-orchestration-deployment`
