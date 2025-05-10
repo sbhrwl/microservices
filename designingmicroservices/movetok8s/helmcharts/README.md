@@ -30,7 +30,7 @@
 - Generate the basic `Helm chart directory`. 
 - Run this in your terminal:
   ```
-  helm create command-orchestration
+  helm create orchestration-services
   ```
-- This creates a directory called **command-orchestration** with default templates and values.
+- This creates a directory called **orchestration-services** with default templates and values.
 
