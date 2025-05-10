@@ -1,5 +1,7 @@
 # Introduction
 - `RESTful API endpoint` to generate a greeting message based on time of the day.
+## Properties
+- [application.properties](src/main/resources/application.properties)
 ## How to run
 - Build 
   ```bash
