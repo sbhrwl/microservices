@@ -29,4 +29,4 @@ kubectl apply -f orchestration-services.yaml
   # Replace with your host machine IP (e.g., 192.168.1.100) if Kafka is running on Docker Desktop.
   # This allows the pod to reach the Kafka broker running on your host.
   ```
-## Helm charts
+## [Helm charts](helmcharts/README.md)
