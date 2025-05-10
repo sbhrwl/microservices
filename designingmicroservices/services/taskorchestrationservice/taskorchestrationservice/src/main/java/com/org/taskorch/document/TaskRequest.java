@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Document(collection = "tasks")
+@Document(collection = "command_requests") // MongoDB collection name
 public class TaskRequest {
 
     @Id
-    @JsonProperty("task_id") // Maps JSON property to this field
-    private String taskId; // Use commandId as the primary key
+    @JsonProperty("command_id") // Maps JSON property to this field
+    private String taskId; // Use As Task is not yet created, so taskId mapped to command_id column of database
 
     @JsonProperty("requested_by")
     private String requestedBy;
