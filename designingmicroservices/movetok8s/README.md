@@ -23,6 +23,5 @@ kubectl apply -f orchestration-services.yaml
 ## Access
 - `http://localhost:30081/...` → `commandorchestrationservice`
 - `http://localhost:30082/...` → `taskorchestrationservice`
-
+- [`Failures with Kafka`](failuresWithKafka/README.md)
 ## Helm charts
-
