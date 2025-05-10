@@ -23,7 +23,7 @@ mvn spring-boot:run
 ```
 
 ## Test
-- `GET` `localhost:9092/api/tasks`
+- `GET` `localhost:9082/api/tasks`
 - Kafka consumer
   - Check console for consumer logs
     ```
@@ -47,8 +47,12 @@ docker build -t sbhrwldocker/taskorchestratorservice:v1.0.0 .
 ## Run Docker image as a Docker container
 ### Option 1
 - `docker run` command
+  - `MONGO_HOST=host.docker.internal`: 
+    - This sets the environment variable `MONGO_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where MongoDB is running
+  - `KAFKA_HOST=host.docker.internal`:
+    - This sets the environment variable `KAFKA_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where KAFKA is running
   ```bash
-  docker run -p 8082:9092 taskorchestratorservice
+  docker run -p 8082:9082 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 taskorchestratorservice
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
@@ -59,7 +63,7 @@ docker build -t sbhrwldocker/taskorchestratorservice:v1.0.0 .
     java-app:
       image: taskorchestratorservice        # use the already built image
       ports:
-        - "8082:9092"             # map container port to host
+        - "8082:9082"             # map container port to host
       restart: unless-stopped
   ```
 ## Test container

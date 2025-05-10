@@ -23,7 +23,7 @@ mvn spring-boot:run
 ```
 
 ## Test
-- request "POST" `localhost:9091/api/commands`
+- request "POST" `localhost:9081/api/commands`
 - with request body as JSON payload
   ```json
   {
@@ -57,8 +57,12 @@ docker build -t sbhrwldocker/commandorchestratorservice:v1.0.0 .
 ## Run Docker image as a Docker container
 ### Option 1
 - `docker run` command
+  - `MONGO_HOST=host.docker.internal`: 
+    - This sets the environment variable `MONGO_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where MongoDB is running
+  - `KAFKA_HOST=host.docker.internal`:
+    - This sets the environment variable `KAFKA_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where KAFKA is running
   ```bash
-  docker run -p 8081:9091 commandorchestratorservice
+  docker run -p 8081:9081 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 commandorchestratorservice
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
