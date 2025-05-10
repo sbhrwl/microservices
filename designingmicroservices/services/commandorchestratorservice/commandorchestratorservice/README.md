@@ -49,10 +49,10 @@ mvn spring-boot:run
 - [Dockerfile](Dockerfile)
 ### Build Docker image
 ```bash
-docker build -t commandorchestratorservice .
+docker build -t command-orchestration .
 
 # For pushing image to Docker registry, build the image with the full tag directly
-docker build -t sbhrwldocker/commandorchestratorservice:v1.0.0 .
+docker build -t sbhrwldocker/command-orchestration:v1.0.0 .
 ```
 ## Run Docker image as a Docker container
 ### Option 1
@@ -62,7 +62,7 @@ docker build -t sbhrwldocker/commandorchestratorservice:v1.0.0 .
   - `KAFKA_HOST=host.docker.internal`:
     - This sets the environment variable `KAFKA_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where KAFKA is running
   ```bash
-  docker run -p 8081:9081 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 commandorchestratorservice
+  docker run -p 8081:9081 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 command-orchestration
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`
