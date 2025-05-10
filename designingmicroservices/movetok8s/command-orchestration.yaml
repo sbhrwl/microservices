@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-orchestration-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-orchestration
+  template:
+    metadata:
+      labels:
+        app: command-orchestration
+    spec:
+      containers:
+      - name: command-orchestration
+        image: your-dockerhub/commandorchestration:latest
+        ports:
+        - containerPort: 9081
+        env:
+        - name: SPRING_DATA_MONGODB_URI
+          value: mongodb://host.docker.internal:27017/yourdb
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: host.docker.internal:9092
+        - name: SERVER_PORT
+          value: "9081"
