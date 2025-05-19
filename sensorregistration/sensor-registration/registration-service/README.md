@@ -51,6 +51,16 @@ mvn spring-boot:run
     - `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
     - `db.sensorRegistrations.find().pretty()`
 
+## Integrate notification service
+- The `notification-service` will be integrated to `registration-service`. 
+- The `registration-service` to call the `notification-service's endpoint` after successfully saving a sensor registration to the database.
+  - **Add RestTemplate to `registration-service`:** 
+    - We'll use Spring's `RestTemplate` to make the HTTP call to the `notification-service`.
+  - **Configure RestTemplate:** 
+    - We'll create a bean for `RestTemplate`.
+  - **Modify `SensorRegistrationConsumer`:** 
+    - We'll update the consumer to call the `notification-service` after saving to MongoDB.
+    - Confuigure notificationServiceUrl in `application.properties`
 ## Containerise application
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 ### Build your app
