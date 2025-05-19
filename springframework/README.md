@@ -39,5 +39,4 @@
 - **Flexibility**: Works with various technologies (`Hibernate, Thymeleaf, React`).
 - **Community & Ecosystem**: Large community, extensive documentation, and continuous updates.
 ## APIs
-- [Microservices](Microservices/README.md)
 <img src="images/apis.jpg">
