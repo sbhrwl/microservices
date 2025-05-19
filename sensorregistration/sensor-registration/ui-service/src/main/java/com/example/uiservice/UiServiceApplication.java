@@ -1,4 +1,4 @@
-package com.example.ui_service;
+package com.example.uiservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
