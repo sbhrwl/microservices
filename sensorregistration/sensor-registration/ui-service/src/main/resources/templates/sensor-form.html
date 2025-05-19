@@ -1,83 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Registration Form</title>
-    <script src="https://www.keycloak.org/js/keycloak.js"></script>
-    <script>
-        // Define Keycloak configuration and sensor service URL.
+    <title>Sensor Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js@23.0.0/dist/keycloak.min.js"></script>
+    <script th:inline="javascript">
+        // Keycloak config values injected by Thymeleaf
         const keycloakConfig = {
-            url: '${keycloak.url}', //  Keycloak URL (will be replaced by server)
-            realm: '${keycloak.realm}',         //  Keycloak realm name (will be replaced by server)
-            clientId: '${keycloak.clientId}',    //  Keycloak client ID (will be replaced by server)
+            url: [[${keycloakUrl}]],
+            realm: [[${keycloakRealm}]],
+            clientId: [[${keycloakClientId}]]
         };
-        const sensorServiceUrl = '${sensor.service.url}/api/register/sensor'; //  <---  Make Dynamic
+        // Dynamically set sensor service URL using Thymeleaf
+        const sensorServiceUrl = [[${sensorServiceUrl}]] + '/api/register/sensor';
 
-        // Initialize Keycloak
         const keycloak = new Keycloak(keycloakConfig);
 
-        // Initialize Keycloak and handle authentication
-        keycloak.init({ onLoad: 'login-required' }) //  Force login on page load
-            .then(authenticated => {
+        window.onload = function() {
+            keycloak.init({ onLoad: 'login-required' }).then(function(authenticated) {
                 if (authenticated) {
-                    console.log("Authenticated");
-                    //  The user is authenticated, so we can now show the form and make the request
-                    document.getElementById('sensorForm').style.display = 'block'; // Show the form
-
-                    // Get the form element
+                    document.getElementById('sensorForm').style.display = 'block';
                     const sensorForm = document.getElementById('sensorForm');
-
-                    // Add an event listener to the form for the submit event
-                    sensorForm.addEventListener('submit', (event) => {
-                        // Prevent the default form submission behavior (which would cause a page reload)
+                    sensorForm.addEventListener('submit', function(event) {
                         event.preventDefault();
-
-                        // Get the values from the input fields
                         const sensorId = document.getElementById('sensorId').value;
                         const sensorModel = document.getElementById('sensorModel').value;
                         const email = document.getElementById('email').value;
-
-                        // Create an object to hold the sensor data
                         const sensorData = {
                             sensorId: sensorId,
                             sensorModel: sensorModel,
                             email: email
                         };
-
-                        // Send a POST request to the server to register the sensor
                         fetch(sensorServiceUrl, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${keycloak.token}` //  Use the Keycloak token
+                                'Authorization': `Bearer ${keycloak.token}`
                             },
-                            body: JSON.stringify(sensorData) // Convert the sensor data object to a JSON string
+                            body: JSON.stringify(sensorData)
                         })
                         .then(response => {
-                            // Check if the response was successful (status code 200-299)
+                            console.log('Called sensor service at:', sensorServiceUrl);
                             if (response.ok) {
-                                alert('Sensor registered successfully!'); // Show a success message
+                                alert('Sensor registered successfully!');
                             } else {
-                                alert('Failed to register sensor.'); // Show an error message
+                                alert('Failed to register sensor.');
                             }
                         })
                         .catch(error => {
-                            // Handle any errors that occurred during the fetch operation
                             console.error('Error:', error);
-                            alert('An error occurred.'); // Show a generic error message to the user
+                            alert('An error occurred.');
                         });
                     });
                 } else {
-                    console.log("Not authenticated");
-                    //  The user is not authenticated.  Keycloak's login-required will handle the redirect to Keycloak.
-                    //  You might want to display a message here.
+                    document.getElementById('sensorForm').style.display = 'none';
                 }
-            })
-            .catch(error => {
-                console.error("Keycloak init failed", error);
+            }).catch(function() {
                 alert('Failed to initialize authentication.');
             });
+        };
     </script>
 </head>
 <body>
