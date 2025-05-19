@@ -1,7 +1,7 @@
 # Introduction
 - Sensor registration
   -  **Direct UI input:** 
-     - A user logs in through the UI and enters their sensor details and email address directly. The sens button calls **Sensor Service**.
+     - A user logs in through the UI and enters their sensor details and email address directly. The send button on UI calls **Sensor Service**.
   -  **Secured API endpoint** 
      - An external client sends a POST request to a secured endpoint of the **Sensor Service**. 
 - **Flow**
