@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  activemq:
+    image: rmohr/activemq:latest
+    container_name: activemq
+    ports:
+      - "61616:61616"    # for OpenWire (broker protocol)
+      - "8161:8161"      # for Web Console (http://localhost:8161)
+      - "1099:1099"      # for JMX (VisualVM monitoring)
+    environment:
+      ACTIVEMQ_OPTS: >-
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=1099
+        -Dcom.sun.management.jmxremote.rmi.port=1099
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Djava.rmi.server.hostname=localhost

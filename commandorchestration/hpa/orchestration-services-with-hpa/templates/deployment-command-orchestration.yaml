@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.command.name }}-deployment
+spec:
+  replicas: {{ .Values.command.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.command.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.command.name }}
+    spec:
+      containers:
+        - name: {{ .Values.command.name }}
+          image: {{ .Values.command.image }}
+          ports:
+            - containerPort: {{ .Values.command.containerPort }}
+          env:
+            - name: MONGO_HOST
+              value: {{ .Values.env.MONGO_HOST }}
+            - name: MONGO_PORT
+              value: "{{ .Values.env.MONGO_PORT }}"
+            - name: SPRING_DATA_MONGODB_USERNAME
+              value: {{ .Values.env.SPRING_DATA_MONGODB_USERNAME }}
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              value: {{ .Values.env.SPRING_DATA_MONGODB_PASSWORD }}
+            - name: SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE
+              value: {{ .Values.env.SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE }}
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: {{ .Values.env.SPRING_DATA_MONGODB_DATABASE }}
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.env.KAFKA_BOOTSTRAP_SERVERS }}
+            - name: SERVER_PORT
+              value: "{{ .Values.command.containerPort }}"

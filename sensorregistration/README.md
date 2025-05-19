@@ -1,0 +1,13 @@
+# Sensor registration
+- [Introduction](introduction/README.md)
+- [Architecture](architecture/README.md)
+- [Project structure](projectstructure/README.md)
+- [Services](sensor-registration/README.md)
+  - [Sensor service](sensor-registration/sensor-service/README.md)
+  - [Registration service](sensor-registration/registration-service/README.md)
+  - [Notification service](sensor-registration/notification-service/README.md)
+  - [UI service](sensor-registration/ui-service/README.md)
+- [Move to Kubernetes](movetok8s/README.md)
+- [Helm charts](helmcharts/README.md)
+- [Horizontal Pod Autoscalar](hpa/README.md)
+- [Deployment across multiple nodes](deploymentacrossmultiplenodes/README.md)

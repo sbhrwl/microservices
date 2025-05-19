@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-orchestration-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-orchestration
+  template:
+    metadata:
+      labels:
+        app: command-orchestration
+    spec:
+      containers:
+      - name: command-orchestration
+        image: sbhrwldocker/command-orchestration:latest
+        ports:
+        - containerPort: 9081
+        env:
+        - name: MONGO_HOST
+          value: host.docker.internal
+        - name: MONGO_PORT
+          value: "27017"
+        - name: SPRING_DATA_MONGODB_USERNAME
+          value: root
+        - name: SPRING_DATA_MONGODB_PASSWORD
+          value: root123
+        - name: SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE
+          value: admin
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: commandorchestrator
+        # Important: host.docker.internal does NOT work from inside Kubernetes pods.
+        # Replace with your host machine IP (e.g., 192.168.1.100) if Kafka is running on Docker Desktop.
+        # This allows the pod to reach the Kafka broker running on your host.   
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: host.docker.internal:29092
+        - name: SERVER_PORT
+          value: "9081"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: command-orchestration-service
+spec:
+  type: NodePort
+  selector:
+    app: command-orchestration
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 9081
+      nodePort: 30081
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-orchestration-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-orchestration
+  template:
+    metadata:
+      labels:
+        app: task-orchestration
+    spec:
+      containers:
+      - name: task-orchestration
+        image: sbhrwldocker/task-orchestration:latest
+        ports:
+        - containerPort: 9082
+        env:
+        - name: MONGO_HOST
+          value: host.docker.internal
+        - name: MONGO_PORT
+          value: "27017"
+        - name: SPRING_DATA_MONGODB_USERNAME
+          value: root
+        - name: SPRING_DATA_MONGODB_PASSWORD
+          value: root123
+        - name: SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE
+          value: admin
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: commandorchestrator
+        # Important: host.docker.internal does NOT work from inside Kubernetes pods.
+        # Replace with your host machine IP (e.g., 192.168.1.100) if Kafka is running on Docker Desktop.
+        # This allows the pod to reach the Kafka broker running on your host.  
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: host.docker.internal:29092
+        - name: SERVER_PORT
+          value: "9082"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-orchestration-service
+spec:
+  type: NodePort
+  selector:
+    app: task-orchestration
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 9082
+      nodePort: 30082

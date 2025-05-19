@@ -1,0 +1,12 @@
+# Command orchestration 
+- [Motivation](motivation/README.md)
+- [Architecture](architecture/README.md)
+- [Services](services/README.md)
+  - [Command Orchestrator Service](services/commandorchestratorservice/README.md)
+  - [Task Orchestration Service](services/taskorchestrationservice/README.md)
+  - [Command Lifecycle Service](services/commandlifecycleservice/README.md)
+  - [Protocol Adapter Service](services/protocoladapterservice/README.md)
+- [Move to Kubernetes](movetok8s/README.md)
+- [Helm charts](helmcharts/README.md)
+- [Horizontal Pod Autoscalar](hpa/README.md)
+- [Deployment across multiple nodes](deploymentacrossmultiplenodes/README.md)

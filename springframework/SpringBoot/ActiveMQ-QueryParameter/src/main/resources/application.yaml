@@ -1,0 +1,7 @@
+spring.activemq:
+  broker-url: tcp://fijyvvrhessw35.eu.bm.net:61616
+  user: broker
+  password: broker
+
+server:
+  port: 2012

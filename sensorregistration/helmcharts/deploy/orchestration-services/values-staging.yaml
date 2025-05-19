@@ -1,0 +1,24 @@
+command:
+  name: command-orchestration
+  replicas: 2
+  image: sbhrwldocker/command-orchestration:staging
+  containerPort: 9081
+  servicePort: 8081
+  nodePort: 31081
+
+task:
+  name: task-orchestration
+  replicas: 2
+  image: sbhrwldocker/task-orchestration:staging
+  containerPort: 9082
+  servicePort: 8082
+  nodePort: 31082
+
+env:
+  MONGO_HOST: staging-db.internal
+  MONGO_PORT: "27017"
+  SPRING_DATA_MONGODB_USERNAME: root
+  SPRING_DATA_MONGODB_PASSWORD: root123
+  SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE: admin
+  SPRING_DATA_MONGODB_DATABASE: commandorchestrator
+  KAFKA_BOOTSTRAP_SERVERS: staging-kafka:29092

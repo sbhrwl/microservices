@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.org.cmdorch.protobuf";
+option java_outer_classname = "CommandRequestProto";
+
+message CommandRequest {
+  string command_id = 1;
+  string requested_by = 2;
+  repeated string device_ids = 3;
+  string command_type = 4;
+  CommandParams command_params = 5;
+}
+
+message CommandParams {
+  string tou_profile_id = 1;
+}

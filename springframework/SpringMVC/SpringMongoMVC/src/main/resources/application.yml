@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      # uri : mongodb+srv://sabharwalonnet:sabharwalonnet@sabharwalr.lzsu0gx.mongodb.net/?retryWrites=true&w=majority
+      host : localhost
+      port : 27017
+      database : pwskills

@@ -1,0 +1,23 @@
+# Authentication with Keycloak
+- Create spring boot app with [spring initialiser](https://start.spring.io/)
+  - Build: `mvn clean install`
+  - Run: `mvn spring-boot:run`
+- [Keycloak setup](keycloak/README.md)
+- Add [role-based access control](rbac/README.md)
+  - Fine-grained authorization.
+- Call the secured endpoint with [Postman using an access token](postman/README.md)
+  - Validates the setup and role-based logic.
+  - Reinforces understanding of OAuth2 token flow.
+- [Secure Swagger UI](swaggerui/README.md)
+  - Ensures that API documentation isn't exposed.
+  - Adds developer-facing security.
+- Add [CORS config](cors/README.md)
+  - Important if you'll call this backend from a frontend (e.g., React, Angular).
+  - Comes into play when you connect systems.
+- [Run app as a Docker container](authenticatewithkeycloak/ContainerisedService.md)
+  - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
+- **Endpoints**
+  - **Public**: `GET` `http://localhost:8081/public`
+    - Expected result: `This is a public endpoint.`
+  - **Secure**: `GET` `http://localhost:8081/hello` 
+    - Expected result: `401 Unauthorized`
