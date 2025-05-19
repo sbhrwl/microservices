@@ -1,10 +1,11 @@
 # Introduction
 - Sensor registration
-  -  **Direct UI Input:** 
-     - A user logs in through the UI and enters their inverter details and email address directly. 
-  -  **Secured API Endpoint via Kafka:** 
-     - An external client (potentially another system or a different user flow) sends a POST request to a secured endpoint of the **Sensor Service**. 
-- Common flow
+  -  **Direct UI input:** 
+     - A user logs in through the UI and enters their sensor details and email address directly. The sens button calls **Sensor Service**.
+  -  **Secured API endpoint** 
+     - An external client sends a POST request to a secured endpoint of the **Sensor Service**. 
+- **Flow**
+  - **Sensor Service** enqueues message to Kafka topic
   - **Registration Service** consumes message from kafka, saves the data to MongoDB, and then calls the **Notification Service**.
 - This provides flexibility and allows for different integration points into our system. 
   - The first method is for direct user interaction
