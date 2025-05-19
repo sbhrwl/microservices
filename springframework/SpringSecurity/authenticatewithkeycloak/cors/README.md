@@ -11,3 +11,4 @@
   * Your frontend is running on `http://localhost:3000`
   * Your Spring Boot backend is on `http://localhost:8081`
   * If the backend doesn't allow cross-origin requests, the browser blocks it.
+- [Example from `sensor registration` service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/src/main/java/com/example/sensorservice/config/SecurityConfig.java)
