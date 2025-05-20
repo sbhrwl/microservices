@@ -1,7 +1,6 @@
 # Sensor registration
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
-- [Project structure](projectstructure/README.md)
 - [Prerequisites](prerequisites/README.md)
 - [Services](sensor-registration/README.md)
   - [Sensor service](sensor-registration/sensor-service/README.md)
