@@ -10,7 +10,29 @@
   - [Test container](#test-container)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
+```local
+# Server Configuration
+server.port=9082
+
+# Keycloak configuration
+spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8080/realms/master
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://localhost:8080/realms/master/protocol/openid-connect/certs
+spring.security.oauth2.client.registration.keycloak.client-id=sensor-service
+# spring.security.oauth2.client.registration.keycloak.client-secret=YOUR_CLIENT_SECRET # Only if your client has a secret
+spring.security.oauth2.client.registration.keycloak.provider=keycloak
+spring.security.oauth2.client.provider.keycloak.issuer-uri=http://localhost:8080/realms/master
+
+# Kafka configuration
+spring.kafka.producer.bootstrap-servers=${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+kafka.topic.sensor-registration=sensor-registrations
+
+# CORS configuration
+cors.allowed-origins=http://localhost:9081
 ```
+
+```container
 # Server Configuration
 server.port=${SERVER_PORT:9082}
 
