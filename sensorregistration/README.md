@@ -8,7 +8,7 @@
   - [Notification service](sensor-registration/notification-service/README.md)
   - [UI service](sensor-registration/ui-service/README.md)
 - [Containers](containers/README.md)
-- [Move to Kubernetes](movetok8s/README.md)
+- [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across multiple nodes](deploymentacrossmultiplenodes/README.md)
