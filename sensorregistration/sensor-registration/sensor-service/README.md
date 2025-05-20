@@ -10,6 +10,28 @@
   - [Test container](#test-container)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
+```
+# Server Configuration
+server.port=${SERVER_PORT:9082}
+
+# Keycloak configuration
+spring.security.oauth2.resourceserver.jwt.issuer-uri=${KEYCLOAK_ISSUER_URI:http://host.docker.internal:8080/realms/master}
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri=${KEYCLOAK_JWK_SET_URI:http://host.docker.internal:8080/realms/master/protocol/openid-connect/certs}
+spring.security.oauth2.client.registration.keycloak.client-id=${KEYCLOAK_CLIENT_ID:sensor-service}
+spring.security.oauth2.client.registration.keycloak.provider=${KEYCLOAK_PROVIDER:keycloak}
+spring.security.oauth2.client.provider.keycloak.issuer-uri=${KEYCLOAK_ISSUER_URI:http://host.docker.internal:8080/realms/master}
+# Uncomment and set secret if needed
+# spring.security.oauth2.client.registration.keycloak.client-secret=${KEYCLOAK_CLIENT_SECRET:}
+
+# Kafka configuration
+spring.kafka.producer.bootstrap-servers=${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+kafka.topic.sensor-registration=${KAFKA_SENSOR_REG_TOPIC:sensor-registrations}
+
+# CORS configuration
+cors.allowed-origins=${CORS_ALLOWED_ORIGINS:http://host.docker.internal:9081}
+```
 ## How to run
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
 - Build 

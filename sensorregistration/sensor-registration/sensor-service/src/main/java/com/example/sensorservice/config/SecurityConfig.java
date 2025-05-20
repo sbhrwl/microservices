@@ -26,7 +26,7 @@ public class SecurityConfig {
             .cors()
             .and()
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/public/**", "/api/register/public").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2.jwt());
