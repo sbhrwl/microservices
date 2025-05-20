@@ -6,8 +6,9 @@
 |Build jar|`mvn clean package`|`mvn clean package`|`mvn clean package`|`mvn clean package`|
 |Dockerfile|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/Dockerfile)|
 |Build image|`docker build -t sbhrwldocker/ui-service:latest .`|`docker build -t sbhrwldocker/sensor-service:latest .`|`docker build -t sbhrwldocker/registration-service:latest .`|`docker build -t sbhrwldocker/notification-service:latest .`|
-|Run container|`docker run -p 8081:9081 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 ui-service`|`docker run -p 8082:9082 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 sensor-service`|`docker run -p 8083:9083 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 registration-service`|`docker run -p 8084:9084 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 notification-service`|
-|Test|Log in to UI||||
+|docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
+|Run container|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|
+||||||
 
 ## Test ui service
 
