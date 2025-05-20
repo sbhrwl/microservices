@@ -1,9 +1,14 @@
 version: '3.8'
 
 services:
-  sensor-service:
+  registration-service:
     build:
       context: .
     image: registration-service:latest
     ports:
       - "9083:9083"
+    environment:
+      SERVER_PORT: ${SERVER_PORT:9083}
+      KAFKA_HOST: ${KAFKA_HOST:host.docker.internal}
+      KAFKA_PORT: ${KAFKA_PORT:29092}
+      NOTIFICATION_SERVICE_URL: ${NOTIFICATION_SERVICE_URL:http://host.docker.internal:9084}
