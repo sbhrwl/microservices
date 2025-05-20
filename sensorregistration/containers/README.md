@@ -49,3 +49,9 @@ docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_IS
 ## Test registration service
 
 ## Test notification service
+- Send `GET` request `http://localhost:9084/api/notification/email/registration-confirmation`
+- Body `form-data`
+  ```
+  toEmail : sabharwal.onnet@gmail.com
+  sensorId : sensor123
+  ```
