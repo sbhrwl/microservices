@@ -4,6 +4,8 @@
 - [Notification service](notification-service/README.md)
 - [UI service](ui-service/README.md)
 
+---
+
 <summary>
   <details>Parent pom.xml</details>
 
