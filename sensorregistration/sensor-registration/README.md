@@ -4,10 +4,8 @@
 - [Notification service](notification-service/README.md)
 - [UI service](ui-service/README.md)
 
----
-
-<summary>
-  <details>Parent pom.xml</details>
+<details>
+  <summary>Parent pom.xml</summary>
 
   ## Parent pom.xml
   - When we are *building* these standalone services using a build tool like Maven, a multi-module project structure with a parent `pom.xml` offers significant advantages during the **development and build process**:
@@ -24,4 +22,4 @@
       * **Organize the Project:** Provide a clear structure in our codebase.
   * **Runtime:** Each microservice is a standalone application.
   * **Development/Build:** The parent `pom.xml` in a multi-module Maven project is a tool to help manage and build these independent services in a cohesive way.  
-</summary>
+</details>
