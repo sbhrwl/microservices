@@ -12,15 +12,15 @@
 ## Docker run
 - ui service
 ```
-docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sensor-service:latest
+docker run --name ui-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sbhrwldocker/ui-service:latest
 ```
 - sensor service
 ```
-docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sensor-service:latest
+docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sbhrwldocker/sensor-service:latest
 ```
 - registration service
 ```
-docker run --name registration-service -p 9083:9083 -e SERVER_PORT=9083 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e NOTIFICATION_SERVICE_URL=http://host.docker.internal:9084 registration-service:latest
+docker run --name registration-service -p 9083:9083 -e SERVER_PORT=9083 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e MONGO_HOST=host.docker.internal -e NOTIFICATION_SERVICE_URL=http://host.docker.internal:9084 sbhrwldocker/registration-service:latest
 ```
 - notification service
 ```
