@@ -7,3 +7,9 @@ services:
     image: ui-service:latest
     ports:
       - "9081:9081"
+    environment:
+      SERVER_PORT: 9081
+      KEYCLOAK_URL: http://host.docker.internal:8080/
+      KEYCLOAK_REALM: master
+      KEYCLOAK_CLIENTID: sensor-service
+      SENSOR_SERVICE_URL: http://host.docker.internal:9082

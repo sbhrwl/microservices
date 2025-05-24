@@ -18,3 +18,6 @@ mvn spring-boot:run
 ```
 
 ## Test
+- `localhost:9081/`
+  - username: `endpointaccessuser`
+  - password: `password123`
