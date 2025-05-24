@@ -1,7 +1,7 @@
 # Notification service
 - [Properties](#properties)
 - [How to run](#how-to-run)
-- [Test notification service](#test-notification-service)
+- [Test](#test)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
 - Configure `mailtrap`
@@ -19,14 +19,8 @@ mvn clean install -DskipTests
 ```bash
 mvn spring-boot:run
 ```
-- Container
-```
-mvn clean package
-docker build -t notification-service .
-docker run -p 9084:9084 -e SERVER_PORT=9084 --name notification-service notification-service
-```
-- With docker compose: `docker-compose up --build`
-## Test notification service
+
+## Test
 - Send request from `sensor service`
   - Get Access token
   - request **`POST`** `http://localhost:9081/api/register/sensor`
