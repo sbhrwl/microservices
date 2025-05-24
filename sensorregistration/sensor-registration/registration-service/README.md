@@ -1,7 +1,8 @@
 # Registration service
 - [Properties](#properties)
 - [How to run](#how-to-run)
-- [Test](#test)
+- [Test registration service](#test-registration-service)
+- [Integrate notification service](#integrate-notification-service)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
 ## How to run
@@ -55,9 +56,9 @@ docker run -p 9083:9083 -e SERVER_PORT=9083 -e MONGO_HOST=host.docker.internal -
 - The `notification-service` will be integrated to `registration-service`. 
 - The `registration-service` to call the `notification-service's endpoint` after successfully saving a sensor registration to the database.
   - **Add RestTemplate to `registration-service`:** 
-    - We'll use Spring's `RestTemplate` to make the HTTP call to the `notification-service`.
+    - Use Spring's `RestTemplate` to make the HTTP call to the `notification-service`.
   - **Configure RestTemplate:** 
-    - We'll create a bean for `RestTemplate`.
+    - Create a **bean** for `RestTemplate`.
   - **Modify `SensorRegistrationConsumer`:** 
-    - We'll update the consumer to call the `notification-service` after saving to MongoDB.
-    - Confuigure notificationServiceUrl in `application.properties`
+    - Update the consumer to call the `notification-service` after saving to MongoDB.
+    - Configure **`notificationServiceUrl`** in `application.properties`
