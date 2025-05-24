@@ -51,3 +51,5 @@
 - You need this client so that:
   * Keycloak knows your app exists and can issue tokens for it.
   * Postman can request a token using `client_id=ClientForSecuredEndpointApp`.
+### Token expiry
+<img src="images/tokenexpiry.jpg">
