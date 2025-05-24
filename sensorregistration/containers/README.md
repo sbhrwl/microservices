@@ -1,7 +1,7 @@
 # Containers
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 
-|Steps|ui service|sensor service|registration service|notification service|
+|Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
 |-----|----------|--------------|--------------------|--------------------|
 |Build jar|`mvn clean package`|`mvn clean package`|`mvn clean package`|`mvn clean package`|
 |Dockerfile|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/Dockerfile)|
