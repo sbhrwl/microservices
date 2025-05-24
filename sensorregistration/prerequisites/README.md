@@ -2,7 +2,7 @@
 - [Kafka setup](#kafka-setup)
 - [MongoDB setup](#mongodb-setup)
 ## Kafka setup
-- Create a [`docker-compose.yml`](kafkasetup/docker-compose.yml)
+- Create a [`docker-compose.yml`](kafka/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Varify: `docker-compose logs kafka`
 - Log in to container via `Docker Desktop` or `console`
@@ -18,7 +18,7 @@
   kafka-console-producer.sh --bootstrap-server localhost:9092 --topic my-topic
   ```
 ## MongoDB setup
-- Create a [`docker-compose.yml`](mongodbsetup/docker-compose.yml)
+- Create a [`docker-compose.yml`](mongodb/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Verify MySQL Docker container is running: `docker ps`
 - [Download MongoDB shell](https://www.mongodb.com/try/download/shell)
@@ -31,7 +31,7 @@
   db.command_requests.find().pretty()
   ```
 # Keycloak setup
-- [`docker-compose.yaml`](docker-compose.yaml)
+- Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
 - Run docker compose: `docker-compose up -d`
 - Access Keycloak
   * URL: [http://localhost:8080](http://localhost:8080)
