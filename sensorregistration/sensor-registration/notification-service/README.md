@@ -25,7 +25,7 @@ mvn clean package
 docker build -t notification-service .
 docker run -p 9084:9084 -e SERVER_PORT=9084 --name notification-service notification-service
 ```
-- With docker compose: `docker-compose up`
+- With docker compose: `docker-compose up --build`
 ## Test notification service
 - Send request from `sensor service`
   - Get Access token
