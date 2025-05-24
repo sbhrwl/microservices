@@ -1,7 +1,7 @@
 # Registration service
 - [Properties](#properties)
 - [How to run](#how-to-run)
-- [Test registration service](#test-registration-service)
+- [Test](#test)
 - [Integrate notification service](#integrate-notification-service)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
@@ -17,13 +17,6 @@ mvn clean install -DskipTests
 ```bash
 mvn spring-boot:run
 ```
-- Container
-```
-mvn clean package
-docker build -t registration-service .
-docker run -p 9083:9083 -e SERVER_PORT=9083 -e MONGO_HOST=host.docker.internal -e MONGO_PORT=27017 -e MONGO_USERNAME=root -e MONGO_PASSWORD=root123 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=host.docker.internal:29092 --name registration-service registration-service
-```
-- With docker compose: `docker-compose up --build`
 ## Test registration service
 - Send request from `sensor service`
   - Get Access token
