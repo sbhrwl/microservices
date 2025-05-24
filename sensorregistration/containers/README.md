@@ -6,52 +6,6 @@
 |Build jar|`mvn clean package`|`mvn clean package`|`mvn clean package`|`mvn clean package`|
 |Dockerfile|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/Dockerfile)|
 |Build image|`docker build -t sbhrwldocker/ui-service:latest .`|`docker build -t sbhrwldocker/sensor-service:latest .`|`docker build -t sbhrwldocker/registration-service:latest .`|`docker build -t sbhrwldocker/notification-service:latest .`|
+|Run container|``|``|`docker run -p 9083:9083 -e SERVER_PORT=9083 -e MONGO_HOST=host.docker.internal -e MONGO_PORT=27017 -e MONGO_USERNAME=root -e MONGO_PASSWORD=root123 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=host.docker.internal:29092 --name registration-service registration-service`|`docker run -p 9084:9084 -e SERVER_PORT=9084 --name notification-service notification-service`|
 |docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
 |Run container|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|
-
-## Docker run
-- ui service
-```
-docker run --name ui-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sbhrwldocker/ui-service:latest
-```
-- sensor service
-```
-docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_ISSUER_URI=http://host.docker.internal:8080/realms/master -e KEYCLOAK_CLIENT_ID=sensor-service -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e KAFKA_SENSOR_REG_TOPIC=sensor-registrations -e CORS_ALLOWED_ORIGINS=http://host.docker.internal:9081 sbhrwldocker/sensor-service:latest
-```
-- registration service
-```
-docker run -p 9083:9083 -e SERVER_PORT=9083 -e MONGO_HOST=host.docker.internal -e MONGO_PORT=27017 -e MONGO_USERNAME=root -e MONGO_PASSWORD=root123 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=host.docker.internal:29092 --name registration-service registration-service
-```
-- notification service
-```
-docker run -p 9084:9084 -e SERVER_PORT=9084 --name notification-service notification-service
-```
-
-## Test ui service
-
-## Test sensor service
-- Send `POST` request from **Postman** `localhost:8081/api/commands`
-  ```json
-  {
-    "requested_by": "userD",
-    "device_ids": [
-      "meter-001",
-      "meter-002",
-      "meter-003"
-    ],
-    "command_type": "SET_TOU",
-    "command_params": {
-      "tou_profile_id": "TOU-2025-TEST"
-    }
-  }
-  ```
-
-## Test registration service
-
-## Test notification service
-- Send `GET` request `http://localhost:9084/api/notification/email/registration-confirmation`
-- Body `form-data`
-  ```
-  toEmail : sabharwal.onnet@gmail.com
-  sensorId : sensor123
-  ```
