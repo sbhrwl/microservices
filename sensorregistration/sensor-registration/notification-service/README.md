@@ -1,7 +1,7 @@
 # Notification service
 - [Properties](#properties)
 - [How to run](#how-to-run)
-- [Test](#test)
+- [Test notification service](#test-notification-service)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
 - Configure `mailtrap`
