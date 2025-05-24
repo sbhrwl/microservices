@@ -1,4 +1,5 @@
 # Move to Kubernetes
+- [Kubernetes commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/k8scommands/README.md)
 ## Push images to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
 ```
