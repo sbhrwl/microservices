@@ -13,6 +13,10 @@
     ```
     kafka-console-consumer --bootstrap-server localhost:9092 --topic task.requested --from-beginning --max-messages 10
     ```
+- Publish message to a topic
+  ```
+  kafka-console-producer.sh --bootstrap-server localhost:9092 --topic my-topic
+  ```
 ## MongoDB setup
 - Create a [`docker-compose.yml`](mongodbsetup/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
