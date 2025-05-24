@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   registration-service:
-    image: registration-service
+    image: registration-service:latest
+    container_name: registration-service
     build:
       context: .
       dockerfile: Dockerfile
