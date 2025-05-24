@@ -20,11 +20,11 @@ docker run --name sensor-service -p 9082:9082 -e SERVER_PORT=9082 -e KEYCLOAK_IS
 ```
 - registration service
 ```
-docker run --name registration-service -p 9083:9083 -e SERVER_PORT=9083 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e MONGO_HOST=host.docker.internal -e NOTIFICATION_SERVICE_URL=http://host.docker.internal:9084 sbhrwldocker/registration-service:latest
+docker run -p 9083:9083 -e SERVER_PORT=9083 -e MONGO_HOST=host.docker.internal -e MONGO_PORT=27017 -e MONGO_USERNAME=root -e MONGO_PASSWORD=root123 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 -e SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=host.docker.internal:29092 --name registration-service registration-service
 ```
 - notification service
 ```
-docker run --name sensor-service -p 9082:9082
+docker run -p 9084:9084 -e SERVER_PORT=9084 --name notification-service notification-service
 ```
 
 ## Test ui service
