@@ -4,6 +4,7 @@
 - [Assign role to user](#assign-role-to-user)
 - [Create a new client for your app in keycloak](#create-a-new-client-for-your-app-in-keycloak)
   - [Why this is needed](#why-this-is-needed)
+  - [Token expiry](#token-expiry)
 ## Create a user
 - In the Keycloak admin console, go to `Users` (left sidebar).
 - Click “Add user”.
