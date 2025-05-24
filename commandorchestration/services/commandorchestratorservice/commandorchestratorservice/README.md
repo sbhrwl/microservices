@@ -64,7 +64,7 @@ docker build -t sbhrwldocker/command-orchestration:latest .
   - `KAFKA_HOST=host.docker.internal`:
     - This sets the environment variable `KAFKA_HOST` to `host.docker.internal`, which **from inside the container points to your host machine**, where KAFKA is running
   ```bash
-  docker run -p 8081:9081 -e MONGO_HOST=host.docker.internal -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 command-orchestration
+    docker run -p 9081:9081 -e SERVER_PORT=9081 -e MONGO_HOST=host.docker.internal -e MONGO_PORT=27017 -e MONGO_USERNAME=root -e MONGO_PASSWORD=root123 -e KAFKA_HOST=host.docker.internal -e KAFKA_PORT=29092 --name command-orchestration command-orchestration
   ```
 ### Option 2
 - `docker-compose.yml` followed by `docker-compose up`

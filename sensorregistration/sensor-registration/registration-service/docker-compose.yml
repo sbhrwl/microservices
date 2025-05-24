@@ -2,13 +2,20 @@ version: '3.8'
 
 services:
   registration-service:
+    image: registration-service
     build:
       context: .
-    image: registration-service:latest
+      dockerfile: Dockerfile
     ports:
       - "9083:9083"
     environment:
-      SERVER_PORT: ${SERVER_PORT:9083}
-      KAFKA_HOST: ${KAFKA_HOST:host.docker.internal}
-      KAFKA_PORT: ${KAFKA_PORT:29092}
-      NOTIFICATION_SERVICE_URL: ${NOTIFICATION_SERVICE_URL:http://host.docker.internal:9084}
+      SERVER_PORT: 9083
+      MONGO_HOST: host.docker.internal
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: root123
+      KAFKA_HOST: host.docker.internal
+      KAFKA_PORT: 29092
+      SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS: host.docker.internal:29092
+      NOTIFICATION_SERVICE_URL: ${NOTIFICATION_SERVICE_URL:-http://host.docker.internal:9084}
+    depends_on: []

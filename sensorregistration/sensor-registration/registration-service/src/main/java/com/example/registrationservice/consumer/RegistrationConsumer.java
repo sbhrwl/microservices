@@ -31,9 +31,10 @@ public class RegistrationConsumer {
     @Value("${notification.service.url}")
     private String notificationServiceUrl;
 
-    @KafkaListener(topics = "${kafka.topic.sensor-registration}", groupId = "registration-service-group")
+    @KafkaListener(topics = "${spring.kafka.consumer.topic}", groupId = "${spring.kafka.consumer.group-id}")
     public void consumeRegistration(ConsumerRecord<String, String> record) {
         try {
+            LOGGER.info("Received message from 'sensor-registrations': {}", record);
             RegistrationDTO registrationDTO = objectMapper.readValue(record.value(), RegistrationDTO.class);
             Registration registration = new Registration();
             registration.setSensorId(registrationDTO.getSensorId());
