@@ -21,7 +21,7 @@
   └── values-prod.yaml
   ```
 ## HPA configuration
-- HPA is configured in the [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/hpa/orchestration-services-with-hpa/values.yaml) for both services
+- HPA is configured in the [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestration-services-with-hpa/values.yaml) for both services
   - `commandOrchestration.autoscaling`
   - `taskOrchestration.autoscaling` 
 - Example configuration:
