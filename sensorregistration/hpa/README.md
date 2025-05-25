@@ -46,8 +46,6 @@
       KEYCLOAK_REALM: "master"
       KEYCLOAK_CLIENTID: "sensor-service"
       SENSOR_SERVICE_URL: "http://sensor-service:9082"
-    nodeSelector:
-      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
@@ -67,8 +65,6 @@
       KAFKA_PORT: "29092"
       KAFKA_SENSOR_REG_TOPIC: "sensor-registrations"
       CORS_ALLOWED_ORIGINS: "http://ui-service:9081"
-    nodeSelector:
-      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
@@ -88,8 +84,6 @@
       KAFKA_PORT: "29092"
       SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS: "kafka:29092"
       NOTIFICATION_SERVICE_URL: "http://notification-service:9084"
-    nodeSelector:
-      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
@@ -99,8 +93,6 @@
   notificationService:
     image: notification-service:latest
     port: 9084
-    nodeSelector:
-      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
