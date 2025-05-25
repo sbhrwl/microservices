@@ -20,7 +20,7 @@
 - Helm’s `create` command generates a bunch of example templates we don’t need. Let’s simplify.
 - Go to the `templates` folder:
   ```
-  cd orchestration-services/templates
+  cd orchestrate-sensor-services/templates
   ```
 - Delete all the default templates *except* `_helpers.tpl`.
   - *(Use **`del`** if you’re in Command Prompt on Windows instead of Git Bash or PowerShell)*
@@ -35,49 +35,64 @@
   _helpers.tpl
   ```
 ## Convert your existing YAML into a Helm template
-- **command-orchestration**
-  - [`deployment-command-orchestration.yaml`](orchestration-services/templates/deployment-command-orchestration.yaml)
-  - [`service-command-orchestration.yaml`](orchestration-services/templates/service-command-orchestration.yaml)
-- **task-orchestration**
-  - [`deployment-task-orchestration.yaml`](orchestration-services/templates/deployment-task-orchestration.yaml)
-  - [`service-task-orchestration.yaml`](orchestration-services/templates/service-task-orchestration.yaml)
-- [**`values.yaml`**](orchestration-services/templates/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
+- **ui-service**
+  - [`ui-deployment.yaml`](orchestrate-sensor-services/templates/ui-deployment.yaml)
+  - [`ui-service.yaml`](orchestrate-sensor-services/templates/ui-service.yaml)
+- **sensor-service**
+  - [`sensor-deployment.yaml`](orchestrate-sensor-services/templates/sensor-deployment.yaml)
+  - [`sensor-service.yaml`](orchestrate-sensor-services/templates/sensor-service.yaml)
+- **registration-service**
+  - [`registration-deployment.yaml`](orchestrate-sensor-services/templates/registration-deployment.yaml)
+  - [`registration-service.yaml`](orchestrate-sensor-services/templates/registration-service.yaml)
+- **notification-service**
+  - [`notification-deployment.yaml`](orchestrate-sensor-services/templates/notification-deployment.yaml)
+  - [`notification-service.yaml`](orchestrate-sensor-services/templates/notification-service.yaml)
+- [**`values.yaml`**](orchestrate-sensor-services/templates/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
 ### Folder structure
 ```pgsql
-orchestration-services/
+orchestrate-sensor-services/
 ├── charts/
 ├── templates/
-│   ├── deployment-command-orchestration.yaml
-│   ├── service-command-orchestration.yaml
-│   ├── deployment-task-orchestration.yaml
-│   ├── service-task-orchestration.yaml
+│   ├── ui-deployment.yaml
+│   ├── ui-service.yaml
+│   ├── sensor-deployment.yaml
+│   ├── sensor-service.yaml
+│   ├── registration-deployment.yaml
+│   ├── registration-service.yaml
+│   ├── notification-deployment.yaml
+│   ├── notification-service.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml    ✅ should be here
 ```
 ## Cleanup existing Kubernetes deployment 
 ```
-kubectl delete deployment command-orchestration-deployment
-kubectl delete deployment task-orchestration-deployment
-kubectl delete service command-orchestration-service
-kubectl delete service task-orchestration-service
+kubectl delete deployment ui-deployment
+kubectl delete deployment sensor-deployment
+kubectl delete deployment registration-deployment
+kubectl delete deployment notification-deployment
+
+kubectl delete service ui-service
+kubectl delete service sensor-service
+kubectl delete service registration-service
+kubectl delete service notification-service
 
 ## OR
-kubectl delete deployment command-orchestration-deployment task-orchestration-deployment
-kubectl delete service command-orchestration-service task-orchestration-service
+kubectl delete deployment ui-deployment sensor-deployment registration-deployment notification-deployment
+kubectl delete service ui-service sensor-service registration-service notification-service
 ```
 ## Install Helm release
-- Go to Helm chart folder (e.g., `orchestration-services`), run this command:
+- Go to Helm chart folder (e.g., `orchestrate-sensor-services`), run this command:
   ```powershell
-  helm install orchestration-release . 
+  helm install orchestrate-sensor-services-release . 
   ```
-- **`orchestration-release`** is the name you're assigning to this Helm release (you can change it if you like).
+- **`orchestrate-sensor-services-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 - Helm will deploy both your services using the templates and values from `values.yaml`.
 - Verify release `helm list`
   ```
   NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
-  orchestration-release   default         1               2025-05-12 09:53:22.55453 +0300 EEST    deployed        orchestration-services-0.1.0    1.16.0
+  orchestrate-sensor-services-release   default         1               2025-05-12 09:53:22.55453 +0300 EEST    deployed        orchestrate-sensor-services-0.1.0    1.16.0
   ```
 ## Verify
 - Helm list
@@ -92,13 +107,15 @@ kubectl delete service command-orchestration-service task-orchestration-service
   ```powershell
   kubectl get svc
   ```
-  * `command-orchestration-service` on NodePort `30081`
-  * `task-orchestration-service` on NodePort `30082`
+  * `ui-service` on NodePort `30081`
+  * `sensor-service` on ClusterIP `30082`
 - **Access the services**
-  - `http://localhost:30081/...` → `commandorchestrationservice`
-  - `http://localhost:30082/...` → `taskorchestrationservice`
+  * `http://localhost:30081/...` → `ui-service`
+  * `http://localhost:30082/...` → `sensor-service`
+  * `http://localhost:30083/...` → `registration-service`
+  * `http://localhost:30084/...` → `notification-service`
 ## Uninstall Helm release
-- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestration-release`
+- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestrate-sensor-services-release`
   ```
-  helm uninstall orchestration-release
+  helm uninstall orchestrate-sensor-services-release
   ``` 
