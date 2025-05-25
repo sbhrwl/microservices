@@ -43,10 +43,10 @@ kubectl label node <worker-node-2-name> node-role=worker
   - **`nodeSelector`** ensures pods run only on nodes with `node-role=worker`.
   - **`affinity`** (optional) encourages the scheduler to spread replicas across different nodes using anti-affinity to the same pod type.
 ```yaml
-command:
-  name: command-orchestration
+ui:
+  name: ui-service
   replicas: 1
-  image: sbhrwldocker/command-orchestration:latest
+  image: sbhrwldocker/ui-service:latest
   containerPort: 9081
   servicePort: 8081
   nodePort: 30081
@@ -69,10 +69,10 @@ command:
                   values:
                     - command-orchestration
 
-task:
-  name: task-orchestration
+sensor:
+  name: sensor-service
   replicas: 1
-  image: sbhrwldocker/task-orchestration:latest
+  image: sbhrwldocker/sensor-service:latest
   containerPort: 9082
   servicePort: 8082
   nodePort: 30082
@@ -104,14 +104,14 @@ env:
   SPRING_DATA_MONGODB_DATABASE: commandorchestrator
   KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:29092
 
-commandOrchestration:
+ui:
   autoscaling:
     enabled: true
     minReplicas: 2
     maxReplicas: 10
     targetCPUUtilizationPercentage: 75
 
-taskOrchestration:
+sensor:
   autoscaling:
     enabled: true
     minReplicas: 2
