@@ -3,9 +3,10 @@
 ## Push images to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
 ```
-docker push sbhrwldocker/command-orchestration:latest
-
-docker push sbhrwldocker/task-orchestration:latest
+docker push sbhrwldocker/ui-service:latest
+docker push sbhrwldocker/sensor-service:latest
+docker push sbhrwldocker/registration-service:latest
+docker push sbhrwldocker/notification-service:latest
 ```
 ## Deployment files 
 - [`command-orchestration.yaml`](command-orchestration.yaml)
