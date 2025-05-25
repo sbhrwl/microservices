@@ -43,8 +43,13 @@ mvn spring-boot:run
 - `registration service` creates a document in MongoDB
   - Verify at **MongoDB**
   - Open MongoDB shell
-    - `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
-    - `db.sensorRegistrations.find().pretty()`
+    - Connect: `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
+    - Check available Databses: `show dbs`
+    - Swicth to DB: `use sensorregistration`
+    - Query documents in the collections: `db.sensorRegistrations.find().pretty()`
+      - Find a sensor: `db.sensorRegistrations.findOne({ sensorId: "sensor789" })`    
+    - Delete documents from the collections: `db.sensorRegistrations.deleteMany({})`
+      - Delete a sensor: `db.sensorRegistrations.deleteOne({ sensorId: "sensor789" })`
 
 ## Integrate notification service
 - The `notification-service` will be integrated to `registration-service`. 

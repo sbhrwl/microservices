@@ -48,3 +48,7 @@ mvn spring-boot:run
     - `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
     - `db.sensorRegistrations.find().pretty()`
 - Verify **email**
+  - `POST` `http://localhost:9084/api/notification/email/registration-confirmation`
+  - Body: `form-data`
+    - `toEmail`: `sabharwal.onnet@gmail.com`
+    - `sensorId`: `sensor123`
