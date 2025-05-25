@@ -47,7 +47,7 @@
 - **notification-service**
   - [`notification-deployment.yaml`](orchestrate-sensor-services/templates/notification-deployment.yaml)
   - [`notification-service.yaml`](orchestrate-sensor-services/templates/notification-service.yaml)
-- [**`values.yaml`**](orchestrate-sensor-services/templates/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
+- [**`values.yaml`**](orchestrate-sensor-services/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
 ### Folder structure
 ```pgsql
 orchestrate-sensor-services/
