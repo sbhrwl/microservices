@@ -1,11 +1,20 @@
 # Sensor registration
+- [Keycloak setup](#keycloak-setup)
 - [Kafka setup](#kafka-setup)
 - [MongoDB setup](#mongodb-setup)
-- [Keycloak setup](#keycloak-setup)
+## Keycloak setup
+- Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
+- Run docker compose: `docker-compose up -d`
+- Access Keycloak
+  * URL: [http://localhost:8080](http://localhost:8080)
+  * Username: `admin`
+  * Password: `admin`
+- Stop Services: `docker-compose down`
+
 ## Kafka setup
 - Create a [`docker-compose.yml`](kafka/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
-- Varify: `docker-compose logs kafka`
+- Verify: `docker-compose logs kafka`
 - Log in to container via `Docker Desktop` or `console`
   - `docker exec -it <kafka_container_id_or_name> /bin/bash`
 - Verify topics: `kafka-topics --bootstrap-server localhost:9092 --list`
@@ -31,11 +40,3 @@
   ```
   db.command_requests.find().pretty()
   ```
-# Keycloak setup
-- Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
-- Run docker compose: `docker-compose up -d`
-- Access Keycloak
-  * URL: [http://localhost:8080](http://localhost:8080)
-  * Username: `admin`
-  * Password: `admin`
-- Stop Services: `docker-compose down`
