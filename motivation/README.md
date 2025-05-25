@@ -36,3 +36,4 @@
   * Use **domain boundaries** (bounded contexts in DDD) to guide decomposition.
   * Observe runtime behavior before splitting (e.g., if `Command Generator` spikes under load, consider isolating XML creation).
   * Services that interact with **infrastructure or protocols** (e.g., Protocol Gateway) are often better as independent functions.
+* [Microservice example: `Generate message`](generatemessage/README.md)
