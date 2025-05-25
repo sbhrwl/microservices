@@ -14,7 +14,7 @@
 ```
 sensor-registration/
 └── ui-service/           (Provides the user interface)
-├── sensor-service/      (Handles direct UI submissions and API endpoint, publishes to Kafka)
+├── sensor-service/       (Handles direct UI submissions and API endpoint, publishes to Kafka)
 ├── registration-service/ (Consumes Kafka messages and processes registrations to mongodb)
 ├── notification-service/ (Sends email notifications)
 ```
