@@ -8,13 +8,13 @@
   - **Sensor Service** enqueues message to Kafka topic
   - **Registration Service** consumes message from kafka, saves the data to MongoDB, and then calls the **Notification Service**.
   - **Notification Service** sends an email to the user for `successful registration`
-- This provides flexibility and allows for different integration points into our system. 
+- This allows **different integration points** into our system. 
   - The first method is for direct user interaction
   - The second method is for automated registrations or integrations with other platforms.
 ```
 sensor-registration/
+└── ui-service/           (Provides the user interface)
 ├── sensor-service/      (Handles direct UI submissions and API endpoint, publishes to Kafka)
 ├── registration-service/ (Consumes Kafka messages and processes registrations to mongodb)
 ├── notification-service/ (Sends email notifications)
-└── ui-service/           (Provides the user interface)
 ```
