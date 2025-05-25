@@ -30,7 +30,6 @@
 ## MongoDB setup
 - Create a [`docker-compose.yml`](mongodb/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
-- Verify MySQL Docker container is running: `docker ps`
 - [Download MongoDB shell](https://www.mongodb.com/try/download/shell)
 - Open MongoDB shell
   ```bash
