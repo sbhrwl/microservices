@@ -19,6 +19,10 @@
   │   ├── registration-service.yaml
   │   ├── notification-deployment.yaml
   │   ├── notification-service.yaml
+  │   ├── hpa-uiService.yaml
+  │   ├── hpa-sensorService.yaml
+  │   ├── hpa-registrationService.yaml
+  │   ├── hpa-notificationService.yaml
   │   └── _helpers.tpl
   ├── Chart.yaml
   ├── values.yaml         # default (used for dev/test)

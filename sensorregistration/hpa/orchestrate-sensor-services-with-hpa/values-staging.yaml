@@ -1,5 +1,5 @@
 uiService:
-  image: ui-service:latest
+  image: ui-service:staging
   port: 9081
   env:
     SERVER_PORT: "9081"
@@ -10,11 +10,11 @@ uiService:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 75
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
 
 sensorService:
-  image: sensor-service:latest
+  image: sensor-service:staging
   port: 9082
   env:
     SERVER_PORT: "9082"
@@ -29,11 +29,11 @@ sensorService:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 75
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
 
 registrationService:
-  image: registration-service:latest
+  image: registration-service:staging
   port: 9083
   env:
     SERVER_PORT: "9083"
@@ -48,14 +48,14 @@ registrationService:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 75
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
 
 notificationService:
-  image: notification-service:latest
+  image: notification-service:staging
   port: 9084
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 75
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
