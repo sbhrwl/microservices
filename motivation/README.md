@@ -1,6 +1,6 @@
 # Goals of transition
 * [Introduction](#introduction)
-* [Communication between these microservices](#communication-between-these-microservices)
+* [Communication between microservices](#communication-between-microservices)
 * [Approach for desiging microservices](#approach-for-desiging-microservices)
 * [Best practices](#best-practices)
 * [Microservice example: `Generate message`](generatemessage/README.md)
@@ -12,7 +12,7 @@
   * Fault isolation?
   * Tech stack modernization?
   * Integration with cloud-native platforms?
-## Communication between these microservices
+## Communication between microservices
 * **Event-driven** (e.g., using Pub/Sub to trigger each stage asynchronously), or
 * **Request-response** (e.g., one microservice calling the next via REST or gRPC)?
 ## Approach for desiging microservices
