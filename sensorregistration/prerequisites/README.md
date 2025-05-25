@@ -10,7 +10,7 @@
   * Username: `admin`
   * Password: `admin`
 - Stop Services: `docker-compose down`
-- [User, role and client creation](https://github.com/sbhrwl/microservices/blob/main/springframework/SpringSecurity/authenticatewithkeycloak/README.md)
+- [User, role and client creation](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/README.md)
 
 ## Kafka setup
 - Create a [`docker-compose.yml`](kafka/docker-compose.yml)
