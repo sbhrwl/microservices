@@ -38,26 +38,69 @@
 - Example configuration:
   ```yaml
   uiService:
+    image: ui-service:latest
+    port: 9081
+    env:
+      SERVER_PORT: "9081"
+      KEYCLOAK_URL: "http://keycloak:8080/"
+      KEYCLOAK_REALM: "master"
+      KEYCLOAK_CLIENTID: "sensor-service"
+      SENSOR_SERVICE_URL: "http://sensor-service:9082"
+    nodeSelector:
+      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
       maxReplicas: 10
       targetCPUUtilizationPercentage: 75
-  
+
   sensorService:
+    image: sensor-service:latest
+    port: 9082
+    env:
+      SERVER_PORT: "9082"
+      KEYCLOAK_ISSUER_URI: "http://keycloak:8080/realms/master"
+      KEYCLOAK_JWK_SET_URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+      KEYCLOAK_CLIENT_ID: "sensor-service"
+      KEYCLOAK_PROVIDER: "keycloak"
+      KAFKA_HOST: "kafka"
+      KAFKA_PORT: "29092"
+      KAFKA_SENSOR_REG_TOPIC: "sensor-registrations"
+      CORS_ALLOWED_ORIGINS: "http://ui-service:9081"
+    nodeSelector:
+      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
       maxReplicas: 10
       targetCPUUtilizationPercentage: 75
+
   registrationService:
+    image: registration-service:latest
+    port: 9083
+    env:
+      SERVER_PORT: "9083"
+      MONGO_HOST: "mongo"
+      MONGO_PORT: "27017"
+      MONGO_USERNAME: "root"
+      MONGO_PASSWORD: "root123"
+      KAFKA_HOST: "kafka"
+      KAFKA_PORT: "29092"
+      SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS: "kafka:29092"
+      NOTIFICATION_SERVICE_URL: "http://notification-service:9084"
+    nodeSelector:
+      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
       maxReplicas: 10
       targetCPUUtilizationPercentage: 75
-  
+
   notificationService:
+    image: notification-service:latest
+    port: 9084
+    nodeSelector:
+      node-role: worker
     autoscaling:
       enabled: true
       minReplicas: 2
