@@ -1,9 +1,8 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
 - [Setup](setup/README.md)
 - [Deploy](deploy/README.md)
-- [Why Helm charts](#why-helm-charts)
 - [Creating environments](creatingenvs/README.md)
-
+- [Why Helm charts](#why-helm-charts)
 ## Why Helm charts
 - **Reusability and Templating**
   * With Helm, you write templates (with `{{ }}`) instead of hardcoding values.
