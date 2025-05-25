@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-{{ 'sensorService' }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-{{ 'sensorService' }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-{{ 'sensorService' }}
+    spec:
+      containers:
+        - name: {{ 'sensorService' }}
+          image: {{ .Values.sensorService.image }}
+          ports:
+            - containerPort: {{ .Values.sensorService.port }}
+          env:
+            {{- range $key, $value := .Values.sensorService.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
