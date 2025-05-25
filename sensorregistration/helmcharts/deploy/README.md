@@ -11,7 +11,7 @@
 - Generate the basic `Helm chart directory`. 
 - Run this in your terminal:
   ```
-  helm create orchestration-services
+  helm create orchestrate-sensor-services
   ```
 - This creates a directory called [**orchestrate-sensor-services**](orchestrate-sensor-services) with default templates and values.
 <img src="images/directorystructure.jpg">
