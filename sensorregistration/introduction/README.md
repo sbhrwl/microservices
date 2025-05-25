@@ -1,5 +1,5 @@
 # Introduction
-- Sensor registration
+- **Sensor registration**
   -  **Direct UI input:** 
      - A user logs in through the UI and enters their sensor details and email address directly. The send button on UI calls **Sensor Service**.
   -  **Secured API endpoint** 
@@ -8,7 +8,7 @@
   - **Sensor Service** enqueues message to Kafka topic
   - **Registration Service** consumes message from kafka, saves the data to MongoDB, and then calls the **Notification Service**.
   - **Notification Service** sends an email to the user for `successful registration`
-- **Different integration points** into our system. 
+- **Different integration points** into our system
   - The first method is for direct user interaction
   - The second method is for automated registrations or integrations with other platforms.
 ```
