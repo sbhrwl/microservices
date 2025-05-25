@@ -1,4 +1,11 @@
 # Goals of transition
+* [Introduction](#introduction)
+* [Communication between these microservices](#communication-between-these-microservices)
+* [Approach for desiging microservices](#approach-for-desiging-microservices)
+* [Best practices](#best-practices)
+* [Microservice example: `Generate message`](generatemessage/README.md)
+* [Spring framework](springframework/README.md)
+## Introduction
 * Motivation for shift to microservices
   * Better scalability?
   * Independent deployments?
@@ -31,9 +38,8 @@
   **Best When:**
   * Your use cases are strongly coupled.
   * Simpler ops and release cycles are a priority.
-* Best practices
+## Best practices
   * Start with **coarser-grained services** and break them down as you scale.
   * Use **domain boundaries** (bounded contexts in DDD) to guide decomposition.
   * Observe runtime behavior before splitting (e.g., if `Command Generator` spikes under load, consider isolating XML creation).
   * Services that interact with **infrastructure or protocols** (e.g., Protocol Gateway) are often better as independent functions.
-* [Microservice example: `Generate message`](generatemessage/README.md)
