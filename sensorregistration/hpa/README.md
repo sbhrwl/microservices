@@ -2,7 +2,7 @@
 ## Introduction 
 - The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that **automatically scales** the number of pods in a deployment, replica set, or stateful set based on observed metrics like `CPU utilization`, `memory usage`, or `custom metrics`.
 ## Structure
-- [orchestration-services](https://github.com/sbhrwl/microservices/tree/main/hpa/orchestration-services-with-hpa)
+- [orchestration-services](orchestrate-sensor-services-with-hpa)
 - This Helm chart deploys two services:
   - **Command Orchestration**
   - **Task Orchestration**
