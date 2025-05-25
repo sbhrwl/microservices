@@ -1,6 +1,7 @@
-# Command Orchestrator Service
+# Sensor registration
 - [Kafka setup](#kafka-setup)
 - [MongoDB setup](#mongodb-setup)
+- [Keycloak setup](#keycloak-setup)
 ## Kafka setup
 - Create a [`docker-compose.yml`](kafka/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
