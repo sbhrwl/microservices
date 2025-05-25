@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-{{ 'registrationService' }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-{{ 'registrationService' }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-{{ 'registrationService' }}
+    spec:
+      containers:
+        - name: {{ 'registrationService' }}
+          image: {{ .Values.registrationService.image }}
+          ports:
+            - containerPort: {{ .Values.registrationService.port }}
+          env:
+            {{- range $key, $value := .Values.registrationService.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}

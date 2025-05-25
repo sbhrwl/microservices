@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-{{ 'notificationService' }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-{{ 'notificationService' }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-{{ 'notificationService' }}
+    spec:
+      containers:
+        - name: {{ 'notificationService' }}
+          image: {{ .Values.notificationService.image }}
+          ports:
+            - containerPort: {{ .Values.notificationService.port }}
+          env:
+            {{- range $key, $value := .Values.notificationService.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}

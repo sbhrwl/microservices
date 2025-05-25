@@ -1,0 +1,4 @@
+apiVersion: v2
+name: orchestrate-sensor-services
+description: A Helm chart for orchestrating UI, Sensor, Registration, and Notification services
+version: 0.1.0
