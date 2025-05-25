@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  sensor-service:
+  ui-service:
     build:
       context: .
     image: ui-service:latest

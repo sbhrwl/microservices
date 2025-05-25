@@ -1,37 +1,32 @@
 ## Architecture
 ```plantuml
 @startuml
-actor User
-boundary UI
-control InverterService
-database MongoDB_Inverter
-control NotificationService
+skinparam style strict
+skinparam linetype ortho
 
-User -> UI : Logs in (via Keycloak)
-User -> UI : Enters inverter details and email
-UI -> InverterService : Sends inverter data and email
-InverterService -> MongoDB_Inverter : Saves inverter data (includes user ID and email)
-InverterService -> NotificationService : Sends notification event (includes email and inverter details)
-NotificationService -> User : Sends registration email
+package "Frontend" {
+  [UI Service\n(9081)] as UI
+}
 
+package "Backend" {
+  [Sensor Service\n(9082)] as SENSOR
+  [Registration Service\n(9083)] as REG
+  [Notification Service\n(9084)] as NOTIF
+}
+
+package "External" {
+  [Keycloak\n(8080)] as KEYCLOAK
+  [MongoDB\n(27017)] as MONGO
+  [Kafka\n(29092)] as KAFKA
+}
+
+UI --> SENSOR : API Calls
+UI --> KEYCLOAK : OAuth Login
+SENSOR --> KEYCLOAK : Token Validation
+SENSOR --> KAFKA : Produce Events
+KAFKA --> REG : Consume Events
+REG --> MONGO : Store Data
+REG --> NOTIF : Send Notifications
 @enduml
 ```
-
-```plantuml
-@startuml
-actor "External Client" as Client
-boundary InverterService
-queue KafkaBroker
-control RegistrationService
-database MongoDB_Registration
-control NotificationService
-
-Client -> InverterService : POST /api/register (inverter details, email, token)
-InverterService -> KafkaBroker : Sends registration message (inverter details, email)
-KafkaBroker -> RegistrationService : Receives registration message
-RegistrationService -> MongoDB_Registration : Creates registration document
-RegistrationService -> NotificationService : Calls with email and inverter details
-NotificationService -> Client : Sends registration email
-
-@enduml
-```
+<img src="images/architecture.jpg">

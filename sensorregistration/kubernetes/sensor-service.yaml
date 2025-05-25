@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-service
+  template:
+    metadata:
+      labels:
+        app: sensor-service
+    spec:
+      containers:
+        - name: sensor-service
+          image: sensor-service:latest
+          ports:
+            - containerPort: 9082
+          env:
+            - name: SERVER_PORT
+              value: "9082"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://localhost:8080/realms/master"
+              # NOTE: 'localhost' inside pod means the pod itself; replace with cluster service URL if needed.
+            - name: KEYCLOAK_JWK_SET_URI
+              value: "http://host.docker.internal:8080/realms/master/protocol/openid-connect/certs"
+              # NOTE: 'host.docker.internal' won’t resolve inside k8s pods. Replace with correct service address.
+            - name: KEYCLOAK_CLIENT_ID
+              value: "sensor-service"
+            - name: KEYCLOAK_PROVIDER
+              value: "keycloak"
+            # - name: KEYCLOAK_CLIENT_SECRET
+            #   value: "your-secret-if-needed"
+            - name: KAFKA_HOST
+              value: "host.docker.internal"
+              # NOTE: Replace with Kafka service name or cluster IP inside Kubernetes.
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: KAFKA_SENSOR_REG_TOPIC
+              value: "sensor-registrations"
+            - name: CORS_ALLOWED_ORIGINS
+              value: "http://host.docker.internal:9081"
+              # NOTE: This must be accessible from within the cluster; update if needed.
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-service
+spec:
+  selector:
+    app: sensor-service
+  ports:
+    - protocol: TCP
+      port: 9082
+      targetPort: 9082
+  # type ClusterIP is default, so you can omit it or keep explicitly
+  type: ClusterIP

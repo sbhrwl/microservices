@@ -1,0 +1,199 @@
+# orchestrate-sensor-services.yaml
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-service
+  template:
+    metadata:
+      labels:
+        app: sensor-service
+    spec:
+      containers:
+        - name: sensor-service
+          image: sensor-service:latest
+          ports:
+            - containerPort: 9082
+          env:
+            - name: SERVER_PORT
+              value: "9082"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://localhost:8080/realms/master"
+              # NOTE: Replace with Keycloak service URL in cluster
+            - name: KEYCLOAK_JWK_SET_URI
+              value: "http://host.docker.internal:8080/realms/master/protocol/openid-connect/certs"
+              # NOTE: Replace with correct in-cluster address
+            - name: KEYCLOAK_CLIENT_ID
+              value: "sensor-service"
+            - name: KEYCLOAK_PROVIDER
+              value: "keycloak"
+            - name: KAFKA_HOST
+              value: "host.docker.internal"
+              # NOTE: Replace with Kafka service name in cluster
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: KAFKA_SENSOR_REG_TOPIC
+              value: "sensor-registrations"
+            - name: CORS_ALLOWED_ORIGINS
+              value: "http://host.docker.internal:9081"
+              # NOTE: Replace with actual UI service address inside cluster
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-service
+spec:
+  selector:
+    app: sensor-service
+  ports:
+    - protocol: TCP
+      port: 9082
+      targetPort: 9082
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service
+  template:
+    metadata:
+      labels:
+        app: ui-service
+    spec:
+      containers:
+        - name: ui-service
+          image: ui-service:latest
+          ports:
+            - containerPort: 9081
+          env:
+            - name: SERVER_PORT
+              value: "9081"
+            - name: KEYCLOAK_URL
+              value: "http://host.docker.internal:8080/"
+              # NOTE: Replace with Keycloak service URL
+            - name: KEYCLOAK_REALM
+              value: "master"
+            - name: KEYCLOAK_CLIENTID
+              value: "sensor-service"
+            - name: SENSOR_SERVICE_URL
+              value: "http://host.docker.internal:9082"
+              # NOTE: Replace with sensor-service ClusterIP service URL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-service
+spec:
+  selector:
+    app: ui-service
+  ports:
+    - protocol: TCP
+      port: 9081
+      targetPort: 9081
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registration-service
+  template:
+    metadata:
+      labels:
+        app: registration-service
+    spec:
+      containers:
+        - name: registration-service
+          image: registration-service:latest
+          ports:
+            - containerPort: 9083
+          env:
+            - name: SERVER_PORT
+              value: "9083"
+            - name: MONGO_HOST
+              value: "host.docker.internal"
+              # NOTE: Replace with MongoDB service DNS in cluster
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_USERNAME
+              value: "root"
+            - name: MONGO_PASSWORD
+              value: "root123"
+            - name: KAFKA_HOST
+              value: "host.docker.internal"
+              # NOTE: Replace with Kafka service DNS
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS
+              value: "host.docker.internal:29092"
+            - name: NOTIFICATION_SERVICE_URL
+              value: "http://host.docker.internal:9084"
+              # NOTE: Replace with notification-service DNS in cluster
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-service
+spec:
+  selector:
+    app: registration-service
+  ports:
+    - protocol: TCP
+      port: 9083
+      targetPort: 9083
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: notification-service:latest
+          ports:
+            - containerPort: 9084
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - protocol: TCP
+      port: 9084
+      targetPort: 9084
+  type: ClusterIP
