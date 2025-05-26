@@ -22,11 +22,11 @@
 - View messages from a topic
   - If you don’t want to read from the beginning but only new messages, omit the `--from-beginning` flag
     ```
-    kafka-console-consumer --bootstrap-server localhost:9092 --topic task.requested --from-beginning --max-messages 10
+    kafka-console-consumer --bootstrap-server localhost:9092 --topic sensor-registrations --from-beginning --max-messages 10
     ```
 - Publish message to a topic
   ```
-  kafka-console-producer.sh --bootstrap-server localhost:9092 --topic my-topic
+  kafka-console-producer.sh --bootstrap-server localhost:9092 --topic sensor-registrations
   ```
 ## MongoDB setup
 - Create a [`docker-compose.yml`](mongodb/docker-compose.yml)
