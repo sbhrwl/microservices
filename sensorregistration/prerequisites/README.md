@@ -16,6 +16,7 @@
 - Create a [`docker-compose.yml`](kafka/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Verify: `docker-compose logs kafka`
+- Kafka user interface: `http://localhost:8081/`
 - Log in to container via `Docker Desktop` or `console`
   - `docker exec -it <kafka_container_id_or_name> /bin/bash`
 - Verify topics: `kafka-topics --bootstrap-server localhost:9092 --list`
