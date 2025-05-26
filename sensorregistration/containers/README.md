@@ -14,3 +14,8 @@
 |Run container|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|
 |Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
 |Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
+
+## Change to Kafka setup for containers
+- Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
+- With `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://host.docker.internal:29092`
+      
