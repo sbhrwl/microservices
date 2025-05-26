@@ -1,6 +1,7 @@
 # Containers
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 - [Docker compose commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/dockercompose/README.md)
+- [Change to Kafka setup for containers](#change-to-kafka-setup-for-containers)
 
 |Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
 |-----|----------|--------------|--------------------|--------------------|
