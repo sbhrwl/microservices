@@ -12,11 +12,14 @@
 |Stop container|`docker stop ui-service`|`docker stop sensor-service`|`docker stop registration-service`|`docker stop notification-service`|
 |Remove container|`docker rm -f ui-service`|`docker rm -f sensor-service`|`docker rm -f registration-service`|`docker rm -f notification-service`|
 |docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
-|Run container|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|`docker-compose up --build`|
+|Run container|`docker-compose up -d`|`docker-compose up -d`|`docker-compose up -d`|`docker-compose up -d`|
 |Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
 |Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
 
 ## Change to Kafka setup for containers
 - Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
 - With `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://host.docker.internal:29092`
+- Followed by
+  - `docker-compose down`
+  - `docker-compose up -d`
       
