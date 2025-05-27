@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   registration-service:
     image: sbhrwldocker/registration-service:latest

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   sensor-service:
     image: sbhrwldocker/sensor-service:latest
