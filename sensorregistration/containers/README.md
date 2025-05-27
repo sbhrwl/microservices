@@ -19,7 +19,7 @@
 |**Build docker image and run container with `docker compose`**|||||
 ||||||
 |docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
-|Run container|`docker-compose up -d`|`docker-compose up -d`|`docker-compose up -d`|`docker-compose up -d`|
+|Run container|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|
 |Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
 |Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
 
