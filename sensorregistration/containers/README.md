@@ -3,6 +3,9 @@
 - [Docker compose commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/dockercompose/README.md)
 - [Change to Kafka setup for containers](#change-to-kafka-setup-for-containers)
 - [Setting up containers](#setting-up-containers)
+  - [Prerequisites](#prerequisites)
+  - [Using docker compose](#using-docker-compose)
+  - [Using docker commands](#using-docker-commands)
 
 ## Change to Kafka setup for containers
 - Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
@@ -11,13 +14,28 @@
   - `docker-compose down`
   - `docker-compose up -d`
 ## Setting up containers
+### Prerequisites 
 
-|Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
+Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
 |-----|----------|--------------|--------------------|--------------------|
 |application.properties|[application.properties](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/src/main/resources/application.properties)|[application.properties](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/src/main/resources/application.properties)|[application.properties](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/src/main/resources/application.properties)|[application.properties](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/src/main/resources/application.properties)|
 |Build jar|`mvn clean package`|`mvn clean package`|`mvn clean package`|`mvn clean package`|
 |Dockerfile|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/Dockerfile)|[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/Dockerfile)|
-||||||
+
+### Using docker compose
+
+|Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
+|-----|----------|--------------|--------------------|--------------------|
+|
+|docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
+|Run container|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|
+|Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
+|Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
+
+### Using docker commands 
+
+|Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
+|-----|----------|--------------|--------------------|--------------------|
 |**Build docker image and run container with `docker commands`**|||||
 ||||||
 |Build image|`docker build -t sbhrwldocker/ui-service:latest .`|`docker build -t sbhrwldocker/sensor-service:latest .`|`docker build -t sbhrwldocker/registration-service:latest .`|`docker build -t sbhrwldocker/notification-service:latest .`|
@@ -25,10 +43,4 @@
 |Stop container|`docker stop ui-service`|`docker stop sensor-service`|`docker stop registration-service`|`docker stop notification-service`|
 |Remove container|`docker rm -f ui-service`|`docker rm -f sensor-service`|`docker rm -f registration-service`|`docker rm -f notification-service`|
 ||||||
-|**Build docker image and run container with `docker compose`**|||||
-||||||
-|docker-compose.yml|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/docker-compose.yml)|[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/docker-compose.yml)|
-|Run container|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|
-|Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
-|Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
       
