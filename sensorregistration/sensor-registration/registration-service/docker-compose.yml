@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   registration-service:
-    image: registration-service:latest
+    image: sbhrwldocker/registration-service:latest
     container_name: registration-service
     build:
       context: .

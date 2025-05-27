@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   sensor-service:
-    image: sensor-service:latest
+    image: sbhrwldocker/sensor-service:latest
     container_name: sensor-service
     build:
       context: .

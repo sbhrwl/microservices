@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   notification-service:
-    image: notification-service:latest
+    image: sbhrwldocker/notification-service:latest
     container_name: notification-service
     build:
       context: .

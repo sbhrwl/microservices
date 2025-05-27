@@ -4,7 +4,7 @@ services:
   ui-service:
     build:
       context: .
-    image: ui-service:latest
+    image: sbhrwldocker/ui-service:latest
     ports:
       - "9081:9081"
     environment:
