@@ -2,6 +2,15 @@
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 - [Docker compose commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/dockercompose/README.md)
 - [Change to Kafka setup for containers](#change-to-kafka-setup-for-containers)
+- [Setting up containers](#setting-up-containers)
+
+## Change to Kafka setup for containers
+- Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
+- With `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://host.docker.internal:29092`
+- Followed by
+  - `docker-compose down`
+  - `docker-compose up -d`
+## Setting up containers
 
 |Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/README.md)|[sensor service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/sensor-service/README.md)|[registration service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/registration-service/README.md)|[notification service](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/notification-service/README.md)|
 |-----|----------|--------------|--------------------|--------------------|
@@ -22,11 +31,4 @@
 |Run container|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|`docker-compose up --build -d`|
 |Stop container|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|`docker-compose stop`|
 |Stop and remove container resources|`docker-compose down`|`docker-compose down`|`docker-compose down`|`docker-compose down`|
-
-## Change to Kafka setup for containers
-- Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
-- With `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://host.docker.internal:29092`
-- Followed by
-  - `docker-compose down`
-  - `docker-compose up -d`
       
