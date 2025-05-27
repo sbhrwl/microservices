@@ -13,7 +13,6 @@ services:
       MONGO_PORT: 27017
       MONGO_USERNAME: root
       MONGO_PASSWORD: root123
-      KAFKA_HOST: host.docker.internal
-      KAFKA_PORT: 29092
+      SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS: host.docker.internal:29092
       NOTIFICATION_SERVICE_URL: http://host.docker.internal:9084
     depends_on: []
