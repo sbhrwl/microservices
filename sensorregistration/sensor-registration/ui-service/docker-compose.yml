@@ -11,3 +11,8 @@ services:
       KEYCLOAK_REALM: master
       KEYCLOAK_CLIENTID: sensor-service
       SENSOR_SERVICE_URL: http://host.docker.internal:9082
+    networks:
+      - keycloak_net
+networks:
+  keycloak_net:
+    external: true
