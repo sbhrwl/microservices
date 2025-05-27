@@ -9,3 +9,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9084:9084"
+    environment:
+      SERVER_PORT: 9084
