@@ -45,6 +45,9 @@ kubectl apply -f registration-service.yaml
 kubectl apply -f notification-service.yaml
 
 kubectl apply -f orchestrate-sensor-services.yaml
+
+# Cleanup
+kubectl delete -f orchestrate-sensor-services.yaml
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access
