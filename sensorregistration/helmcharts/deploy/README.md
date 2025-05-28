@@ -6,6 +6,7 @@
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify](#verify)
+- [Access](#access)
 - [Uninstall Helm release](#uninstall-helm-release)
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
@@ -99,21 +100,39 @@ kubectl delete service ui-service sensor-service registration-service notificati
   ```
   helm list -A
   ```
-- **Check pods status**
-  ```powershell
-  kubectl get pods
-  ```
-- **Check services and exposed NodePorts**
-  ```powershell
-  kubectl get svc
-  ```
-  * `ui-service` on NodePort `30081`
-  * `sensor-service` on ClusterIP `30082`
-- **Access the services**
+- Verify
+```
+C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>helm list
+NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS  CHART                   APP VERSION
+orchestrate-sensor-services-release     default         1               2025-05-28 22:20:01.3609859 +0300 EEST  deployedsensor-app-chart-0.1.0  1.0
+
+C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>helm list -A
+NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS  CHART                   APP VERSION
+orchestrate-sensor-services-release     default         1               2025-05-28 22:20:01.3609859 +0300 EEST  deployedsensor-app-chart-0.1.0  1.0
+
+C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+notification-service-7f5845c77c-4fq8z   1/1     Running   0          26s
+registration-service-86d67ff64-26kbp    1/1     Running   0          26s
+sensor-service-7b4d75956f-dbt5j         1/1     Running   0          26s
+ui-service-dfbb8d9df-rrnbp              1/1     Running   0          26s
+
+C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get svc
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          23d
+notification-service   ClusterIP   10.101.107.255   <none>        9084/TCP         34s
+registration-service   ClusterIP   10.108.156.30    <none>        9083/TCP         34s
+sensor-service         NodePort    10.109.161.68    <none>        9082:30082/TCP   34s
+ui-service             NodePort    10.96.134.147    <none>        9081:30081/TCP   34s
+```
+
+- [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
+## Access
+* List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/...` → `ui-service`
   * `http://localhost:30082/...` → `sensor-service`
-  * `http://localhost:30083/...` → `registration-service`
-  * `http://localhost:30084/...` → `notification-service`
+  * ClusterIP service → `registration-service`
+  * ClusterIP service → `notification-service`
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestrate-sensor-services-release`
   ```
