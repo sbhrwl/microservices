@@ -22,15 +22,12 @@ spec:
               value: "9081"
             - name: KEYCLOAK_URL
               value: "http://192.168.0.102:8080/"
-              # Access Keycloak running on your laptop
             - name: KEYCLOAK_REALM
               value: "master"
             - name: KEYCLOAK_CLIENTID
               value: "sensor-service"
             - name: SENSOR_SERVICE_URL
               value: "http://192.168.0.102:30082"
-              # Access sensor-service via NodePort exposed on the host
-
 ---
 apiVersion: v1
 kind: Service
@@ -43,4 +40,4 @@ spec:
   ports:
     - port: 9081
       targetPort: 9081
-      nodePort: 30081  # This will be accessible from your browser at http://192.168.0.102:30081
+      nodePort: 30081
