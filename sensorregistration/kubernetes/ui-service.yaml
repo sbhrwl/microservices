@@ -21,16 +21,15 @@ spec:
             - name: SERVER_PORT
               value: "9081"
             - name: KEYCLOAK_URL
-              value: "http://host.docker.internal:8080/"
-              # NOTE: 'host.docker.internal' does NOT work inside Kubernetes pods.
-              # Replace with the actual service name, cluster IP, or external URL.
+              value: "http://192.168.0.102:8080/"
+              # Access Keycloak running on your laptop
             - name: KEYCLOAK_REALM
               value: "master"
             - name: KEYCLOAK_CLIENTID
               value: "sensor-service"
             - name: SENSOR_SERVICE_URL
-              value: "http://host.docker.internal:9082"
-              # NOTE: Same as above — ensure this URL is reachable from within the cluster.
+              value: "http://192.168.0.102:30082"
+              # Access sensor-service via NodePort exposed on the host
 
 ---
 apiVersion: v1
@@ -44,4 +43,4 @@ spec:
   ports:
     - port: 9081
       targetPort: 9081
-      nodePort: 30081  # Exposes service on <NodeIP>:30081
+      nodePort: 30081  # This will be accessible from your browser at http://192.168.0.102:30081
