@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-service
-          image: ui-service:latest
+          image: sbhrwldocker/ui-service:latest
           ports:
             - containerPort: 9081
           env:
