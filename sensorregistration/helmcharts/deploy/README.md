@@ -5,8 +5,8 @@
   - [Folder structure](#folder-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
-- [Verify](#verify)
-- [Access](#access)
+- [Verify deployment](#verify-deployment)
+- [Access services](#access-services)
 - [Uninstall Helm release](#uninstall-helm-release)
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
@@ -36,51 +36,21 @@
   _helpers.tpl
   ```
 ## Convert your existing YAML into a Helm template
-- **ui-service**
-  - [`ui-deployment.yaml`](orchestrate-sensor-services/templates/ui-deployment.yaml)
-  - [`ui-service.yaml`](orchestrate-sensor-services/templates/ui-service.yaml)
-- **sensor-service**
-  - [`sensor-deployment.yaml`](orchestrate-sensor-services/templates/sensor-deployment.yaml)
-  - [`sensor-service.yaml`](orchestrate-sensor-services/templates/sensor-service.yaml)
-- **registration-service**
-  - [`registration-deployment.yaml`](orchestrate-sensor-services/templates/registration-deployment.yaml)
-  - [`registration-service.yaml`](orchestrate-sensor-services/templates/registration-service.yaml)
-- **notification-service**
-  - [`notification-deployment.yaml`](orchestrate-sensor-services/templates/notification-deployment.yaml)
-  - [`notification-service.yaml`](orchestrate-sensor-services/templates/notification-service.yaml)
-- [**`values.yaml`**](orchestrate-sensor-services/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
+- [**all-resources**]((orchestrate-sensor-services/templates/all-resources.yaml)
+- [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
 ### Folder structure
 ```pgsql
 orchestrate-sensor-services/
 ├── charts/
 ├── templates/
-│   ├── ui-deployment.yaml
-│   ├── ui-service.yaml
-│   ├── sensor-deployment.yaml
-│   ├── sensor-service.yaml
-│   ├── registration-deployment.yaml
-│   ├── registration-service.yaml
-│   ├── notification-deployment.yaml
-│   ├── notification-service.yaml
-│   └── _helpers.tpl
+│   └── all-resources
 ├── Chart.yaml
-├── values.yaml    ✅ should be here
+├── values.yaml
+├── .helmignore
 ```
 ## Cleanup existing Kubernetes deployment 
 ```
-kubectl delete deployment ui-deployment
-kubectl delete deployment sensor-deployment
-kubectl delete deployment registration-deployment
-kubectl delete deployment notification-deployment
-
-kubectl delete service ui-service
-kubectl delete service sensor-service
-kubectl delete service registration-service
-kubectl delete service notification-service
-
-## OR
-kubectl delete deployment ui-deployment sensor-deployment registration-deployment notification-deployment
-kubectl delete service ui-service sensor-service registration-service notification-service
+kubectl delete -f orchestrate-sensor-services.yaml
 ```
 ## Install Helm release
 - Go to Helm chart folder (e.g., `orchestrate-sensor-services`), run this command:
@@ -95,7 +65,7 @@ kubectl delete service ui-service sensor-service registration-service notificati
   NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
   orchestrate-sensor-services-release   default         1               2025-05-12 09:53:22.55453 +0300 EEST    deployed        orchestrate-sensor-services-0.1.0    1.16.0
   ```
-## Verify
+## Verify deployment
 - Helm list
   ```
   helm list -A
@@ -127,10 +97,10 @@ ui-service             NodePort    10.96.134.147    <none>        9081:30081/TCP
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
-## Access
+## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/...` → `ui-service`
-  * `http://localhost:30082/...` → `sensor-service`
+  * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
 ## Uninstall Helm release
