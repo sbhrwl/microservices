@@ -20,6 +20,24 @@
             keycloak.init({ onLoad: 'login-required' }).then(function(authenticated) {
                 if (authenticated) {
                     document.getElementById('sensorForm').style.display = 'block';
+
+                    // Log the access token
+                    console.log('Keycloak Access Token:', keycloak.token);
+
+                    // Decode JWT payload
+                    function decodeJwt(token) {
+                        const payload = token.split('.')[1];
+                        const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+                        return JSON.parse(decoded);
+                    }
+                    const claims = decodeJwt(keycloak.token);
+                    console.log('Decoded JWT Claims:', claims);
+
+                    // Display issuer and claims on the page
+                    let infoDiv = document.createElement('div');
+                    infoDiv.innerHTML = `<strong>Issuer:</strong> ${claims.iss}<br><strong>Claims:</strong> <pre>${JSON.stringify(claims, null, 2)}</pre>`;
+                    document.body.insertBefore(infoDiv, document.getElementById('sensorForm'));
+                    
                     const sensorForm = document.getElementById('sensorForm');
                     sensorForm.addEventListener('submit', function(event) {
                         event.preventDefault();
