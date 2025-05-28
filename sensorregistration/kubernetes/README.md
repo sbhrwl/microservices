@@ -90,9 +90,3 @@ PS C:\Git\microservices\sensorregistration\kubernetes>
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
-- [`Failures with Kafka`](failuresWithKafka/README.md)
-  ```
-  # Important: host.docker.internal does NOT work from inside Kubernetes pods.
-  # Replace with your host machine IP (e.g., 192.168.1.100) if Kafka is running on Docker Desktop.
-  # This allows the pod to reach the Kafka broker running on your host.
-  ```
