@@ -9,16 +9,15 @@ docker push sbhrwldocker/registration-service:latest
 docker push sbhrwldocker/notification-service:latest
 ```
 ## Deployment files 
-- We need to configue them such that MongoDB and Kafka are accessible from kubernetes
-  - Understand where MongoDB and Kafka is running.
-  - Make sure your Kubernetes pod can reach it.
-  - Set the right hostname/IP in the Deployment env vars.
-  - `ipconfig`
-  - `netstat -an | grep 27017`
-  - `kubectl run mongo-test --rm -it --image=busybox --restart=Never -- sh`
+- We need to configue them such that MongoDB, Kafka and Keycloak are accessible from kubernetes
+  - Set the right **`hostname/IP`** in the Deployment env vars so that Kubernetes pod can reach MongoDB, Kafka and Keycloak
+  - Check IP address of your laptopn where these are running as docker containers: `ipconfig` - **192.168.0.102**
+  - **mongo-test**: `kubectl run mongo-test --rm -it --image=busybox --restart=Never -- sh`
     - `nc -zv 192.168.0.102 27017`
-  - `kubectl run kafka-test --rm -it --image=busybox --restart=Never -- sh`
+  - **kafka-test**: `kubectl run kafka-test --rm -it --image=busybox --restart=Never -- sh`
     - `nc -zv 192.168.0.102 29092`
+  - **keycloak-test**: `kubectl run keycloak-test --rm -it --image=busybox --restart=Never -- sh`
+    - `nc -zv 192.168.0.102 8080`
 - [`ui-service.yaml`](ui-service.yaml)
 - [`sensor-service.yaml`](sensor-service.yaml)
 - [`registration-service.yaml`](registration-service.yaml)
