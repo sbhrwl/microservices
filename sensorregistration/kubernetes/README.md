@@ -82,15 +82,8 @@ PS C:\Git\microservices\sensorregistration\kubernetes>
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/...` → `ui-service`
   * `http://localhost:30082/...` → `sensor-service`
-  * `http://localhost:30083/...` → `registration-service`
-  * `http://localhost:30084/...` → `notification-service`
-  * `http://localhost:30080/...` → `keycloak` (if running locally on port 8080 and exposed as 30080)
-* List of **internal Kubernetes service URLs** (accessible from within the cluster, such as by other services or pods):
-  * `http://ui-service:9081/...` → `ui-service`
-  * `http://sensor-service:9082/...` → `sensor-service`
-  * `http://registration-service:9083/...` → `registration-service`
-  * `http://notification-service:9084/...` → `notification-service`
-  * `http://keycloak:8080/...` → `keycloak` (assuming it's deployed in the cluster with a service named `keycloak`)
+  * ClusterIP service → `registration-service`
+  * ClusterIP service → `notification-service`
 - [`Failures with Kafka`](failuresWithKafka/README.md)
   ```
   # Important: host.docker.internal does NOT work from inside Kubernetes pods.
