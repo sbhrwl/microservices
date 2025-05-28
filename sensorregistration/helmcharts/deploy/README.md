@@ -36,7 +36,7 @@
   _helpers.tpl
   ```
 ## Convert your existing YAML into a Helm template
-- [**all-resources**]((orchestrate-sensor-services/templates/all-resources.yaml)
+- [**all-resources**](orchestrate-sensor-services/templates/all-resources.yaml)
 - [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
 ### Folder structure
 ```pgsql
