@@ -41,7 +41,7 @@
 - **task-orchestration**
   - [`deployment-task-orchestration.yaml`](orchestration-services/templates/deployment-task-orchestration.yaml)
   - [`service-task-orchestration.yaml`](orchestration-services/templates/service-task-orchestration.yaml)
-- [**`values.yaml`**](orchestration-services/templates/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
+- [**`values.yaml`**](orchestration-services/values.yaml) should be inside `root` of the Helm chart folder, not inside the `templates/` folder
 ### Folder structure
 ```pgsql
 orchestration-services/
