@@ -25,14 +25,8 @@
 orchestrate-sensor-services/
 ├── charts/
 ├── templates/
-│   ├── ui-deployment.yaml
-│   ├── ui-service.yaml
-│   ├── sensor-deployment.yaml
-│   ├── sensor-service.yaml
-│   ├── registration-deployment.yaml
-│   ├── registration-service.yaml
-│   ├── notification-deployment.yaml
-│   ├── notification-service.yaml
+│   └── all-resources
+├── Chart.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml         # default (used for dev/test)
