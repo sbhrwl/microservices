@@ -24,6 +24,19 @@ docker push sbhrwldocker/notification-service:latest
 - [`notification-service.yaml`](notification-service.yaml)
 - Combined: [`orchestrate-sensor-services.yaml`](orchestrate-sensor-services.yaml)
 
+## Cleanup
+- Stop running containers
+```
+docker ps --format "{{.Names}}" | grep -E 'sensor-service|ui-service|registration-service|notification-service' | xargs -r docker stop
+```
+- Remove stopped containers
+```
+docker ps -a --format "{{.Names}}" | grep -E 'sensor-service|ui-service|registration-service|notification-service' | xargs -r docker rm
+```
+- Prune dangling images
+```
+docker image prune -f
+```
 ## Apply
 ```bash
 kubectl apply -f ui-service.yaml
