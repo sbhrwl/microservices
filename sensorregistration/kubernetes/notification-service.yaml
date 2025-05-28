@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-service-config
+data:
+  SERVER_PORT: "9084"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,10 +21,12 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: notification-service:latest
+          image: sbhrwldocker/notification-service:latest
           ports:
             - containerPort: 9084
-
+          envFrom:
+            - configMapRef:
+                name: notification-service-config
 ---
 apiVersion: v1
 kind: Service
