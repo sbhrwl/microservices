@@ -27,11 +27,10 @@ orchestrate-sensor-services/
 ├── templates/
 │   └── all-resources
 ├── Chart.yaml
-│   └── _helpers.tpl
-├── Chart.yaml
-├── values.yaml         # default (used for dev/test)
+├── values.yaml
 ├── values-staging.yaml
 ├── values-prod.yaml
+├── .helmignore
 ```
 ## Create environment wise values file
 - `values-<env>.yaml` files
