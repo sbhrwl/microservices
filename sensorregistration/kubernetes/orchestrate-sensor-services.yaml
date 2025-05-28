@@ -107,7 +107,7 @@ spec:
     spec:
       containers:
         - name: sensor-service
-          image: sensor-service:latest
+          image: sbhrwldocker/sensor-service:latest
           ports:
             - containerPort: 9082
           env:
@@ -160,7 +160,7 @@ spec:
     spec:
       containers:
         - name: ui-service
-          image: ui-service:latest
+          image: sbhrwldocker/ui-service:latest
           ports:
             - containerPort: 9081
           env:
