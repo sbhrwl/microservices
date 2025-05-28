@@ -1,5 +1,11 @@
 # Move to Kubernetes
 - [Kubernetes commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/k8scommands/README.md)
+- [Push images to Docker registry](#push-images-to-docker-registry)
+- [Deployment files](#deployment-files)
+- [Cleanup](#cleanup)
+- [Apply](#apply)
+- [Verify deployment](#verify-deployment)
+- [Access services](#access-services)
 ## Push images to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
 ```
@@ -49,7 +55,7 @@ kubectl apply -f orchestrate-sensor-services.yaml
 # Cleanup
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
-- Verify
+## Verify
 ```
 PS C:\Git\microservices\sensorregistration\kubernetes> kubectl apply -f orchestrate-sensor-services.yaml
 configmap/notification-service-config created
@@ -78,10 +84,10 @@ PS C:\Git\microservices\sensorregistration\kubernetes>
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
-## Access
+## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/...` → `ui-service`
-  * `http://localhost:30082/...` → `sensor-service`
+  * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
 - [`Failures with Kafka`](failuresWithKafka/README.md)
