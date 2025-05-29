@@ -132,15 +132,15 @@ C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa
   * ClusterIP service → `notification-service`
 ### Uninstall
 ```
-helm uninstall orchestrate-sensor-services-dev -n dev
-helm uninstall orchestrate-sensor-services-staging -n staging
-helm uninstall orchestrate-sensor-services-prod -n prod
+helm uninstall orchestrate-sensor-services-with-hpa-release-dev -n dev
+helm uninstall orchestrate-sensor-services-with-hpa-release-staging -n staging
+helm uninstall orchestrate-sensor-services-with-hpa-release-prod -n prod
 ```
 ## Upgrades per environment
 - Go to Helm chart folder (e.g., `orchestrate-sensor-services`)
 ```bash
-helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
-helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
+helm upgrade orchestrate-sensor-services-with-hpa-release-staging . -f values-staging.yaml -n staging
+helm upgrade orchestrate-sensor-services-with-hpa-release-prod . -f values-prod.yaml -n prod
 ```
 ## Verify HPA
 - **`kubectl get hpa -n dev`**
