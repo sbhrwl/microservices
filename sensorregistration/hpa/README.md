@@ -13,19 +13,19 @@
   ├── templates/
   │   ├── ui-deployment.yaml
   │   ├── ui-service.yaml
+  │   ├── ui-service-hpa.yaml
   │   ├── sensor-deployment.yaml
   │   ├── sensor-service.yaml
+  │   ├── sensor-service-hpa.yaml
   │   ├── registration-deployment.yaml
   │   ├── registration-service.yaml
+  │   ├── registration-service-hpa.yaml
   │   ├── notification-deployment.yaml
   │   ├── notification-service.yaml
-  │   ├── hpa-uiService.yaml
-  │   ├── hpa-sensorService.yaml
-  │   ├── hpa-registrationService.yaml
-  │   ├── hpa-notificationService.yaml
+  │   ├── notification-service-hpa.yaml
   │   └── _helpers.tpl
   ├── Chart.yaml
-  ├── values.yaml         # default (used for dev/test)
+  ├── values.yaml
   ├── values-staging.yaml
   ├── values-prod.yaml
   ```
