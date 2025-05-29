@@ -36,7 +36,15 @@
   _helpers.tpl
   ```
 ## Convert your existing YAML into a Helm template
-- [**all-resources**](orchestrate-sensor-services/templates/all-resources.yaml)
+- [**notification-configmap**](orchestrate-sensor-services/templates/notification-configmap.yaml)
+- [**notification-deployment**](orchestrate-sensor-services/templates/notification-deployment.yaml)
+- [**notification-service**](orchestrate-sensor-services/templates/notification-service.yaml)
+- [**registration-deployment**](orchestrate-sensor-services/templates/registration-deployment.yaml)
+- [**registration-service**](orchestrate-sensor-services/templates/registration-service.yaml)
+- [**sensor-deployment**](orchestrate-sensor-services/templates/sensor-deployment.yaml)
+- [**sensor-service**](orchestrate-sensor-services/templates/sensor-service.yaml)
+- [**ui-deployment**](orchestrate-sensor-services/templates/ui-deployment.yaml)
+- [**ui-service**](orchestrate-sensor-services/templates/ui-service.yaml)
 - [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
 ### Folder structure
 ```pgsql
