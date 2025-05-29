@@ -2,5 +2,3 @@
 - [Setup](setup/README.md)
 - [Deploy](deploy/README.md)
 - [Creating environments](creatingenvs/README.md)
-- [Why Helm charts](#why-helm-charts)
-
