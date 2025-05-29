@@ -142,3 +142,38 @@ helm uninstall orchestrate-sensor-services-prod -n prod
 helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
 helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
 ```
+## Verify HPA
+- **`kubectl get hpa -n dev`**
+```
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get hpa -n dev
+NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          4m10s
+registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          4m10s
+sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          4m10s
+ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          4m10s
+```
+- Describe a specific HPA
+```
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl describe hpa registration-hpa -n dev
+Name:                                                  registration-hpa
+Namespace:                                             dev
+Labels:                                                app=registration
+                                                       app.kubernetes.io/managed-by=Helm
+Annotations:                                           meta.helm.sh/release-name: orchestrate-sensor-services-with-hpa-release-dev
+                                                       meta.helm.sh/release-namespace: dev
+CreationTimestamp:                                     Thu, 29 May 2025 18:10:02 +0300
+Reference:                                             Deployment/registration
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  <unknown> / 80%
+Min replicas:                                          1
+Max replicas:                                          5
+Deployment pods:                                       0 current / 0 desired
+Conditions:
+  Type         Status  Reason          Message
+  ----         ------  ------          -------
+  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "registration" not found
+Events:
+  Type     Reason          Age                  From                       Message
+  ----     ------          ----                 ----                       -------
+  Warning  FailedGetScale  27s (x5 over 4m27s)  horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+```
