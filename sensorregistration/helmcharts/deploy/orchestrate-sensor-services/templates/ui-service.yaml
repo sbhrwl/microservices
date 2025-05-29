@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-service
+spec:
+  selector:
+    app: ui-service
+  ports:
+    - port: {{ .Values.uiService.port }}
+      targetPort: {{ .Values.uiService.port }}
+      nodePort: {{ .Values.uiService.nodePort }}
+  type: NodePort

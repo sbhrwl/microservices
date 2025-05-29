@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-service
+  template:
+    metadata:
+      labels:
+        app: sensor-service
+    spec:
+      containers:
+        - name: sensor-service
+          image: {{ .Values.sensorService.image }}
+          ports:
+            - containerPort: {{ .Values.sensorService.port }}
+          env:
+{% for key, value in .Values.sensorService.env.items() %}
+            - name: {{ key }}
+              value: "{{ value }}"
+{% endfor %}

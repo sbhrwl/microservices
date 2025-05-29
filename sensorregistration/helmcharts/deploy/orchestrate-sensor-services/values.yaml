@@ -1,3 +1,41 @@
-# Default values for sensor-app-chart.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+notificationService:
+  config:
+    SERVER_PORT: '9084'
+  image: sbhrwldocker/notification-service:latest
+  port: 9084
+registrationService:
+  env:
+    KAFKA_HOST: 192.168.0.102
+    KAFKA_PORT: '29092'
+    MONGO_HOST: 192.168.0.102
+    MONGO_PASSWORD: root123
+    MONGO_PORT: '27017'
+    MONGO_USERNAME: root
+    NOTIFICATION_SERVICE_URL: http://notification-service:9084
+    SERVER_PORT: '9083'
+  image: sbhrwldocker/registration-service:latest
+  port: 9083
+sensorService:
+  env:
+    CORS_ALLOWED_ORIGINS: http://localhost:30081,http://192.168.0.102:30081
+    KAFKA_HOST: 192.168.0.102
+    KAFKA_PORT: '29092'
+    KAFKA_SENSOR_REG_TOPIC: sensor-registrations
+    KEYCLOAK_CLIENT_ID: sensor-service
+    KEYCLOAK_ISSUER_URI: http://192.168.0.102:8080/realms/master
+    KEYCLOAK_JWK_SET_URI: http://192.168.0.102:8080/realms/master/protocol/openid-connect/certs
+    KEYCLOAK_PROVIDER: keycloak
+    SERVER_PORT: '9082'
+  image: sbhrwldocker/sensor-service:latest
+  nodePort: 30082
+  port: 9082
+uiService:
+  env:
+    KEYCLOAK_CLIENTID: sensor-service
+    KEYCLOAK_REALM: master
+    KEYCLOAK_URL: http://192.168.0.102:8080/
+    SENSOR_SERVICE_URL: http://192.168.0.102:30082
+    SERVER_PORT: '9081'
+  image: sbhrwldocker/ui-service:latest
+  nodePort: 30081
+  port: 9081

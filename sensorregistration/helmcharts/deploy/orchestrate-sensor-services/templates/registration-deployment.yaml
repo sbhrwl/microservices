@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registration-service
+  template:
+    metadata:
+      labels:
+        app: registration-service
+    spec:
+      containers:
+        - name: registration-service
+          image: {{ .Values.registrationService.image }}
+          ports:
+            - containerPort: {{ .Values.registrationService.port }}
+          env:
+{% for key, value in .Values.registrationService.env.items() %}
+            - name: {{ key }}
+              value: "{{ value }}"
+{% endfor %}
