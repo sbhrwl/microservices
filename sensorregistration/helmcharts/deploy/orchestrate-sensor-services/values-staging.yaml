@@ -1,41 +1,41 @@
-uiService:
-  image: ui-service:staging
-  port: 9081
-  env:
-    SERVER_PORT: "9081"
-    KEYCLOAK_URL: "http://keycloak.staging:8080/"
-    KEYCLOAK_REALM: "master"
-    KEYCLOAK_CLIENTID: "sensor-service"
-    SENSOR_SERVICE_URL: "http://sensor-service:9082"
-
-sensorService:
-  image: sensor-service:staging
-  port: 9082
-  env:
-    SERVER_PORT: "9082"
-    KEYCLOAK_ISSUER_URI: "http://keycloak.staging:8080/realms/master"
-    KEYCLOAK_JWK_SET_URI: "http://keycloak.staging:8080/realms/master/protocol/openid-connect/certs"
-    KEYCLOAK_CLIENT_ID: "sensor-service"
-    KEYCLOAK_PROVIDER: "keycloak"
-    KAFKA_HOST: "kafka"
-    KAFKA_PORT: "29092"
-    KAFKA_SENSOR_REG_TOPIC: "sensor-registrations"
-    CORS_ALLOWED_ORIGINS: "http://ui-service:9081"
-
-registrationService:
-  image: registration-service:staging
-  port: 9083
-  env:
-    SERVER_PORT: "9083"
-    MONGO_HOST: "mongo-staging"
-    MONGO_PORT: "27017"
-    MONGO_USERNAME: "root"
-    MONGO_PASSWORD: "root123"
-    KAFKA_HOST: "kafka-staging"
-    KAFKA_PORT: "29092"
-    SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS: "kafka:29092"
-    NOTIFICATION_SERVICE_URL: "http://notification-service:9084"
-
 notificationService:
-  image: notification-service:staging
+  config:
+    SERVER_PORT: '9084'
+  image: sbhrwldocker/notification-service:staging
   port: 9084
+registrationService:
+  env:
+    KAFKA_HOST: 192.168.0.102
+    KAFKA_PORT: '29092'
+    MONGO_HOST: 192.168.0.102
+    MONGO_PASSWORD: root123
+    MONGO_PORT: '27017'
+    MONGO_USERNAME: root
+    NOTIFICATION_SERVICE_URL: http://notification-service:9084
+    SERVER_PORT: '9083'
+  image: sbhrwldocker/registration-service:staging
+  port: 9083
+sensorService:
+  env:
+    CORS_ALLOWED_ORIGINS: http://localhost:30081,http://192.168.0.102:30081
+    KAFKA_HOST: 192.168.0.102
+    KAFKA_PORT: '29092'
+    KAFKA_SENSOR_REG_TOPIC: sensor-registrations
+    KEYCLOAK_CLIENT_ID: sensor-service
+    KEYCLOAK_ISSUER_URI: http://192.168.0.102:8080/realms/master
+    KEYCLOAK_JWK_SET_URI: http://192.168.0.102:8080/realms/master/protocol/openid-connect/certs
+    KEYCLOAK_PROVIDER: keycloak
+    SERVER_PORT: '9082'
+  image: sbhrwldocker/sensor-service:staging
+  nodePort: 30082
+  port: 9082
+uiService:
+  env:
+    KEYCLOAK_CLIENTID: sensor-service
+    KEYCLOAK_REALM: master
+    KEYCLOAK_URL: http://192.168.0.102:8080/
+    SENSOR_SERVICE_URL: http://192.168.0.102:30082
+    SERVER_PORT: '9081'
+  image: sbhrwldocker/ui-service:staging
+  nodePort: 30081
+  port: 9081
