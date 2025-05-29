@@ -41,3 +41,40 @@ Steps|[ui service](https://github.com/sbhrwl/microservices/blob/main/sensorregis
 |Remove container|`docker rm -f ui-service`|`docker rm -f sensor-service`|`docker rm -f registration-service`|`docker rm -f notification-service`|
 ||||||
       
+## Test
+- Send request from `ui service`
+  - Login `localhost:9081`
+  - Fill sensor values and press `send` button.
+- Send request from `sensor service`
+  - Get Access token
+  - request **`POST`** `http://localhost:9083/api/register/sensor`
+  - with request body as JSON payload
+    ```json
+      {
+          "sensorId": "sensor123",
+          "sensorModel": "ModelX",
+          "email": "user@example.com"
+      }
+    ```
+  - Modify `Body -> x-wwww-form-url-encoded`
+    ```
+    grant_type : password
+    client_id  : sensor-service (created in Keycloak)
+    username  : endpointaccessuser
+    password  : password123
+    ```
+  - Verify at Kafka console
+    ```
+    kafka-console-consumer --bootstrap-server localhost:9092 --topic sensor-registrations --from-beginning --max-messages 10  
+    ```
+- `registration service` creates a document in MongoDB
+  - Verify at **MongoDB**
+  - Open MongoDB shell
+    - Connect: `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
+    - Check available Databses: `show dbs`
+    - Swicth to DB: `use sensorregistration`
+    - Query documents in the collections: `db.sensorRegistrations.find().pretty()`
+      - Find a sensor: `db.sensorRegistrations.findOne({ sensorId: "sensor789" })`    
+    - Delete documents from the collections: `db.sensorRegistrations.deleteMany({})`
+      - Delete a sensor: `db.sensorRegistrations.deleteOne({ sensorId: "sensor789" })`
+- `notification service` sends an email, verify at console of `notification service`
