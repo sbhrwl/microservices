@@ -1,7 +1,19 @@
 # Horizontal Pod Autoscalar
+- [Introduction](#introduction)
+- [Chart structure](#chart-structure)
+- [HPA configuration](#hpa-configuration)
+- [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
+- [Installation](#installation)
+  - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
+  - [Releases per environment](#releases-per-environment)
+- [Verify release](#verify-release)
+- [Verify HPA](#v-hpa)
+- [Access services](#access-services)
+- [Uninstall](#uninstall)
+- [Upgrades per environment](#upgrades-per-environment)
 ## Introduction 
 - The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that **automatically scales** the number of pods in a deployment, replica set, or stateful set based on observed metrics like `CPU utilization`, `memory usage`, or `custom metrics`.
-## Structure
+## Chart structure
 - [orchestrate-sensor-services-with-hpa](orchestrate-sensor-services-with-hpa)
 - This Helm chart deploys two services:
   - **Command Orchestration**
@@ -44,7 +56,7 @@
   ```bash
   helm install orchestrate-sensor-services-with-hpa-services . -f values-prod.yaml
   ```
-## Use Kubernetes namespaces
+### Use Kubernetes namespaces
 - Namespaces keep your environments isolated on the same cluster.
   ```bash
   kubectl create namespace dev
@@ -64,7 +76,7 @@
     ```
     kubectl get all -n dev
     ``` 
-## Install Helm releases per environment
+### Releases per environment
 - Go to Helm chart folder [`orchestrate-sensor-services-with-hpa`](orchestrate-sensor-services-with-hpa)
 ```bash
 # For dev (default values.yaml)
@@ -76,7 +88,7 @@ helm install orchestrate-sensor-services-with-hpa-release-staging . -f values-st
 # For prod
 helm install orchestrate-sensor-services-with-hpa-release-prod . -f values-prod.yaml -n prod
 ```
-### Verify what this installation created
+## Verify release
 - Helm list
   ```
   helm list -A
@@ -123,25 +135,6 @@ ui-service             NodePort    10.105.71.251   <none>        9081:30081/TCP 
 
 C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>
 ```
-- [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
-## Access services
-* List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/` → `ui-service`
-  * `http://localhost:30082/api/register/sensor` → `sensor-service`
-  * ClusterIP service → `registration-service`
-  * ClusterIP service → `notification-service`
-### Uninstall
-```
-helm uninstall orchestrate-sensor-services-with-hpa-release-dev -n dev
-helm uninstall orchestrate-sensor-services-with-hpa-release-staging -n staging
-helm uninstall orchestrate-sensor-services-with-hpa-release-prod -n prod
-```
-## Upgrades per environment
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services`)
-```bash
-helm upgrade orchestrate-sensor-services-with-hpa-release-staging . -f values-staging.yaml -n staging
-helm upgrade orchestrate-sensor-services-with-hpa-release-prod . -f values-prod.yaml -n prod
-```
 ## Verify HPA
 - **`kubectl get hpa -n dev`**
 ```
@@ -176,4 +169,22 @@ Events:
   Type     Reason          Age                  From                       Message
   ----     ------          ----                 ----                       -------
   Warning  FailedGetScale  27s (x5 over 4m27s)  horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+```
+## Access services
+* List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
+  * `http://localhost:30081/` → `ui-service`
+  * `http://localhost:30082/api/register/sensor` → `sensor-service`
+  * ClusterIP service → `registration-service`
+  * ClusterIP service → `notification-service`
+## Uninstall
+```
+helm uninstall orchestrate-sensor-services-with-hpa-release-dev -n dev
+helm uninstall orchestrate-sensor-services-with-hpa-release-staging -n staging
+helm uninstall orchestrate-sensor-services-with-hpa-release-prod -n prod
+```
+## Upgrades per environment
+- Go to Helm chart folder (e.g., `orchestrate-sensor-services`)
+```bash
+helm upgrade orchestrate-sensor-services-with-hpa-release-staging . -f values-staging.yaml -n staging
+helm upgrade orchestrate-sensor-services-with-hpa-release-prod . -f values-prod.yaml -n prod
 ```
