@@ -9,12 +9,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: registration
-  minReplicas: { { .Values.hpa.registration.minReplicas } }
-  maxReplicas: { { .Values.hpa.registration.maxReplicas } }
+  minReplicas: {{ .Values.hpa.registration.minReplicas }}
+  maxReplicas: {{ .Values.hpa.registration.maxReplicas }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: { { .Values.hpa.registration.targetCPUUtilizationPercentage } }
+          averageUtilization: {{ .Values.hpa.registration.targetCPUUtilizationPercentage }}

@@ -9,12 +9,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: sensor
-  minReplicas: { { .Values.hpa.sensor.minReplicas } }
-  maxReplicas: { { .Values.hpa.sensor.maxReplicas } }
+  minReplicas: {{ .Values.hpa.sensor.minReplicas }}
+  maxReplicas: {{ .Values.hpa.sensor.maxReplicas }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: { { .Values.hpa.sensor.targetCPUUtilizationPercentage } }
+          averageUtilization: {{ .Values.hpa.sensor.targetCPUUtilizationPercentage }}

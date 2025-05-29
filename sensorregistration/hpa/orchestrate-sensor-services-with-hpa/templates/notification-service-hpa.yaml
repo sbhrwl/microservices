@@ -9,12 +9,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: notification
-  minReplicas: { { .Values.hpa.notification.minReplicas } }
-  maxReplicas: { { .Values.hpa.notification.maxReplicas } }
+  minReplicas: {{ .Values.hpa.notification.minReplicas }}
+  maxReplicas: {{ .Values.hpa.notification.maxReplicas }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: { { .Values.hpa.notification.targetCPUUtilizationPercentage } }
+          averageUtilization: {{ .Values.hpa.notification.targetCPUUtilizationPercentage }}

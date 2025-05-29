@@ -9,12 +9,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: ui
-  minReplicas: { { .Values.hpa.ui.minReplicas } }
-  maxReplicas: { { .Values.hpa.ui.maxReplicas } }
+  minReplicas: {{ .Values.hpa.ui.minReplicas }}
+  maxReplicas: {{ .Values.hpa.ui.maxReplicas }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: { { .Values.hpa.ui.targetCPUUtilizationPercentage } }
+          averageUtilization: {{ .Values.hpa.ui.targetCPUUtilizationPercentage }}
