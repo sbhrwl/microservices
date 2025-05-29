@@ -1,7 +1,7 @@
 # Helm charts
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
-- [Convert your existing YAML into a Helm template](#convert-your-existing-yaml-into-a-helm-template)
+- [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
   - [Folder structure](#folder-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
@@ -35,7 +35,7 @@
   ```
   _helpers.tpl
   ```
-## Convert your existing YAML into a Helm template
+## Convert deployment YAMLs into a Helm template
 - [**notification-deployment**](orchestrate-sensor-services/templates/notification-deployment.yaml)
 - [**notification-service**](orchestrate-sensor-services/templates/notification-service.yaml)
 - [**notification-configmap**](orchestrate-sensor-services/templates/notification-configmap.yaml)
