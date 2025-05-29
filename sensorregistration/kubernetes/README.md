@@ -86,7 +86,7 @@ PS C:\Git\microservices\sensorregistration\kubernetes>
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/...` → `ui-service`
+  * `http://localhost:30081/` → `ui-service`
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
