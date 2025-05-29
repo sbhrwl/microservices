@@ -1,6 +1,5 @@
 # Creating environments
 - [Introduction](#introduction)
-- [Organize your Helm chart directory](#organize-your-helm-chart-directory)
 - [Create environment wise values file](#create-environment-wise-values-file)
 - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
 - [Install Helm releases per environment](#install-helm-releases-per-environment)
@@ -14,7 +13,11 @@
   - that uses **separate `values.yaml` files** for each environment,
   - optionally with **separate namespaces** and **Git branching** or directory strategies.
 
-## Organize your Helm chart directory
+## Create environment wise values file
+- `values-<env>.yaml` files
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-prod.yaml)
 - Assuming your chart is named [`orchestrate-sensor-services`](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services):
 ```
 orchestrate-sensor-services/
@@ -35,11 +38,6 @@ orchestrate-sensor-services/
 ├── values-prod.yaml
 ├── .helmignore
 ```
-## Create environment wise values file
-- `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-prod.yaml)
 ## Use Kubernetes namespaces
 - Namespaces keep your environments isolated on the same cluster.
   ```bash
