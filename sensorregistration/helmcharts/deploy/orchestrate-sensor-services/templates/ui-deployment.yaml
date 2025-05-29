@@ -18,7 +18,7 @@ spec:
           ports:
             - containerPort: {{ .Values.uiService.port }}
           env:
-{% for key, value in .Values.uiService.env.items() %}
-            - name: {{ key }}
-              value: "{{ value }}"
-{% endfor %}
+            {{- range $key, $value := .Values.uiService.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}

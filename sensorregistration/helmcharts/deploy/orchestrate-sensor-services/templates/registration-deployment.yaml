@@ -18,7 +18,7 @@ spec:
           ports:
             - containerPort: {{ .Values.registrationService.port }}
           env:
-{% for key, value in .Values.registrationService.env.items() %}
-            - name: {{ key }}
-              value: "{{ value }}"
-{% endfor %}
+            {{- range $key, $value := .Values.registrationService.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
