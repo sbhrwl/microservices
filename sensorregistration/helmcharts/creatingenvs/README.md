@@ -3,7 +3,7 @@
 - [Create environment wise values file](#create-environment-wise-values-file)
 - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
 - [Install Helm releases per environment](#install-helm-releases-per-environment)
-  - [Verify what this installation created](#verify-what-this-installation-created)
+  - [Verify release](#verify-release)
   - [Uninstall](#uninstall)
 - [Upgrades per environment](#upgrades-per-environment)
 - [Environment specific secrets and configs](#environment-specific-secrets-and-configs)
@@ -70,7 +70,7 @@ helm install orchestrate-sensor-services-staging . -f values-staging.yaml -n sta
 # For prod
 helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
 ```
-### Verify what this installation created
+### Verify release
 - Helm list
   ```
   helm list -A
