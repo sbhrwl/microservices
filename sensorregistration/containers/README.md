@@ -6,7 +6,7 @@
   - [Prerequisites](#prerequisites)
   - [Using docker compose](#using-docker-compose)
   - [Using docker commands](#using-docker-commands)
-
+- [Test](#test)
 ## Change to Kafka setup for containers
 - Replace: `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092`
 - With `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://host.docker.internal:29092`
