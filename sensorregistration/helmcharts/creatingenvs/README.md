@@ -121,12 +121,6 @@ ui-service             NodePort    10.106.105.86    <none>        9081:30081/TCP
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
-## Uninstall Helm release
-- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestrate-sensor-services-release`
-  ```
-  helm uninstall orchestrate-sensor-services-release
-  ``` 
-
 ### Uninstall
 ```
 helm uninstall orchestrate-sensor-services-dev -n dev
