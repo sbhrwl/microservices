@@ -149,7 +149,7 @@ registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5   
 sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          4m10s
 ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          4m10s
 ```
-- Describe a specific HPA: **`kubectl describe hpa registration-hpa -n dev`*"
+- Describe a specific HPA: **`kubectl describe hpa registration-hpa -n dev`**
 ```
 C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl describe hpa registration-hpa -n dev
 Name:                                                  registration-hpa
