@@ -1,7 +1,7 @@
 # Automation
 - [Using GitOps tools](#using-gitops-tools)
 - [Script to create namespaces and install all 3 environments in one go](#script-to-create-namespaces-and-install-all-3-environments-in-one-go)
-- [Uninstallation](#uninstallation)
+  - [Uninstallation](#uninstallation)
 - [Scripts that takes environment name as input parameter](#scripts-that-takes-environment-name-as-input-parameter)
 - [Checking differences before applying changes](#checking-differences-before-applying-changes)
 ## Using GitOps tools
@@ -22,7 +22,7 @@
   Set-ExecutionPolicy RemoteSigned -Scope Process
   ./deploy-all.ps1
   ```
-## Uninstallation
+### Uninstallation
 - The PowerShell script ([`uninstall-all.ps1`](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/deploy/uninstall-all.ps1)) **uninstalls** the Helm releases and delete the associated namespaces:
 - Save this as `uninstall-all.ps1` in your project folder.
 - Run it in PowerShell:
