@@ -11,5 +11,5 @@
 - [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Horizontal Pod Autoscalar](hpa/README.md)
-- [Automation][automation/README.md)
+- [Automation](automation/README.md)
 - [Cluster with multiple nodes](clusterwithmultiplenodes/README.md)
