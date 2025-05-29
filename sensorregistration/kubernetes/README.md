@@ -55,7 +55,7 @@ kubectl apply -f orchestrate-sensor-services.yaml
 # Cleanup
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
-## Verify
+## Verify deployment
 ```
 PS C:\Git\microservices\sensorregistration\kubernetes> kubectl apply -f orchestrate-sensor-services.yaml
 configmap/notification-service-config created
