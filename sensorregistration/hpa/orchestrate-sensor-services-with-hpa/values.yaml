@@ -1,3 +1,24 @@
+hpa:
+  notification:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  registration:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  sensor:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  ui:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
 notificationService:
   config:
     SERVER_PORT: '9084'

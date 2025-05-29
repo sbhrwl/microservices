@@ -1,20 +1,20 @@
-{{- if .Values.notificationService.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ .Chart.Name }}-notificationService
+  name: notification-hpa
+  labels:
+    app: notification
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Chart.Name }}-notificationService
-  minReplicas: {{ .Values.notificationService.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.notificationService.autoscaling.maxReplicas }}
+    name: notification
+  minReplicas: { { .Values.hpa.notification.minReplicas } }
+  maxReplicas: { { .Values.hpa.notification.maxReplicas } }
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.notificationService.autoscaling.targetCPUUtilizationPercentage }}
-{{- end }}
+          averageUtilization: { { .Values.hpa.notification.targetCPUUtilizationPercentage } }
