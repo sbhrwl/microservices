@@ -23,9 +23,17 @@
 - Assuming your chart is named [`orchestrate-sensor-services`](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services):
 ```
 orchestrate-sensor-services/
-├── charts/
 ├── templates/
-│   └── all-resources
+│   ├── notification-deployment.yaml
+│   ├── notification-service.yaml
+│   ├── notification-configmap.yaml
+│   ├── registration-deployment.yaml
+│   ├── registration-service.yaml
+│   ├── sensor-deployment.yaml
+│   ├── sensor-service.yaml
+│   ├── ui-deployment.yaml
+│   ├── ui-service.yaml
+│   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
 ├── values-staging.yaml
