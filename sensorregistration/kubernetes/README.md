@@ -2,7 +2,7 @@
 - [Kubernetes commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/k8scommands/README.md)
 - [Push images to Docker registry](#push-images-to-docker-registry)
 - [Deployment files](#deployment-files)
-- [Cleanup](#cleanup)
+- [Cleanup containers created during development](#cleanup-containers-created-during-development)
 - [Apply](#apply)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
@@ -30,7 +30,7 @@ docker push sbhrwldocker/notification-service:latest
 - [`notification-service.yaml`](notification-service.yaml)
 - Combined: [`orchestrate-sensor-services.yaml`](orchestrate-sensor-services.yaml)
 
-## Cleanup
+## Cleanup containers created during development
 - Stop running containers
 ```
 docker ps --format "{{.Names}}" | grep -E 'sensor-service|ui-service|registration-service|notification-service' | xargs -r docker stop
