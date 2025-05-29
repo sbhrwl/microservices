@@ -65,7 +65,7 @@
     kubectl get all -n dev
     ``` 
 ## Install Helm releases per environment
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services-with-hpa-release`)
+- Go to Helm chart folder [`orchestrate-sensor-services-with-hpa`](orchestrate-sensor-services-with-hpa)
 ```bash
 # For dev (default values.yaml)
 helm install orchestrate-sensor-services-with-hpa-release-dev . -n dev
@@ -95,23 +95,33 @@ helm install orchestrate-sensor-services-with-hpa-release-prod . -f values-prod.
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>helm list -n dev
-NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-dev dev             1               2025-05-29 10:28:52.6299129 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>helm install orchestrate-sensor-services-with-hpa-release-dev . -n dev
+NAME: orchestrate-sensor-services-with-hpa-release-dev
+LAST DEPLOYED: Thu May 29 18:10:01 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
 
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get pods -n dev
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>helm list -n dev
+NAME                                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+orchestrate-sensor-services-with-hpa-release-dev        dev             1               2025-05-29 18:10:01.6976586 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get pods -n dev
 NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-vskkc   1/1     Running   0          44s
-registration-service-7c4555d588-tc8vs   1/1     Running   0          44s
-sensor-service-59b4d96b5-pxz7k          1/1     Running   0          44s
-ui-service-55f94d6747-r8jkh             1/1     Running   0          44s
+notification-service-7f5845c77c-k98lr   1/1     Running   0          26s
+registration-service-7c4555d588-5qm9v   1/1     Running   0          26s
+sensor-service-59b4d96b5-m4wdb          1/1     Running   0          26s
+ui-service-55f94d6747-clsck             1/1     Running   0          26s
 
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get svc -n dev
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-notification-service   ClusterIP   10.98.195.16     <none>        9084/TCP         102s
-registration-service   ClusterIP   10.110.139.200   <none>        9083/TCP         102s
-sensor-service         NodePort    10.109.147.130   <none>        9082:30082/TCP   102s
-ui-service             NodePort    10.106.105.86    <none>        9081:30081/TCP   102s
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get svc -n dev
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+notification-service   ClusterIP   10.107.107.90   <none>        9084/TCP         32s
+registration-service   ClusterIP   10.100.167.26   <none>        9083/TCP         32s
+sensor-service         NodePort    10.97.154.243   <none>        9082:30082/TCP   32s
+ui-service             NodePort    10.105.71.251   <none>        9081:30081/TCP   32s
+
+C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
