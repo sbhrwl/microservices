@@ -2,7 +2,6 @@
 - [Introduction](#introduction)
 - [Chart structure](#chart-structure)
 - [HPA configuration](#hpa-configuration)
-- [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 - [Installation](#installation)
   - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
   - [Releases per environment](#releases-per-environment)
@@ -139,6 +138,7 @@ ui-service             NodePort    10.105.71.251   <none>        9081:30081/TCP 
 
 C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>
 ```
+- [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa -n dev`**
 ```
