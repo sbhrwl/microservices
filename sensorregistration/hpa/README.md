@@ -6,7 +6,7 @@
   - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
   - [Releases per environment](#releases-per-environment)
 - [Verify release](#verify-release)
-- [Verify HPA](#v-hpa)
+- [Verify HPA](#verify-hpa)
 - [Access services](#access-services)
 - [Uninstall](#uninstall)
 - [Upgrades per environment](#upgrades-per-environment)
