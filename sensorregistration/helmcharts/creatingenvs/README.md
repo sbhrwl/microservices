@@ -93,6 +93,8 @@ helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
   kubectl get all -n staging
   kubectl get all -n prod
   ```
+- `kubectl get pods -n dev`
+- `kubectl get svc -n dev`
 ### Uninstall
 ```
 helm uninstall orchestrate-sensor-services-dev -n dev
