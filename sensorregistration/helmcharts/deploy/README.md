@@ -2,10 +2,10 @@
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
 - [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
-  - [Folder structure](#folder-structure)
+- [Chart structure](#chart-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
-- [Verify deployment](#verify-deployment)
+- [Verify release](#verify-release)
 - [Access services](#access-services)
 - [Uninstall Helm release](#uninstall-helm-release)
 ## Create Helm chart structure
@@ -46,7 +46,7 @@
 - [**ui-deployment**](orchestrate-sensor-services/templates/ui-deployment.yaml)
 - [**ui-service**](orchestrate-sensor-services/templates/ui-service.yaml)
 - [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
-### Folder structure
+## Chart structure
 ```pgsql
 orchestrate-sensor-services/
 ├── templates/
@@ -69,19 +69,12 @@ orchestrate-sensor-services/
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
 ## Install Helm release
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services`), run this command:
+- Go to Helm chart folder [**orchestrate-sensor-services**](orchestrate-sensor-services), run this command:
   ```powershell
   helm install orchestrate-sensor-services-release . 
   ```
-- **`orchestrate-sensor-services-release`** is the name you're assigning to this Helm release (you can change it if you like).
-- `.` means Helm will *install using the chart in the current directory*.
-- Helm will deploy both your services using the templates and values from `values.yaml`.
-- Verify release `helm list`
-  ```
-  NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
-  orchestrate-sensor-services-release   default         1               2025-05-12 09:53:22.55453 +0300 EEST    deployed        orchestrate-sensor-services-0.1.0    1.16.0
-  ```
-## Verify deployment
+
+## Verify release
 - Helm list
   ```
   helm list -A
