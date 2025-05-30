@@ -6,7 +6,7 @@
 - [Verify release](#verify-release)
 - [Verify HPA](#verify-hpa)
 - [Access services](#access-services)
-- [Uninstall](#uninstall)
+- [Uninstall Helm release](#uninstall-helm-release)
 - [HPA simulations](#hpa-simulations)
   - [Check if metrics server is running](#check-if-metrics-server-is-running)
   - [Force a CPU load to test autoscaling](#force-a-cpu-load-to-test-autoscaling)
@@ -122,7 +122,7 @@ Events:
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
-## Uninstall
+## Uninstall Helm release
 ```
 helm uninstall orchestrate-sensor-services-with-hpa-release
 ```
