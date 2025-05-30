@@ -3,7 +3,7 @@
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
 - [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
-  - [Folder structure](#folder-structure)
+- [Chart structure](#chart-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
@@ -47,7 +47,7 @@
 - [**ui-deployment**](orchestrate-sensor-services/templates/ui-deployment.yaml)
 - [**ui-service**](orchestrate-sensor-services/templates/ui-service.yaml)
 - [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
-### Folder structure
+### Chart structure
 ```pgsql
 orchestrate-sensor-services/
 ├── templates/
