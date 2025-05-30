@@ -50,57 +50,62 @@
   ```
 
 ## Verify release
-- Helm list
-  ```
-  helm list -A
-  ```
-- Verify
 ```
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>helm install orchestrate-sensor-services-with-hpa-release
-NAME: orchestrate-sensor-services-with-hpa-release-dev
-LAST DEPLOYED: Thu May 29 18:10:01 2025
-NAMESPACE: dev
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm install orchestrate-sensor-services-with-hpa-release .
+NAME: orchestrate-sensor-services-with-hpa-release
+LAST DEPLOYED: Fri May 30 11:01:11 2025
+NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>helm list
-NAME                                                NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-with-hpa-release        dev             1               2025-05-29 18:10:01.6976586 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get pods
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list
+NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+orchestrate-sensor-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list -A
+NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+orchestrate-sensor-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get pods
 NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-k98lr   1/1     Running   0          26s
-registration-service-7c4555d588-5qm9v   1/1     Running   0          26s
-sensor-service-59b4d96b5-m4wdb          1/1     Running   0          26s
-ui-service-55f94d6747-clsck             1/1     Running   0          26s
-
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get svc
-NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-notification-service   ClusterIP   10.107.107.90   <none>        9084/TCP         32s
-registration-service   ClusterIP   10.100.167.26   <none>        9083/TCP         32s
-sensor-service         NodePort    10.97.154.243   <none>        9082:30082/TCP   32s
-ui-service             NodePort    10.105.71.251   <none>        9081:30081/TCP   32s
+notification-service-7f5845c77c-nm2qt   1/1     Running   0          23s
+registration-service-7c4555d588-b4mpk   1/1     Running   0          23s
+sensor-service-59b4d96b5-l2zwl          1/1     Running   0          23s
+ui-service-55f94d6747-qbssp             1/1     Running   0          23s
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get svc
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          25d
+notification-service   ClusterIP   10.107.55.248    <none>        9084/TCP         27s
+registration-service   ClusterIP   10.109.192.122   <none>        9083/TCP         27s
+sensor-service         NodePort    10.97.158.255    <none>        9082:30082/TCP   27s
+ui-service             NodePort    10.102.72.111    <none>        9081:30081/TCP   27s
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl get hpa
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get hpa
 NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          4m10s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          4m10s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          4m10s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          4m10s
+notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
+registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
+sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
+ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
 ```
 - Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
 ```
-C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa>kubectl describe hpa registration-hpa
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get hpa
+NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
+registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
+sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
+ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl describe hpa registration-hpa
 Name:                                                  registration-hpa
+Namespace:                                             default
 Labels:                                                app=registration
                                                        app.kubernetes.io/managed-by=Helm
 Annotations:                                           meta.helm.sh/release-name: orchestrate-sensor-services-with-hpa-release
-CreationTimestamp:                                     Thu, 29 May 2025 18:10:02 +0300
+                                                       meta.helm.sh/release-namespace: default
+CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
 Reference:                                             Deployment/registration
 Metrics:                                               ( current / target )
   resource cpu on pods  (as a percentage of request):  <unknown> / 80%
@@ -112,9 +117,9 @@ Conditions:
   ----         ------  ------          -------
   AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "registration" not found
 Events:
-  Type     Reason          Age                  From                       Message
-  ----     ------          ----                 ----                       -------
-  Warning  FailedGetScale  27s (x5 over 4m27s)  horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+  Type     Reason          Age   From                       Message
+  ----     ------          ----  ----                       -------
+  Warning  FailedGetScale  11s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
 ```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
