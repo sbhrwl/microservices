@@ -48,6 +48,7 @@
 ## Protobuf usage
 * **Internal microservices** often use Protobuf, especially when built with **gRPC** or communicating via **message brokers**.
 * Protobuf helps ensure **performance, compactness, and schema evolution** in internal systems.
+* [Protobuf setup guide for Java projects](protobuf/README.md)
 
 | Use Case                      | Protobuf Usage | Notes                                                              |
 | ----------------------------- | -------------- | ------------------------------------------------------------------ |
