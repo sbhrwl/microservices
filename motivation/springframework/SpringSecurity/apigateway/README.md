@@ -8,7 +8,8 @@
 - [Service discovery](#service-discovery)
 ## Introduction
 - Expose a controlled API endpoint
-- Manage authentication and authorization - Enforce rate limiting and quota management
+- Manage authentication and authorization
+- Enforce rate limiting and quota management
 ```
 [ Postman ] ──▶ [ Kong Gateway (localhost:8000) ]
                         │
