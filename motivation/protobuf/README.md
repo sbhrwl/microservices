@@ -86,8 +86,8 @@ message TaskMessage {
 }
 
 enum CommandType {
-  START = 0;
-  STOP = 1;
-  RESTART = 2;
+  DIRECT = 0;
+  OPEN = 1;
+  PULSE = 2;
 }
 ```
