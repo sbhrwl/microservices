@@ -90,23 +90,21 @@ helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>helm list -n dev
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list -n dev
 NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-dev dev             1               2025-05-29 10:28:52.6299129 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get pods -n dev
+orchestrate-sensor-services-dev dev             1               2025-05-30 11:04:03.8511928 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get pods -n dev
 NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-vskkc   1/1     Running   0          44s
-registration-service-7c4555d588-tc8vs   1/1     Running   0          44s
-sensor-service-59b4d96b5-pxz7k          1/1     Running   0          44s
-ui-service-55f94d6747-r8jkh             1/1     Running   0          44s
-
-C:\Git\microservices\sensorregistration\helmcharts\deploy\orchestrate-sensor-services>kubectl get svc -n dev
+notification-service-7f5845c77c-ndt8t   1/1     Running   0          2m13s
+registration-service-7c4555d588-vfz2j   1/1     Running   0          2m13s
+sensor-service-59b4d96b5-q4kbl          1/1     Running   0          2m13s
+ui-service-55f94d6747-gqw57             1/1     Running   0          2m13s
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get svc -n dev
 NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-notification-service   ClusterIP   10.98.195.16     <none>        9084/TCP         102s
-registration-service   ClusterIP   10.110.139.200   <none>        9083/TCP         102s
-sensor-service         NodePort    10.109.147.130   <none>        9082:30082/TCP   102s
-ui-service             NodePort    10.106.105.86    <none>        9081:30081/TCP   102s
+notification-service   ClusterIP   10.102.19.193    <none>        9084/TCP         2m24s
+registration-service   ClusterIP   10.102.135.152   <none>        9083/TCP         2m24s
+sensor-service         NodePort    10.101.218.249   <none>        9082:30082/TCP   2m24s
+ui-service             NodePort    10.101.36.130    <none>        9081:30081/TCP   2m24s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
