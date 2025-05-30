@@ -5,7 +5,7 @@
 * [Best practices](#best-practices)
 * [Microservice example: `Generate message`](generatemessage/README.md)
 * [Spring framework](springframework/README.md)
-* [Industry practice of Protobuf usage](#industry-practice-of-protobuf-usage)
+* [Protobuf usage](#protobuf-usage)
 ## Introduction
 * Motivation for shift to microservices
   * Better scalability?
@@ -45,7 +45,7 @@
 * Observe runtime behavior before splitting (e.g., if `Command Generator` spikes under load, consider isolating XML creation).
 * Services that interact with **infrastructure or protocols** (e.g., Protocol Gateway) are often better as independent functions.
 
-## Industry practice of Protobuf usage
+## Protobuf usage
 * **Internal microservices** often use Protobuf, especially when built with **gRPC** or communicating via **message brokers**.
 * Protobuf helps ensure **performance, compactness, and schema evolution** in internal systems.
 
