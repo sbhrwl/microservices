@@ -2,9 +2,9 @@
 - [Introduction](#introduction)
 - [Create environment wise values file](#create-environment-wise-values-file)
 - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
-- [Install Helm releases per environment](#install-helm-releases-per-environment)
+- [Helm releases per environment](#install-helm-releases-per-environment)
   - [Verify release](#verify-release)
-  - [Uninstall](#uninstall)
+  - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrades per environment](#upgrades-per-environment)
 - [Environment specific secrets and configs](#environment-specific-secrets-and-configs)
 ## Introduction
@@ -15,28 +15,29 @@
 
 ## Create environment wise values file
 - `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services/values-prod.yaml)
-- Assuming your chart is named [`orchestrate-sensor-services`](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/deploy/orchestrate-sensor-services):
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values-prod.yaml)
 ```
-orchestrate-sensor-services/
+orchestrate-sensor-services-with-hpa/
 ├── templates/
 │   ├── notification-deployment.yaml
 │   ├── notification-service.yaml
-│   ├── notification-configmap.yaml
+│   ├── notification-service-hpa.yaml
 │   ├── registration-deployment.yaml
 │   ├── registration-service.yaml
+│   ├── registration-service-hpa.yaml
 │   ├── sensor-deployment.yaml
 │   ├── sensor-service.yaml
+│   ├── sensor-service-hpa.yaml
 │   ├── ui-deployment.yaml
 │   ├── ui-service.yaml
+│   ├── ui-service-hpa.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
 ├── values-staging.yaml
 ├── values-prod.yaml
-├── .helmignore
 ```
 ## Use Kubernetes namespaces
 - Namespaces keep your environments isolated on the same cluster.
@@ -58,8 +59,8 @@ orchestrate-sensor-services/
     ```
     kubectl get all -n dev
     ``` 
-## Install Helm releases per environment
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services`)
+## Helm release per environment
+- Go to Helm chart folder [orchestrate-sensor-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa)
 ```bash
 # For dev (default values.yaml)
 helm install orchestrate-sensor-services-dev . -n dev
@@ -114,14 +115,14 @@ ui-service             NodePort    10.106.105.86    <none>        9081:30081/TCP
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
-### Uninstall
+### Uninstall Helm release
 ```
 helm uninstall orchestrate-sensor-services-dev -n dev
 helm uninstall orchestrate-sensor-services-staging -n staging
 helm uninstall orchestrate-sensor-services-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services`)
+- Go to Helm chart folder [orchestrate-sensor-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa)
 ```bash
 helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
 helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
