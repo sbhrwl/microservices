@@ -24,7 +24,6 @@
 - Each push profile includes **individual OBIS codes** for:
   - Phase voltage
   - Phase current
-  - Power (active/reactive)
   - Power factor
   - Power quality metrics (e.g., THD, sags/swells)
 ## Ingestion flow
