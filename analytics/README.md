@@ -6,11 +6,11 @@
 - [Ingestion flow](#ingestion-flow)
 ## Grid problems to solve using power quality data
 - **Phase imbalance**
-- **Voltage fluctuations & sags**
-- **Harmonics & distortion**
+- **Voltage fluctuations and sags**
+- **Harmonics and distortion**
 ## Event collection 
 
-| Measurement            | Phase imbalance | Voltage fluctuations & sags | Harmonics & distortion |
+| Measurement            | Phase imbalance | Voltage fluctuations and sags | Harmonics and distortion |
 |------------------------|------------------|------------------------------|-------------------------|
 | Phase (A/B/C)          | ✅               | ✅                           |                         |
 | Phase Voltage          | ✅               | ✅                           | ✅                      |
