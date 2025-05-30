@@ -7,6 +7,11 @@
   - [Create routes](#create-routes)
 - [Service discovery](#service-discovery)
 ## Introduction
+- **Use API gateways selectively**  
+  - If you do not want to expose the broker directly to external clients, instead want to expose **`a controlled API endpoint`**
+  - If you want to manage authentication and authorization for message publishing/subscription through a **single entry point**, an API gateway can help enforce security policies.
+  - If you want to enforce to limit API requests
+    - Rate limiting and quota management
 ```
 [ Postman ] ──▶ [ Kong Gateway (localhost:8000) ]
                         │
