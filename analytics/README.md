@@ -7,6 +7,15 @@
 - **Phase imbalance**
 - **Voltage fluctuations & sags**
 - **Harmonics & distortion**
+## Event collection 
+
+| Measurement            | Phase imbalance | Voltage fluctuations & sags | Harmonics & distortion |
+|------------------------|------------------|------------------------------|-------------------------|
+| Phase (A/B/C)          | ✅               | ✅                           |                         |
+| Phase Voltage          | ✅               | ✅                           | ✅                      |
+| Phase Current          | ✅               |                              | ✅                      |
+| Power Factor           |                  |                              | ✅                      |
+| Power Quality (THD, dips, swells) |        | ✅                           | ✅                      |
 
 ## Data source or initial discovery
 - Data is collected from **DLMS smart meters**.
