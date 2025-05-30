@@ -6,6 +6,7 @@
 - [Apply](#apply)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
+- [Cleanup](#cleanup)
 ## Push images to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
 ```
@@ -90,3 +91,7 @@ PS C:\Git\microservices\sensorregistration\kubernetes>
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
+## Cleanup
+```
+kubectl delete -f orchestrate-sensor-services.yaml
+```
