@@ -1,4 +1,5 @@
 # [Analytics on power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
+- [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
 - [Data source or initial discovery](data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
