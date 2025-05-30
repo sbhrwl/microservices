@@ -46,25 +46,12 @@
 * Services that interact with **infrastructure or protocols** (e.g., Protocol Gateway) are often better as independent functions.
 
 ## Industry practice of Protobuf usage
+* **Internal microservices** often use Protobuf, especially when built with **gRPC** or communicating via **message brokers**.
+* Protobuf helps ensure **performance, compactness, and schema evolution** in internal systems.
 
-Use Case	Protobuf Usage	Notes
-
-Internal microservices	✅ Yes	Common with gRPC or REST+Protobuf in performance-critical systems
-Public REST APIs	❌ Rarely	JSON preferred due to readability and broad client compatibility
-Message brokers (Kafka, etc.)	✅ Yes	Widely used with schema registries for efficient, compact messages
-Event-driven architecture	✅ Yes	Used for structured, fast, and evolvable event formats
-
-
-
----
-
-✅ Key Point:
-
-Internal microservices often use Protobuf, especially when built with gRPC or communicating via message brokers.
-
-Protobuf helps ensure performance, compactness, and schema evolution in internal systems.
-
-
-Let me know if you'd like a column added for JSON usage to contrast!
-
-
+| Use Case                      | Protobuf Usage | Notes                                                              |
+| ----------------------------- | -------------- | ------------------------------------------------------------------ |
+| Internal microservices        | ✅ Yes          | Common with gRPC or REST+Protobuf in performance-critical systems  |
+| Public REST APIs              | ❌ No           | JSON preferred due to readability and broad client compatibility   |
+| Message brokers (Kafka, etc.) | ✅ Yes          | Widely used with schema registries for efficient, compact messages |
+| Event-driven architecture     | ✅ Yes          | Used for structured, fast, and evolvable event formats             |
