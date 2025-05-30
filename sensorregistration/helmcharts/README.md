@@ -70,7 +70,7 @@ orchestrate-sensor-services/
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
 ## Install Helm release
-- Go to Helm chart folder (e.g., `orchestrate-sensor-services`), run this command:
+- Go to Helm chart folder [**orchestrate-sensor-services**](orchestrate-sensor-services)
   ```powershell
   helm install orchestrate-sensor-services-release . 
   ```
