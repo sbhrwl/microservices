@@ -20,7 +20,7 @@
 
 ## Data source or initial discovery
 - Data is collected from **DLMS smart meters**.
-- Smart meters **push power quality data hourly** using a **push profile**.
+- Smart meters **push power quality data hourly** using a **push profile** configured in a **push schedular**
 - Each push profile includes **individual OBIS codes** for:
   - Phase voltage
   - Phase current
