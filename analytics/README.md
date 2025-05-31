@@ -5,6 +5,7 @@
 - [Data source or initial discovery](data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
+- [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
 ## [Grid problems to solve using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
@@ -95,6 +96,8 @@ Power quality ingestion service (to be built)
 - Need to support filtering by time, meterId, and obiscode 
 - [Datalake GCS](datalake/README.md)
 - [Timeseries DB](timeseries/README.md)
+
+## Datalake Vs Timeseries DB 
 
 | Aspect                 | GCS Data Lake                              | InfluxDB Time Series DB                    |
 |------------------------|-------------------------------------------|--------------------------------------------|
