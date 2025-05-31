@@ -31,21 +31,21 @@
 - Use GCS compose or **Dataflow job** to consolidate small files hourly or daily.
 
 ### Storage access efficiency
-- Time + OBIS Code vs Time + Meter
+- Time + Meter vs Time + OBIS Code
 
-| Criteria                        | Time + OBIS Code                            | Time + Meter                             |
-|-------------------------------|---------------------------------------------|------------------------------------------|
-| **Optimized for**             | Analytics by OBIS (e.g., voltage trends)    | Per-meter diagnostics / traceability     |
-| **Reads for bulk analytics** | ✅ Efficient (scan one OBIS type)           | ❌ Less efficient (need to scan all meters) |
-| **Reads for single meter**    | ❌ Slower (need to search all OBIS files)   | ✅ Fast (data is in one place per meter)  |
-| **Write complexity**          | Medium (grouping by OBIS)                   | Low (one file per push)                  |
-| **File count (raw)**          | 24,000/day (with 5k OBIS readings/file)     | 12M/day (or 24k/day if batched)          |
-| **Best for**                  | Aggregation, trend detection                | Auditing, debugging per device           |
+| Criteria                        | Time + Meter                             | Time + OBIS Code                            |
+|-------------------------------|------------------------------------------|---------------------------------------------|
+| **Optimized for**             | Per-meter diagnostics / traceability     | Analytics by OBIS (e.g., voltage trends)    |
+| **Reads for bulk analytics** | ❌ Less efficient (need to scan all meters) | ✅ Efficient (scan one OBIS type)           |
+| **Reads for single meter**    | ✅ Fast (data is in one place per meter)  | ❌ Slower (need to search all OBIS files)   |
+| **Write complexity**          | Low (one file per push)                  | Medium (grouping by OBIS)                   |
+| **File count (raw)**          | 12M/day (or 24k/day if batched)          | 24,000/day (with 5k OBIS readings/file)     |
+| **Best for**                  | Auditing, debugging per device           | Aggregation, trend detection                |
 
 ### Summary
-- Choose **Time + OBIS Code** if:
-  - Main use case is **analytics across all meters**
-  - You want to quickly analyze e.g., voltage dips, sags, across regions
 - Choose **Time + Meter** if:
   - Your focus is **per-device investigation**, e.g., troubleshooting a faulty meter
   - Simpler writing logic, no need to group by OBIS
+- Choose **Time + OBIS Code** if:
+  - Main use case is **analytics across all meters**
+  - You want to quickly analyze e.g., voltage dips, sags, across regions
