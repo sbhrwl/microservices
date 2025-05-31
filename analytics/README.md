@@ -50,14 +50,14 @@ Power quality ingestion service (to be built)
 (Available for analytics)
 ```
 
-1. **DLMS Smart Meter**
+1. **DLMS smart meter**
    - Sends hourly push of power quality measurements via DLMS push profile.
-2. **DLMS Gateway**
+2. **DLMS gateway**
    - Parses incoming DLMS raw data.
    - Converts into structured JSON format.
-   - Pushes JSON to an **internal queue (Queue B)**.
-3. **Ingestion Start Point**
-   - We subscribe to **Queue-Analytics** with structured data:
+   - Pushes JSON to **Queue-Analytics**.
+3. **Ingestion start point**
+   - Subscribe to **Queue-Analytics** and consume parsed data:
      ```json
      {
        "meterId": "DLMS123456",
@@ -69,7 +69,7 @@ Power quality ingestion service (to be built)
        ]
      }
      ```
-## Storage Model
+## Storage model
 - We will **split each OBIS reading** into its own record.
 - Minimal fields per record:
   ```json
