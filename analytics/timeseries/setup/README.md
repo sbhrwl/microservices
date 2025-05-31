@@ -1,4 +1,4 @@
-Exactly! ✅ Here's your quick checklist:
+
 ```
 version: '3'
 services:
@@ -18,41 +18,32 @@ volumes:
   influxdb-storage:
 ```
 
-✅ Step 1: Start InfluxDB
-
-Use your docker-compose.yml:
-
-docker-compose up -d
-
-
----
-
-✅ Step 2: Download InfluxDB CLI (influx.exe)
-
-Visit: https://portal.influxdata.com/downloads/
-
-Scroll to InfluxDB 1.x CLI section
-
-Download and unzip on your Windows machine
-
-
-
----
-
-✅ Step 3: Connect via CLI
-
-Open PowerShell or CMD, then run:
-
-influx.exe -host localhost -username admin -password admin123
-
-You'll enter the Influx shell like this:
-
-Connected to http://localhost:8086 version 1.8.x
-InfluxDB shell version: 1.8.x
+- Shell: https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip
+```
+Connected to http://localhost:8086 version 1.8.10
+InfluxDB shell version: 1.8.10
+> show databses
+ERR: error parsing query: found databses, expected CONTINUOUS, DATABASES, DIAGNOSTICS, FIELD, GRANTS, MEASUREMENT, MEASUREMENTS, QUERIES, RETENTION, SERIES, SHARD, SHARDS, STATS, SUBSCRIPTIONS, TAG, USERS at line 1, char 6
+Warning: It is possible this error is due to not setting a database.
+Please set a database with the command "use <database>".
 > SHOW DATABASES
-
-
----
-
-Ready to insert test meter data next?
-
+name: databases
+name
+----
+_internal
+> CREATE DATABASE power_quality
+> USE power_quality
+Using database power_quality
+> SHOW DATABASES
+name: databases
+name
+----
+_internal
+power_quality
+> INSERT voltage,meter_id=meter001,phase=A,obis_code=1.0.32.7.0.255 value=229.5
+> SELECT * FROM voltage
+name: voltage
+time                meter_id obis_code      phase value
+----                -------- ---------      ----- -----
+1748698153029208483 meter001 1.0.32.7.0.255 A     229.5
+```
