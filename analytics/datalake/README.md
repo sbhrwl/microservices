@@ -20,6 +20,8 @@
 - ⚠️ Harder to isolate individual meters  
 - 🚀 Fast for global batch queries  
 - `gs://pq-data/{year}/{month}/{day}/{hour}/all-meters.json`
+- File count estimate
+  - **500k meters × 10 OBIS codes × 24 pushes/day = `120 million OBIS readings/day`**
 
 ## Mitigating large number of files
 - **Batch** by group of meters (e.g., 100 meters per file) → reduces to 120k files/day.
