@@ -32,6 +32,55 @@
 - **All meter data arrives on a single queue**, regardless of:
   - Meter ID
   - OBIS code
-### Design decision pending
-- No existing service yet to **split or route messages** by meter or OBIS code.
-- This will be the **starting point** for designing the data processing pipeline.
+
+
+## Data flow
+```
+DLMS Meter
+   │
+   ▼
+DLMS Gateway (parses DLMS → JSON)
+   │
+   ▼
+Internal Queue B (JSON messages)
+   │
+   ▼
+Power Quality Ingestion Service (to be built)
+   │
+   ▼
+[Target Storage Layer – TBD]
+   ▼
+(Available for analytics)
+```
+
+1. **DLMS Smart Meter**
+   - Sends hourly push of power quality measurements via DLMS push profile.
+2. **DLMS Gateway**
+   - Parses incoming DLMS raw data.
+   - Converts into structured JSON format.
+   - Pushes JSON to an **internal queue (Queue B)**.
+3. **Ingestion Start Point**
+   - We subscribe to **Queue B** with structured data:
+     ```json
+     {
+       "meterId": "DLMS123456",
+       "timestamp": "2025-05-31T10:00:00Z",
+       "values": [
+         { "obis": "1.0.32.7.0.255", "value": 230.1 },
+         { "obis": "1.0.52.7.0.255", "value": 231.0 },
+         ...
+       ]
+     }
+     ```
+## Storage Model
+- We will **split each OBIS reading** into its own record.
+- Minimal fields per record:
+  ```json
+  {
+    "meterId": "DLMS123456",
+    "timestamp": "2025-05-31T10:00:00Z",
+    "obis": "1.0.32.7.0.255",
+    "value": 230.1
+  }
+  ```
+
