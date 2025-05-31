@@ -95,3 +95,18 @@ Power quality ingestion service (to be built)
 - Need to support filtering by time, meterId, and obiscode 
 - [Datalake GCS](datalake/README.md)
 - [Timeseries DB](timeseries/README.md)
+
+| Aspect                 | GCS Data Lake                              | InfluxDB Time Series DB                    |
+|------------------------|-------------------------------------------|--------------------------------------------|
+| **Data type**           | Raw files (JSON, CSV, Parquet, etc.)      | Time series with schema (measurements, tags, fields) |
+| **Schema flexibility**  | Fully flexible (schema-on-read)            | Schema-on-write, structured for time series |
+| **Query type**          | Batch queries (e.g., BigQuery, Spark)      | Real-time queries, aggregations, analytics |
+| **Latency**             | Higher (minutes to hours)                   | Low latency (seconds to sub-seconds)       |
+| **Scalability**         | Virtually unlimited (object storage)       | High but limited by cluster size            |
+| **Cost**                | Low storage cost, pay per access            | Compute + storage costs, usually higher     |
+| **Data ingestion**      | Batch/streaming, can store raw and enriched | Optimized for high-frequency inserts        |
+| **Durability & backup** | Built-in durable storage, easy backups      | Built-in retention policies, backups possible |
+| **Flexibility for analytics** | Supports complex analytics with external tools | Limited to time-series analytics within DB |
+| **Cloud vendor lock-in**| Moderate (can migrate files but tooling may vary) | Some lock-in due to DB engine and query language |
+| **Setup complexity**    | Simple (upload files), but need query infra | Medium (DB setup, schema design, maintenance) |
+| **Use case fit**        | Long-term storage, historical analytics    | Real-time monitoring, anomaly detection     |
