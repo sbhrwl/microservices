@@ -52,14 +52,14 @@ Power quality ingestion service (to be built)
 (Available for analytics)
 ```
 
-1. **DLMS smart meter**
-   - Sends hourly push of power quality measurements via DLMS push profile.
-2. **DLMS gateway**
-   - Parses incoming DLMS raw data.
-   - Converts into structured JSON format.
-   - Pushes JSON to **Queue-Analytics**.
-3. **Ingestion start point**
-   - Subscribe to **Queue-Analytics** and consume parsed data:
+- **DLMS smart meter**
+  - Sends hourly push of power quality measurements via DLMS push profile.
+- **DLMS gateway**
+  - Parses incoming DLMS raw data.
+  - Converts into structured JSON format.
+  - Pushes JSON to **Queue-Analytics**.
+- **Ingestion start point**
+  - Subscribe to **Queue-Analytics** and consume parsed data:
      ```json
      {
        "meterId": "DLMS123456",
