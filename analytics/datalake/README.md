@@ -1,4 +1,11 @@
 # Designing data lake in GCS
+- [Objective](#objective)
+- [Transformation options](#transformation-options)
+  - [Time only](#time-only)
+  - [Time with Meter Id](#time-with-meter-id)
+  - [Time with OBIS code](#time-with-obis-code)
+- [Mitigating large number of files](#mitigating-large-number-of-files)
+- [Storage access efficiency](#storage-access-efficiency)
 ## Objective
 - Store parsed DLMS smart meter data efficiently for periodic analytics, keeping it cloud-agnostic and query-ready.
 ## Transformation options
@@ -30,7 +37,7 @@
     - 120 million ÷ 5,000 = 24,000 files/day
 - Use GCS compose or **Dataflow job** to consolidate small files hourly or daily.
 
-### Storage access efficiency
+## Storage access efficiency
 - Time + Meter vs Time + OBIS Code
 
 | Criteria                        | Time + Meter                             | Time + OBIS Code                            |
