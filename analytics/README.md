@@ -94,3 +94,4 @@ Power quality ingestion service (to be built)
 - Data pushed hourly  
 - Need to support filtering by time, meterId, and obiscode 
 - [Datalake](datalake/README.md)
+- [Timeseries](timeseries/README.md)
