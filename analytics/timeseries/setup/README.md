@@ -22,10 +22,6 @@ volumes:
 ```
 Connected to http://localhost:8086 version 1.8.10
 InfluxDB shell version: 1.8.10
-> show databses
-ERR: error parsing query: found databses, expected CONTINUOUS, DATABASES, DIAGNOSTICS, FIELD, GRANTS, MEASUREMENT, MEASUREMENTS, QUERIES, RETENTION, SERIES, SHARD, SHARDS, STATS, SUBSCRIPTIONS, TAG, USERS at line 1, char 6
-Warning: It is possible this error is due to not setting a database.
-Please set a database with the command "use <database>".
 > SHOW DATABASES
 name: databases
 name
