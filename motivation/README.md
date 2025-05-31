@@ -68,11 +68,11 @@
   - No two workers do the same task, ensuring efficiency and no duplicates.
 ### Examples
 - **Single consumer group:**  
-  One group with multiple consumers balances load across partitions.  
-  Good for horizontal scaling and simplicity.
+  - One group with multiple consumers balances load across partitions.  
+  - Good for horizontal scaling and simplicity.
 - **Multiple consumer groups:**  
-  Different groups independently consume the same topic data.  
-  Useful if you have different applications or analytics that need all the data separately.
+  - Different groups independently consume the same topic data.  
+  - Useful if you have different applications or analytics that need all the data separately.
 ### Decision Points
 
 | Scenario                        | Recommendation                 |
@@ -81,8 +81,5 @@
 | Multiple independent consumers  | Multiple consumer groups       |
 | Need scalability & load balance | Single group with multiple consumers |
 
----
-
-Choose a **single consumer group** if your ingestion service is the sole consumer and you want easy scaling.
-
-Choose **multiple consumer groups** if different services need the same data independently.
+- Choose a **single consumer group** if your ingestion service is the sole consumer and you want easy scaling.
+- Choose **multiple consumer groups** if different services need the same data independently.
