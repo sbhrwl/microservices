@@ -1,7 +1,22 @@
 Exactly! ✅ Here's your quick checklist:
+```
+version: '3'
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=power_quality
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin123
 
-
----
+volumes:
+  influxdb-storage:
+```
 
 ✅ Step 1: Start InfluxDB
 
