@@ -28,24 +28,21 @@
   - Power factor
   - Power quality metrics (e.g., THD, sags/swells)
 ## Ingestion flow
-- Data is pushed into a **message broker** that is part of the **HES (Headend System)**.
+- DLMS smart meters push data to the **Gateway**
 - **All meter data arrives on a single queue**, regardless of:
   - Meter ID
   - OBIS code
-
-
-## Data flow
 ```
-DLMS Meter
+DLMS smart meter
    │
    ▼
 DLMS Gateway (parses DLMS → JSON)
    │
    ▼
-Queue Analytics (JSON messages)
+Queue-Analytics (JSON messages)
    │
    ▼
-Power Quality Ingestion Service (to be built)
+Power quality ingestion service (to be built)
    │
    ▼
 [Target Storage Layer – TBD]
@@ -60,18 +57,18 @@ Power Quality Ingestion Service (to be built)
    - Converts into structured JSON format.
    - Pushes JSON to an **internal queue (Queue B)**.
 3. **Ingestion Start Point**
-   - We subscribe to **Queue Analytics** with structured data:
-   ```json
-   {
-  "meterId": "DLMS123456",
-  "timestamp": "2025-05-31T10:00:00Z",
-  "obis": "1.0.32.7.0.255",
-  "value": 230.1,
-  "measurementType": "voltage",
-  "phase": "A",
-  "unit": "V"
-   }
-   ```
+   - We subscribe to **Queue-Analytics** with structured data:
+     ```json
+     {
+       "meterId": "DLMS123456",
+       "timestamp": "2025-05-31T10:00:00Z",
+       "values": [
+         { "obis": "1.0.32.7.0.255", "value": 230.1 },
+         { "obis": "1.0.52.7.0.255", "value": 231.0 },
+         ...
+       ]
+     }
+     ```
 ## Storage Model
 - We will **split each OBIS reading** into its own record.
 - Minimal fields per record:
