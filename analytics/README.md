@@ -4,6 +4,7 @@
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
 - [Data source or initial discovery](data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
+- [Storage model](#storage-model)
 ## Grid problems to solve using power quality data
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
