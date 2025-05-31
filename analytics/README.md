@@ -6,6 +6,7 @@
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
 - [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
+- [Data ingestion service](service/README.md)
 ## [Grid problems to solve using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
