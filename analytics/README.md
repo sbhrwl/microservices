@@ -1,11 +1,11 @@
-# [Analytics on power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
+# Analytics on power quality data
 - [Event collection](#event-collection)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
 - [Data source or initial discovery](data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
-## Grid problems to solve using power quality data
+## [Grid problems to solve using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
 - **Harmonics and distortion**
