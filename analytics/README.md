@@ -42,7 +42,7 @@ DLMS Meter
 DLMS Gateway (parses DLMS → JSON)
    │
    ▼
-Internal Queue B (JSON messages)
+Queue Analytics (JSON messages)
    │
    ▼
 Power Quality Ingestion Service (to be built)
@@ -60,27 +60,30 @@ Power Quality Ingestion Service (to be built)
    - Converts into structured JSON format.
    - Pushes JSON to an **internal queue (Queue B)**.
 3. **Ingestion Start Point**
-   - We subscribe to **Queue B** with structured data:
-     ```json
-     {
-       "meterId": "DLMS123456",
-       "timestamp": "2025-05-31T10:00:00Z",
-       "values": [
-         { "obis": "1.0.32.7.0.255", "value": 230.1 },
-         { "obis": "1.0.52.7.0.255", "value": 231.0 },
-         ...
-       ]
-     }
-     ```
+   - We subscribe to **Queue Analytics** with structured data:
+   ```json
+   {
+  "meterId": "DLMS123456",
+  "timestamp": "2025-05-31T10:00:00Z",
+  "obis": "1.0.32.7.0.255",
+  "value": 230.1,
+  "measurementType": "voltage",
+  "phase": "A",
+  "unit": "V"
+   }
+   ```
 ## Storage Model
 - We will **split each OBIS reading** into its own record.
 - Minimal fields per record:
   ```json
   {
-    "meterId": "DLMS123456",
-    "timestamp": "2025-05-31T10:00:00Z",
-    "obis": "1.0.32.7.0.255",
-    "value": 230.1
+  "meterId": "DLMS123456",
+  "timestamp": "2025-05-31T10:00:00Z",
+  "obis": "1.0.32.7.0.255",
+  "value": 230.1,
+  "measurementType": "voltage",
+  "phase": "A",
+  "unit": "V"
   }
   ```
 
