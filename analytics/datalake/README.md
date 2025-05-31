@@ -7,6 +7,8 @@
 - 🔍 Can load data for specific meters  
 - ⚠️ Too many small files (if each meter is separate)  
 - `gs://pq-data/{year}/{month}/{day}/{hour}/meter-{meterId}.json`
+- File count estimate
+  - **500k meters × 24 pushes/day = `12 million files/day`**
 ### Time with OBIS code
 - 📊 Optimized for analytical queries by metric type  
 - ⚠️ More complexity in ingestion  
@@ -18,3 +20,7 @@
 - ⚠️ Harder to isolate individual meters  
 - 🚀 Fast for global batch queries  
 - `gs://pq-data/{year}/{month}/{day}/{hour}/all-meters.json`
+
+## Mitigating large number of files
+- **Batch** by group of meters (e.g., 100 meters per file) → reduces to 120k files/day.
+- Use GCS compose or *"Dataflow job** to consolidate small files hourly or daily.
