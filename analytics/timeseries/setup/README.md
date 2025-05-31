@@ -1,4 +1,4 @@
-
+- `docker-compose up -d`
 ```
 version: '3'
 services:
@@ -18,7 +18,8 @@ volumes:
   influxdb-storage:
 ```
 
-- Shell: https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip
+- Download Influxdb shell: https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip
+- unzip and double click `influx.exe`
 ```
 Connected to http://localhost:8086 version 1.8.10
 InfluxDB shell version: 1.8.10
