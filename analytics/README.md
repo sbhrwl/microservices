@@ -1,7 +1,7 @@
 # Analytics on power quality data
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
 - [Event collection](#event-collection)
-- [Data source or initial discovery](data-source-or-initial-discovery)
+- [Data source or initial discovery](#data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
 - [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
