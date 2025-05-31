@@ -45,7 +45,7 @@ time                meter_id obis_code      phase value
 1748698153029208483 meter001 1.0.32.7.0.255 A     229.5
 ```
 ## Script 
--This will generate 300 lines (5 meters × 3 phases × 5 metrics × 4 intervals).
+- This will generate 300 lines (5 meters × 3 phases × 5 metrics × 4 intervals).
 - You can redirect the output to a .txt file and write it into InfluxDB via CLI or HTTP API.
 ```python
 import random
