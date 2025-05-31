@@ -1,7 +1,7 @@
 # Analytics on power quality data
-- [Event collection](#event-collection)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
+- [Event collection](#event-collection)
 - [Data source or initial discovery](data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
