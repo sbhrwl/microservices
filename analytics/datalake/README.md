@@ -27,6 +27,6 @@
 - **Batch** by group of meters or readings
   - If we batch `500 meters` per file:
     - 12 million ÷ 500 = 24,000 files/day
-  - If we batch `5,000 readings` per file:
+  - If we batch `5,000 obis readings` per file:
     - 120 million ÷ 5,000 = 24,000 files/day
 - Use GCS compose or *"Dataflow job** to consolidate small files hourly or daily.
