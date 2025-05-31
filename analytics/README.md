@@ -90,7 +90,13 @@ Power quality ingestion service (to be built)
 Store parsed DLMS smart meter data efficiently for periodic analytics, keeping it cloud-agnostic and query-ready.
 
 ### Considerations
-- ~120 million records/day  
+- ~120 million records/day
+  - Assuming:
+    - 500,000 meters
+    - ~10 OBIS codes per meter
+    - 24 hourly pushes per day
+    - ➡️ That’s 120 million records/day
+(500,000 × 10 × 24)
 - Data pushed hourly  
 - Need to support filtering by time, meterId, and possibly region or source
 
