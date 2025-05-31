@@ -1,4 +1,6 @@
-# Data ingestion service 
+# Data ingestion service
+- [Service design](#service-design)
+- [Brain storming](#brain-storming)
 ## Service design
 - **Subscribes to**: ActiveMQ queue with hourly meter data (all OBIS codes in one message).  
 - **InfluxDB schema**:  
