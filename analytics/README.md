@@ -93,5 +93,5 @@ Power quality ingestion service (to be built)
 (500,000 × 10 × 24)
 - Data pushed hourly  
 - Need to support filtering by time, meterId, and obiscode 
-- [Datalake](datalake/README.md)
+- [Datalake GCS](datalake/README.md)
 - [Timeseries DB](timeseries/README.md)
