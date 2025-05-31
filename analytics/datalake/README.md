@@ -24,5 +24,9 @@
   - **500k meters × 10 OBIS codes × 24 pushes/day = `120 million OBIS readings/day`**
 
 ## Mitigating large number of files
-- **Batch** by group of meters (e.g., 100 meters per file) → reduces to 120k files/day.
+- **Batch** by group of meters or readings
+  - If we batch `500 meters` per file:
+    - 12 million ÷ 500 = 24,000 files/day
+  - If we batch `5,000 readings` per file:
+    - 120 million ÷ 5,000 = 24,000 files/day
 - Use GCS compose or *"Dataflow job** to consolidate small files hourly or daily.
