@@ -1,4 +1,4 @@
-# Analytics on power quality data
+# Analytics on timeseries data
 - [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
 - [Event collection](#event-collection)
 - [Data source or initial discovery](#data-source-or-initial-discovery)
