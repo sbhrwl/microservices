@@ -2,6 +2,8 @@
 - [Keycloak setup](#keycloak-setup)
 - [Kafka setup](#kafka-setup)
 - [MongoDB setup](#mongodb-setup)
+- [InfluxDB setup](#influxdb-setup)
+- [ActiveMQ setup](#activemq-setup)
 ## Keycloak setup
 - Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
 - Run docker compose: `docker-compose up -d`
@@ -37,7 +39,13 @@
   ```bash
   Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
   ```
-- To confirm the data, query the collection:
-  ```
-  db.command_requests.find().pretty()
-  ```
+
+## InfluxDB setup
+- Create a [`docker-compose.yml`](influxdb/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
+- Open InfluxDB shell
+## ActiveMQ setup
+- Create a [`docker-compose.yml`](activemq-hawtio/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
+- ActiveMQ console: http://localhost:8161 - admin/admin
+- Hawtio console: http://localhost:7777 - admin/admin

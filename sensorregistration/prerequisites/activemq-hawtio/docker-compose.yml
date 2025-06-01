@@ -1,0 +1,32 @@
+services:
+  activemq:
+    image: webcenter/activemq:5.15.9
+    container_name: activemq
+    ports:
+      - "61616:61616"   # JMS port
+      - "8161:8161"     # Web console
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+    volumes:
+      - activemq-data:/data/activemq
+      - activemq-conf:/conf
+
+  hawtio:
+    image: hawtio/hawtio:2.14.0
+    container_name: hawtio
+    ports:
+      - "7777:7777"
+    environment:
+      - HAWTIO_USERNAME=admin
+      - HAWTIO_PASSWORD=admin
+      - JAVA_OPTS=-Dhawtio.proxyWhitelist=* -Dhawtio.authenticationEnabled=true
+    command: >
+      java -jar /opt/hawtio/hawtio-app.jar 
+      --port 7777 
+      --proxyAllowDomainNames=* 
+      --remote JolokiaUrl=http://activemq:8161/api/jolokia
+
+volumes:
+  activemq-data:
+  activemq-conf:
