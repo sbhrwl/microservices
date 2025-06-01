@@ -72,7 +72,14 @@ Power quality ingestion service (to be built)
      }
      ```
 ## Storage model
-- We will **split each OBIS reading** into its own record.
+- Consider
+  - 500,000 meters
+  - ~10 OBIS codes per meter
+  - Data pushed hourly  
+    - 24 hourly pushes per day
+### Store meter wise data
+- 500k meters × 24 pushes/day = **12 million records/day**
+### Split each OBIS reading into its own record
 - Minimal fields per record:
   ```json
   {
@@ -85,19 +92,10 @@ Power quality ingestion service (to be built)
   "unit": "V"
   }
   ```
-- ~120 million records/day
-  - Assuming:
-    - 500,000 meters
-    - ~10 OBIS codes per meter
-    - 24 hourly pushes per day
-    - ➡️ That’s 120 million records/day
-(500,000 × 10 × 24)
-- Data pushed hourly  
-- Need to support filtering by time, meterId, and obiscode 
+- (500,000 × 10 × 24) = **120 million records/day**
+## Datalake Vs Timeseries DB 
 - [Datalake GCS](datalake/README.md)
 - [Timeseries DB](timeseries/README.md)
-
-## Datalake Vs Timeseries DB 
 
 | Aspect                 | GCS Data Lake                              | InfluxDB Time Series DB                    |
 |------------------------|-------------------------------------------|--------------------------------------------|
