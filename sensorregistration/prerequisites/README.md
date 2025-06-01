@@ -47,6 +47,8 @@
 ## ActiveMQ setup
 - Create a [`docker-compose.yml`](activemq-hawtio/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
-- ActiveMQ console: http://localhost:8161 - admin/admin
-- Hawtio console: http://localhost:7777 - admin/admin
+- ActiveMQ console
+  - http://localhost:8161 - admin/admin
+- Hawtio console
+  - http://localhost:7777 - admin/admin
   - Hawtio auto-connects to `ActiveMQ’s Jolokia endpoint`.
