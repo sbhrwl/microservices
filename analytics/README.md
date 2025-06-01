@@ -1,5 +1,5 @@
 # Analytics on timeseries data
-- [Solving grid problems using power quality data](#solvinf-grid-problems-using-power-quality-data)
+- [Solving grid problems using power quality data](#solving-grid-problems-using-power-quality-data)
 - [Event collection](#event-collection)
 - [Data source or initial discovery](#data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
