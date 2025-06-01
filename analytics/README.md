@@ -1,12 +1,12 @@
 # Analytics on timeseries data
-- [Grid problems to solve using power quality data](grid-problems-to-solve-using-power-quality-data)
+- [Solving grid problems using power quality data](#solvinf-grid-problems-using-power-quality-data)
 - [Event collection](#event-collection)
 - [Data source or initial discovery](#data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
 - [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
 - [Data ingestion service](service/README.md)
-## [Grid problems to solve using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
+## [Solving grid problems using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
 - **Harmonics and distortion**
