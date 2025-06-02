@@ -4,6 +4,7 @@
 - [MongoDB setup](#mongodb-setup)
 - [InfluxDB setup](#influxdb-setup)
 - [ActiveMQ setup](#activemq-setup)
+- [Grafana setup](#grafana-setup)
 ## Keycloak setup
 - Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
 - Run docker compose: `docker-compose up -d`
@@ -49,3 +50,6 @@
 - Run docker compose: `docker-compose up -d`
 - ActiveMQ console
   - http://localhost:8161 - admin/admin
+## Grafana setup
+- Create a [`docker-compose.yml`](grafana/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
