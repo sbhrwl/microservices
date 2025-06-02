@@ -45,7 +45,7 @@
 - Run docker compose: `docker-compose up -d`
 - [Open InfluxDB shell](https://github.com/sbhrwl/microservices/blob/main/analytics/timeseries/setup/README.md)
 ## ActiveMQ setup
-- Create a [`docker-compose.yml`](activemq-hawtio/docker-compose.yml)
+- Create a [`docker-compose.yml`](activemq/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - ActiveMQ console
   - http://localhost:8161 - admin/admin
