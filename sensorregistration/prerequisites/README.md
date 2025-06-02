@@ -51,5 +51,5 @@
 - ActiveMQ console
   - http://localhost:8161 - admin/admin
 ## Grafana setup
-- Create a [`docker-compose.yml`](grafana/docker-compose.yml)
+- Create a [`docker-compose.yml`](grafana/docker-compose.yaml)
 - Run docker compose: `docker-compose up -d`
