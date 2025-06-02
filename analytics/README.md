@@ -7,6 +7,7 @@
 - [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
 - [Data ingestion service](service/README.md)
   - [Implementation](ingestion-service/README.md)
+  - [Grafana connection with InfluxDB](grafana/README.md)
 ## [Solving grid problems using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
