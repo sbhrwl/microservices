@@ -6,3 +6,11 @@ spring:
   jms:
     template:
       default-destination: power-quality
+
+custom:
+  influxdb:
+    host: http://localhost:8086
+    database: power_quality
+    username: admin
+    password: admin123
+    single-measurement: true  # true = use one measurement "power_quality", false = use multiple like "voltage", "current"

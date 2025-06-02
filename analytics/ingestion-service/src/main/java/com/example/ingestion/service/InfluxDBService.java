@@ -1,5 +1,6 @@
 package com.example.ingestion.service;
 
+import com.example.ingestion.config.InfluxDBProperties;
 import com.example.ingestion.dto.PowerQualityMessage;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +15,15 @@ import java.util.stream.Collectors;
 public class InfluxDBService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String influxUrl = "http://localhost:8086/write?db=power_quality&u=admin&p=admin123";
+    private final InfluxDBProperties influxDBProperties;
+
+    public InfluxDBService(InfluxDBProperties influxDBProperties) {
+        this.influxDBProperties = influxDBProperties;
+    }
 
     public void sendToInflux(List<PowerQualityMessage> messages) {
-        // Convert PowerQualityMessage objects to InfluxDB line protocol format
+        String influxUrl = buildInfluxUrl();
+
         List<String> lines = messages.stream()
                 .map(this::convertToLineProtocol)
                 .collect(Collectors.toList());
@@ -37,17 +43,31 @@ public class InfluxDBService {
         }
     }
 
+    private String buildInfluxUrl() {
+        return String.format("%s/write?db=%s&u=%s&p=%s",
+                influxDBProperties.getHost(),
+                influxDBProperties.getDatabase(),
+                influxDBProperties.getUsername(),
+                influxDBProperties.getPassword());
+    }
+
     private String convertToLineProtocol(PowerQualityMessage msg) {
-        // Format timestamp in nanoseconds since epoch
         long tsNs = msg.getTimestamp().toEpochMilli() * 1_000_000L;
 
-        // Example line protocol format:
-        // measurement,obis_code=...,phase=...,meter_id=... value=... timestamp
-        return String.format("%s,obis_code=%s,phase=%s,meter_id=%s value=%f %d",
-                msg.getMeasurement(),
+        String measurementName = influxDBProperties.isSingleMeasurement()
+                ? "power_quality"
+                : msg.getMeasurement(); // like "voltage", "current"
+
+        String fieldKey = influxDBProperties.isSingleMeasurement()
+                ? msg.getMeasurement() // field key: voltage=..., current=...
+                : "value";             // default field key
+
+        return String.format("%s,obis_code=%s,phase=%s,meter_id=%s %s=%f %d",
+                measurementName,
                 msg.getObisCode(),
                 msg.getPhase(),
                 msg.getMeterId(),
+                fieldKey,
                 msg.getValue(),
                 tsNs);
     }
