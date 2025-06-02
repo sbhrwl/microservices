@@ -2,6 +2,7 @@
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
+- [Verification at InfluxDB](#verification-at-influxdb)
 ## Properties
 - [application.yml](src/main/resources/application.yml)
 ## How to run
