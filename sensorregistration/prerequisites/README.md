@@ -43,7 +43,7 @@
 ## InfluxDB setup
 - Create a [`docker-compose.yml`](influxdb/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
-- Open InfluxDB shell
+- [Open InfluxDB shell](https://github.com/sbhrwl/microservices/blob/main/analytics/timeseries/setup/README.md)
 ## ActiveMQ setup
 - Create a [`docker-compose.yml`](activemq-hawtio/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
