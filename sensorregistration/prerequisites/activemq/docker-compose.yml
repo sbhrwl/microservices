@@ -1,11 +1,10 @@
-version: '3'
 services:
   activemq:
-    image: rmohr/activemq:5.16.5
+    image: rmohr/activemq:5.15.9
     container_name: activemq
     ports:
       - "61616:61616"   # JMS port
-      - "8161:8161"     # Web console (http://localhost:8161)
+      - "8161:8161"     # Web console
     environment:
       ACTIVEMQ_ADMIN_LOGIN: admin
       ACTIVEMQ_ADMIN_PASSWORD: admin
