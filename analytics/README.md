@@ -3,7 +3,7 @@
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
 - [Ingestion service](ingestion-service/README.md)
-- [Grafana connection with InfluxDB](grafana/README.md)
+- [Dashboard with Grafana](grafana/README.md)
 - [Containers](containers/README.md)
 - [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
