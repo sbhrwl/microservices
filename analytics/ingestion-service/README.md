@@ -1,11 +1,25 @@
 # Ingestion service
+- [Properties](#properties)
+- [How to run](#how-to-run)
+- [Test](#test)
+## Properties
+- [application.properties](src/main/resources/application.properties)
+## How to run
+- Create spring boot app with [spring initialiser](https://start.spring.io/)
+- Build 
+```bash
+mvn clean install
 
-- Build: `mvn clean install`
-- Run: `mvn spring-boot:run`
-- Test
-  - `http://localhost:8080/api/powerquality/generate`
+mvn clean install -DskipTests
+```
+- Run
+```bash
+mvn spring-boot:run
+```
+## Test
+- Publish sensor data to ActiveMQ  `http://localhost:8080/api/powerquality/generate`
   - It will send `~300 messages` to the `power-quality-queue`
-## Verification 
+## Verification at InfluxDB
 ### Single measurement
 - Basic queries 
 ```sql
