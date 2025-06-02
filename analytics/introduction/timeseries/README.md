@@ -1,5 +1,7 @@
-# Timeseries 
+# Timeseries
 - [Schema](#schema)
+- [Sample line protocol](#sample-line-protocol)
+- [What Is a Timeseries database](#what-is-a-timeseries-database)
 ## Schema 
 - Database/Measurement_Name: power_quality
 - Fields
@@ -15,8 +17,10 @@
 ```text
 power_quality,meter_id=MTR001 voltage_a=230.1,voltage_b=228.7,voltage_c=225.4,current_a=10.2,current_b=9.8,current_c=11.0,power_factor=0.92,frequency=50.0 1717140000000000000
 ```
-##  What Is a Timeseries database
-- A time series database (TSDB) like **InfluxDB** is optimized to store and query data that is indexed by time — perfect for sensor data such as smart meter readings.
+
+##  What is a Timeseries database
+- A time series database (TSDB) like **InfluxDB** is optimized to store and query data that is indexed by time
+- Perfect for sensor data such as smart meter readings.
 ## Data model in InfluxDB
 - InfluxDB organizes data as follows:
   - **Database**: Like a schema. Example: `power_quality`
@@ -89,8 +93,3 @@ SHOW FIELD KEYS FROM power_quality
   * Store time-stamped power quality data efficiently
   * Query historical and real-time insights
   * Detect anomalies and visualize trends in Grafana
-
-Perfect for energy monitoring, reporting, and smart grid analytics.
-
-```
-```
