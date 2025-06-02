@@ -1,5 +1,5 @@
 # Timeseries 
-- [InfluxDB setup](setup/README.md)
+- [Schema](#schema)
 ## Schema 
 - Database/Measurement_Name: power_quality
 - Fields
