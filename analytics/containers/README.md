@@ -20,7 +20,7 @@
 
 | Steps                  | Details                                                                                                                        |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| docker-compose.yml     | [Link](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/docker-compose.yml) |
+| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/analytics/ingestion-service/docker-compose.yml) |
 | Run container          | `docker-compose up --build -d`                                                                                                 |
 | Stop container         | `docker-compose stop`                                                                                                          |
 | Stop & remove resources| `docker-compose down`                                                                                                          |
