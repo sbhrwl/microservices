@@ -1,5 +1,6 @@
 # Grafana visualisations
 - [Setup connection to InfluxDB](#setup-connection-to-influxdb)
+- [Build dashboard](#build-dashboard)
 - [Real time voltage widget](#real-time-voltage-widget)
 - [Real time current widget](#real-time-current-widget)
 - [Historical voltage trends](#historical-voltage-trends)
@@ -21,6 +22,12 @@
   * Database / Bucket: your InfluxDB bucket (e.g., `power_quality`)
   * Organization: your InfluxDB org name
 - Click **Save & Test**
+## Build dashboard
+* Real-time monitoring
+* Historical trends
+* Visual anomaly alert
+* Comparison across meters
+
 ## Real time voltage widget
 - Go to your dashboard → **Add panel**
 - Query:
