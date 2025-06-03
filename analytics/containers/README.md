@@ -1,7 +1,6 @@
 # Containers
 - [Docker commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/commands/README.md)
 - [Docker compose commands](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Docker/dockercompose/README.md)
-- [Change to Kafka setup for containers](#change-to-kafka-setup-for-containers)
 - [Setting up containers](#setting-up-containers)
   - [Prerequisites](#prerequisites)
   - [Using docker compose](#using-docker-compose)
