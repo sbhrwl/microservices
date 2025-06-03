@@ -58,38 +58,32 @@ kubectl delete -f ingestion-services.yaml
 ## Install Helm release
 - Go to Helm chart folder [**orchestrate-ingestion-services**](orchestrate-ingestion-services)
 ```powershell
-helm install orchestrate-ingestion-services-release . 
+helm install orchestrate-ingestion-services-release .
 ```
 - **`orchestrate-ingestion-services-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-ingestion-services> helm install orchestrate-ingestion-services-release .
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm install orchestrate-ingestion-services-release .
 NAME: orchestrate-ingestion-services-release
-LAST DEPLOYED: Fri May 30 10:57:25 2025
+LAST DEPLOYED: Tue Jun  3 13:43:28 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-ingestion-services> helm list
-NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-ingestion-services-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-ingestion-services> helm list -A
-NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-ingestion-services-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-ingestion-services> kubectl get pods
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-cd2qr   1/1     Running   0          2m10s
-registration-service-7c4555d588-65v4h   1/1     Running   0          2m10s
-sensor-service-59b4d96b5-v9rjj          1/1     Running   0          2m10s
-ui-service-55f94d6747-rfjnn             1/1     Running   0          2m10s
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-ingestion-services> kubectl get svc
-NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1       <none>        443/TCP          25d
-notification-service   ClusterIP   10.105.187.69   <none>        9084/TCP         2m17s
-registration-service   ClusterIP   10.109.85.233   <none>        9083/TCP         2m17s
-sensor-service         NodePort    10.98.38.139    <none>        9082:30082/TCP   2m17s
-ui-service             NodePort    10.98.31.231    <none>        9081:30081/TCP   2m17s
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list
+NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+orchestrate-ingestion-services-release  default         1               2025-06-03 13:43:28.7138803 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list -A
+NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+orchestrate-ingestion-services-release  default         1               2025-06-03 13:43:28.7138803 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get pods 
+NAME                                                              READY   STATUS    RESTARTS   AGE
+orchestrate-ingestion-services-release-ingestion-service-7kzkns   1/1     Running   0          22s
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get svc
+NAME                                                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes                                                 ClusterIP   10.96.0.1      <none>        443/TCP          29d
+orchestrate-ingestion-services-release-ingestion-service   NodePort    10.98.242.98   <none>        9081:30091/TCP   29s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services

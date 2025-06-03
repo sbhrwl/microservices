@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: ingestion-service
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.ingestionService.image }}"
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: {{ .Values.service.port }}
+           - containerPort: {{ .Values.ingestionService.service.port }}
           env:
-            {{- range $key, $val := .Values.env }}
+            {{- range $key, $val := .Values.ingestionService.env }}
             - name: {{ $key }}
               value: "{{ $val }}"
             {{- end }}
