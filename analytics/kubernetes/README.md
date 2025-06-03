@@ -20,7 +20,7 @@ docker push sbhrwldocker/ingestion-service:latest
     - `nc -zv 192.168.0.102 61616`
   - **influxdb-test**: `kubectl run influxdb-test --rm -it --image=busybox --restart=Never -- sh`
     - `nc -zv 192.168.0.102 8086`
-- [`ui-service.yaml`](ui-service.yaml)
+- [`ingestion-service.yaml`](ingestion-service.yaml)
 
 ## Cleanup containers created during development
 - Stop running containers
