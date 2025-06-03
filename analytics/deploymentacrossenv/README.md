@@ -15,9 +15,9 @@
 
 ## Create environment wise values file
 - `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-hpa/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-hpa/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-hpa/values-prod.yaml)
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/analytics/hpa/orchestrate-ingestion-services-hpa/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/analytics/hpa/orchestrate-ingestion-services-hpa/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/analytics/hpa/orchestrate-ingestion-services-hpa/values-prod.yaml)
 ```
 orchestrate-sensor-services-hpa/
 ├── templates/
@@ -51,7 +51,7 @@ orchestrate-sensor-services-hpa/
     kubectl get all -n dev
     ``` 
 ## Helm release per environment
-- Go to Helm chart folder [orchestrate-sensor-services-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-hpa)
+- Go to Helm chart folder [orchestrate-sensor-services-hpa](https://github.com/sbhrwl/microservices/tree/main/analytics/hpa/orchestrate-ingestion-services-hpa)
 ```bash
 # For dev (default values.yaml)
 helm install orchestrate-sensor-services-dev . -n dev
