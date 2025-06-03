@@ -2,6 +2,23 @@
 - [Schema](#schema)
 - [Sample line protocol](#sample-line-protocol)
 - [What Is a Timeseries database](#what-is-a-timeseries-database)
+- [Data model in InfluxDB](#data-model-in-influxdb)
+- [Writing data](#writing-data)
+  - [One measurement style](#one-measurement-style)
+- [Querying data](#querying-data)
+  - [Show measurements](#show-measurements)
+  - [List series](#list-series)
+  - [Basic select](#basic-select)
+  - [Filter by tags](#filter-by-tags)
+- [Analytical queries](#analytical-queries)
+  - [Daily average voltage](#daily-average-voltage)
+  - [Compare voltages between phases](#compare-voltages-between-phases)
+  - [Detect voltage drop](#detect-voltage-drop)
+- [Useful admin commands](#useful-admin-commands)
+  - [Show tag keys](#show-tag-keys)
+  - [Show field keys](#show-field-keys)
+- [Tools](#tools)
+- [Summary](#summary)
 ## Schema 
 - Database/Measurement_Name: power_quality
 - Fields
@@ -77,11 +94,11 @@ WHERE voltage < 210 AND time > now() - 1h
 ```
 
 ## Useful admin commands
-### Show Tag Keys
+### Show tag keys
 ```sql
 SHOW TAG KEYS FROM power_quality
 ```
-### Show Field Keys
+### Show field keys
 ```sql
 SHOW FIELD KEYS FROM power_quality
 ```
