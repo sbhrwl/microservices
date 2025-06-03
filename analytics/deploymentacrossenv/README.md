@@ -108,7 +108,7 @@ helm uninstall orchestrate-sensor-services-staging -n staging
 helm uninstall orchestrate-sensor-services-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder [orchestrate-sensor-services-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-hpa)
+- Go to Helm chart folder [orchestrate-sensor-services-hpa](https://github.com/sbhrwl/microservices/tree/main/analytics/hpa/orchestrate-ingestion-services-hpa)
 ```bash
 helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
 helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
