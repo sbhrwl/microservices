@@ -14,13 +14,13 @@
 ## Introduction 
 - The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that **automatically scales** the number of pods in a deployment, replica set, or stateful set based on observed metrics like `CPU utilization`, `memory usage`, or `custom metrics`.
 ## HPA configuration
-- [ingestion-service-hpa.yaml](orchestrate-ingestion-services-with-hpa/templates/ingestion-service-hpa.yaml)
-- [values.yaml](orchestrate-ingestion-services-with-hpa/values.yaml)
+- [ingestion-service-hpa.yaml](orchestrate-ingestion-services-hpa/templates/ingestion-service-hpa.yaml)
+- [values.yaml](orchestrate-ingestion-services-hpa/values.yaml)
 ## Chart structure
-- [orchestrate-ingestion-services-with-hpa](orchestrate-ingestion-services-with-hpa)
+- [orchestrate-ingestion-services-hpa](orchestrate-ingestion-services-hpa)
 - Each service has its own Deployment, Service, and Horizontal Pod Autoscaler (HPA) configuration.
   ```
-  orchestrate-ingestion-services-with-hpa/
+  orchestrate-ingestion-services-hpa/
   ├── templates/
   │   ├── ingestion-deployment.yaml
   │   ├── ingestion-service.yaml
@@ -32,46 +32,39 @@
   ├── values-prod.yaml
   ```
 ## Install Helm release
-- Go to Helm chart folder (e.g., [orchestrate-ingestion-services-with-hpa](orchestrate-ingestion-services-with-hpa)), run this command:
+- Go to Helm chart folder (e.g., [orchestrate-ingestion-services-hpa](orchestrate-ingestion-services-hpa)), run this command:
   ```bash
-  helm install orchestrate-ingestion-services-with-hpa-release .
+  helm install orchestrate-ingestion-services-hpa-release .
   ```
 
 ## Verify release
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> helm install orchestrate-ingestion-services-with-hpa-release .
-NAME: orchestrate-ingestion-services-with-hpa-release
-LAST DEPLOYED: Fri May 30 11:01:11 2025
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm install orchestrate-ingestion-services-hpa-release .
+NAME: orchestrate-ingestion-services-hpa-release
+LAST DEPLOYED: Tue Jun  3 14:13:22 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> helm list
-NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-ingestion-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> helm list -A
-NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-ingestion-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> kubectl get pods
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-nm2qt   1/1     Running   0          23s
-registration-service-7c4555d588-b4mpk   1/1     Running   0          23s
-sensor-service-59b4d96b5-l2zwl          1/1     Running   0          23s
-ui-service-55f94d6747-qbssp             1/1     Running   0          23s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> kubectl get svc
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          25d
-notification-service   ClusterIP   10.107.55.248    <none>        9084/TCP         27s
-registration-service   ClusterIP   10.109.192.122   <none>        9083/TCP         27s
-sensor-service         NodePort    10.97.158.255    <none>        9082:30082/TCP   27s
-ui-service             NodePort    10.102.72.111    <none>        9081:30081/TCP   27s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa>
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list
+NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:13:22.1748744 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list -A
+NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:13:22.1748744 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get pods
+NAME                                                              READY   STATUS    RESTARTS   AGE
+orchestrate-ingestion-services-hpa-release-ingestion-servivj84k   1/1     Running   0          25s
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get svc
+NAME                                                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes                                                     ClusterIP   10.96.0.1       <none>        443/TCP          29d
+orchestrate-ingestion-services-hpa-release-ingestion-service   NodePort    10.107.77.104   <none>        9081:30081/TCP   34s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> kubectl get hpa
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
 NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
 notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
 registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
@@ -80,18 +73,18 @@ ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5   
 ```
 - Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> kubectl get hpa
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
 NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
 notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
 registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
 sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
 ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-with-hpa> kubectl describe hpa registration-hpa
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl describe hpa registration-hpa
 Name:                                                  registration-hpa
 Namespace:                                             default
 Labels:                                                app=registration
                                                        app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: orchestrate-ingestion-services-with-hpa-release
+Annotations:                                           meta.helm.sh/release-name: orchestrate-ingestion-services-hpa-release
                                                        meta.helm.sh/release-namespace: default
 CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
 Reference:                                             Deployment/registration
@@ -114,7 +107,7 @@ Events:
   * `localhost:30081/api/powerquality/generate` → `ingestion-service`
 ## Uninstall Helm release
 ```
-helm uninstall orchestrate-ingestion-services-with-hpa-release
+helm uninstall orchestrate-ingestion-services-hpa-release
 ```
 
 ## HPA simulations
