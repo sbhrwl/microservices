@@ -81,21 +81,22 @@ helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-hpa> helm list -n dev
-NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-dev dev             1               2025-05-30 11:04:03.8511928 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-hpa> kubectl get pods -n dev
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-ndt8t   1/1     Running   0          2m13s
-registration-service-7c4555d588-vfz2j   1/1     Running   0          2m13s
-sensor-service-59b4d96b5-q4kbl          1/1     Running   0          2m13s
-ui-service-55f94d6747-gqw57             1/1     Running   0          2m13s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-hpa> kubectl get svc -n dev
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-notification-service   ClusterIP   10.102.19.193    <none>        9084/TCP         2m24s
-registration-service   ClusterIP   10.102.135.152   <none>        9083/TCP         2m24s
-sensor-service         NodePort    10.101.218.249   <none>        9082:30082/TCP   2m24s
-ui-service             NodePort    10.101.36.130    <none>        9081:30081/TCP   2m24s
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> helm install orchestrate-sensor-services-dev . -n dev
+NAME: orchestrate-sensor-services-dev
+LAST DEPLOYED: Tue Jun  3 14:39:07 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> helm list -n dev
+NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+orchestrate-sensor-services-dev dev             1               2025-06-03 14:39:07.7390047 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get pods -n dev
+NAME                                                              READY   STATUS    RESTARTS   AGE
+orchestrate-sensor-services-dev-ingestion-service-78846b7chkh5x   1/1     Running   0          23s
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get svc -n dev
+NAME                                                TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+orchestrate-sensor-services-dev-ingestion-service   NodePort   10.103.144.169   <none>        9081:30081/TCP   31s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
