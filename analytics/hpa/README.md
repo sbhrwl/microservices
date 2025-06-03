@@ -39,68 +39,57 @@
 
 ## Verify release
 ```
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm install orchestrate-ingestion-services-hpa-release .
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> helm install orchestrate-ingestion-services-hpa-release .
 NAME: orchestrate-ingestion-services-hpa-release
-LAST DEPLOYED: Tue Jun  3 14:13:22 2025
+LAST DEPLOYED: Tue Jun  3 14:16:06 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> helm list
 NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
-orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:13:22.1748744 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm list -A
+orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:16:06.4760078 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> helm list -A
 NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
-orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:13:22.1748744 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get pods
+orchestrate-ingestion-services-hpa-release      default         1               2025-06-03 14:16:06.4760078 +0300 EEST  deployed        ingestion-service-chart-0.1.0   1.0        
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get pods
 NAME                                                              READY   STATUS    RESTARTS   AGE
-orchestrate-ingestion-services-hpa-release-ingestion-servivj84k   1/1     Running   0          25s
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get svc
+orchestrate-ingestion-services-hpa-release-ingestion-servilkt8j   1/1     Running   0          17s
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get svc 
 NAME                                                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes                                                     ClusterIP   10.96.0.1       <none>        443/TCP          29d
-orchestrate-ingestion-services-hpa-release-ingestion-service   NodePort    10.107.77.104   <none>        9081:30081/TCP   34s
+orchestrate-ingestion-services-hpa-release-ingestion-service   NodePort    10.109.44.178   <none>        9081:30081/TCP   21s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
-NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
-```
-- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
-```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
-NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-ingestion-services-hpa> kubectl describe hpa registration-hpa
-Name:                                                  registration-hpa
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
+NAME                                                           REFERENCE                                                                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+orchestrate-ingestion-services-hpa-release-ingestion-service   Deployment/orchestrate-ingestion-services-hpa-release-ingestion-service   cpu: <unknown>/70%   1         5         0          46s
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl describe hpa orchestrate-ingestion-services-hpa-release-ingestion-service
+Name:                                                  orchestrate-ingestion-services-hpa-release-ingestion-service
 Namespace:                                             default
-Labels:                                                app=registration
-                                                       app.kubernetes.io/managed-by=Helm
+Labels:                                                app.kubernetes.io/managed-by=Helm
 Annotations:                                           meta.helm.sh/release-name: orchestrate-ingestion-services-hpa-release
                                                        meta.helm.sh/release-namespace: default
-CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
-Reference:                                             Deployment/registration
+CreationTimestamp:                                     Tue, 03 Jun 2025 14:16:06 +0300
+Reference:                                             Deployment/orchestrate-ingestion-services-hpa-release-ingestion-service
 Metrics:                                               ( current / target )
-  resource cpu on pods  (as a percentage of request):  <unknown> / 80%
+  resource cpu on pods  (as a percentage of request):  <unknown> / 70%
 Min replicas:                                          1
 Max replicas:                                          5
-Deployment pods:                                       0 current / 0 desired
+Deployment pods:                                       1 current / 0 desired
 Conditions:
-  Type         Status  Reason          Message
-  ----         ------  ------          -------
-  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "registration" not found
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 Events:
-  Type     Reason          Age   From                       Message
-  ----     ------          ----  ----                       -------
-  Warning  FailedGetScale  11s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+  Type     Reason                        Age   From                       Message
+  ----     ------                        ----  ----                       -------
+  Warning  FailedGetResourceMetric       56s   horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  56s   horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 ```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
