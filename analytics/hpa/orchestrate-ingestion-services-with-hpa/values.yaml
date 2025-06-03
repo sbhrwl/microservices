@@ -1,0 +1,18 @@
+ingestionService:
+  env:
+    SERVER_PORT: '9081'
+    ACTIVEMQ_BROKER_URL: tcp://192.168.0.102:61616
+    ACTIVEMQ_USER: admin
+    ACTIVEMQ_PASSWORD: admin
+    ACTIVEMQ_DEFAULT_DESTINATION: power-quality
+    INFLUXDB_HOST: http://192.168.0.102:8086
+    INFLUXDB_DATABASE: power_quality
+    INFLUXDB_USERNAME: admin
+    INFLUXDB_PASSWORD: admin123
+    INFLUXDB_SINGLE_MEASUREMENT: 'true'
+  image: sbhrwldocker/ingestion-service:latest
+  replicaCount: 1
+  service:
+    type: NodePort
+    port: 9081
+    nodePort: 30081
