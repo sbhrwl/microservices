@@ -30,7 +30,7 @@
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | Build image            | `docker build -t sbhrwldocker/ingestion-service:latest .`                                                                             |                    
 | Run container          | `docker run -p 9081:9081 -e SERVER_PORT=9081 -e ACTIVEMQ_BROKER_URL=tcp://192.168.0.102:61616 -e ACTIVEMQ_USER=admin -e ACTIVEMQ_PASSWORD=admin -e ACTIVEMQ_DEFAULT_DESTINATION=power-quality -e INFLUXDB_HOST=http://192.168.0.102:8086 -e INFLUXDB_DATABASE=power_quality -e INFLUXDB_USERNAME=admin -e INFLUXDB_PASSWORD=admin123 -e INFLUXDB_SINGLE_MEASUREMENT=true sbhrwldocker/ingestion-service:latest` |
-| Stop container         | `docker stop ui-service`      |
-| Remove container       | `docker rm -f ui-service`     |
+| Stop container         | `docker stop sbhrwldocker/ingestion-service:latest`      |
+| Remove container       | `docker rm -f sbhrwldocker/ingestion-service:latest`     |
       
 ## Test
