@@ -16,12 +16,10 @@ docker push sbhrwldocker/ingestion-service:latest
 - We need to configue deployment files such that ActiveMQ and InfluxDB are accessible from kubernetes
   - Set the right **`hostname/IP`** in the Deployment env vars so that Kubernetes pod can reach ActiveMQ and InfluxDB
   - Check IP address of your laptop where these are running as docker containers: `ipconfig` - **192.168.0.102**
-  - **mongo-test**: `kubectl run mongo-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 27017`
-  - **kafka-test**: `kubectl run kafka-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 29092`
-  - **keycloak-test**: `kubectl run keycloak-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 8080`
+  - **activemq-test**: `kubectl run activemq-test --rm -it --image=busybox --restart=Never -- sh`
+    - `nc -zv 192.168.0.102 61616`
+  - **influxdb-test**: `kubectl run influxdb-test --rm -it --image=busybox --restart=Never -- sh`
+    - `nc -zv 192.168.0.102 8086`
 - [`ui-service.yaml`](ui-service.yaml)
 
 ## Cleanup containers created during development
@@ -46,17 +44,16 @@ kubectl delete -f ingestion-service.yaml
 ```
 ## Verify deployment
 ```
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl apply -f ingestion-service.yaml
-deployment.apps/ui-service created
-service/ui-service created
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl get pods
-NAME                                    READY   STATUS    RESTARTS   AGE
-ui-service-dfbb8d9df-jclm2              1/1     Running   0          17s
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl get services
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          23d
-ui-service             NodePort    10.110.234.13    <none>        9081:30081/TCP   21s
-PS C:\Git\microservices\sensorregistration\kubernetes>
+PS C:\Git\microservices\analytics\kubernetes> kubectl apply -f ingestion-service.yaml
+deployment.apps/ingestion-service created
+service/ingestion-service created
+PS C:\Git\microservices\analytics\kubernetes> kubectl get pods
+NAME                                 READY   STATUS    RESTARTS   AGE
+ingestion-service-57cf55cc56-ndsq7   1/1     Running   0          18s
+PS C:\Git\microservices\analytics\kubernetes> kubectl get services
+NAME                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+ingestion-service   NodePort    10.99.57.141   <none>        9081:30081/TCP   25s
+kubernetes          ClusterIP   10.96.0.1      <none>        443/TCP          29d
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
