@@ -51,6 +51,7 @@ SELECT MAX(current) FROM power_quality GROUP BY phase
 SELECT "power_factor" FROM power_quality WHERE meter_id = 'METER-001'
 ```
 ### Multiple measurements
+- **INFLUXDB_SINGLE_MEASUREMENT=`false`**
 - Data is split across multiple measurements like voltage, current, power_factor, etc. 
 - Each has a `field` named value.
 - Basic queries
