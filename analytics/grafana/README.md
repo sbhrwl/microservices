@@ -1,11 +1,11 @@
 # Grafana visualisations
 - [Setup connection to InfluxDB](#setup-connection-to-influxdb)
 - [Build dashboard](#build-dashboard)
-- [Real time voltage widget](#real-time-voltage-widget)
-- [Real time current widget](#real-time-current-widget)
-- [Historical voltage trends](#historical-voltage-trends)
-- [Voltage anomaly alert](#voltage-anomaly-alert)
-- [Compare voltage across meters and phases](#compare-voltage-across-meters-and-phases)
+  - [Real time voltage widget](#real-time-voltage-widget)
+  - [Real time current widget](#real-time-current-widget)
+  - [Historical voltage trends](#historical-voltage-trends)
+  - [Voltage anomaly alert](#voltage-anomaly-alert)
+  - [Compare voltage across meters and phases](#compare-voltage-across-meters-and-phases)
 ## Setup connection to InfluxDB
 - Open your browser, go to `http://localhost:3000`
 - Login: `admin` / `admin123`
@@ -28,7 +28,7 @@
 * Visual anomaly alert
 * Comparison across meters
 
-## Real time voltage widget
+### Real time voltage widget
 - Go to your dashboard → **Add panel**
 - Query:
   * FROM: `power_quality`
@@ -39,7 +39,7 @@
   * Title: `Real-time Voltage`
   * Refresh: `5s`
 - Click **Apply**.
-## Real time current widget
+### Real time current widget
 - Go to your dashboard → **Add panel**
 - Query:
   * FROM: `power_quality`
@@ -50,7 +50,7 @@
   * Title: `Real-time Current`
   * Refresh: `5s`
 - Click **Apply**.
-## Historical voltage trends
+### Historical voltage trends
 - **Add panel**
 - Query:
   * FROM: `power_quality`
@@ -60,7 +60,7 @@
 - Visualization: **Time series**
 - Title: `Voltage - Daily Trend`
 - Click **Apply** when done.
-## Voltage anomaly alert
+### Voltage anomaly alert
 - Visual threshold)
 - Open **Real-time Voltage** panel → click **Edit**
 - Go to **Overrides** or **Thresholds**
@@ -69,7 +69,7 @@
   * Color: **red**
 - Optional: Show area below threshold as filled
 - Click **Apply**
-## Compare voltage across meters and phases
+### Compare voltage across meters and phases
 - Assuming you have a tag like `meter_id` or `phase` in your data:
 - **Add panel**
 - Query:
