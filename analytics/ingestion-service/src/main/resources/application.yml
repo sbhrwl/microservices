@@ -1,16 +1,22 @@
+# Server Configuration
+server:
+  port: ${SERVER_PORT:9081}
+
+# ActiveMQ Configuration
 spring:
   activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
+    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://localhost:61616}
+    user: ${ACTIVEMQ_USER:admin}
+    password: ${ACTIVEMQ_PASSWORD:admin}
   jms:
     template:
-      default-destination: power-quality
+      default-destination: ${ACTIVEMQ_DEFAULT_DESTINATION:power-quality}
 
+# InfluxDB Configuration
 custom:
   influxdb:
-    host: http://localhost:8086
-    database: power_quality
-    username: admin
-    password: admin123
-    single-measurement: true  # true = use one measurement "power_quality", false = use multiple like "voltage", "current"
+    host: ${INFLUXDB_HOST:http://localhost:8086}
+    database: ${INFLUXDB_DATABASE:power_quality}
+    username: ${INFLUXDB_USERNAME:admin}
+    password: ${INFLUXDB_PASSWORD:admin123}
+    single-measurement: ${INFLUXDB_SINGLE_MEASUREMENT:true}  # true = one measurement "power_quality"
