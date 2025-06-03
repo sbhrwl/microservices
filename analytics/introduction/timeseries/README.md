@@ -5,6 +5,7 @@
 - [Data model in InfluxDB](#data-model-in-influxdb)
 - [Writing data](#writing-data)
   - [One measurement style](#one-measurement-style)
+  - [Multiple measurement style](#multiple-measurement-style)
 - [Querying data](#querying-data)
   - [Show measurements](#show-measurements)
   - [List series](#list-series)
@@ -54,6 +55,13 @@ power_quality,meter_id=MTR001 voltage_a=230.1,voltage_b=228.7,voltage_c=225.4,cu
 ```text
 power_quality,meter_id=001,phase=L1 voltage=231.2,current=5.2,active_power=1200 1717305600000000000
 ````
+### Multiple measurement style
+- In this style, each **type of measurement** (e.g., `voltage`, `current`, `active_power`) is written as a **separate measurement** in InfluxDB.
+```text
+voltage,meter_id=001,phase=L1,obis_code=1-0:32.7.0 value=231.2 1717305600000000000
+current,meter_id=001,phase=L1,obis_code=1-0:31.7.0 value=5.2 1717305600000000000
+active_power,meter_id=001,phase=L1,obis_code=1-0:21.7.0 value=1200 1717305600000000000
+```
 ## Querying data
 ### Show measurements
 ```sql
