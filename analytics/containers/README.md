@@ -14,7 +14,7 @@
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | application.yml | [application.yml](https://github.com/sbhrwl/microservices/blob/main/analytics/ingestion-service/src/main/resources/application.yml)    |
 | Build jar       | `mvn clean package`                                                                                                                    |
-| Dockerfile      | [Link](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)                 |
+| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/sensor-registration/ui-service/Dockerfile)                 |
 
 ### Using docker compose
 
