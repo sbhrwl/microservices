@@ -29,8 +29,8 @@
 
 | Steps                  | Details                                                                                                                        |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| Build image            | `docker build -t sbhrwldocker/ui-service:latest .`                                                                             |                    
-| Run container          | `docker run -p 9081:9081 -e SERVER_PORT=9081 -e KEYCLOAK_URL=http://host.docker.internal:8080/ -e KEYCLOAK_REALM=master -e KEYCLOAK_CLIENTID=sensor-service -e SENSOR_SERVICE_URL=http://host.docker.internal:9082 --name ui-service sbhrwldocker/ui-service:latest` |
+| Build image            | `docker build -t sbhrwldocker/ingestion-service:latest .`                                                                             |                    
+| Run container          | `docker run -p 9081:9081 -e SERVER_PORT=9081 -e ACTIVEMQ_BROKER_URL=tcp://192.168.0.102:61616 -e ACTIVEMQ_USER=admin -e ACTIVEMQ_PASSWORD=admin -e ACTIVEMQ_DEFAULT_DESTINATION=power-quality -e INFLUXDB_HOST=http://192.168.0.102:8086 -e INFLUXDB_DATABASE=power_quality -e INFLUXDB_USERNAME=admin -e INFLUXDB_PASSWORD=admin123 -e INFLUXDB_SINGLE_MEASUREMENT=true sbhrwldocker/ingestion-service:latest` |
 | Stop container         | `docker stop ui-service`      |
 | Remove container       | `docker rm -f ui-service`     |
       
