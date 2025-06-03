@@ -15,4 +15,4 @@ ingestionService:
   service:
     type: NodePort
     port: 9081
-    nodePort: 30091
+    nodePort: 30081
