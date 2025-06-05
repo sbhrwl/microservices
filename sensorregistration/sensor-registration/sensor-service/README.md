@@ -18,8 +18,16 @@ mvn spring-boot:run
 ```
 
 ## Test
-- Get Access token
-- request **`POST`** `http://localhost:9081/api/register/sensor`
+- Get Access token `http://localhost:8080/realms/master/protocol/openid-connect/token`
+  - Modify `Body -> x-wwww-form-url-encoded`
+     ```
+     grant_type : password
+     client_id  : sensor-service (created in Keycloak)
+     username  : endpointaccessuser
+     password  : password123
+     ```
+
+- Request **`POST`** `http://localhost:9081/api/register/sensor`
 - with request body as JSON payload
   ```json
     {
@@ -28,13 +36,7 @@ mvn spring-boot:run
         "email": "user@example.com"
     }
   ```
-- Modify `Body -> x-wwww-form-url-encoded`
-   ```
-   grant_type : password
-   client_id  : sensor-service (created in Keycloak)
-   username  : endpointaccessuser
-   password  : password123
-   ```
+
 - Verify at Kafka console
   ```
   kafka-console-consumer --bootstrap-server localhost:9092 --topic sensor-registrations --from-beginning --max-messages 10  
