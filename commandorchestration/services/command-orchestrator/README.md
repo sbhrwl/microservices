@@ -1,4 +1,4 @@
-# Task Service
+# Command orchestrator 
 - Copy [protos](src/main/proto/TaskMessage.proto) from Task creator service to this service
   - The java_package = "com.example.taskservice"; and java_outer_classname = "TaskMessageProto";
     - This means when the protobuf-maven-plugin (which you've already added to your pom.xml) compiles this .proto file in your new command-orchestration-service project, the generated Java classes (like TaskMessage and CommandType) will be placed under the package com.example.taskservice, and the main outer class will be TaskMessageProto.
