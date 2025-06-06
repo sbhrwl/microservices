@@ -1,29 +1,6 @@
 # Task Service
 
-## Description
-Spring Boot service to handle task submissions, store them in MongoDB, encode using Protobuf, and publish to a Kafka topic.
-
-## Technologies Used
-- Java 17
-- Spring Boot
-- MongoDB
-- Apache Kafka
-- Protobuf
-- Keycloak (for authentication)
-- Maven
-
-## How to Run
-
-### Prerequisites
-- Docker Desktop (with MongoDB and Kafka containers running)
-- Java 17+
-- Maven
-- Keycloak running with a realm `demo-realm` and a client `task-service-client`
-
-### Steps
-- Start MongoDB and Kafka via Docker.
-- Start Keycloak.
-- Generate proto
+- Generate the protos:
 ```
 mvn clean compile
 ```
@@ -36,26 +13,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-### Kafka
-Make sure your Kafka is running on port `29092` with no authentication.
-
-### MongoDB
-Ensure MongoDB is accessible at `mongodb://localhost:27017` with a database named `taskdb`.
-
-## API Endpoint
-
-### POST `/tasks`
-Submit a task:
-```json
-{
-  "taskId": "task-001",
-  "commandType": "DIRECT",
-  "commandArgs": ["arg1", "arg2"],
-  "sensorList": ["sensor1", "sensor2"]
-}
-```
-
-## Postman
+## Test
 - Get Access token `http://localhost:8080/realms/master/protocol/openid-connect/token`
   - Modify `Body -> x-wwww-form-url-encoded`
      ```
