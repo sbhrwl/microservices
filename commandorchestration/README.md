@@ -2,6 +2,7 @@
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Services](services/README.md)
+  - [Task Service](services/task-service/README.md)
   - [Command Orchestrator Service](services/commandorchestratorservice/README.md)
   - [Task Orchestration Service](services/taskorchestrationservice/README.md)
   - [Command Lifecycle Service](services/commandlifecycleservice/README.md)
