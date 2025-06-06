@@ -20,6 +20,8 @@ mvn spring-boot:run
 ```
 PS C:\Git\task-service> Test-NetConnection -ComputerName localhost -Port 29092
 ```
+  - Netcat: `nc -vz localhost 29092`
+  - Telnet: `telnet localhost 29092`
 ## Test
 - Get Access token `http://localhost:8080/realms/master/protocol/openid-connect/token`
   - Modify `Body -> x-wwww-form-url-encoded`
