@@ -6,8 +6,6 @@
   - [Command orchestrator](services/command-orchestrator/README.md)
   - [Protocol gateway](services/protocoladapterservice/README.md)
   - [Sensor simulator](services/commandorchestratorservice/README.md)
-  - [Task Orchestration Service](services/taskorchestrationservice/README.md)
-  - [Command Lifecycle Service](services/commandlifecycleservice/README.md)
 - [Kubernetes](movetok8s/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Horizontal Pod Autoscalar](hpa/README.md)
