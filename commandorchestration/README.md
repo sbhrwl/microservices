@@ -5,7 +5,7 @@
   - [Task orchestrator](services/task-orchestrator/README.md)
   - [Command orchestrator](services/command-orchestrator/README.md)
   - [Protocol gateway](services/protocoladapterservice/README.md)
-  - [Command Orchestrator Service](services/commandorchestratorservice/README.md)
+  - [Sensor simulator](services/commandorchestratorservice/README.md)
   - [Task Orchestration Service](services/taskorchestrationservice/README.md)
   - [Command Lifecycle Service](services/commandlifecycleservice/README.md)
 - [Kubernetes](movetok8s/README.md)
