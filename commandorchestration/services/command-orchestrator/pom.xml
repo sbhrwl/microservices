@@ -38,6 +38,13 @@
             <artifactId>spring-kafka</artifactId>
             <version>3.1.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
@@ -58,7 +65,8 @@
     </dependencies>
 
     <build>
-        <plugins> <plugin>
+        <plugins> 
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -91,5 +99,6 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins> </build>
+        </plugins> 
+    </build>
 </project>

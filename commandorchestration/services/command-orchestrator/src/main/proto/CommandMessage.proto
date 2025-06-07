@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.example.commandorchestrator";
+option java_outer_classname = "CommandMessageProto";
+
+ // to reuse CommandType enum
+import "TaskMessage.proto";
+
+message CommandMessage {
+  string id = 1;
+  string taskId = 2;
+  string sensorId = 3;
+  CommandType commandType = 4;
+  repeated string commandArgs = 5;
+}
