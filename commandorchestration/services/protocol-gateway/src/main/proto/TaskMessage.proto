@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "com.example.taskservice";
+option java_outer_classname = "TaskMessageProto";
+
+message TaskMessage {
+  string taskId = 1;
+  CommandType commandType = 2;
+  repeated string commandArgs = 3;
+  repeated string sensorList = 4;
+}
+
+enum CommandType {
+  START = 0;
+  STOP = 1;
+  RESTART = 2;
+}
