@@ -1,6 +1,6 @@
 package com.example.protocolgateway.protocol;
 
-import com.example.commandorchestrator.CommandMessageProto.CommandMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -9,17 +9,18 @@ import java.util.Map;
 public class ProtocolConverterFactory {
 
     private final Map<String, ProtocolConverter> converters;
+    private final String protocol;
 
-    public ProtocolConverterFactory(Map<String, ProtocolConverter> converters) {
+    public ProtocolConverterFactory(Map<String, ProtocolConverter> converters,
+                                    @Value("${protocol.type:dlms}") String protocol) {
         this.converters = converters;
+        this.protocol = protocol.toLowerCase();
     }
 
-    public ProtocolConverter getConverter(CommandMessage commandMessage) {
-        String protocolKey = commandMessage.getCommandType().name().toLowerCase();
-
-        ProtocolConverter converter = converters.get(protocolKey);
+    public ProtocolConverter getConverter() {
+        ProtocolConverter converter = converters.get(protocol);
         if (converter == null) {
-            throw new IllegalArgumentException("Unsupported protocol: " + protocolKey);
+            throw new IllegalArgumentException("Unsupported protocol: " + protocol);
         }
         return converter;
     }

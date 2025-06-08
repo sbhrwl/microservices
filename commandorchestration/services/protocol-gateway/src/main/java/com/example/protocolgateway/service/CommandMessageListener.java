@@ -34,8 +34,7 @@ public class CommandMessageListener {
                     commandMessage.getCommandType(),
                     commandMessage.getCommandArgsList());
 
-            ProtocolConverter converter = protocolConverterFactory.getConverter(commandMessage);
-
+            ProtocolConverter converter = protocolConverterFactory.getConverter(); // no argument now
 
             byte[] convertedCommand = converter.convertCommand(commandMessage);
             logger.info("Converted command bytes: {}", new String(convertedCommand));
