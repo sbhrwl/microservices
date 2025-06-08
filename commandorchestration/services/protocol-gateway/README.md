@@ -1,6 +1,6 @@
 # Protocol gateway
 - Generate the protos:
-```
+```bash
 mvn clean compile
 ```
 - Build the project:
