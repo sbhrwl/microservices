@@ -6,8 +6,11 @@ import com.example.protocolgateway.protocol.ProtocolConverterFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CommandMessageListener {
@@ -15,6 +18,10 @@ public class CommandMessageListener {
     private static final Logger logger = LoggerFactory.getLogger(CommandMessageListener.class);
 
     private final ProtocolConverterFactory protocolConverterFactory;
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${sensor.simulator.url}")
+    private String sensorSimulatorUrl;
 
     public CommandMessageListener(ProtocolConverterFactory protocolConverterFactory) {
         this.protocolConverterFactory = protocolConverterFactory;
@@ -34,12 +41,17 @@ public class CommandMessageListener {
                     commandMessage.getCommandType(),
                     commandMessage.getCommandArgsList());
 
-            ProtocolConverter converter = protocolConverterFactory.getConverter(); // no argument now
-
+            ProtocolConverter converter = protocolConverterFactory.getConverter();
             byte[] convertedCommand = converter.convertCommand(commandMessage);
+
             logger.info("Converted command bytes: {}", new String(convertedCommand));
 
-            // TODO: Send convertedCommand to the sensor or downstream system
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            HttpEntity<byte[]> requestEntity = new HttpEntity<>(convertedCommand, headers);
+
+            ResponseEntity<String> response = restTemplate.postForEntity(sensorSimulatorUrl, requestEntity, String.class);
+            logger.info("Sensor simulator response: {}", response.getBody());
 
         } catch (Exception e) {
             logger.error("Failed to process CommandMessage", e);
