@@ -9,6 +9,8 @@
   - Optionally saves the data to MongoDB.
   - Enqueues command as protocol buffers to Kafka command-topic
 - **Protocol gateway**
-  - 
+  - Dequeues message and creates the corresponding protocol specific command for the sensor 
+  - Sends command to the sensor
 - **Sensor simulator**
-  - 
+  - Simulates a sensor 
+  - Takes an action as requested in the command 
