@@ -50,62 +50,54 @@ ocs-release# Horizontal Pod Autoscalar
 
 ## Verify release
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> helm install ocs-hpa-release .
-NAME: orchestrate-command-services-with-hpa-release
-LAST DEPLOYED: Fri May 30 11:01:11 2025
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm install ocs-hpa-release .
+NAME: ocs-hpa-release
+LAST DEPLOYED: Mon Jun  9 20:33:04 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> helm list
-NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-command-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> helm list -A
-NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-command-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get pods
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-nm2qt   1/1     Running   0          23s
-registration-service-7c4555d588-b4mpk   1/1     Running   0          23s
-sensor-service-59b4d96b5-l2zwl          1/1     Running   0          23s
-ui-service-55f94d6747-qbssp             1/1     Running   0          23s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get svc
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          25d
-notification-service   ClusterIP   10.107.55.248    <none>        9084/TCP         27s
-registration-service   ClusterIP   10.109.192.122   <none>        9083/TCP         27s
-sensor-service         NodePort    10.97.158.255    <none>        9082:30082/TCP   27s
-ui-service             NodePort    10.102.72.111    <none>        9081:30081/TCP   27s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa>
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+ocs-hpa-release default         1               2025-06-09 20:33:04.8829931 +0300 EEST  deployed        microservices-0.1.0     1.0
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm list -A
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+ocs-hpa-release default         1               2025-06-09 20:33:04.8829931 +0300 EEST  deployed        microservices-0.1.0     1.0
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get pods
+NAME                                                              READY   STATUS    RESTARTS   AGE
+ocs-hpa-release-microservices-command-orchestrator-789c6d7sbdgq   1/1     Running   0          26s
+ocs-hpa-release-microservices-protocol-gateway-7f86cfb765-mtzl4   1/1     Running   0          26s
+ocs-hpa-release-microservices-sensor-simulator-5b7686d8c-n86fm    1/1     Running   0          26s
+ocs-hpa-release-microservices-task-orchestrator-69555b676cbzc25   1/1     Running   0          26s
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get svc
+NAME                                                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes                                           ClusterIP   10.96.0.1       <none>        443/TCP          35d
+ocs-hpa-release-microservices-command-orchestrator   ClusterIP   10.108.97.239   <none>        9082/TCP         32s
+ocs-hpa-release-microservices-sensor-simulator       ClusterIP   10.97.46.170    <none>        9084/TCP         32s
+ocs-hpa-release-microservices-task-orchestrator      NodePort    10.96.175.72    <none>        9081:32147/TCP   32s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get hpa
-NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get hpa
+NAME                       REFERENCE                         TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+command-orchestrator-hpa   Deployment/command-orchestrator   cpu: <unknown>/80%   1         5         0          49s
+protocol-gateway-hpa       Deployment/protocol-gateway       cpu: <unknown>/80%   1         5         0          49s
+sensor-simulator-hpa       Deployment/sensor-simulator       cpu: <unknown>/80%   1         5         0          49s
+task-orchestrator-hpa      Deployment/task-orchestrator      cpu: <unknown>/80%   1         5         0          49s
 ```
 - Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get hpa
-NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa registration-hpa
-Name:                                                  registration-hpa
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa task-orchestrator-hpa
+Name:                                                  task-orchestrator-hpa
 Namespace:                                             default
-Labels:                                                app=registration
+Labels:                                                app=task-orchestrator
                                                        app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: orchestrate-command-services-with-hpa-release
+Annotations:                                           meta.helm.sh/release-name: ocs-hpa-release
                                                        meta.helm.sh/release-namespace: default
-CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
-Reference:                                             Deployment/registration
+CreationTimestamp:                                     Mon, 09 Jun 2025 20:33:05 +0300
+Reference:                                             Deployment/task-orchestrator
 Metrics:                                               ( current / target )
   resource cpu on pods  (as a percentage of request):  <unknown> / 80%
 Min replicas:                                          1
@@ -114,11 +106,11 @@ Deployment pods:                                       0 current / 0 desired
 Conditions:
   Type         Status  Reason          Message
   ----         ------  ------          -------
-  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "registration" not found
+  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "task-orchestrator" not found
 Events:
   Type     Reason          Age   From                       Message
   ----     ------          ----  ----                       -------
-  Warning  FailedGetScale  11s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+  Warning  FailedGetScale  13s   horizontal-pod-autoscaler  deployments/scale.apps "task-orchestrator" not found
 ```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
