@@ -15,8 +15,8 @@
 ## Verification
 - Task orchestrator
 ```
-[Task orchestrator] [nio-9081-exec-3] c.e.taskservice.service.KafkaProducer    : Message sent successfully for key: task-0011
-[Task orchestrator] [nio-9081-exec-3] c.e.taskservice.service.TaskService      : Task message sent to Kafka for task ID: task-0011
+[Task orchestrator] [ntainer#0-0-C-1] c.e.taskservice.service.KafkaProducer    : Message sent successfully for key: task-0011
+[Task orchestrator] [ntainer#0-0-C-1] c.e.taskservice.service.TaskService      : Task message sent to Kafka for task ID: task-0011
 ```
 - Command orchestrator
 ```
@@ -52,6 +52,6 @@ sensorList: "sensor4"
 ```
 - Sensor simulator
 ```
-[Sensor simulator] [nio-9084-exec-1] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7302
-[Sensor simulator] [nio-9084-exec-2] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7303
+[Sensor simulator] [ntainer#0-0-C-1] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7302
+[Sensor simulator] [ntainer#0-0-C-1] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7303
 ```
