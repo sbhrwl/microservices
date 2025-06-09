@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: taskOrchestrator-hpa
+  name: task-orchestrator-hpa
   labels:
-    app: taskOrchestrator
+    app: task-orchestrator
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: taskOrchestrator
+    name: task-orchestrator
   minReplicas: {{ .Values.hpa.taskOrchestrator.minReplicas }}
   maxReplicas: {{ .Values.hpa.taskOrchestrator.maxReplicas }}
   metrics:

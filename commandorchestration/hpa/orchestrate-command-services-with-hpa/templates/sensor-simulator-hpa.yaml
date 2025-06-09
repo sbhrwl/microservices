@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: sensorSimulator-hpa
+  name: sensor-simulator-hpa
   labels:
-    app: sensorSimulator
+    app: sensor-simulator
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: sensorSimulator
+    name: sensor-simulator
   minReplicas: {{ .Values.hpa.sensorSimulator.minReplicas }}
   maxReplicas: {{ .Values.hpa.sensorSimulator.maxReplicas }}
   metrics:
