@@ -13,12 +13,12 @@
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
 ## Verification
-- Task orchestrator
+- **Task orchestrator**
 ```
 [Task orchestrator] [ntainer#0-0-C-1] c.e.taskservice.service.KafkaProducer    : Message sent successfully for key: task-0011
 [Task orchestrator] [ntainer#0-0-C-1] c.e.taskservice.service.TaskService      : Task message sent to Kafka for task ID: task-0011
 ```
-- Command orchestrator
+- **Command orchestrator**
 ```
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.consumer.TaskMessageConsumer       : Received Kafka message with key: task-0011 from topic: task-topic
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.consumer.TaskMessageConsumer       : Successfully deserialized TaskMessage: taskId: "task-0011"
@@ -39,7 +39,7 @@ sensorList: "sensor4"
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Command for sensor sensor4 is ready for execution.
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Finished orchestrating commands for Task ID: task-0011.
 ```
-- Protocol gateway
+- **Protocol gateway**
 ```
 [Protocol gateway] [ntainer#0-0-C-1] c.e.p.service.CommandMessageListener     : Received CommandMessage: ID=68467fe0e7b5b607348d7302, SensorID=sensor3, Type=START, Args=[arg1, arg2]
 [Protocol gateway] [ntainer#0-0-C-1] c.e.p.protocol.DlmsProtocolConverter     : Converting command with ID 68467fe0e7b5b607348d7302 for DLMS protocol
@@ -50,7 +50,7 @@ sensorList: "sensor4"
 [Protocol gateway] [ntainer#0-0-C-1] c.e.p.service.CommandMessageListener     : Converted command bytes: 68467fe0e7b5b607348d7303
 [Protocol gateway] [ntainer#0-0-C-1] c.e.p.service.CommandMessageListener     : Sensor simulator response: Simulated sensor received payload of length 24
 ```
-- Sensor simulator
+- **Sensor simulator**
 ```
 [Sensor simulator] [ntainer#0-0-C-1] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7302
 [Sensor simulator] [ntainer#0-0-C-1] c.e.s.c.SensorSimulatorController        : Received sensor simulation request with payload: 68467fe0e7b5b607348d7303
