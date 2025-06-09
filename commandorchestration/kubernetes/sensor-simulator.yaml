@@ -1,49 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registration-service
+  name: sensor-simulator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: registration-service
+      app: sensor-simulator
   template:
     metadata:
       labels:
-        app: registration-service
+        app: sensor-simulator
     spec:
       containers:
-        - name: registration-service
-          image: sbhrwldocker/registration-service:latest
+        - name: sensor-simulator
+          image: sbhrwldocker/sensor-simulator:latest
           ports:
-            - containerPort: 9083
+            - containerPort: 9084
           env:
             - name: SERVER_PORT
-              value: "9083"
-            - name: MONGO_HOST
-              value: "192.168.0.102"
-            - name: MONGO_PORT
-              value: "27017"
-            - name: MONGO_USERNAME
-              value: "root"
-            - name: MONGO_PASSWORD
-              value: "root123"
-            - name: KAFKA_HOST
-              value: "192.168.0.102"
-            - name: KAFKA_PORT
-              value: "29092"
-            - name: NOTIFICATION_SERVICE_URL
-              value: "http://notification-service:9084"
+              value: "9084"
+            - name: SENSOR_SIMULATOR_ENDPOINT
+              value: "/simulate"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: registration-service
+  name: sensor-simulator
 spec:
   selector:
-    app: registration-service
+    app: sensor-simulator
   ports:
-    - protocol: TCP
-      port: 9083
-      targetPort: 9083
+    - port: 9084
+      targetPort: 9084
   type: ClusterIP
