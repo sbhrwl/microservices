@@ -89,21 +89,27 @@ helm install ocs-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> helm list -n dev
-NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-command-services-dev dev             1               2025-05-30 11:04:03.8511928 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get pods -n dev
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-ndt8t   1/1     Running   0          2m13s
-registration-service-7c4555d588-vfz2j   1/1     Running   0          2m13s
-sensor-service-59b4d96b5-q4kbl          1/1     Running   0          2m13s
-ui-service-55f94d6747-gqw57             1/1     Running   0          2m13s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get svc -n dev
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-notification-service   ClusterIP   10.102.19.193    <none>        9084/TCP         2m24s
-registration-service   ClusterIP   10.102.135.152   <none>        9083/TCP         2m24s
-sensor-service         NodePort    10.101.218.249   <none>        9082:30082/TCP   2m24s
-ui-service             NodePort    10.101.36.130    <none>        9081:30081/TCP   2m24s
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm install ocs-dev . -n dev
+NAME: ocs-dev
+LAST DEPLOYED: Mon Jun  9 20:43:34 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm list -n dev
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+ocs-dev dev             1               2025-06-09 20:43:34.7918091 +0300 EEST  deployed        microservices-0.1.0     1.0
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get pods -n dev
+NAME                                                          READY   STATUS    RESTARTS   AGE
+ocs-dev-microservices-command-orchestrator-789c6d7877-4h5hs   1/1     Running   0          26s
+ocs-dev-microservices-protocol-gateway-7f86cfb765-b59lb       1/1     Running   0          26s
+ocs-dev-microservices-sensor-simulator-5b7686d8c-8lthj        1/1     Running   0          26s
+ocs-dev-microservices-task-orchestrator-69555b676c-ms6ft      1/1     Running   0          26s
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get svc -n dev
+NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+ocs-dev-microservices-command-orchestrator   ClusterIP   10.110.31.157   <none>        9082/TCP         32s
+ocs-dev-microservices-sensor-simulator       ClusterIP   10.107.86.93    <none>        9084/TCP         32s
+ocs-dev-microservices-task-orchestrator      NodePort    10.108.173.61   <none>        9081:30557/TCP   32s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
