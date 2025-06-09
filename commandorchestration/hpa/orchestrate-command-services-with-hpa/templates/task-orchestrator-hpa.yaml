@@ -1,0 +1,20 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: taskOrchestrator-hpa
+  labels:
+    app: taskOrchestrator
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: taskOrchestrator
+  minReplicas: {{ .Values.hpa.taskOrchestrator.minReplicas }}
+  maxReplicas: {{ .Values.hpa.taskOrchestrator.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.hpa.taskOrchestrator.targetCPUUtilizationPercentage }}

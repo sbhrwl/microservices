@@ -1,3 +1,24 @@
+hpa:
+  taskOrchestrator:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  commandOrchestrator:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  protocolGateway:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  sensorSimulator:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
 taskOrchestrator:
   replicaCount: 1
   image:

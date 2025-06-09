@@ -1,0 +1,20 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: sensorSimulator-hpa
+  labels:
+    app: sensorSimulator
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sensorSimulator
+  minReplicas: {{ .Values.hpa.sensorSimulator.minReplicas }}
+  maxReplicas: {{ .Values.hpa.sensorSimulator.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.hpa.sensorSimulator.targetCPUUtilizationPercentage }}

@@ -1,0 +1,20 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: protocolGateway-hpa
+  labels:
+    app: protocolGateway
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: registration
+  minReplicas: {{ .Values.hpa.protocolGateway.minReplicas }}
+  maxReplicas: {{ .Values.hpa.protocolGateway.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.hpa.protocolGateway.targetCPUUtilizationPercentage }}
