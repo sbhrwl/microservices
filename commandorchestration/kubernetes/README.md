@@ -50,48 +50,47 @@ kubectl apply -f task-orchestrator.yaml
 kubectl apply -f command-orchestrator.yaml
 kubectl apply -f protocol-gateway.yaml
 kubectl apply -f sensor-simulator.yaml
-
-kubectl apply -f orchestrate-command-orchestrators.yaml
+kubectl apply -f orchestrate-command-services.yaml
 
 # Cleanup
-kubectl delete -f orchestrate-command-orchestrators.yaml
+kubectl delete -f orchestrate-command-services.yaml
+kubectl delete -f task-orchestrator.yaml
+kubectl delete -f command-orchestrator.yaml
+kubectl delete -f protocol-gateway.yaml
+kubectl delete -f sensor-simulator.yaml
 ```
 ## Verify deployment
 ```
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl apply -f orchestrate-command-orchestrators.yaml
-configmap/sensor-simulator-config created
-deployment.apps/sensor-simulator created
-service/sensor-simulator created
-deployment.apps/protocol-gateway created
-service/protocol-gateway created
-deployment.apps/command-orchestrator created
-service/command-orchestrator created
+PS C:\Git\microservices\commandorchestration\kubernetes> kubectl apply -f orchestrate-command-services.yaml
 deployment.apps/task-orchestrator created
 service/task-orchestrator created
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl get pods
-NAME                                    READY   STATUS    RESTARTS   AGE
-sensor-simulator-7f5845c77c-dchcf   1/1     Running   0          17s
-protocol-gateway-86d67ff64-tf8mh    1/1     Running   0          17s
-command-orchestrator-74567d6548-c2fgp         1/1     Running   0          17s
-task-orchestrator-dfbb8d9df-jclm2              1/1     Running   0          17s
-PS C:\Git\microservices\sensorregistration\kubernetes> kubectl get services
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1        <none>        443/TCP          23d
-sensor-simulator   ClusterIP   10.104.141.255   <none>        9084/TCP         21s
-protocol-gateway   ClusterIP   10.97.150.246    <none>        9083/TCP         21s
-command-orchestrator         NodePort    10.104.180.39    <none>        9082:30082/TCP   21s
-task-orchestrator             NodePort    10.110.234.13    <none>        9081:30081/TCP   21s
-PS C:\Git\microservices\sensorregistration\kubernetes>
+deployment.apps/command-orchestrator created
+service/command-orchestrator created
+deployment.apps/protocol-gateway created
+deployment.apps/sensor-simulator created
+service/sensor-simulator created
+PS C:\Git\microservices\commandorchestration\kubernetes> kubectl get pods
+NAME                                   READY   STATUS    RESTARTS   AGE
+command-orchestrator-8589d7f68-7q6bd   1/1     Running   0          28s
+protocol-gateway-f468cfc55-j9d6z       1/1     Running   0          27s
+sensor-simulator-5b7686d8c-qqmt5       1/1     Running   0          27s
+task-orchestrator-7cb78c878-88khr      1/1     Running   0          28s
+PS C:\Git\microservices\commandorchestration\kubernetes> kubectl get services
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+command-orchestrator   ClusterIP   10.104.94.116   <none>        9082/TCP         36s
+kubernetes             ClusterIP   10.96.0.1       <none>        443/TCP          35d
+sensor-simulator       ClusterIP   10.98.42.15     <none>        9084/TCP         35s
+task-orchestrator      NodePort    10.107.144.94   <none>        9081:30081/TCP   36s
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/` → `task-orchestrator`
-  * `http://localhost:30082/api/register/sensor` → `command-orchestrator`
-  * ClusterIP service → `protocol-gateway`
+  * ClusterIP service → `command-orchestrator`
+  * Kafka listener → `protocol-gateway`
   * ClusterIP service → `sensor-simulator`
 ## Cleanup
 ```
-kubectl delete -f orchestrate-command-orchestrators.yaml
+kubectl delete -f orchestrate-command-services.yaml
 ```

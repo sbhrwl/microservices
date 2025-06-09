@@ -147,7 +147,7 @@ spec:
             - name: PROTOCOL_TYPE
               value: "dlms"
             - name: SENSOR_SIMULATOR_URL
-              value: "http://host.docker.internal:9084/simulate"
+              value: "http://sensor-simulator:9084/simulate"
 
 ---
 apiVersion: apps/v1
