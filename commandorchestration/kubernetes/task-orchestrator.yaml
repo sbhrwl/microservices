@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service
+  template:
+    metadata:
+      labels:
+        app: ui-service
+    spec:
+      containers:
+        - name: ui-service
+          image: sbhrwldocker/ui-service:latest
+          ports:
+            - containerPort: 9081
+          env:
+            - name: SERVER_PORT
+              value: "9081"
+            - name: KEYCLOAK_URL
+              value: "http://192.168.0.102:8080/"
+            - name: KEYCLOAK_REALM
+              value: "master"
+            - name: KEYCLOAK_CLIENTID
+              value: "sensor-service"
+            - name: SENSOR_SERVICE_URL
+              value: "http://192.168.0.102:30082"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-service
+spec:
+  type: NodePort
+  selector:
+    app: ui-service
+  ports:
+    - port: 9081
+      targetPort: 9081
+      nodePort: 30081

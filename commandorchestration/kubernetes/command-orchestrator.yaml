@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-orchestrator
+  template:
+    metadata:
+      labels:
+        app: command-orchestrator
+    spec:
+      containers:
+        - name: command-orchestrator
+          image: sbhrwldocker/command-orchestrator:latest
+          ports:
+            - containerPort: 9082
+          env:
+            - name: SERVER_PORT
+              value: "9082"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "http://192.168.0.102:8080/realms/master"
+            - name: KEYCLOAK_JWK_SET_URI
+              value: "http://192.168.0.102:8080/realms/master/protocol/openid-connect/certs"
+            - name: KEYCLOAK_CLIENT_ID
+              value: "command-orchestrator"
+            - name: KEYCLOAK_PROVIDER
+              value: "keycloak"
+            - name: KAFKA_HOST
+              value: "192.168.0.102"
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: KAFKA_SENSOR_REG_TOPIC
+              value: "sensor-registrations"
+            - name: CORS_ALLOWED_ORIGINS
+              value: "http://localhost:30081,http://192.168.0.102:30081"
+              # value: "http://192.168.0.102:9081"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: command-orchestrator
+spec:
+  selector:
+    app: command-orchestrator
+  ports:
+    - protocol: TCP
+      port: 9082
+      targetPort: 9082
+      nodePort: 30082
+  type: NodePort

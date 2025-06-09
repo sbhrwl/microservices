@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registration-service
+  template:
+    metadata:
+      labels:
+        app: registration-service
+    spec:
+      containers:
+        - name: registration-service
+          image: sbhrwldocker/registration-service:latest
+          ports:
+            - containerPort: 9083
+          env:
+            - name: SERVER_PORT
+              value: "9083"
+            - name: MONGO_HOST
+              value: "192.168.0.102"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_USERNAME
+              value: "root"
+            - name: MONGO_PASSWORD
+              value: "root123"
+            - name: KAFKA_HOST
+              value: "192.168.0.102"
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: NOTIFICATION_SERVICE_URL
+              value: "http://notification-service:9084"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-service
+spec:
+  selector:
+    app: registration-service
+  ports:
+    - protocol: TCP
+      port: 9083
+      targetPort: 9083
+  type: ClusterIP
