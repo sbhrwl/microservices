@@ -15,7 +15,7 @@
   ```
   helm create orchestrate-sensor-services
   ```
-- This creates a directory called [**orchestrate-sensor-services**](orchestrate-sensor-services) with default templates and values.
+- This creates a directory called [**orchestrate-command-services**](orchestrate-command-services) with default templates and values.
 <img src="images/directorystructure.jpg">
 
 ## Clean up the default templates
