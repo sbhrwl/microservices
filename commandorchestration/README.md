@@ -20,6 +20,16 @@
 ```
 - Command orchestrator
 ```
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.consumer.TaskMessageConsumer       : Received Kafka message with key: task-0011 from topic: task-topic
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.consumer.TaskMessageConsumer       : Successfully deserialized TaskMessage: taskId: "task-0011"
+commandArgs: "arg1"
+commandArgs: "arg2"
+sensorList: "sensor3"
+sensorList: "sensor4"
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Orchestrating commands for Task ID: task-0011 with 2 sensors.
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Saved command to MongoDB for sensor sensor3 with ID: 68467fe0e7b5b607348d7302
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.service.KafkaProducer              : Sending message to Kafka topic: command-topic with key: sensor3
+[Command orchestrator] [ntainer#0-0-C-1] c.e.c.service.KafkaProducer              : Message payload (Base64 encoded): Chg2ODQ2N2ZlMGU3YjViNjA3MzQ4ZDczMDISCXRhc2stMDAxMRoHc2Vuc29yMyoEYXJnMSoEYXJnMg==
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.service.KafkaProducer              : Message sent successfully for key: sensor3
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Command for sensor sensor3 is ready for execution.
 [Command orchestrator] [ntainer#0-0-C-1] c.e.c.s.CommandOrchestrationService      : Saved command to MongoDB for sensor sensor4 with ID: 68467fe0e7b5b607348d7303
