@@ -1,17 +1,20 @@
 services:
-  ui-service:
+  protocol-gateway:
+    image: sbhrwldocker/protocol-gateway:latest
+    container_name: protocol-gateway
     build:
       context: .
-    image: sbhrwldocker/ui-service:latest
+      dockerfile: Dockerfile
     ports:
-      - "9081:9081"
+      - "9083:9083"
     environment:
-      SERVER_PORT: 9081
-      # KEYCLOAK_URL: http://localhost:8080/
-      # KEYCLOAK_URL: http://host.docker.internal:8080/
-      # KEYCLOAK_URL: http://keycloak:8080/
-      KEYCLOAK_URL: http://192.168.0.102:8080/
-      KEYCLOAK_REALM: master
-      KEYCLOAK_CLIENTID: sensor-service
-      # SENSOR_SERVICE_URL: http://host.docker.internal:9082
-      SENSOR_SERVICE_URL: http://192.168.0.102:9082
+      SERVER_PORT: 9083
+
+      # Kafka config
+      KAFKA_HOST: host.docker.internal
+      KAFKA_PORT: 29092
+      KAFKA_COMMAND_TOPIC: command-topic
+
+      # Protocol type and simulator endpoint
+      PROTOCOL_TYPE: dlms
+      SENSOR_SIMULATOR_URL: http://host.docker.internal:9084/simulate

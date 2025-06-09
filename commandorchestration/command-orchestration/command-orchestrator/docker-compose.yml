@@ -1,17 +1,26 @@
 services:
-  ui-service:
+  command-orchestrator:
+    image: sbhrwldocker/command-orchestrator:latest
+    container_name: command-orchestrator
     build:
       context: .
-    image: sbhrwldocker/ui-service:latest
+      dockerfile: Dockerfile
     ports:
-      - "9081:9081"
+      - "9082:9082"
     environment:
-      SERVER_PORT: 9081
-      # KEYCLOAK_URL: http://localhost:8080/
-      # KEYCLOAK_URL: http://host.docker.internal:8080/
-      # KEYCLOAK_URL: http://keycloak:8080/
-      KEYCLOAK_URL: http://192.168.0.102:8080/
-      KEYCLOAK_REALM: master
-      KEYCLOAK_CLIENTID: sensor-service
-      # SENSOR_SERVICE_URL: http://host.docker.internal:9082
-      SENSOR_SERVICE_URL: http://192.168.0.102:9082
+      SERVER_PORT: 9082
+
+      # Kafka config
+      KAFKA_HOST: host.docker.internal
+      KAFKA_PORT: 29092
+      KAFKA_TASK_REG_TOPIC: task-topic
+      KAFKA_COMMAND_TOPIC: command-topic
+
+      # MongoDB config
+      MONGO_HOST: host.docker.internal
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: root123
+
+      # Optional: command persistence toggle
+      COMMAND_PERSISTENCE_ENABLED: true

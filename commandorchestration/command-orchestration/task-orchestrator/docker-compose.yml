@@ -1,17 +1,30 @@
 services:
-  ui-service:
+  task-orchestrator:
+    image: sbhrwldocker/task-orchestrator:latest
+    container_name: task-orchestrator
     build:
       context: .
-    image: sbhrwldocker/ui-service:latest
+      dockerfile: Dockerfile
     ports:
       - "9081:9081"
     environment:
       SERVER_PORT: 9081
-      # KEYCLOAK_URL: http://localhost:8080/
-      # KEYCLOAK_URL: http://host.docker.internal:8080/
-      # KEYCLOAK_URL: http://keycloak:8080/
-      KEYCLOAK_URL: http://192.168.0.102:8080/
+
+      # Keycloak config
       KEYCLOAK_REALM: master
-      KEYCLOAK_CLIENTID: sensor-service
-      # SENSOR_SERVICE_URL: http://host.docker.internal:9082
-      SENSOR_SERVICE_URL: http://192.168.0.102:9082
+      KEYCLOAK_AUTH_SERVER_URL: http://host.docker.internal:8080/
+      KEYCLOAK_RESOURCE: sensor-service
+      KEYCLOAK_PUBLIC_CLIENT: true
+      KEYCLOAK_BEARER_ONLY: true
+      SPRING_SECURITY_OAUTH2_RESOURCE_SERVER_JWT_ISSUER_URI: http://host.docker.internal:8080/realms/master
+
+      # Kafka config
+      KAFKA_HOST: host.docker.internal
+      KAFKA_PORT: 29092
+      KAFKA_TASK_REG_TOPIC: task-topic
+
+      # MongoDB config
+      MONGO_HOST: host.docker.internal
+      MONGO_PORT: 27017
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: root123
