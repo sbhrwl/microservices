@@ -123,13 +123,13 @@ Events:
 ```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/` → `ui-service`
-  * `http://localhost:30082/api/register/sensor` → `sensor-service`
-  * ClusterIP service → `registration-service`
-  * ClusterIP service → `notification-service`
+  * `http://localhost:30081/` → `task-orchestrator`
+  * ClusterIP service → `command-orchestrator`
+  * Kafka listener → `protocol-gateway`
+  * ClusterIP service → `sensor-simulator`
 ## Uninstall Helm release
 ```
-helm uninstall orchestrate-sensor-services-with-hpa-release
+helm uninstall ocs-hpa-release
 ```
 
 ## HPA simulations
