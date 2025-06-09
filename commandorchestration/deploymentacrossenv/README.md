@@ -62,13 +62,13 @@ orchestrate-command-services-with-hpa/
 - Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa/orchestrate-command-services-with-hpa)
 ```bash
 # For dev (default values.yaml)
-helm install orchestrate-command-services-dev . -n dev
+helm install ocs-dev . -n dev
 
 # For staging
-helm install orchestrate-command-services-staging . -f values-staging.yaml -n staging
+helm install ocs-staging . -f values-staging.yaml -n staging
 
 # For prod
-helm install orchestrate-command-services-prod . -f values-prod.yaml -n prod
+helm install ocs-prod . -f values-prod.yaml -n prod
 ```
 ### Verify release
 - Helm list
@@ -114,16 +114,16 @@ ui-service             NodePort    10.101.36.130    <none>        9081:30081/TCP
   * ClusterIP service → `sensor-simulator`
 ### Uninstall Helm release
 ```
-helm uninstall orchestrate-command-services-dev -n dev
-helm uninstall orchestrate-command-services-staging -n staging
-helm uninstall orchestrate-command-services-prod -n prod
+helm uninstall ocs-dev -n dev
+helm uninstall ocs-staging -n staging
+helm uninstall ocs-prod -n prod
 ```
 ## Upgrades per environment
 - Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa
 /orchestrate-command-services-with-hpa)
 ```bash
-helm upgrade orchestrate-command-services-staging . -f values-staging.yaml -n staging
-helm upgrade orchestrate-command-services-prod . -f values-prod.yaml -n prod
+helm upgrade ocs-staging . -f values-staging.yaml -n staging
+helm upgrade ocs-prod . -f values-prod.yaml -n prod
 ```
 ## Environment specific secrets and configs
 - Avoid putting secrets in values files.
