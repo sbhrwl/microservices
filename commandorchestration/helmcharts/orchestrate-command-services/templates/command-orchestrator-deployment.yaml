@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "microservices.fullname" . }}-command-orchestrator
+spec:
+  replicas: {{ .Values.commandOrchestrator.replicaCount }}
+  selector:
+    matchLabels:
+      app: command-orchestrator
+  template:
+    metadata:
+      labels:
+        app: command-orchestrator
+    spec:
+      containers:
+        - name: command-orchestrator
+          image: "{{ .Values.commandOrchestrator.image.repository }}:{{ .Values.commandOrchestrator.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.commandOrchestrator.env.SERVER_PORT }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.commandOrchestrator.env.SERVER_PORT }}"
+            - name: COMMAND_PERSISTENCE_ENABLED
+              value: "{{ .Values.commandOrchestrator.env.COMMAND_PERSISTENCE_ENABLED }}"

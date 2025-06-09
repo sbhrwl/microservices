@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "microservices.fullname" . }}-task-orchestrator
+spec:
+  type: {{ .Values.taskOrchestrator.service.type }}
+  ports:
+    - port: {{ .Values.taskOrchestrator.service.port }}
+      targetPort: {{ .Values.taskOrchestrator.env.SERVER_PORT }}
+      protocol: TCP
+      name: http
+  selector:
+    app: task-orchestrator

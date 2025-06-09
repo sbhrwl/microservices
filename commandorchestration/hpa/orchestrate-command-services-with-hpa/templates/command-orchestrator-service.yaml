@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "microservices.fullname" . }}-command-orchestrator
+spec:
+  type: {{ .Values.commandOrchestrator.service.type }}
+  ports:
+    - port: {{ .Values.commandOrchestrator.service.port }}
+      targetPort: {{ .Values.commandOrchestrator.env.SERVER_PORT }}
+      protocol: TCP
+      name: http
+  selector:
+    app: command-orchestrator

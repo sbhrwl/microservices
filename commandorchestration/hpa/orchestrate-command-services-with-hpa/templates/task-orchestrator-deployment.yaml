@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "microservices.fullname" . }}-task-orchestrator
+spec:
+  replicas: {{ .Values.taskOrchestrator.replicaCount }}
+  selector:
+    matchLabels:
+      app: task-orchestrator
+  template:
+    metadata:
+      labels:
+        app: task-orchestrator
+    spec:
+      containers:
+        - name: task-orchestrator
+          image: "{{ .Values.taskOrchestrator.image.repository }}:{{ .Values.taskOrchestrator.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.taskOrchestrator.env.SERVER_PORT }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.taskOrchestrator.env.SERVER_PORT }}"
+            - name: KEYCLOAK_ISSUER_URI
+              value: "{{ .Values.taskOrchestrator.env.KEYCLOAK_ISSUER_URI }}"
+            - name: KEYCLOAK_JWK_SET_URI
+              value: "{{ .Values.taskOrchestrator.env.KEYCLOAK_JWK_SET_URI }}"
+            - name: KEYCLOAK_CLIENT_ID
+              value: "{{ .Values.taskOrchestrator.env.KEYCLOAK_CLIENT_ID }}"
+            - name: KEYCLOAK_PROVIDER
+              value: "{{ .Values.taskOrchestrator.env.KEYCLOAK_PROVIDER }}"
+            - name: CORS_ALLOWED_ORIGINS
+              value: "{{ .Values.taskOrchestrator.env.CORS_ALLOWED_ORIGINS }}"
