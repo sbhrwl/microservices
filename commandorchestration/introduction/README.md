@@ -5,9 +5,9 @@
   - The task is enqueued as protocol buffers message to Kafka task-topic
 - **Command orchestrator** 
   - Consumes message from kafka
-  - Generates command for the sensors
-  - Optionally saves the data to MongoDB.
-  - Enqueues command as protocol buffers to Kafka command-topic
+  - Add metadata needed to create a command and generates command for each sensor
+  - Optionally saves the generated commands to MongoDB.
+  - Enqueues commands as protocol buffers to Kafka command-topic
 - **Protocol gateway**
   - Dequeues message and performs protocol conversion as understood by the sensor 
   - Sends command to the sensor
