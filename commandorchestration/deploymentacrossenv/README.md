@@ -15,24 +15,23 @@
 
 ## Create environment wise values file
 - `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa/values-prod.yaml)
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values-prod.yaml)
 ```
-orchestrate-sensor-services-with-hpa/
+orchestrate-command-services-with-hpa/
 ├── templates/
-│   ├── notification-deployment.yaml
-│   ├── notification-service.yaml
-│   ├── notification-service-hpa.yaml
-│   ├── registration-deployment.yaml
-│   ├── registration-service.yaml
-│   ├── registration-service-hpa.yaml
-│   ├── sensor-deployment.yaml
-│   ├── sensor-service.yaml
-│   ├── sensor-service-hpa.yaml
-│   ├── ui-deployment.yaml
-│   ├── ui-service.yaml
-│   ├── ui-service-hpa.yaml
+│   ├── task-orchestrator-deployment.yaml
+│   ├── task-orchestrator-service.yaml
+│   ├── task-orchestrator--hpa.yaml
+│   ├── command-orchestrator-deployment.yaml
+│   ├── command-orchestrator-service.yaml
+│   ├── command-orchestrator-hpa.yaml
+│   ├── protocol-gateway-deployment.yaml
+│   ├── protocol-gateway-hpa.yaml
+│   ├── sensor-simulator-deployment.yaml
+│   ├── sensor-simulator-service.yaml
+│   ├── sensor-simulator-hpa.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
@@ -60,16 +59,16 @@ orchestrate-sensor-services-with-hpa/
     kubectl get all -n dev
     ``` 
 ## Helm release per environment
-- Go to Helm chart folder [orchestrate-sensor-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa)
+- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa/orchestrate-command-services-with-hpa)
 ```bash
 # For dev (default values.yaml)
-helm install orchestrate-sensor-services-dev . -n dev
+helm install orchestrate-command-services-dev . -n dev
 
 # For staging
-helm install orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
+helm install orchestrate-command-services-staging . -f values-staging.yaml -n staging
 
 # For prod
-helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
+helm install orchestrate-command-services-prod . -f values-prod.yaml -n prod
 ```
 ### Verify release
 - Helm list
@@ -90,16 +89,16 @@ helm install orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list -n dev
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> helm list -n dev
 NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-dev dev             1               2025-05-30 11:04:03.8511928 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get pods -n dev
+orchestrate-command-services-dev dev             1               2025-05-30 11:04:03.8511928 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get pods -n dev
 NAME                                    READY   STATUS    RESTARTS   AGE
 notification-service-7f5845c77c-ndt8t   1/1     Running   0          2m13s
 registration-service-7c4555d588-vfz2j   1/1     Running   0          2m13s
 sensor-service-59b4d96b5-q4kbl          1/1     Running   0          2m13s
 ui-service-55f94d6747-gqw57             1/1     Running   0          2m13s
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get svc -n dev
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-command-services-with-hpa> kubectl get svc -n dev
 NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 notification-service   ClusterIP   10.102.19.193    <none>        9084/TCP         2m24s
 registration-service   ClusterIP   10.102.135.152   <none>        9083/TCP         2m24s
@@ -109,21 +108,22 @@ ui-service             NodePort    10.101.36.130    <none>        9081:30081/TCP
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/` → `ui-service`
-  * `http://localhost:30082/api/register/sensor` → `sensor-service`
-  * ClusterIP service → `registration-service`
-  * ClusterIP service → `notification-service`
+  * `http://localhost:30081/` → `task-orchestrator`
+  * ClusterIP service → `command-orchestrator`
+  * Kafka listener → `protocol-gateway`
+  * ClusterIP service → `sensor-simulator`
 ### Uninstall Helm release
 ```
-helm uninstall orchestrate-sensor-services-dev -n dev
-helm uninstall orchestrate-sensor-services-staging -n staging
-helm uninstall orchestrate-sensor-services-prod -n prod
+helm uninstall orchestrate-command-services-dev -n dev
+helm uninstall orchestrate-command-services-staging -n staging
+helm uninstall orchestrate-command-services-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder [orchestrate-sensor-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services-with-hpa)
+- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa
+/orchestrate-command-services-with-hpa)
 ```bash
-helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
-helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
+helm upgrade orchestrate-command-services-staging . -f values-staging.yaml -n staging
+helm upgrade orchestrate-command-services-prod . -f values-prod.yaml -n prod
 ```
 ## Environment specific secrets and configs
 - Avoid putting secrets in values files.
