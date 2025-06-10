@@ -35,3 +35,10 @@
   - We also about gRPC's streaming capabilities
   - Now, imagine we want `to make HTTP itself better for real-time communication`, similar to how gRPC does streaming, but still `keeping it HTTP-based for web browser compatibility`.
   - This is where HTTP/3 and WebTransport come in.
+### HTTP/3.
+- HTTP/1.1: The classic HTTP 
+- HTTP/2: used by gRPC 
+- *"HTTP/3**
+  - It is the next major version of the HTTP protocol.
+  - HTTP/3 runs on top of a new transport protocol called **QUIC (Quick UDP Internet Connections)*", instead of `TCP` (which HTTP/1.1 and HTTP/2 use).
+    - Think of TCP as a very reliable but sometimes slower delivery service, and QUIC as a `faster, more flexible` one.
