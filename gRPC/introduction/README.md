@@ -14,6 +14,7 @@
 ## Scenarios where gRPC often shines
 * **Streaming** (video/audio, live data feeds): Constant, high-throughput data transfer.
 * **Gaming**: Low latency for player actions and updates.
+* **Chat messages**
 * **Backend services communication**: Often need very efficient, high-volume communication between services `within a data center`.
 ### HTTP usage
 - HTTP/REST has a much more mature and widely supported ecosystem, especially for public-facing APIs:
