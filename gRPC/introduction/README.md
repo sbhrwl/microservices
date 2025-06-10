@@ -31,7 +31,7 @@
   - This ensures that all services, regardless of their implementation language, speak the exact same "language" when communicating
 ## Real time APIs with HTTP
 - Based on HTTP3 and WebTransport
-  - You already know HTTP and how it traditionally works (request-response).
-  - You also about gRPC's streaming capabilities
+  - We already know HTTP and how it traditionally works (request-response).
+  - We also about gRPC's streaming capabilities
   - Now, imagine we want `to make HTTP itself better for real-time communication`, similar to how gRPC does streaming, but still `keeping it HTTP-based for web browser compatibility`.
   - This is where HTTP/3 and WebTransport come in.
