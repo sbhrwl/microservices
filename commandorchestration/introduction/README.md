@@ -1,0 +1,16 @@
+# Introduction 
+- **Task orchestrator**
+  - Exposes a POST endpoint, that expects a json payload with command parameters
+  - A task is created in Mongodb 
+  - The task is enqueued as protocol buffers message to Kafka task-topic
+- **Command orchestrator** 
+  - Consumes message from kafka
+  - Add metadata needed to create a command and generates command for each sensor
+  - Optionally saves the generated commands to MongoDB.
+  - Enqueues commands as protocol buffers to Kafka command-topic
+- **Protocol gateway**
+  - Dequeues message and performs protocol conversion as understood by the sensor 
+  - Sends command to the sensor
+- **Sensor simulator**
+  - Simulates a sensor 
+  - Takes an action as requested in the command 

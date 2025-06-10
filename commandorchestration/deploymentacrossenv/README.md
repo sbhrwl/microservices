@@ -125,8 +125,7 @@ helm uninstall ocs-staging -n staging
 helm uninstall ocs-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa
-/orchestrate-command-services-with-hpa)
+- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa/orchestrate-command-services-with-hpa)
 ```bash
 helm upgrade ocs-staging . -f values-staging.yaml -n staging
 helm upgrade ocs-prod . -f values-prod.yaml -n prod
