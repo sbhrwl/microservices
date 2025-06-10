@@ -4,6 +4,7 @@
 - With **gRPC**, instead of text, you define your data structures using `Protocol Buffers`. 
   - This is like creating a highly organized, **language-neutral blueprint** for the messages your applications will send.
 ## Streaming support
+- **Streaming** = `Multiple messages over one connection`
 - HTTP is mostly a request-response model (client asks, server answers).
 - gRPC, built on HTTP/2, supports various types of communication:
   * **Unary**: Still request-response, like HTTP.
