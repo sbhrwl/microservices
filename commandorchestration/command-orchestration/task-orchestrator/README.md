@@ -24,16 +24,16 @@ mvn spring-boot:run
      ```
 
 - Request **`POST`** `http://localhost:9081/tasks`
-- with request body as JSON payload
-  ```json
-  {
-    "taskId": "task-003",
-    "commandType": "RESTART",
-    "commandArgs": ["arg1", "arg2"],
-    "sensorList": ["sensor1", "sensor2"]
-  }
+  - with request body as JSON payload
+    ```json
+    {
+      "taskId": "task-003",
+      "commandType": "RESTART",
+      "commandArgs": ["arg1", "arg2"],
+      "sensorList": ["sensor1", "sensor2"]
+    }
   ```
-- `registration service` creates a document in MongoDB
+- `task-orchestrator` creates a document in MongoDB
   - Verify at **MongoDB**
   - Open MongoDB shell
     - Connect: `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
