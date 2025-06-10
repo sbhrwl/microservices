@@ -15,3 +15,9 @@
 * **Streaming** (video/audio, live data feeds): Constant, high-throughput data transfer.
 * **Gaming**: Low latency for player actions and updates.
 * **Backend services communication**: Often need very efficient, high-volume communication between services `within a data center`.
+### HTTP usage
+- HTTP/REST has a much more mature and widely supported ecosystem, especially for public-facing APIs:
+  * Browser compatibility: All web browsers natively speak HTTP and understand JSON. gRPC requires a proxy layer (like gRPC-Web) to work in browsers, adding complexity.
+  * Tooling: A vast array of tools, libraries, and documentation exist for building and testing REST APIs in virtually every programming language.
+  * Simplicity for simple cases: For basic CRUD (Create, Read, Update, Delete) operations, REST can be very straightforward to implement and understand.
+- So, when ease of development, broad client compatibility (especially web browsers), and a mature ecosystem are priorities, HTTP/REST often wins.
