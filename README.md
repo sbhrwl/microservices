@@ -4,3 +4,5 @@
 - [Registering sensors](sensorregistration/README.md)
 - [Analytics on sensor data](analytics/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
+
+<img src="img.jpg">
