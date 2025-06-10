@@ -6,7 +6,7 @@
 ## Streaming 
 - HTTP is mostly a request-response model (client asks, server answers).
 - gRPC, built on HTTP/2, supports various types of communication:
-  * Unary: Still request-response, like HTTP.
-  * Server Streaming: Client sends a request, server sends back multiple responses.
-  * Client Streaming: Client sends multiple requests, server sends one response.
-  * Bidirectional Streaming: Client and server both send multiple messages back and forth simultaneously.
+  * **Unary**: Still request-response, like HTTP.
+  * **Server streaming**: Client sends a request, server sends back multiple responses.
+  * **Client streaming**: Client sends multiple requests, server sends one response.
+  * **Bidirectional streaming**: Client and server both send multiple messages back and forth simultaneously.
