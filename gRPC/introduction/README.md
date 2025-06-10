@@ -40,7 +40,7 @@
 - HTTP/2: used by gRPC 
 - **HTTP/3**
   - It is the next major version of the HTTP protocol.
-  - HTTP/3 runs on top of a new transport protocol called **QUIC (Quick UDP Internet Connections)*", instead of `TCP` (which HTTP/1.1 and HTTP/2 use).
+  - HTTP/3 runs on top of a new transport protocol called **QUIC (Quick UDP Internet Connections)**, instead of `TCP` (which HTTP/1.1 and HTTP/2 use).
     - Think of TCP as a very reliable but sometimes slower delivery service, and QUIC as a `faster, more flexible` one.
 ### WebTransport
 - WebTransport is an improvement for real-time
