@@ -1,4 +1,6 @@
 # Data ingestion service
+<img src="images/architecture.jpg">
+
 - [Service design](#service-design)
 - [Brain storming](#brain-storming)
 ## Service design
