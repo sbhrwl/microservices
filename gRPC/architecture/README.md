@@ -16,6 +16,6 @@
 6.  **Error Handling (Server):** Handle database errors or invalid input gracefully and return appropriate gRPC responses.
 7.  **Logging:** Log incoming gRPC requests, database operations, and responses/errors.
 8.  **Spring Boot Application:** Be a standalone Spring Boot application.
-<img src="architecture.jpg">
+<img src="images/architecture.jpg">
 
-<img src="img.jpg">
+<img src="images/img.jpg">
