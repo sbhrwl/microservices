@@ -4,4 +4,4 @@
 - [Registering sensors](sensorregistration/README.md)
 - [Analytics on sensor data](analytics/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
-- [gRPC](ingestion/README.md)
+- [gRPC](gRPC/README.md)
