@@ -15,10 +15,17 @@
 * **Streaming** (video/audio, live data feeds): Constant, high-throughput data transfer.
 * **Gaming**: Low latency for player actions and updates.
 * **Chat messages**
-* **Backend services communication**: Often need very efficient, high-volume communication between services `within a data center`.
+* **Real-time analytics**
+* **Internal backend services communication**: Often need very efficient, high-volume communication between services `within a data center`.
 ### HTTP usage
-- HTTP/REST has a much more mature and widely supported ecosystem, especially for public-facing APIs:
+- HTTP/REST has a much more mature and widely supported ecosystem, especially for **public-facing APIs**
   * Browser compatibility: All web browsers natively speak HTTP and understand JSON. gRPC requires a proxy layer (like gRPC-Web) to work in browsers, adding complexity.
   * Tooling: A vast array of tools, libraries, and documentation exist for building and testing REST APIs in virtually every programming language.
-  * Simplicity for simple cases: For basic CRUD (Create, Read, Update, Delete) operations, REST can be very straightforward to implement and understand.
+  * Simplicity for simple cases: For basic **CRUD** (Create, Read, Update, Delete) operations, REST can be very straightforward to implement and understand.
 - So, when ease of development, broad client compatibility (especially web browsers), and a mature ecosystem are priorities, HTTP/REST often wins.
+## Language diversity
+- Protocol Buffers, is designed to handle "polyglot" environment well
+  - If you have a system where different parts are written in different programming languages (e.g., one service in Python, another in Java, another in Go), and you need them to communicate seamlessly.
+- Protocol Buffers are `language-agnostic`. 
+  - You define your service and message structures once in a .proto file, and then you can generate client and server code in numerous languages (Java, Python, Go, C#, Node.js, etc.). 
+  - This ensures that all services, regardless of their implementation language, speak the exact same "language" when communicating
