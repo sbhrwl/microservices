@@ -53,3 +53,16 @@
   - When you open a WebSocket connection, it's like **opening a `persistent, two-way street` between your browser and the server**. 
   - Once established, both the client and the server can send messages to each other whenever they want, without constantly initiating new requests. 
   - This is great for real-time communication.
+- WebSockets revolutionized real-time communication on the web. 
+- They are widely used for chat apps, online games, notifications, etc.
+#### Challenges with websockets
+- WebSockets themselves still run over TCP. 
+  - While they offer two-way communication, they provide a single, ordered stream of messages. 
+  - If one message gets stuck, everything behind it also gets stuck (that "head-of-line blocking" issue we talked about).
+- This is where WebTransport comes in, especially when combined with HTTP/3.
+### WebTransport
+- WebTransport is an API that allows web applications to send and receive data using HTTP/3 (and thus QUIC). 
+- It's designed to provide the benefits of QUIC (like no head-of-line blocking for different streams, faster connection setup) directly to the browser.
+- If WebSockets provide a single "two-way street" over TCP, and WebTransport uses HTTP/3 (built on QUIC) with its ability to handle multiple independent streams, what core advantage might WebTransport offer over WebSockets for complex real-time applications?
+  - UDP
+
