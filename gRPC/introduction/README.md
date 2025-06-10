@@ -46,7 +46,9 @@
 - WebTransport is an improvement for real-time
 #### WebSockets
 - Imagine you're on a website, and you want to see live updates, like a chat room or stock prices changing instantly.
-- With traditional HTTP/1.1, you'd have to constantly ask the server "Are there any new messages?" (polling), which is inefficient. Or the server would have to keep a request open for a long time until it had something to send (long polling).
+- With traditional HTTP/1.1,
+  - You'd have to constantly ask the server **"Are there any new messages?"** (`polling`), which is inefficient. `Or`
+  - The server would have to **keep a request open for a long time** until it had something to send (`long polling`).
 - WebSockets were designed to solve this.
 - When you open a WebSocket connection, it's like opening a persistent, **two-way street between your browser and the server**. 
 - Once established, both the client and the server can send messages to each other whenever they want, without constantly initiating new requests. 
