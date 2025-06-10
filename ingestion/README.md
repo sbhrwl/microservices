@@ -4,7 +4,7 @@
 - [Test](#test)
 - [Verification at InfluxDB](#verification-at-influxdb)
 ## Properties
-- [application.yml](src/main/resources/application.yml)
+- [application.properties](src/main/resources/application.properties)
 ## How to run
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
 - Build 
