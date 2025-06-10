@@ -1,5 +1,5 @@
-# 
-## HTTP Vs gRPC 
+# Road to Real time APIs
+## HTTP and gRPC 
 - Both HTTP and [gRPC](https://github.com/sbhrwl/system_design/blob/main/docs/services/grpc/README.md) can be used to build APIs.
 - When you use HTTP for an API (often called a REST API), you're usually sending data as `text` (like JSON or XML).
 - With **gRPC**, instead of text, you define your data structures using `Protocol Buffers`. 
