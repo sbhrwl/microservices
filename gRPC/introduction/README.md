@@ -11,7 +11,7 @@
   * **Server streaming**: Client sends a request, server sends back multiple responses.
   * **Client streaming**: Client sends multiple requests, server sends one response.
   * **Bidirectional streaming**: Client and server both send multiple messages back and forth simultaneously.
-## Scenarios where gRPC often shines
+## Scenarios where gRPC shines
 * **Streaming** (video/audio, live data feeds): Constant, high-throughput data transfer.
 * **Gaming**: Low latency for player actions and updates.
 * **Chat messages**
