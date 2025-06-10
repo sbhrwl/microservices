@@ -3,3 +3,10 @@
 - When you use HTTP for an API (often called a REST API), you're usually sending data as `text` (like JSON or XML).
 - With **gRPC**, instead of text, you define your data structures using `Protocol Buffers`. 
   - This is like creating a highly organized, **language-neutral blueprint** for the messages your applications will send.
+## Streaming 
+- HTTP is mostly a request-response model (client asks, server answers).
+- gRPC, built on HTTP/2, supports various types of communication:
+  * Unary: Still request-response, like HTTP.
+  * Server Streaming: Client sends a request, server sends back multiple responses.
+  * Client Streaming: Client sends multiple requests, server sends one response.
+  * Bidirectional Streaming: Client and server both send multiple messages back and forth simultaneously.
