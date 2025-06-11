@@ -68,13 +68,20 @@
 - WebSockets revolutionized real-time communication on the web. 
 - They are widely used for chat apps, online games, notifications, etc.
 ##### Challenges with websockets
-- WebSockets themselves still run over TCP. 
+- WebSockets themselves still run over `TCP`. 
   - While they offer two-way communication, they provide a single, ordered stream of messages. 
-  - If one message gets stuck, everything behind it also gets stuck (that "head-of-line blocking" issue we talked about).
+  - If one message gets stuck, everything behind it also gets stuck (**"head-of-line blocking"** issue).
 - This is where WebTransport comes in, especially when combined with HTTP/3.
 ### How WebTransport helps
 - WebTransport is an API that allows web applications to send and receive data using HTTP/3 (and thus QUIC). 
 - It's designed to provide the benefits of QUIC (like no head-of-line blocking for different streams, faster connection setup) directly to the browser.
-- If WebSockets provide a single "two-way street" over TCP, and WebTransport uses HTTP/3 (built on QUIC) with its ability to handle multiple independent streams, what core advantage might WebTransport offer over WebSockets for complex real-time applications?
-  - UDP
-
+- WebTransport runs over **QUIC (which uses UDP but adds reliability)**, it gains several key benefits over WebSockets (which run over TCP):
+  - **Multiple, independent streams:**
+    - Unlike WebSockets' single stream, WebTransport can open multiple *independent* streams within a single connection.
+    - This means if one stream experiences packet loss, the others aren't affected by "head-of-line blocking."
+  - **Unreliable datagrams:**
+     - WebTransport also offers an optional "datagram" mode.
+     - This allows for sending small, unreliable, unordered messages, which is perfect for very low-latency scenarios where losing an occasional update is okay (like a game sending player positions) and you don't want the overhead of guaranteed delivery.
+  - **Faster connection setup:**
+    - Thanks to QUIC's design.
+- So, in essence, `WebTransport` offers a more flexible and potentially higher-performance way to do real-time communication in browsers than WebSockets, especially for complex applications that might benefit from multiple independent data streams or ultra-low-latency unreliable messaging.
