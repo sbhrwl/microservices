@@ -10,6 +10,7 @@
     - [WebSockets](#websockets)
       - [Challenges with websockets](#challenges-with-websockets)
     - [How WebTransport helps](#how-webtransport-helps)
+- [gRPC Vs WebTransport](#grpc-vs-webtransport)
 ## HTTP and gRPC
 - Both HTTP and [gRPC](https://github.com/sbhrwl/system_design/blob/main/docs/services/grpc/README.md) can be used to build APIs.
 - When you use HTTP for an API (often called a REST API), you're usually sending data as `text` (like JSON or XML).
@@ -85,3 +86,22 @@
   - **Faster connection setup:**
     - Thanks to QUIC's design.
 - So, in essence, `WebTransport` offers a more flexible and potentially higher-performance way to do real-time communication in browsers than WebSockets, especially for complex applications that might benefit from multiple independent data streams or ultra-low-latency unreliable messaging.
+Perfect answer! You've nailed the primary strengths.
+
+## gRPC Vs WebTransport
+* **gRPC:** Is exceptionally well-suited for **internal service-to-service communication**.
+  * **Reasoning:** Its binary nature, Protocol Buffer contracts, and efficient HTTP/2 foundation make it ideal for high-performance, low-latency communication *between trusted services* in a data center or within a microservices architecture.
+  * Browser compatibility, while possible with gRPC-Web, is an add-on, not its core design goal.
+* **WebTransport (with HTTP/3):** Is designed for **browser-to-server real-time communication**.
+  * **Reasoning:** Its native browser support, ability to handle multiple independent streams, and foundation on HTTP/3/QUIC make it excellent for building highly performant, flexible, and real-time web applications that need efficient two-way data flow directly from the browser.
+
+| Feature                   | gRPC (Protocol Buffers, HTTP/2)                     | WebTransport (HTTP/3, QUIC)                                  |
+| :------------------------ | :-------------------------------------------------- | :----------------------------------------------------------- |
+| **Primary Use Case** | Internal service-to-service, microservices         | Browser-to-server real-time apps                             |
+| **Browser Compatibility** | Requires proxy (gRPC-Web)                           | Native W3C standard, direct browser support                  |
+| **Data Format** | Binary (Protocol Buffers)                           | Binary (common, but flexible)                                |
+| **Debugging** | Requires special tools to decode                    | Requires knowledge of custom binary format (if used)         |
+| **API Contract/Schema** | Strict (Protocol Buffers), code generation          | Flexible, user-defined (transport only)                      |
+| **Streaming Capabilities**| Unary, Server Stream, Client Stream, Bi-directional | Multiple independent streams, unreliable datagrams           |
+| **Underlying Protocol** | HTTP/2 over TCP                                     | HTTP/3 over QUIC (built on UDP)                              |
+| **Head-of-Line Blocking** | Possible (within HTTP/2 streams)                    | Minimized (due to QUIC's stream multiplexing)                |
