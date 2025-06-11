@@ -19,3 +19,15 @@
 <img src="images/architecture.jpg">
 
 <img src="images/img.jpg">
+
+## Flow 
+- The Ingestion Service is set up to:
+  * Start as a standalone Spring Boot application.
+  * Connect to ActiveMQ.
+  * Receive JSON messages from `registration.queue`.
+  * Deserialize these JSON messages into **RegistrationRequest`Pojo`** instances.
+  * Convert these RegistrationRequestPojo instances into **RegistrationRequestMessage `Protobuf objects`**.
+  * Provides an HTTP endpoint to easily inject test messages into ActiveMQ.
+- Next Steps (Upcoming):
+  * Implementing the gRPC client in the Ingestion Service to send the RegistrationRequestMessage to the Hub Service.
+  * Addressing client-side gRPC error handling.
