@@ -1,5 +1,7 @@
 # Architecture
 - [gRPC setup](grpcsetup/README.md)
+- [Ingestion service](#ingestion-service)
+- [Hub service](#hub-service)
 ## Ingestion service
 1.  **Consume from ActiveMQ:** Listen for and receive messages from a specific ActiveMQ queue.
 2.  **Act as gRPC Client:** Be able to initiate and make gRPC calls to Service B.
@@ -19,16 +21,16 @@
 8.  **Spring Boot Application:** Be a standalone Spring Boot application.
 <img src="images/architecture.jpg">
 
-<img src="images/img.jpg">
-
 ## Flow 
-- The Ingestion Service is set up to:
-  * Start as a standalone Spring Boot application.
-  * Connect to ActiveMQ.
-  * Receive JSON messages from `registration.queue`.
-  * Deserialize these JSON messages into **RegistrationRequest`Pojo`** instances.
-  * Convert these RegistrationRequestPojo instances into **RegistrationRequestMessage `Protobuf objects`**.
-  * Provides an HTTP endpoint to easily inject test messages into ActiveMQ.
-- Next Steps (Upcoming):
-  * Implementing the gRPC client in the Ingestion Service to send the RegistrationRequestMessage to the Hub Service.
-  * Addressing client-side gRPC error handling.
+* The Ingestion Service is set up to:
+    * Start as a standalone Spring Boot application.
+    * Connect to ActiveMQ.
+    * Receive JSON messages from `registration.queue`.
+    * Deserialize these JSON messages into **RegistrationRequest`Pojo`** instances.
+    * Convert these `RegistrationRequestPojo` instances into **RegistrationRequestMessage `Protobuf` objects**.
+    * **Successfully makes gRPC calls to the Hub Service** using the generated `RegistrationServiceGrpc.RegistrationServiceBlockingStub` to send the `RegistrationRequestMessage`.
+    * Provides an HTTP endpoint to easily inject test messages into ActiveMQ, which are then processed and sent via gRPC.
+**Next Steps (Upcoming):**
+* Addressing client-side gRPC error handling (e.g., retries, circuit breakers, dead-letter queues).
+* Implementing persistence in the Hub Service (e.g., saving registered sensor data to a database).
+* Adding more sophisticated business logic to the Hub Service's `RegisterSensor` method.
