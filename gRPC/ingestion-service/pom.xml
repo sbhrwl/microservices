@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <!-- Protobuf version updated to 3.25.3 as per your working configuration -->
+        <!-- Protobuf version set to 3.25.3 as per your working configuration -->
         <protobuf.version>3.25.3</protobuf.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <grpc.version>1.62.2</grpc.version>
@@ -89,7 +89,7 @@
 
     <build>
         <plugins>
-            <!-- OS Maven plugin for OS detection - updated to user's working version -->
+            <!-- OS Maven plugin for OS detection - using version 1.7.0 as per your working setup -->
             <plugin>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
@@ -108,7 +108,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Protobuf Maven plugin - updated to user's working configuration -->
+            <!-- Protobuf Maven plugin: configured to generate both messages and gRPC stubs -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
@@ -122,14 +122,40 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                            <!-- This goal is crucial for generating gRPC service stubs like RegistrationServiceGrpc -->
+                            <goal>compile-custom</goal>
                         </goals>
+                        <configuration>
+                            <!-- Specifies the gRPC Java plugin for custom compilation -->
+                            <pluginId>grpc-java</pluginId>
+                            <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Removed build-helper-maven-plugin as it's not present in your working config.
-                 The direct imports in your ActiveMQMessageListener are now handling class resolution. -->
-
+            <!-- build-helper-maven-plugin: Adds generated sources to the build path -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <!-- Ensure this runs early in the build lifecycle -->
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/protobuf/java</source>
+                                <source>${project.build.directory}/generated-sources/protobuf/grpc-java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

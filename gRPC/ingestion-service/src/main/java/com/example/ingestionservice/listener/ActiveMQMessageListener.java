@@ -1,11 +1,13 @@
+// src/main/java/com/example/ingestionservice/listener/ActiveMQMessageListener.java
 package com.example.ingestionservice.listener;
 
 import com.example.ingestionservice.model.RegistrationRequestPojo;
 import com.example.ingestionservice.proto.RegistrationRequestMessage;
 import com.example.ingestionservice.proto.RegistrationResponseMessage;
-
+// import com.example.ingestionservice.proto.RegistrationServiceGrpc; // Commented out for now
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +21,14 @@ public class ActiveMQMessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQMessageListener.class);
 
+    // Commented out: Autowire the gRPC blocking stub provided by GrpcClientConfig
+    // @Autowired
+    // private RegistrationServiceGrpc.RegistrationServiceBlockingStub registrationServiceBlockingStub;
+
     /**
      * This method listens for messages on the 'registration.queue'.
-     * Spring's JMS auto-configuration, combined with Jackson (if on classpath),
-     * will automatically attempt to deserialize the incoming JSON string into
-     * the RegistrationRequestPojo object.
+     * Spring's JMS auto-configuration will deserialize the incoming JSON string
+     * into the RegistrationRequestPojo object.
      *
      * @param registrationRequestPojo The deserialized POJO representing the incoming message.
      */
@@ -39,8 +44,24 @@ public class ActiveMQMessageListener {
                     protobufMessage.getSensorModel(),
                     protobufMessage.getEmail());
 
-        // TODO: In the next step, this is where we will add the gRPC client call
-        // to send 'protobufMessage' to the Hub Service.
+        // --- gRPC Client Call: Temporarily commented out until Hub Service is implemented ---
+        /*
+        try {
+            logger.info("Sending gRPC request to Hub Service for sensor: {}", protobufMessage.getSensorId());
+            // Make the gRPC call using the injected blocking stub
+            RegistrationResponseMessage response = registrationServiceBlockingStub.registerSensor(protobufMessage);
+            logger.info("Received gRPC response from Hub Service: Success={}, Message='{}'",
+                        response.getSuccess(), response.getMessage());
+
+            if (!response.getSuccess()) {
+                logger.warn("Sensor registration failed for {}: {}", protobufMessage.getSensorId(), response.getMessage());
+                // TODO: Implement more robust error handling / retry logic here
+            }
+        } catch (Exception e) {
+            logger.error("gRPC call to Hub Service failed for sensor {}: {}", protobufMessage.getSensorId(), e.getMessage(), e);
+            // TODO: Implement more robust error handling (e.g., dead-letter queue, metrics)
+        }
+        */
     }
 
     /**
