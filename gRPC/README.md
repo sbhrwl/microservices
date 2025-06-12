@@ -37,3 +37,13 @@
 [Hub service] [ault-executor-0] c.e.h.service.RegistrationServiceImpl    : Processing registration for sensor: sensor123
 [Hub service] [ault-executor-0] c.e.h.service.RegistrationServiceImpl    : Sending gRPC RegistrationResponseMessage: Success=true, Message='Sensor registered successfully.'
 ```
+- DB verification
+```sql
+SELECT * FROM sensor_registrations;
+
+SELECT * FROM sensor_registrations WHERE sensor_id = 'sensor123';
+
+SELECT COUNT(*) FROM sensor_registrations;
+
+SELECT * FROM sensor_registrations WHERE email = 'user@example.com';
+```
