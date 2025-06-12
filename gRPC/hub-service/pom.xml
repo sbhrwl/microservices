@@ -33,6 +33,18 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <!-- NEW: Spring Data JPA for database interaction -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- NEW: PostgreSQL JDBC Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Protobuf and gRPC dependencies for generated code -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
@@ -98,40 +110,43 @@
             </plugin>
 
             <!-- Protobuf Maven plugin: configured to generate both messages and gRPC server code -->
-			<plugin>
-				<groupId>org.xolstice.maven.plugins</groupId>
-				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>${protobuf-plugin.version}</version>
-				<configuration>
-					<protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
-					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
-				</configuration>
-				<executions>
-					<!-- Compile .proto messages to Java -->
-					<execution>
-						<id>proto-compile</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/generated-sources/protobuf/java</outputDirectory>
-						</configuration>
-					</execution>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>${protobuf-plugin.version}</version>
+                <configuration>
+                    <!-- IMPORTANT: Set protoSourceRoot for the plugin level -->
+                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+                    <!-- Moved clearOutputDirectory to global configuration -->
+                    <clearOutputDirectory>false</clearOutputDirectory>
+                </configuration>
+                <executions>
+                    <!-- Execution for compiling .proto messages to Java -->
+                    <execution>
+                        <id>proto-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-sources/protobuf/java</outputDirectory>
+                        </configuration>
+                    </execution>
 
-					<!-- Compile gRPC stubs -->
-					<execution>
-						<id>grpc-compile</id>
-						<goals>
-							<goal>compile-custom</goal>
-						</goals>
-						<configuration>
-							<pluginId>grpc-java</pluginId>
-							<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-							<outputDirectory>${project.build.directory}/generated-sources/protobuf/grpc-java</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                    <!-- Execution for compiling gRPC stubs and server base classes -->
+                    <execution>
+                        <id>grpc-compile</id>
+                        <goals>
+                            <goal>compile-custom</goal>
+                        </goals>
+                        <configuration>
+                            <pluginId>grpc-java</pluginId>
+                            <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                            <outputDirectory>${project.build.directory}/generated-sources/protobuf/grpc-java</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- build-helper-maven-plugin: Adds generated sources to the build path -->
             <plugin>
@@ -141,8 +156,8 @@
                 <executions>
                     <execution>
                         <id>add-source</id>
-                        <!-- IMPORTANT: Changed phase to process-sources to ensure it runs AFTER Protobuf generation -->
-                        <phase>process-sources</phase>
+                        <!-- Reverted to 'initialize' phase as in your working ingestion-service pom.xml -->
+                        <phase>initialize</phase>
                         <goals>
                             <goal>add-source</goal>
                         </goals>
@@ -155,6 +170,11 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Removed explicit maven-compiler-plugin configuration for additionalSources,
+                 relying on build-helper-maven-plugin and protobuf-maven-plugin setup
+                 as in your working ingestion-service pom.xml. -->
+
         </plugins>
     </build>
 </project>

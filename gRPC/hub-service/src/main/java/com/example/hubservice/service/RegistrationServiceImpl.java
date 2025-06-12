@@ -1,27 +1,36 @@
 // hub-service/src/main/java/com/example/hubservice/service/RegistrationServiceImpl.java
 package com.example.hubservice.service;
 
+import com.example.hubservice.entity.SensorRegistration; // Import the entity
 import com.example.hubservice.proto.RegistrationRequestMessage;
 import com.example.hubservice.proto.RegistrationResponseMessage;
 import com.example.hubservice.proto.RegistrationServiceGrpc;
+import com.example.hubservice.repository.SensorRegistrationRepository; // Import the repository
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service; // Use @Service for Spring component scanning
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.time.LocalDateTime; // Import for timestamp
 
 /**
  * RegistrationServiceImpl is the concrete implementation of the gRPC RegistrationService.
  * This class handles incoming RegisterSensor RPC calls from clients (like the Ingestion Service).
- * It extends the generated base class and overrides the service methods.
+ * It now integrates with a PostgreSQL database to persist sensor registration data.
  */
-@Service // Mark as a Spring service so it can be managed by the Spring context
+@Service
 public class RegistrationServiceImpl extends RegistrationServiceGrpc.RegistrationServiceImplBase {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);
 
+    // Autowire the SensorRegistrationRepository
+    @Autowired
+    private SensorRegistrationRepository sensorRegistrationRepository;
+
     /**
      * Implements the unary RegisterSensor RPC method.
      * This method receives a RegistrationRequestMessage and sends back a RegistrationResponseMessage.
+     * It now attempts to save the sensor registration details to the database.
      *
      * @param request The incoming RegistrationRequestMessage from the client.
      * @param responseObserver A StreamObserver to send the response back to the client.
@@ -31,35 +40,42 @@ public class RegistrationServiceImpl extends RegistrationServiceGrpc.Registratio
         logger.info("Received gRPC RegistrationRequestMessage: SensorId={}, SensorModel={}, Email={}",
                     request.getSensorId(), request.getSensorModel(), request.getEmail());
 
-        // --- Business Logic Placeholder ---
-        // In a real application, you would perform actions here like:
-        // - Validating the input data
-        // - Storing sensor information in a database
-        // - Communicating with other services
-        // - Generating an actual registration token or ID
-
         boolean success = true;
         String message = "Sensor registered successfully.";
 
-        // Example: Basic validation
+        // Basic validation: Check if sensorId and sensorModel are not empty
         if (request.getSensorId().isEmpty() || request.getSensorModel().isEmpty()) {
             success = false;
             message = "Sensor ID and Sensor Model cannot be empty.";
             logger.warn("Sensor registration failed due to invalid input: {}", message);
         } else {
-            logger.info("Processing registration for sensor: {}", request.getSensorId());
-            // Simulate some processing time or database interaction
             try {
-                Thread.sleep(100); // Simulate work
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                logger.error("Interrupted during simulated processing.", e);
+                // Create a SensorRegistration entity from the Protobuf request message
+                SensorRegistration newRegistration = new SensorRegistration(
+                        request.getSensorId(),
+                        request.getSensorModel(),
+                        request.getEmail(),
+                        LocalDateTime.now() // Set current timestamp
+                );
+
+                // Save the entity to the database using the repository
+                SensorRegistration savedRegistration = sensorRegistrationRepository.save(newRegistration);
+                logger.info("Sensor registration saved to database: ID={}, SensorId={}",
+                            savedRegistration.getId(), savedRegistration.getSensorId());
+
+            } catch (org.springframework.dao.DataIntegrityViolationException e) {
+                // Handle cases where sensorId might already exist (due to unique=true constraint)
                 success = false;
-                message = "Internal server error during processing.";
+                message = "Sensor with ID '" + request.getSensorId() + "' already registered.";
+                logger.warn("Data integrity violation: Sensor registration failed for {}: {}", request.getSensorId(), e.getMessage());
+            } catch (Exception e) {
+                success = false;
+                message = "Failed to save sensor registration due to internal error.";
+                logger.error("Error saving sensor registration for {}: {}", request.getSensorId(), e.getMessage(), e);
             }
         }
 
-        // Build the response message
+        // Build and send the response message
         RegistrationResponseMessage response = RegistrationResponseMessage.newBuilder()
                 .setSuccess(success)
                 .setMessage(message)
@@ -68,9 +84,7 @@ public class RegistrationServiceImpl extends RegistrationServiceGrpc.Registratio
         logger.info("Sending gRPC RegistrationResponseMessage: Success={}, Message='{}'",
                     response.getSuccess(), response.getMessage());
 
-        // Send the response back to the client
         responseObserver.onNext(response);
-        // Mark the RPC call as complete
         responseObserver.onCompleted();
     }
 }
