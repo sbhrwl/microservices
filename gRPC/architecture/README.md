@@ -32,5 +32,4 @@
     * Provides an HTTP endpoint to easily inject test messages into ActiveMQ, which are then processed and sent via gRPC.
 **Next Steps (Upcoming):**
 * Addressing client-side gRPC error handling (e.g., retries, circuit breakers, dead-letter queues).
-* Implementing persistence in the Hub Service (e.g., saving registered sensor data to a database).
 * Adding more sophisticated business logic to the Hub Service's `RegisterSensor` method.
