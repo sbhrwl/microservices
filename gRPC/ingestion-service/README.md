@@ -18,3 +18,14 @@ mvn clean install -DskipTests
 mvn spring-boot:run
 ```
 ## Test
+- Produce sensor registration request
+  - `POST` `http://localhost:8080/generate/registration`
+    - Payload
+    ```json
+    {
+        "sensorId": "sensor123",
+        "sensorModel": "ModelX",
+        "email": "user@example.com"
+    }
+    ```
+- Verify console
