@@ -2,4 +2,5 @@
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
-- [Services](ingestion-service/README.md)
+- [Ingestion service](ingestion-service/README.md)
+- [Hub service](hub-service/README.md)
