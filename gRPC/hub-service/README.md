@@ -18,3 +18,13 @@ mvn clean install -DskipTests
 mvn spring-boot:run
 ```
 ## Test
+- DB verification
+```sql
+SELECT * FROM sensor_registrations;
+
+SELECT * FROM sensor_registrations WHERE sensor_id = 'sensor123';
+
+SELECT COUNT(*) FROM sensor_registrations;
+
+SELECT * FROM sensor_registrations WHERE email = 'user@example.com';
+```
