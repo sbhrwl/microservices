@@ -30,6 +30,7 @@
     * Convert these `RegistrationRequestPojo` instances into **RegistrationRequestMessage `Protobuf` objects**.
     * **Successfully makes gRPC calls to the Hub Service** using the generated `RegistrationServiceGrpc.RegistrationServiceBlockingStub` to send the `RegistrationRequestMessage`.
     * Provides an HTTP endpoint to easily inject test messages into ActiveMQ, which are then processed and sent via gRPC.
-**Next Steps (Upcoming):**
-* Addressing client-side gRPC error handling (e.g., retries, circuit breakers, dead-letter queues).
-* Adding more sophisticated business logic to the Hub Service's `RegisterSensor` method.
+
+* **Next Steps (Upcoming):**
+  * Addressing client-side gRPC error handling (e.g., retries, circuit breakers, dead-letter queues).
+  * Adding more sophisticated business logic to the Hub Service's `RegisterSensor` method.
