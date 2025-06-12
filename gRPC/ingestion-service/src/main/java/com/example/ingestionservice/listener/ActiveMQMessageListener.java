@@ -4,7 +4,7 @@ package com.example.ingestionservice.listener;
 import com.example.ingestionservice.model.RegistrationRequestPojo;
 import com.example.ingestionservice.proto.RegistrationRequestMessage;
 import com.example.ingestionservice.proto.RegistrationResponseMessage;
-// import com.example.ingestionservice.proto.RegistrationServiceGrpc; // Commented out for now
+import com.example.ingestionservice.proto.RegistrationServiceGrpc; // Keep this import
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
 /**
  * ActiveMQMessageListener is a Spring component responsible for listening to
  * messages from the configured ActiveMQ queue, deserializing them into a POJO,
- * and then mapping that POJO to a Protobuf message.
+ * mapping that POJO to a Protobuf message, and then sending it via gRPC.
  */
 @Component
 public class ActiveMQMessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQMessageListener.class);
 
-    // Commented out: Autowire the gRPC blocking stub provided by GrpcClientConfig
-    // @Autowired
-    // private RegistrationServiceGrpc.RegistrationServiceBlockingStub registrationServiceBlockingStub;
+    // Uncomment this line to autowire the gRPC blocking stub
+    @Autowired
+    private RegistrationServiceGrpc.RegistrationServiceBlockingStub registrationServiceBlockingStub;
 
     /**
      * This method listens for messages on the 'registration.queue'.
@@ -44,8 +44,7 @@ public class ActiveMQMessageListener {
                     protobufMessage.getSensorModel(),
                     protobufMessage.getEmail());
 
-        // --- gRPC Client Call: Temporarily commented out until Hub Service is implemented ---
-        /*
+        // --- gRPC Client Call: This block is now re-enabled ---
         try {
             logger.info("Sending gRPC request to Hub Service for sensor: {}", protobufMessage.getSensorId());
             // Make the gRPC call using the injected blocking stub
@@ -61,7 +60,6 @@ public class ActiveMQMessageListener {
             logger.error("gRPC call to Hub Service failed for sensor {}: {}", protobufMessage.getSensorId(), e.getMessage(), e);
             // TODO: Implement more robust error handling (e.g., dead-letter queue, metrics)
         }
-        */
     }
 
     /**

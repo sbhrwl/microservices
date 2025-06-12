@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.hubservice.proto";
+option java_outer_classname = "RegistrationServiceProto";
+
+package registrationservice;
+
+// RegistrationService defines the gRPC service for sensor registration.
+service RegistrationService {
+  // RegisterSensor is a unary RPC that registers a sensor.
+  rpc RegisterSensor (RegistrationRequestMessage) returns (RegistrationResponseMessage);
+}
+
+// RegistrationRequestMessage represents the data for a sensor registration request.
+message RegistrationRequestMessage {
+  string sensorId = 1;
+  string sensorModel = 2;
+  string email = 3;
+}
+
+// RegistrationResponseMessage represents the response after a sensor registration attempt.
+message RegistrationResponseMessage {
+  bool success = 1;
+  string message = 2; // A human-readable message about the success or failure
+}

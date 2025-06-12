@@ -1,4 +1,4 @@
-# Ingestion service
+# Hub service
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
