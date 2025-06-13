@@ -17,12 +17,12 @@
 
 ### Using docker compose
 
-| Steps                  | Details                                                                                                                        |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/gRPC/ingestion-service/docker-compose.yml) |
-| Run container          | `docker-compose up --build -d`                                                                                                 |
-| Stop container         | `docker-compose stop`                                                                                                          |
-| Stop & remove resources| `docker-compose down`                                                                                                          |
+| Steps                  | Ingestion service | Hub service |
+|------------------------|-------------------|------------- |
+| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/gRPC/ingestion-service/docker-compose.yml) |[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/gRPC/hub-service/docker-compose.yml)|
+| Run container          | `docker-compose up --build -d` |`docker-compose up --build -d`  |
+| Stop container         | `docker-compose stop`   |`docker-compose stop`   |
+| Stop & remove resources| `docker-compose down`   |`docker-compose down`   |
 
 ### Using docker commands 
 
