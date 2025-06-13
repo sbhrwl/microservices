@@ -3,15 +3,17 @@ kind: Service
 metadata:
   name: {{ include "ingestion-grpc-service.fullname" . }}
   labels:
-    {{- include "ingestion-grpc-service.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "ingestion-grpc-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.ingestionGrpcService.service.type }}
   selector:
-    {{- include "ingestion-grpc-service.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "ingestion-grpc-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   ports:
-    - protocol: TCP
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
-      {{- if (eq .Values.service.type "NodePort") }}
-      nodePort: {{ .Values.service.nodePort }}
+    - port: {{ .Values.ingestionGrpcService.service.port }}
+      targetPort: {{ .Values.ingestionGrpcService.env.SERVER_PORT | int }}
+      protocol: TCP
+      {{- if eq .Values.ingestionGrpcService.service.type "NodePort" }}
+      nodePort: {{ .Values.ingestionGrpcService.service.nodePort }}
       {{- end }}

@@ -3,17 +3,19 @@ kind: Service
 metadata:
   name: {{ include "hub-service.fullname" . }}
   labels:
-    {{- include "hub-service.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "hub-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.hubService.service.type }}
   selector:
-    {{- include "hub-service.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "hub-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   ports:
     - name: http-port
       protocol: TCP
-      port: {{ .Values.service.httpPort }}
-      targetPort: {{ .Values.service.httpTargetPort }}
+      port: {{ .Values.hubService.service.httpPort }}
+      targetPort: {{ .Values.hubService.service.httpTargetPort }}
     - name: grpc-port
       protocol: TCP
-      port: {{ .Values.service.grpcPort }}
-      targetPort: {{ .Values.service.grpcTargetPort }}
+      port: {{ .Values.hubService.service.grpcPort }}
+      targetPort: {{ .Values.hubService.service.grpcTargetPort }}

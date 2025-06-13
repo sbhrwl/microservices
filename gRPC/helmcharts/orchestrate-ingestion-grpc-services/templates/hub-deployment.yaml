@@ -3,88 +3,45 @@ kind: Deployment
 metadata:
   name: {{ include "hub-service.fullname" . }}
   labels:
-    {{- include "hub-service.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "hub-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.hubService.replicaCount }}
   selector:
     matchLabels:
-      {{- include "hub-service.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ include "hub-service.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "hub-service.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ include "hub-service.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "hub-service.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: {{ include "hub-service.name" . }}
+          image: "{{ .Values.hubService.image.repository }}:{{ .Values.hubService.image.tag }}"
+          imagePullPolicy: {{ .Values.hubService.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.httpTargetPort }}
-              protocol: TCP
-            - name: grpc
-              containerPort: {{ .Values.service.grpcTargetPort }}
-              protocol: TCP
+            - containerPort: {{ .Values.hubService.service.httpTargetPort }}
+            - containerPort: {{ .Values.hubService.service.grpcTargetPort }}
           env:
-            - name: SERVER_PORT
-              value: {{ .Values.service.httpTargetPort | quote }}
-            - name: GRPC_SERVER_PORT
-              value: {{ .Values.service.grpcTargetPort | quote }}
-            - name: DB_URL
-              value: {{ .Values.env.dbUrl | quote }}
-            - name: DB_USERNAME
-              value: {{ .Values.env.dbUsername | quote }}
-            - name: DB_PASSWORD
-              value: {{ .Values.env.dbPassword | quote }}
-            - name: JPA_DDL_AUTO
-              value: {{ .Values.env.jpaDdlAuto | quote }}
-            - name: JPA_SHOW_SQL
-              value: {{ .Values.env.jpaShowSql | quote }}
-            - name: JPA_FORMAT_SQL
-              value: {{ .Values.env.jpaFormatSql | quote }}
-            - name: LOGGING_LEVEL_APP
-              value: {{ .Values.env.loggingLevelApp | quote }}
-            - name: LOGGING_LEVEL_HIBERNATE_SQL
-              value: {{ .Values.env.loggingLevelHibernateSql | quote }}
-            - name: LOGGING_LEVEL_HIBERNATE_BIND
-              value: {{ .Values.env.loggingLevelHibernateBind | quote }}
-            # Example for Spring Application Name (if needed)
             - name: SPRING_APPLICATION_NAME
-              value: {{ .Values.env.springApplicationName | quote }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+              value: {{ .Values.hubService.env.springApplicationName | quote }}
+            - name: SPRING_DATASOURCE_URL
+              value: {{ .Values.hubService.env.dbUrl | quote }}
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ .Values.hubService.env.dbUsername | quote }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ .Values.hubService.env.dbPassword | quote }}
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: {{ .Values.hubService.env.jpaDdlAuto | quote }}
+            - name: SPRING_JPA_SHOW_SQL
+              value: {{ .Values.hubService.env.jpaShowSql | quote }}
+            - name: SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL
+              value: {{ .Values.hubService.env.jpaFormatSql | quote }}
+            - name: LOGGING_LEVEL_APP
+              value: {{ .Values.hubService.env.loggingLevelApp | quote }}
+            - name: LOGGING_LEVEL_ORG_HIBERNATE_SQL
+              value: {{ .Values.hubService.env.loggingLevelHibernateSql | quote }}
+            - name: LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL
+              value: {{ .Values.hubService.env.loggingLevelHibernateBind | quote }}

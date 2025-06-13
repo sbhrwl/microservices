@@ -5,76 +5,25 @@ metadata:
   labels:
     {{- include "ingestion-grpc-service.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.ingestionGrpcService.replicaCount }}
   selector:
     matchLabels:
-      {{- include "ingestion-grpc-service.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: ingestion-grpc-service
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "ingestion-grpc-service.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: ingestion-grpc-service
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "ingestion-grpc-service.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: ingestion-grpc-service
+          image: "{{ .Values.ingestionGrpcService.image.repository }}:{{ .Values.ingestionGrpcService.image.tag }}"
+          imagePullPolicy: {{ .Values.ingestionGrpcService.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.targetPort }}
-              protocol: TCP
+            - containerPort: {{ .Values.ingestionGrpcService.env.SERVER_PORT | int }}
           env:
-            - name: SPRING_APPLICATION_NAME
-              value: {{ .Values.env.springApplicationName | quote }}
-            - name: SERVER_PORT
-              value: {{ .Values.service.targetPort | quote }}
-            - name: ACTIVEMQ_BROKER_URL
-              value: {{ .Values.env.activeMQBrokerUrl | quote }}
-            - name: ACTIVEMQ_QUEUE_NAME
-              value: {{ .Values.env.activeMQQueueName | quote }}
-            - name: ACTIVEMQ_USER
-              value: {{ .Values.env.activeMQUser | quote }}
-            - name: ACTIVEMQ_PASSWORD
-              value: {{ .Values.env.activeMQPassword | quote }}
-            - name: GRPC_HUB_HOST
-              value: {{ .Values.env.grpcHubHost | quote }}
-            - name: GRPC_HUB_PORT
-              value: {{ .Values.env.grpcHubPort | quote }}
-            - name: LOGGING_LEVEL_APP
-              value: {{ .Values.env.loggingLevelApp | quote }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- range $key, $value := .Values.ingestionGrpcService.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}

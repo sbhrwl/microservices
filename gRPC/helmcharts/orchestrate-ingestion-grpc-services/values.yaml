@@ -1,5 +1,8 @@
-ingestionService:
-  image: sbhrwldocker/ingestion-grpc-service:latest
+ingestionGrpcService:
+  image:
+    repository: sbhrwldocker/ingestion-grpc-service
+    tag: latest
+    pullPolicy: IfNotPresent
   replicaCount: 1
   env:
     SERVER_PORT: '9081'
@@ -7,6 +10,8 @@ ingestionService:
     ACTIVEMQ_USER: admin
     ACTIVEMQ_PASSWORD: admin
     ACTIVEMQ_DEFAULT_DESTINATION: registration.queue
+    GRPC_HUB_HOST: "hub-service"
+    GRPC_HUB_PORT: "50051"
   service:
     type: NodePort
     port: 9081
