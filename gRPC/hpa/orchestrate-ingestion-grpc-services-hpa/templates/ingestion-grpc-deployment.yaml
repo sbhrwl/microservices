@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ingestion-grpc-service.fullname" . }}
+  labels:
+    {{- include "ingestion-grpc-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ingestionGrpcService.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingestion-grpc-service
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ingestion-grpc-service
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: ingestion-grpc-service
+          image: "{{ .Values.ingestionGrpcService.image.repository }}:{{ .Values.ingestionGrpcService.image.tag }}"
+          imagePullPolicy: {{ .Values.ingestionGrpcService.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.ingestionGrpcService.env.SERVER_PORT | int }}
+          env:
+            {{- range $key, $value := .Values.ingestionGrpcService.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}

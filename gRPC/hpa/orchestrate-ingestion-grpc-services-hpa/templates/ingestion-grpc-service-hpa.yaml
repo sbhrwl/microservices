@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "ingestion-grpc-service.fullname" . }}-hpa
+  labels:
+    app.kubernetes.io/name: {{ include "ingestion-grpc-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "ingestion-grpc-service.fullname" . }}
+  minReplicas: {{ .Values.ingestionGrpcService.hpa.minReplicas }}
+  maxReplicas: {{ .Values.ingestionGrpcService.hpa.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.ingestionGrpcService.hpa.targetCPUUtilizationPercentage }}
