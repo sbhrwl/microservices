@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hub-service-deployment
+  labels:
+    app: hub-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hub-service
+  template:
+    metadata:
+      labels:
+        app: hub-service
+    spec:
+      containers:
+        - name: hub-service
+          image: sbhrwldocker/hub-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9082
+            - containerPort: 50051
+          env:
+            - name: SERVER_PORT
+              value: "9082"
+            - name: GRPC_SERVER_PORT
+              value: "50051"
+            - name: DB_URL
+              value: "jdbc:postgresql://10.49.148.93:5432/mydatabase"
+            - name: DB_USERNAME
+              value: "myuser"
+            - name: DB_PASSWORD
+              value: "mypassword"
+            - name: JPA_DDL_AUTO
+              value: "update"
+            - name: JPA_SHOW_SQL
+              value: "true"
+            - name: JPA_FORMAT_SQL
+              value: "true"
+            - name: LOGGING_LEVEL_APP
+              value: "INFO"
+            - name: LOGGING_LEVEL_HIBERNATE_SQL
+              value: "DEBUG"
+            - name: LOGGING_LEVEL_HIBERNATE_BIND
+              value: "TRACE"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hub-service
+  labels:
+    app: hub-service
+spec:
+  type: ClusterIP
+  selector:
+    app: hub-service
+  ports:
+    - name: http-port
+      protocol: TCP
+      port: 9082       # The port that the Service itself exposes inside the cluster
+      targetPort: 9082 # The port on the container to which the Service will forward HTTP traffic
+    - name: grpc-port # Name for the gRPC port
+      protocol: TCP
+      port: 50051      # The port that the Service itself exposes inside the cluster for gRPC
+      targetPort: 50051 # The port on the container to which the Service will forward gRPC traffic

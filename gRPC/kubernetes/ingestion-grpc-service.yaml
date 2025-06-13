@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingestion-grpc-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingestion-grpc-service
+  template:
+    metadata:
+      labels:
+        app: ingestion-grpc-service
+    spec:
+      containers:
+        - name: ingestion-grpc-service
+          image: sbhrwldocker/ingestion-grpc-service:latest
+          ports:
+            - containerPort: 9081
+          env:
+            - name: SERVER_PORT
+              value: "9081"
+            - name: ACTIVEMQ_BROKER_URL
+              value: "tcp://10.49.148.93:61616"
+            - name: ACTIVEMQ_USER
+              value: "admin"
+            - name: ACTIVEMQ_PASSWORD
+              value: "admin"
+            - name: ACTIVEMQ_DEFAULT_DESTINATION
+              value: "registration.queue"
+            - name: GRPC_HUB_HOST
+              value: "hub-service"
+            - name: GRPC_HUB_PORT
+              value: "50051"
+            - name: LOGGING_LEVEL_APP
+              value: "INFO"              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingestion-grpc-service
+spec:
+  type: NodePort
+  selector:
+    app: ingestion-grpc-service
+  ports:
+    - port: 9081
+      targetPort: 9081
+      nodePort: 30081
