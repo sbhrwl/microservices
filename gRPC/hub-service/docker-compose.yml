@@ -10,7 +10,7 @@ services:
     environment:
       SERVER_PORT: 9082
       GRPC_SERVER_PORT: 50051
-      DB_URL: jdbc:postgresql://db:5432/mydatabase
+      DB_URL: jdbc:postgresql://10.49.148.93:5432/mydatabase
       DB_USERNAME: myuser
       DB_PASSWORD: mypassword
       # --- JPA/Hibernate Configuration Variables ---
