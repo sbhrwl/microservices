@@ -1,0 +1,17 @@
+services:
+  ingestion-service:
+    build:
+      context: .
+    image: sbhrwldocker/ingestion-grpc-service:latest
+    container_name: ingestion-service-container
+    ports:
+      - "9081:9081"
+    environment:
+      SERVER_PORT: 9081
+      ACTIVEMQ_BROKER_URL: tcp://10.49.148.93:61616
+      ACTIVEMQ_QUEUE_NAME: registration.queue
+      ACTIVEMQ_USER: admin
+      ACTIVEMQ_PASSWORD: admin
+      GRPC_HUB_HOST: hub-service
+      GRPC_HUB_PORT: 50051
+      LOGGING_LEVEL_APP: INFO
