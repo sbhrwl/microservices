@@ -1,5 +1,5 @@
 services:
-  ingestion-service:
+  ingestion-grpc-service:
     build:
       context: .
     image: sbhrwldocker/ingestion-grpc-service:latest
