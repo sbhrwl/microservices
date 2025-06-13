@@ -9,11 +9,11 @@
 ## Setting up containers
 ### Prerequisites 
 
-| Steps                   | Details                                                                                                                        |
-|-------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| application.properties | [application.properties](https://github.com/sbhrwl/microservices/blob/main/gRPC/ingestion-service/src/main/resources/application.properties)    |
-| Build jar       | `mvn clean package`                                                                                                                    |
-| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/gRPC/ingestion-service/Dockerfile)                 |
+| Steps                   | Ingestion service | Hub service |
+|-------------------------|-------------------|-------------|
+| application.properties | [application.properties](https://github.com/sbhrwl/microservices/blob/main/gRPC/ingestion-service/src/main/resources/application.properties)    |[application.properties](https://github.com/sbhrwl/microservices/blob/main/gRPC/hub-service/src/main/resources/application.properties)    |
+| Build jar       | `mvn clean package`  |`mvn clean package`   |
+| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/gRPC/ingestion-service/Dockerfile)  |[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/gRPC/hub-service/Dockerfile)  |
 
 ### Using docker compose
 
