@@ -73,7 +73,7 @@
 | [SensorRegistry] -(gRPC) > [ProtocolAdapterService]-(gRPC) > [CommandDispatcherService]|
 |                                                                          |             |
 |                                                                          v             |
-└-------------------------------------------------------------------------kafka-------------┘
+└-------------------------------------------------------------------------kafka----------┘
 
 [CommandResultIngestorService]  <--(Kafka Consumer)-- Receives result from sensor
 ```
