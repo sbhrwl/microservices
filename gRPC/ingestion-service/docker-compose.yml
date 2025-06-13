@@ -3,7 +3,7 @@ services:
     build:
       context: .
     image: sbhrwldocker/ingestion-grpc-service:latest
-    container_name: ingestion-service-container
+    container_name: ingestion-grpc-service-container
     ports:
       - "9081:9081"
     environment:
