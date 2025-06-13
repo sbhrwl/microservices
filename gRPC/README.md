@@ -4,6 +4,7 @@
 - [Prerequisites](prerequisites/README.md)
 - [Ingestion service](ingestion-service/README.md)
 - [Hub service](hub-service/README.md)
+- [Containers](containers/README.md)
 - [Kubernetes](kubernetes/README.md)
 - [Verification](#verification)
 
