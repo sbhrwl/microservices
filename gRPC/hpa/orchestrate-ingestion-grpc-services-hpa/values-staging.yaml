@@ -1,0 +1,50 @@
+ingestionGrpcService:
+  image:
+    repository: sbhrwldocker/ingestion-grpc-service
+    tag: staging
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  env:
+    SERVER_PORT: '9081'
+    ACTIVEMQ_BROKER_URL: tcp://10.49.148.93:61616
+    ACTIVEMQ_USER: admin
+    ACTIVEMQ_PASSWORD: admin
+    ACTIVEMQ_DEFAULT_DESTINATION: registration.queue
+    GRPC_HUB_HOST: "ocs-grpc-release-hub-service"
+    GRPC_HUB_PORT: "50051"
+  service:
+    type: NodePort
+    port: 9081
+    nodePort: 30081
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75
+
+hubService:
+  image:
+    repository: sbhrwldocker/hub-service
+    tag: staging
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  env:
+    springApplicationName: "Hub service"
+    dbUrl: "jdbc:postgresql://10.49.148.93:5432/mydatabase"
+    dbUsername: "myuser"
+    dbPassword: "mypassword"
+    jpaDdlAuto: "update"
+    jpaShowSql: "true"
+    jpaFormatSql: "true"
+    loggingLevelApp: "INFO"
+    loggingLevelHibernateSql: "DEBUG"
+    loggingLevelHibernateBind: "TRACE"
+  service:
+    type: ClusterIP
+    httpPort: 9082
+    httpTargetPort: 9082
+    grpcPort: 50051
+    grpcTargetPort: 50051
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75
