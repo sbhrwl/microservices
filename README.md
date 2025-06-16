@@ -31,3 +31,11 @@
 18. New design must accommodate the increase in registers.
 19. Messaging uses ActiveMQ (not Kafka); scaling strategy for registers unknown.
 20. ActiveMQ partitioning/clustering/load balancing can be introduced if needed.
+## Summary 
+- Moving from daily to 10-min profile data (~14.4M rows/day).
+- Will grow from 5 to 15 registers per sensor.
+- Data is ingested via ActiveMQ, processed by a Java service, and stored in Oracle.
+- Processing must complete within 10 minutes (batch).
+- System is currently stateful and not horizontally scalable.
+- Open to new storage options (e.g., time-series DB, data lake).
+- Moderate tolerance for late or missing data.
