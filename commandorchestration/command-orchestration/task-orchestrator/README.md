@@ -32,7 +32,7 @@ mvn spring-boot:run
       "commandArgs": ["arg1", "arg2"],
       "sensorList": ["sensor1", "sensor2"]
     }
-  ```
+    ```
 - `task-orchestrator` creates a document in MongoDB
   - Verify at **MongoDB**
   - Open MongoDB shell
