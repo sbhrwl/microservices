@@ -25,3 +25,9 @@
 13. Open to migrating 10-min data to a better storage system.
 14. Target batch processing latency: within or less than 10 minutes.
 15. Some tolerance for missing or late data.
+### Phase 4
+16. Monitoring and alerting for ingestion failures is handled by downstream analytics.
+17. Current sensor registers: 5; expected to grow to 15 registers per sensor.
+18. New design must accommodate the increase in registers.
+19. Messaging uses ActiveMQ (not Kafka); scaling strategy for registers unknown.
+20. ActiveMQ partitioning/clustering/load balancing can be introduced if needed.
