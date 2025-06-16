@@ -19,3 +19,9 @@
 8. Service is stateful and not horizontally scalable currently.
 9. No raw message persistence for replay or audit.
 10. Data retention in Oracle is 90 days.
+### Phase 3
+11. 10-min data retention undecided; possibly 60 days.
+12. Current queries are pushed downstream; no direct query load now.
+13. Open to migrating 10-min data to a better storage system.
+14. Target batch processing latency: within or less than 10 minutes.
+15. Some tolerance for missing or late data.
