@@ -39,3 +39,11 @@
 - System is currently stateful and not horizontally scalable.
 - Open to new storage options (e.g., time-series DB, data lake).
 - Moderate tolerance for late or missing data.
+## Solution Options Discussion
+### Phase 1
+1. Open to decoupling ingestion with raw data storage in object storage (e.g., GCS).
+2. Potential processing delay to enable buffering and scalability.
+3. Benefits include resilience, scalability, and flexibility for growing data volume.
+4. Idea to write a service that reads from ActiveMQ, does protocol conversion, and saves to GCS or DB.
+5. Current service is stateful and enqueues converted data to another queue for DB saving.
+6. Handling backpressure or spikes not planned yet.
