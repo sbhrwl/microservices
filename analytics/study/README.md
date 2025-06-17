@@ -26,3 +26,4 @@
 9. Downstream apps don’t require structured SQL-like access.
 10. No enrichment or joins needed before handing off the data.
 11. Preference is to optimize for storage cost over query speed.
+- **Based on this, a `data lake` (e.g., GCS + Parquet + Iceberg or BigQuery) seems like a better fit than a time-series DB.**
