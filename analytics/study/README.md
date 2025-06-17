@@ -39,3 +39,13 @@
 - Built-in retention policies and compression are needed.
 - High-ingestion throughput with query efficiency is critical.
 
+### Data Delivery Design Summary
+- Analytics team only needs raw 10-min data delivered regularly; they handle queries & analysis.  
+- Focus on reliable, scalable storage and timely delivery; complex query performance less critical.  
+- Pull-based data delivery preferred; analytics team will pull files on their schedule.  
+- File availability batched every 30 mins to balance freshness and overhead.  
+- Data volume estimate: 100k devices × 20 registers every 10 mins.  
+- Single large files per 30 mins are too heavy; better to split files into smaller chunks (e.g., per 10 mins or device groups).  
+- Cloud object storage (e.g., GCS, S3) chosen for file hosting.  
+- Secure access via API gateway handling authentication, logging, throttling, and retries.  
+Next steps: design the service producing these files, file naming/partitioning scheme, and gateway API spec.
