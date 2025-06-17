@@ -14,16 +14,28 @@
 
 
 ## Solution Options Discussion
-1. Open to decoupling ingestion with raw data storage in object storage (e.g., GCS).
-2. Potential processing delay to enable buffering and scalability.
-3. Benefits include resilience, scalability, and flexibility for growing data volume.
-4. Idea to write a service that reads from ActiveMQ, does protocol conversion, and saves to GCS or DB.
-5. Current service is stateful and enqueues converted data to another queue for DB saving.
 
-6. Exploring whether to use time-series DB (InfluxDB, TimescaleDB) or data lake (BigQuery, Iceberg).
-7. Data is mostly stored and passed downstream; minimal querying.
-8. Data is transformed and pushed to analytics in required formats.
-9. Downstream apps don’t require structured SQL-like access.
-10. No enrichment or joins needed before handing off the data.
-11. Preference is to optimize for storage cost over query speed.
-- **Based on this, a `data lake` (e.g., GCS + Parquet + Iceberg or BigQuery) seems like a better fit than a time-series DB.**
+| Category | Item | Decision |
+|----------|------|----------|
+| **Ingestion & Buffering** | 1. Open to decoupling ingestion with raw data storage in object storage (e.g., GCS). | Data Lake |
+| | 2. Potential processing delay to enable buffering and scalability. | Data Lake |
+| | 4. Idea to write a service that reads from ActiveMQ, does protocol conversion, and saves to GCS or DB. | Neutral |
+| | 5. Current service is stateful and enqueues converted data to another queue for DB saving. | Neutral |
+| **Scalability & Resilience** | 1. Benefits include resilience, scalability, and flexibility for growing data volume. | Data Lake |
+| **Storage vs. Query Needs** | 2. Exploring whether to use time-series DB (InfluxDB, TimescaleDB) or data lake (BigQuery, Iceberg). | Under Evaluation |
+| | 2. Data is mostly stored and passed downstream; minimal querying. | Data Lake |
+| | 3. Data is transformed and pushed to analytics in required formats. | Data Lake |
+| | 4. Downstream apps don’t require structured SQL-like access. | Data Lake |
+| | 5. No enrichment or joins needed before handing off the data. | Data Lake |
+| | 6. Preference is to optimize for storage cost over query speed. | Data Lake |
+
+### Summary
+- Based on current needs and trade-offs, a **Data Lake** (e.g., GCS + Parquet + Iceberg or BigQuery) is the more suitable option.
+
+### When Time-Series DB Might Be Better
+- Frequent, low-latency queries on recent data.
+- Need for rollups, aggregations, or alerts on the data.
+- Data is actively used in dashboards (e.g., Grafana).
+- Built-in retention policies and compression are needed.
+- High-ingestion throughput with query efficiency is critical.
+
