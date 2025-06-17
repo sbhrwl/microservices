@@ -14,10 +14,15 @@
 
 
 ## Solution Options Discussion
-### Phase 1
 1. Open to decoupling ingestion with raw data storage in object storage (e.g., GCS).
 2. Potential processing delay to enable buffering and scalability.
 3. Benefits include resilience, scalability, and flexibility for growing data volume.
 4. Idea to write a service that reads from ActiveMQ, does protocol conversion, and saves to GCS or DB.
 5. Current service is stateful and enqueues converted data to another queue for DB saving.
-6. Handling backpressure or spikes not planned yet.
+
+6. Exploring whether to use time-series DB (InfluxDB, TimescaleDB) or data lake (BigQuery, Iceberg).
+7. Data is mostly stored and passed downstream; minimal querying.
+8. Data is transformed and pushed to analytics in required formats.
+9. Downstream apps don’t require structured SQL-like access.
+10. No enrichment or joins needed before handing off the data.
+11. Preference is to optimize for storage cost over query speed.
