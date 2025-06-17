@@ -1,0 +1,15 @@
+#
+
+## Analysis
+
+| **Category**                  | **Details**                                                                                                                                                                                                                                                                                              |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Database & Storage**        | - Current DB: Oracle (no partitioning, acceptable performance)  <br> - Volume: 100k meters → \~500k rows/day <br> - 10-min profile: \~14.4M rows/day <br> - Data retention: 90 days (Oracle) <br> - 10-min data retention: TBD (possibly 60 days) <br> - Open to migrating 10-min data to better storage |
+| **Data Ingestion & Pipeline** | - Pipeline: Kafka → service → protocol conversion → enrichment → Oracle DB <br> - Bottlenecks observed: CPU, IO, memory under load <br> - No raw message persistence (no replay/audit support)                                                                                                           |
+| **Scalability & Performance** | - Current service is stateful and not horizontally scalable <br> - Target batch processing latency: ≤10 minutes <br> - Some tolerance for missing/late data                                                                                                                                              |
+| **Query & Access Patterns**   | - Initial queries: batch processing acceptable <br> - Real-time queries to be revisited later <br> - Queries are pushed downstream; no current direct load                                                                                                                                               |
+| **Monitoring & Reliability**  | - Ingestion failure monitoring/alerting handled downstream <br> - No inbuilt observability/replay capability in ingestion flow                                                                                                                                                                           |
+| **Data Model & Growth**       | - Current sensor registers: 5; expected growth: 15 <br> - Design must accommodate register growth                                                                                                                                                                                                        |
+| **Messaging System**          | - Messaging uses ActiveMQ (not Kafka) <br> - Scaling strategy for registers via ActiveMQ is not yet defined <br> - Clustering/partitioning/load balancing may be introduced                                                                                                                              |
+
+
