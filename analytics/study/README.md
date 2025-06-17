@@ -22,7 +22,7 @@
 | | 4. Idea to write a service that reads from ActiveMQ, does protocol conversion, and saves to GCS or DB. | Neutral |
 | | 5. Current service is stateful and enqueues converted data to another queue for DB saving. | Neutral |
 | **Scalability & Resilience** | 1. Benefits include resilience, scalability, and flexibility for growing data volume. | Data Lake |
-| **Storage vs. Query Needs** | 2. Exploring whether to use time-series DB (InfluxDB, TimescaleDB) or data lake (BigQuery, Iceberg). | Under Evaluation |
+| **Storage vs. Query Needs** | 1. Exploring whether to use time-series DB (InfluxDB, TimescaleDB) or data lake (BigQuery, Iceberg). | Under Evaluation |
 | | 2. Data is mostly stored and passed downstream; minimal querying. | Data Lake |
 | | 3. Data is transformed and pushed to analytics in required formats. | Data Lake |
 | | 4. Downstream apps don’t require structured SQL-like access. | Data Lake |
