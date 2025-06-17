@@ -1,9 +1,10 @@
 # Data Ingestion and Storage Architecture for Meter Data
 ## Overview
-- This document summarizes the current state, analysis, and proposed design options for ingesting, storing, and delivering meter data collected from sensors. The primary focus is to meet analytics requirements, ensure scalability, and prepare for expected data growth.
+- This document summarizes the current state, analysis, and proposed design options for ingesting, storing, and delivering meter data collected from sensors.
+- The primary focus is to meet analytics requirements, ensure scalability, and prepare for expected data growth.
 ## Analysis
 
-| **Category**                  | **Details**                                                                                                                                                                                                                                                                                                     |
+| **Category**                  | **Details**                      |
 | ----------------------------- | -------------------------------- |
 | **Database & Storage**        | - Current DB: Oracle (no partitioning, acceptable performance) <br> - Volume: 100k meters → \~500k rows/day <br> - Data retention: 90 days (Oracle) <br> - 10-min profile: \~14.4M rows/day <br> - 10-min data retention TBD (possibly 60 days) <br> - Open to migrating 10-min data to better storage solution |
 | **Data Ingestion & Pipeline** | - Pipeline: Kafka → service → protocol conversion → enrichment → Oracle DB <br> - Bottlenecks observed: CPU, IO, memory under load <br> - No raw message persistence (no replay/audit support)|
@@ -14,7 +15,7 @@
 | **Messaging System**          | - Messaging uses ActiveMQ (not Kafka) <br> - Scaling strategy for registers via ActiveMQ undefined <br> - Future options: clustering, partitioning, load balancing|
 
 
-## Solution Options Discussion
+## Solution options discussion
 
 | **Category**                 | **Item**                                                                                          | **Decision**     |
 | ---------------------------- | ------------------------------------------------------------------------------------------------- | ---------------- |
@@ -39,7 +40,7 @@
   * Efficient retention and compression policies.
   * High-ingestion throughput with fast query performance.
 
-## Data Delivery Design
+## Data delivery design
 
 | **Category**                | **Details**                                                                                                                           |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
