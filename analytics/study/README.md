@@ -38,33 +38,25 @@
 - Built-in retention policies and compression are needed.
 - High-ingestion throughput with query efficiency is critical.
 
-### Data delivery design
-- Analytics team only needs raw 10-min data delivered regularly; they handle queries & analysis.  
-- Focus on reliable, scalable storage and timely delivery; complex query performance less critical.  
-- Pull-based data delivery preferred; analytics team will pull files on their schedule.  
-- File availability batched every 30 mins to balance freshness and overhead.  
-- Data volume estimate: 100k devices × 20 registers every 10 mins.  
-- Single large files per 30 mins are too heavy; better to split files into smaller chunks (e.g., per 10 mins or device groups).  
-- Cloud object storage (e.g., GCS, S3) chosen for file hosting.  
-- Secure access via API gateway handling authentication, logging, throttling, and retries.  
-
-- File format: Parquet chosen for compactness and analytics friendliness.  
-- Schema evolution needed to handle more registers in future.  
-- Schema versioning in metadata or path is not planned.  
-- File path pattern: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`.  
-- Files will always include all registers every 10 mins (no delta filtering).  
-- Metadata to be stored separately in `.json` files alongside each Parquet chunk, containing:  
-  - device count  
-  - timestamp range  
-  - register list  
-  - generation time  
-- A manifest or index file per time period (e.g., daily) will help analytics discover new files easily.
-
-- Service uploads files directly to GCS.  
-- Upload failures handled with automatic retries; no manual queueing outside ActiveMQ.  
-- ActiveMQ used for message queuing; no upload status pushed back to MQ.  
-- Monitoring starts with basic logs on service host (no centralized logging yet).  
-- Future improvements can include metrics, dashboards, and alerting as needed.  
-
-Next: finalize naming conventions, metadata schema, and manifest file structure.
-Next steps: design the service producing these files and gateway API spec.
+| Category               | Details                                                                                              |
+|------------------------|----------------------------------------------------------------------------------------------------|
+| Data Requirements      | - Analytics team needs raw 10-min data delivered regularly; they handle queries & analysis.         |
+|                        | - Focus on reliable, scalable storage and timely delivery; query performance less critical.          |
+| Delivery Approach       | - Pull-based data delivery preferred; analytics team pulls files on their schedule.                  |
+|                        | - File availability batched every 30 mins to balance freshness and overhead.                         |
+| Data Volume & File Size | - Estimate: 100k devices × 20 registers every 10 mins.                                              |
+|                        | - Single large files per 30 mins too heavy; split files into smaller chunks (e.g., per register).    |
+| Storage & Access        | - Cloud object storage (GCS/S3) chosen for file hosting.                                            |
+|                        | - Secure access via API gateway handling authentication, logging, throttling, retries.              |
+| File Format & Schema    | - Parquet chosen for compactness and analytics friendliness.                                        |
+|                        | - Schema evolution planned for more registers in future.                                           |
+|                        | - No schema versioning in metadata or path planned.                                                |
+| File Organization       | - File path: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`.                           |
+|                        | - Files include all registers every 10 mins (no delta filtering).                                   |
+| Metadata                | - Separate `.json` metadata files per Parquet chunk with device count, timestamp range, register list, generation time. |
+|                        | - Manifest/index files per time period (e.g., daily) for easier file discovery.                     |
+| Upload & Reliability    | - Service uploads files directly to GCS.                                                           |
+|                        | - Upload failures handled with automatic retries; no manual queuing outside ActiveMQ.               |
+|                        | - ActiveMQ used for message queuing; no upload status pushed back to MQ.                            |
+| Monitoring              | - Basic logs on service host; no centralized logging yet.                                          |
+|                        | - Future improvements may include metrics, dashboards, alerting.                                   |
