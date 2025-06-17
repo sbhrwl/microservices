@@ -39,7 +39,7 @@
 - Built-in retention policies and compression are needed.
 - High-ingestion throughput with query efficiency is critical.
 
-### Data Delivery Design Summary
+### Data delivery design
 - Analytics team only needs raw 10-min data delivered regularly; they handle queries & analysis.  
 - Focus on reliable, scalable storage and timely delivery; complex query performance less critical.  
 - Pull-based data delivery preferred; analytics team will pull files on their schedule.  
@@ -48,4 +48,18 @@
 - Single large files per 30 mins are too heavy; better to split files into smaller chunks (e.g., per 10 mins or device groups).  
 - Cloud object storage (e.g., GCS, S3) chosen for file hosting.  
 - Secure access via API gateway handling authentication, logging, throttling, and retries.  
-Next steps: design the service producing these files, file naming/partitioning scheme, and gateway API spec.
+
+- File format: Parquet chosen for compactness and analytics friendliness.  
+- Schema evolution needed to handle more registers in future.  
+- Schema versioning in metadata or path is not planned.  
+- File path pattern: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`.  
+- Files will always include all registers every 10 mins (no delta filtering).  
+- Metadata to be stored separately in `.json` files alongside each Parquet chunk, containing:  
+  - device count  
+  - timestamp range  
+  - register list  
+  - generation time  
+- A manifest or index file per time period (e.g., daily) will help analytics discover new files easily.
+
+Next: finalize naming conventions, metadata schema, and manifest file structure.
+Next steps: design the service producing these files and gateway API spec.
