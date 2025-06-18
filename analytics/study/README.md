@@ -79,8 +79,26 @@
   * lets you keep cheap, batch-optimized storage in GCS,
   * avoids downloading files by enabling SQL access via BigQuery,
   * and supports your current usage: stable schema, small data, rare queries.
+
+### Security
+- We don't need an API Gateway in front of BigQuery.** Here's why:
+  - BigQuery Already Handles Access Control:
+    * You can **grant IAM permissions** (like `bigquery.dataViewer`) to the analytics vendor's service account.
+    * You can **restrict access to specific datasets, tables, even columns**.
+    *  BigQuery **authenticates via Google Cloud IAM** and supports **fine-grained audit logging**.
+  - Why Not API Gateway?
+    * API Gateway is for **controlling HTTP requests to APIs** — not a natural fit for SQL workloads.
+    * Putting an API Gateway in front of BigQuery would:
+      * Add **latency**,
+      * Require you to **proxy SQL queries or REST API calls manually**,
+      * Duplicate features already provided by **IAM and VPC Service Controls**.
+- Better option:
+  - If you want to restrict **network access**:
+    - Use **Private Service Connect (PSC)** or **VPC-SC (Service Controls)** to limit where BigQuery can be accessed from (e.g., only from specific VPCs or IPs).
 ### Next steps
 - Which of these would you like to address first?
-1. 📁 How to structure your GCS bucket and file paths?
-2. 📊 How to define BigQuery external tables over Parquet files?
-3. 🔧 How to design the microservice that generates and uploads data to GCS?
+- Design the microservice that generates and uploads data to GCS
+- Structure your GCS bucket and file paths
+- Define BigQuery external tables over Parquet files
+- IAM permissions for analytics vendor
+- Or a Private Service Connect flow if needed
