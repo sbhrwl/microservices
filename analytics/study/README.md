@@ -65,9 +65,22 @@
 | **Monitoring**              | - Basic logs on service host; no centralized logging yet.                                                                             |
 |                             | - Future enhancements may include metrics, dashboards, and alerting.                                                                  |
 
-## Next Steps
-* Finalize **naming conventions** for files and metadata.
-* Define **metadata schema** in detail.
-* Design the **manifest/index file structure**.
-* Develop the **service** responsible for generating and uploading files.
-* Specify the **API gateway interface** for secure analytics access.
+
+## Store parquet files in GCS and expose them via BigQuery external tables
+### 🆚 Why This Option Wins
+
+| Option| Pros| Cons| Verdict|
+| ----- | --- | --- | ------ |
+| **1. Store in GCS (only)**                                  | ✅ Low cost  <br> ✅ Easy batch file access <br> ✅ Good for archival & delivery                   | ❌ Not queryable directly <br> ❌ Analytics app would need to download & process files              | ❌ Rejected — not suitable since the analytics team doesn't download files |
+| **2. Store in BigQuery (only)**                             | ✅ Fast queries <br> ✅ Full SQL power <br> ✅ Simplifies analytics access                         | ❌ Higher cost (storage + streaming insert/ingest) <br> ❌ Not optimal for rare scans of large data | ❌ Rejected — overkill and costly for rare, simple queries                 |
+| **✅ 3. Store in GCS + expose via BigQuery external tables** | ✅ Low storage cost (GCS) <br> ✅ On-demand querying via BigQuery <br> ✅ No ingestion duplication | ❌ Slightly slower than native BQ tables <br> ❌ Requires schema to be consistent across files      | ✅ **Chosen** — best balance of cost, simplicity, and functionality        |
+
+- This setup:
+  * lets you keep cheap, batch-optimized storage in GCS,
+  * avoids downloading files by enabling SQL access via BigQuery,
+  * and supports your current usage: stable schema, small data, rare queries.
+### Next steps
+- Which of these would you like to address first?
+1. 📁 How to structure your GCS bucket and file paths?
+2. 📊 How to define BigQuery external tables over Parquet files?
+3. 🔧 How to design the microservice that generates and uploads data to GCS?
