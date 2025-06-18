@@ -96,8 +96,26 @@
   - If you want to restrict **network access**:
     - Use **Private Service Connect (PSC)** or **VPC-SC (Service Controls)** to limit where BigQuery can be accessed from (e.g., only from specific VPCs or IPs).
 ### Next steps
-- Design the microservice that generates and uploads data to GCS
+- Design the microservice(s) that
+  - consumes messages from ActiveMQ
+  - generates parquet files
+  - uploads parquet files to GCS
 - Structure your GCS bucket and file paths
+  - **File format and schema**
+    - Parquet chosen for compactness and analytics friendliness
+    - Schema evolution planned to support more registers in the future
+    - No schema versioning in metadata or file path planned currently
+  - **File organization**
+    - File path pattern: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`
+    - Files will always include **all registers** every 10 minutes (no delta filtering).
+  - **Metadata**
+    - Separate `.json` metadata files per Parquet chunk, containing:
+      - Device count
+      - Timestamp range
+      - Register list
+      - Generation time
+    - Manifest or index files per time period (e.g., daily) for easy file discovery
+  - Upload failures handled with automatic retries
 - Define BigQuery external tables over Parquet files
 - IAM permissions for analytics vendor
 - Or a Private Service Connect flow if needed
