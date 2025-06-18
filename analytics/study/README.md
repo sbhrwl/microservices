@@ -1,6 +1,5 @@
-# Data Ingestion and Storage Architecture for Meter Data
+# Data ingestion and storage architecture for Sensor data
 ## Overview
-- This document summarizes the current state, analysis, and proposed design options for ingesting, storing, and delivering meter data collected from sensors.
 - The primary focus is to meet analytics requirements, ensure scalability, and prepare for expected data growth.
 ## Analysis
 
@@ -12,7 +11,7 @@
 | **Query & Access Patterns**   | - Initial queries: batch processing acceptable <br> - Real-time queries to be revisited later <br> - Queries pushed downstream; no current direct heavy query load|
 | **Monitoring & Reliability**  | - Ingestion failure monitoring/alerting handled downstream <br> - No inbuilt observability or replay capability in ingestion flow|
 | **Data Model & Growth**       | - Current sensor registers: 5 <br> - Expected growth to 15 registers <br> - Design must accommodate register growth|
-| **Messaging System**          | - Messaging uses ActiveMQ (not Kafka) <br> - Scaling strategy for registers via ActiveMQ undefined <br> - Future options: clustering, partitioning, load balancing|
+| **Messaging System**          | - Messaging uses ActiveMQ <br> - Scaling strategy for registers via ActiveMQ undefined <br> - Future options: clustering, partitioning, load balancing|
 
 
 ## Solution options discussion
