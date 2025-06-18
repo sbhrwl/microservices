@@ -7,13 +7,12 @@
 - Expose data via BigQuery external tables for analytics applications.
 
 ## 🧩 Architecture overview
-```mermaid
-graph TD
-    A[ActiveMQ] --> B[Ingestion Microservice]
-    B --> C[Parquet File Generation]
-    C --> D[GCS Upload]
-    D --> E[BigQuery External Tables]
-    E --> F[Analytics Application (Pull-Based)]
+```
+[ActiveMQ] --> [Ingestion Microservice]
+[Ingestion Microservice] --> [Parquet File Generation]
+[Parquet File Generation] --> [GCS Upload]
+[GCS Upload] --> [BigQuery External Tables]
+[BigQuery External Tables] --> [Analytics Application (Pull-Based)]
 ````
 
 ## 🛠️ Microservice responsibilities
