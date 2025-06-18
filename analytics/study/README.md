@@ -96,7 +96,6 @@
   - If you want to restrict **network access**:
     - Use **Private Service Connect (PSC)** or **VPC-SC (Service Controls)** to limit where BigQuery can be accessed from (e.g., only from specific VPCs or IPs).
 ### Next steps
-- Which of these would you like to address first?
 - Design the microservice that generates and uploads data to GCS
 - Structure your GCS bucket and file paths
 - Define BigQuery external tables over Parquet files
