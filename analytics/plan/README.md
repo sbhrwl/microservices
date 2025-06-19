@@ -90,6 +90,49 @@ meter-data/
 └── ...
 ```
 
+```
+meter-data/
+├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← ReadingType (harmonics)
+│   └── 2025/
+│       └── 05/
+│           └── 16/
+│               └── 08/
+│                   ├── 00/
+│                   │   ├── part-0001.parquet
+│                   │   ├── part-0001.json
+│                   ├── 10/
+│                   │   ├── part-0002.parquet
+│                   │   ├── part-0002.json
+│                   ├── 20/
+│                   │   ├── part-0003.parquet
+│                   │   ├── part-0003.json
+│                   ├── 30/
+│                   │   ├── part-0004.parquet
+│                   │   ├── part-0004.json
+│                   ├── 40/
+│                   │   ├── part-0005.parquet
+│                   │   ├── part-0005.json
+│                   ├── 50/
+│                   │   ├── part-0006.parquet
+│                   │   ├── part-0006.json
+│                   └── 00/
+│                       ├── part-0007.parquet
+│                       ├── part-0007.json
+│               └── manifest-2025-05-16.json
+└── ...
+```
+
+```
+meter-data/
+├── interval/
+│   ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/      ← Harmonics
+│   │   └── yyyy/MM/dd/HH/mm/
+│   │       └── part-xxxx.parquet
+│   └── 0.7.0.0.0.1.0.0.0.0.0.0.0.0.128.0.27.0/      ← TimeThresholdForCriticalUnderVoltage
+│       └── yyyy/MM/dd/HH/mm/
+│           └── part-xxxx.parquet
+```
+
 ## ✅ Summary
 - This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
