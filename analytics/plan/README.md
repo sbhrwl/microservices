@@ -133,6 +133,17 @@ meter-data/
 │           └── part-xxxx.parquet
 ```
 
+```
+meter-data/
+├── interval/
+│   └── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← Harmonics ReadingType
+│       └── yyyy/MM/dd/HH/mm/
+│           └── part-xxxx.parquet
+├── config/
+│   └── 0.7.0.0.0.1.0.0.0.0.0.0.0.0.128.0.27.0/   ← TimeThresholdForCriticalUnderVoltage
+│       └── yyyy/MM/dd/HH/
+│           └── part-xxxx.parquet
+```
 ## ✅ Summary
 - This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
