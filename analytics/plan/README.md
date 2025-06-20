@@ -47,9 +47,10 @@
 * No ingestion into native BigQuery tables — this keeps costs low and storage decoupled.
 * Schema evolution is handled on the Parquet side.
 ## 🔐 Access Control
-* Analytics vendor accesses BigQuery external tables.
-* IAM roles assigned to vendor to allow **read-only access**.
-* API Gateway handles access to GCS only if direct file reading becomes necessary (not required now).
+* If the 3rd party is trusted and you want rapid development, and the data schema is stable, you can give them direct read-only BigQuery access via IAM roles (e.g., roles/bigquery.dataViewer).
+  * Analytics vendor accesses BigQuery external tables.
+  * IAM roles assigned to vendor to allow **read-only access**.
+* If you want tighter security, control, or expect complex query needs or usage patterns, build a dedicated API layer (e.g., a microservice or Cloud Run app) that queries BigQuery and exposes only required data.
 ## 📊 Data delivery expectations
 
 | Metric                | Value                         |
