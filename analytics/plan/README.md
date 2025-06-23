@@ -148,3 +148,37 @@ meter-data/
 ## ✅ Summary
 - This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
+
+Perfect. Here's both the **desired folder structure** and the matching **BigQuery external table DDL** using Hive partitioning.
+
+---
+
+## 📁 Final GCS Folder Structure (Hive-Compatible)
+```
+gs://<bucket-name>/meter-data/
+├── interval/
+│   ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/      ← Harmonics
+│   │   └── year=2025/month=06/day=18/hour=08/minute=00/
+│   │       └── part-0001.parquet
+│   └── 0.7.0.0.0.1.0.0.0.0.0.0.0.0.128.0.27.0/      ← UnderVoltage
+│       └── year=2025/month=06/day=18/hour=08/minute=00/
+│           └── part-0001.parquet
+```
+
+### 🧾 External Table DDL (Example: Harmonics)
+
+```sql
+CREATE OR REPLACE EXTERNAL TABLE `my_dataset.harmonics`
+OPTIONS (
+  format = 'PARQUET',
+  uris = ['gs://<bucket-name>/meter-data/interval/0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/*'],
+  hive_partitioning_mode = 'AUTO',
+  hive_partitioning_source_uri_prefix = 'gs://<bucket-name>/meter-data/interval/0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/',
+  require_hive_partition_filter = TRUE
+);
+```
+
+### ✅ Benefits
+* Fast filtering by `year`, `month`, etc.
+* No need to define schema manually if Parquet includes it.
+* Works without loading data into BigQuery storage.
