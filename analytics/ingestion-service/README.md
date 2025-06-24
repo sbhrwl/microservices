@@ -18,7 +18,7 @@ mvn clean install -DskipTests
 mvn spring-boot:run
 ```
 ## Test
-- Publish sensor data to ActiveMQ  `http://localhost:8080/api/powerquality/generate`
+- Publish sensor data to ActiveMQ  `http://localhost:9081/api/powerquality/generate`
   - It will send `~300 messages` to the `power-quality-queue`
 ## Verification at InfluxDB
 ### Single measurement
