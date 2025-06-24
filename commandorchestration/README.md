@@ -13,6 +13,25 @@
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
 ## Verification
+- Get Access token `http://localhost:8080/realms/master/protocol/openid-connect/token`
+  - Modify `Body -> x-wwww-form-url-encoded`
+     ```
+     grant_type : password
+     client_id  : sensor-service (created in Keycloak)
+     username  : endpointaccessuser
+     password  : password123
+     ```
+
+- Request **`POST`** `http://localhost:9081/tasks`
+  - Payload
+    ```json
+    {
+      "taskId": "task-003",
+      "commandType": "RESTART",
+      "commandArgs": ["arg1", "arg2"],
+      "sensorList": ["sensor1", "sensor2"]
+    }
+    ```
 - **Task orchestrator**
 ```
 [Task orchestrator] [ntainer#0-0-C-1] c.e.taskservice.service.KafkaProducer    : Message sent successfully for key: task-0011
