@@ -1,13 +1,27 @@
 # Meter data ingestion and delivery pipeline
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - [Purpose](#purpose)
-## 📌 Purpose
+- [Architecture overview](#architecture-overview)
+- [Microservice responsibilities](#microservice-responsibilities)
+- [File structure in GCS](#file-structure-in-gcs)
+  - [File format](#file-format)
+  - [File path convention](#file-path-convention)
+  - [Metadata](#metadata)
+  - [Manifest or index files](#manifest-or-index-files)
+- [External table setup](#external-table-setup)
+- [Access control](#access-control)
+- [Data delivery expectations](#data-delivery-expectations)
+- [Reliability and monitoring](#reliability-and-monitoring)
+- [Future considerations](#future-considerations)
+-[Summary](#summary)
+- [Sample GCS directory tree](#sample-gcs-directory-tree)
+## Purpose
 - Collect raw 10-minute data from sensors (via ActiveMQ).
 - Convert it into analytics-friendly Parquet format.
 - Upload files to Google Cloud Storage (GCS).
 - Expose data via BigQuery external tables for analytics applications.
 
-## 🧩 Architecture overview
+## Architecture overview
 ```
 [ActiveMQ] --> [Ingestion Microservice]
 [Ingestion Microservice] --> [Parquet File Generation]
@@ -16,7 +30,7 @@
 [BigQuery External Tables] --> [Analytics Application (Pull-Based)]
 ````
 
-## 🛠️ Microservice responsibilities
+## Microservice responsibilities
 * Consume messages from **ActiveMQ**.
 * Perform **protocol conversion** if required.
 * Generate **Parquet files** containing:
@@ -25,7 +39,7 @@
 * Upload files to **GCS**, including `.json` metadata files.
 * Handle upload **retries and errors** gracefully.
 
-## 📂 File structure in GCS
+## File structure in GCS
 ### File format
 * **Parquet** — compact, optimized for analytics.
 * Files contain **all registers** every 10 minutes (no delta filtering).
@@ -43,16 +57,16 @@
 ### Manifest or index files
 * Daily manifest files list all Parquet chunks for easier discovery and ingestion by the analytics team.
 
-## ⛓️ External table setup
+## External table setup
 * BigQuery uses **external tables** to directly query GCS-stored Parquet files.
 * No ingestion into native BigQuery tables — this keeps costs low and storage decoupled.
 * Schema evolution is handled on the Parquet side.
-## 🔐 Access Control
+## Access control
 * If the 3rd party is trusted and you want rapid development, and the data schema is stable, you can give them direct read-only BigQuery access via IAM roles (e.g., roles/bigquery.dataViewer).
   * Analytics vendor accesses BigQuery external tables.
   * IAM roles assigned to vendor to allow **read-only access**.
 * If you want tighter security, control, or expect complex query needs or usage patterns, build a dedicated API layer (e.g., a microservice or Cloud Run app) that queries BigQuery and exposes only required data.
-## 📊 Data delivery expectations
+## Data delivery expectations
 
 | Metric                | Value                         |
 | --------------------- | ----------------------------- |
@@ -65,18 +79,22 @@
 | Storage               | Google Cloud Storage (GCS)    |
 | Query interface       | BigQuery (External Table)     |
 
-## 🧪 Reliability and monitoring
+## Reliability and monitoring
 * Upload failures handled with **automatic retries**.
 * Basic logging to service logs; centralized observability can be added later.
 * No upload status posted back to ActiveMQ queue.
 
-## 🚧 Future Considerations
+## Future considerations
 * Introduce **schema versioning** if backward-incompatible changes arise.
 * Explore **delta filtering** if bandwidth/storage costs grow.
 * Consider **partitioning register groups** for better parallelism in analytics.
 * Add **metrics, dashboards**, and alerting for production observability.
 
-## 📁 Sample GCS directory tree
+## Summary
+- This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
+- It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
+
+## Sample GCS directory tree
 ```
 meter-data/
 ├── voltage/
@@ -146,15 +164,9 @@ meter-data/
 │       └── yyyy/MM/dd/HH/
 │           └── part-xxxx.parquet
 ```
-## ✅ Summary
-- This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
-- It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
-
-Perfect. Here's both the **desired folder structure** and the matching **BigQuery external table DDL** using Hive partitioning.
-
----
 
 ## 📁 Final GCS Folder Structure (Hive-Compatible)
+ - **desired folder structure** and the matching **BigQuery external table DDL** using Hive partitioning.
 ```
 gs://<bucket-name>/meter-data/
 ├── interval/
