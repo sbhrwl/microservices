@@ -17,6 +17,8 @@
   - [Reading type followed by timestamp](#reading-type-followed-by-timestamp)
   - [Hive compatible folder structure](#hive-compatible-folder-structure)
 - [Security perspective](security/README.md)
+- [Scalability perspective](scalability/README.md)
+
 ## Purpose
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - Collect raw 10-minute data from sensors (via ActiveMQ).
