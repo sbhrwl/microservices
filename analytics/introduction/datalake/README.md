@@ -6,6 +6,8 @@
   - [Time with OBIS code](#time-with-obis-code)
 - [Mitigating large number of files](#mitigating-large-number-of-files)
 - [Storage access efficiency](#storage-access-efficiency)
+- [Study](study/README.md)
+- [Plan](plan/README.md)
 ## Objective
 - Store parsed DLMS smart meter data efficiently for periodic analytics, keeping it cloud-agnostic and query-ready.
 ## Transformation options

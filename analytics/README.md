@@ -1,6 +1,4 @@
 # Analytics on sensor data
-- [Study](study/README.md)
-- [Plan](plan/README.md)
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
