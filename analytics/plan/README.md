@@ -1,5 +1,4 @@
 # Meter data ingestion and delivery pipeline
-- This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - [Purpose](#purpose)
 - [Architecture overview](#architecture-overview)
 - [Microservice responsibilities](#microservice-responsibilities)
@@ -16,6 +15,7 @@
 -[Summary](#summary)
 - [Sample GCS directory tree](#sample-gcs-directory-tree)
 ## Purpose
+- This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - Collect raw 10-minute data from sensors (via ActiveMQ).
 - Convert it into analytics-friendly Parquet format.
 - Upload files to Google Cloud Storage (GCS).
