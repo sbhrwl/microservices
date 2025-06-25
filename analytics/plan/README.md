@@ -12,8 +12,8 @@
 - [Data delivery expectations](#data-delivery-expectations)
 - [Reliability and monitoring](#reliability-and-monitoring)
 - [Future considerations](#future-considerations)
--[Summary](#summary)
-- [Sample GCS directory tree](#sample-gcs-directory-tree)
+- [Summary](#summary)
+- [Options for GCS directory tree](#options-for-gcs-directory-tree)
 ## Purpose
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - Collect raw 10-minute data from sensors (via ActiveMQ).
@@ -94,22 +94,8 @@
 - This setup balances **storage scalability**, **analytics compatibility**, and **operational simplicity**.
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
 
-## Sample GCS directory tree
-```
-meter-data/
-├── voltage/
-│   └── 2025/
-│       └── 06/
-│           └── 18/
-│               └── 09/
-│                   ├── 10/
-│                   │   ├── part-0001.parquet
-│                   │   ├── part-0001.json
-│                   │   └── ...
-│                   └── manifest-2025-06-18.json
-└── ...
-```
-
+## Options for GCS directory tree
+- **Reading type** followed by timestamp
 ```
 meter-data/
 ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← ReadingType (harmonics)
@@ -153,20 +139,7 @@ meter-data/
 │           └── part-xxxx.parquet
 ```
 
-```
-meter-data/
-├── interval/
-│   └── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← Harmonics ReadingType
-│       └── yyyy/MM/dd/HH/mm/
-│           └── part-xxxx.parquet
-├── config/
-│   └── 0.7.0.0.0.1.0.0.0.0.0.0.0.0.128.0.27.0/   ← TimeThresholdForCriticalUnderVoltage
-│       └── yyyy/MM/dd/HH/
-│           └── part-xxxx.parquet
-```
-
-## 📁 Final GCS Folder Structure (Hive-Compatible)
- - **desired folder structure** and the matching **BigQuery external table DDL** using Hive partitioning.
+### Hive compatible folder structure
 ```
 gs://<bucket-name>/meter-data/
 ├── interval/
@@ -178,8 +151,7 @@ gs://<bucket-name>/meter-data/
 │           └── part-0001.parquet
 ```
 
-### 🧾 External Table DDL (Example: Harmonics)
-
+- Matching external Table DDL (Example: Harmonics)
 ```sql
 CREATE OR REPLACE EXTERNAL TABLE `my_dataset.harmonics`
 OPTIONS (
@@ -190,8 +162,7 @@ OPTIONS (
   require_hive_partition_filter = TRUE
 );
 ```
-
-### ✅ Benefits
-* Fast filtering by `year`, `month`, etc.
-* No need to define schema manually if Parquet includes it.
-* Works without loading data into BigQuery storage.
+- Benefits
+  * Fast filtering by `year`, `month`, etc.
+  * No need to define schema manually if Parquet includes it.
+  * Works without loading data into BigQuery storage.
