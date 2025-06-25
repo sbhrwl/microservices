@@ -14,6 +14,8 @@
 - [Future considerations](#future-considerations)
 - [Summary](#summary)
 - [Options for GCS directory tree](#options-for-gcs-directory-tree)
+  - [Reading type followed by timestamp](#reading-type-followed-by-timestamp)
+  - [Hive compatible folder structure](#hive-compatible-folder-structure)
 ## Purpose
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
 - Collect raw 10-minute data from sensors (via ActiveMQ).
@@ -95,7 +97,7 @@
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
 
 ## Options for GCS directory tree
-- **Reading type** followed by timestamp
+### Reading type followed by timestamp
 ```
 meter-data/
 ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← ReadingType (harmonics)
