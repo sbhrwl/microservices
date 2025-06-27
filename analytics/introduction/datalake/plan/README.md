@@ -16,6 +16,7 @@
 - [Options for GCS directory tree](#options-for-gcs-directory-tree)
   - [Reading type followed by timestamp](#reading-type-followed-by-timestamp)
   - [Hive compatible folder structure](#hive-compatible-folder-structure)
+  - [Query options](#query-options)
 - [Security perspective](security/README.md)
 - [Scalability perspective](scalability/README.md)
 
@@ -172,7 +173,7 @@ OPTIONS (
   * No need to define schema manually if Parquet includes it.
   * Works without loading data into BigQuery storage.
 
-## Query options 
+### Query options 
 | Use case  | Best option |
 |-----------|-------------|
 | One-time or ad hoc analysis      | BigQuery external table      |
