@@ -171,3 +171,11 @@ OPTIONS (
   * Fast filtering by `year`, `month`, etc.
   * No need to define schema manually if Parquet includes it.
   * Works without loading data into BigQuery storage.
+
+## Query options 
+| Use case  | Best option |
+|-----------|-------------|
+| One-time or ad hoc analysis      | BigQuery external table      |
+| Frequent queries & speed is key  | Load into BigQuery native    |
+| Complex ETL or ML workflows      | Dataproc (Spark/PySpark)     |
+| Lightweight script/local dev     | Pandas or DuckDB with GCSFS  |
