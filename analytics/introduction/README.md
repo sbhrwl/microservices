@@ -95,7 +95,7 @@ Power quality ingestion service (to be built)
 ## Datalake Vs Timeseries DB 
 - [Datalake GCS](datalake/README.md)
   - [Study](https://github.com/sbhrwl/microservices/blob/main/analytics/introduction/datalake/README.md)
-- [Timeseries DB](timeseries/README.md)
+- [Timeseries DB](https://github.com/sbhrwl/system_design/blob/main/docs/datastores/timeseries/README.md)
 
 | Aspect                 | GCS Data Lake                              | InfluxDB Time Series DB                    |
 |------------------------|-------------------------------------------|--------------------------------------------|
