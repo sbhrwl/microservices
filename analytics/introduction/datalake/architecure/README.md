@@ -1,15 +1,15 @@
 # Architecture
-- [Overview and Purpose](#overview-and-purpose)
-- [End to End Pipeline](#end-to-end-pipeline)
+- [Overview and purpose](#overview-and-purpose)
+- [End to end pipeline](#end-to-end-pipeline)
 - [Analysis](#analysis)
-- [Solution Options and Decisions](#solution-options-and-decisions)
-- [Summary of Analysis](#summary-of-analysis)
-- [Data Delivery Design](#data-delivery-design)
-- [Security and IAM Model](#security-and-iam-model)
-- [Next Steps](#next-steps)
-- [Evaluation of Plan](#evaluation-of-plan)
-  - [Minor Suggestions](#minor-suggestions)
-- [Final Summary](#final-summary)
+- [Solution options and decisions](#solution-options-and-decisions)
+- [Summary of analysis](#summary-of-analysis)
+- [Data delivery design](#data-delivery-design)
+- [Security and IAM model](#security-and-iam-model)
+- [Next steps](#next-steps)
+- [Evaluation of plan](#evaluation-of-plan)
+  - [Minor suggestions](#minor-suggestions)
+- [Final summary](#final-summary)
 ## Overview and purpose
 - The primary focus is to meet analytics requirements, ensure scalability, and prepare for expected data growth.
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
