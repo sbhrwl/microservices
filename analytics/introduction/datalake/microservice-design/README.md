@@ -1,31 +1,29 @@
-# Meter data ingestion and delivery pipeline
+# Microservice design
 - [Purpose](#purpose)
-- [Architecture overview](#architecture-overview)
-- [Microservice responsibilities](#microservice-responsibilities)
-- [File structure in GCS](#file-structure-in-gcs)
-  - [File format](#file-format)
-  - [File path convention](#file-path-convention)
+- [Architecture Overview](#architecture-overview)
+- [Microservice Responsibilities](#microservice-responsibilities)
+- [File Structure in GCS](#file-structure-in-gcs)
+  - [File Format](#file-format)
+  - [File Path Convention](#file-path-convention)
   - [Metadata](#metadata)
-  - [Manifest or index files](#manifest-or-index-files)
-- [External table setup](#external-table-setup)
-- [Access control](#access-control)
-- [Data delivery expectations](#data-delivery-expectations)
-- [Reliability and monitoring](#reliability-and-monitoring)
-- [Future considerations](#future-considerations)
+  - [Manifest or Index Files](#manifest-or-index-files)
+- [External Table Setup](#external-table-setup)
+- [Access Control](#access-control)
+- [Data Delivery Expectations](#data-delivery-expectations)
+- [Reliability and Monitoring](#reliability-and-monitoring)
+- [Future Considerations](#future-considerations)
 - [Summary](#summary)
-- [Options for GCS directory tree](#options-for-gcs-directory-tree)
-  - [Reading type followed by timestamp](#reading-type-followed-by-timestamp)
-  - [Hive compatible folder structure](#hive-compatible-folder-structure)
-  - [Query options](#query-options)
-- [Security perspective](security/README.md)
-- [Scalability perspective](scalability/README.md)
-
+- [Options for GCS Directory Tree](#options-for-gcs-directory-tree)
+  - [Reading Type Followed by Timestamp](#reading-type-followed-by-timestamp)
+  - [Hive Compatible Folder Structure](#hive-compatible-folder-structure)
+  - [Query Options](#query-options)
 ## Purpose
 - This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
-- Collect raw 10-minute data from sensors (via ActiveMQ).
-- Convert it into analytics-friendly Parquet format.
-- Upload files to Google Cloud Storage (GCS).
-- Expose data via BigQuery external tables for analytics applications.
+- Responsibilities include:
+  - Collect raw 10-minute data from sensors (via ActiveMQ).
+  - Convert it into analytics-friendly Parquet format.
+  - Upload files to Google Cloud Storage (GCS).
+  - Expose data via BigQuery external tables for analytics applications.
 
 ## Architecture overview
 ```
@@ -34,7 +32,7 @@
 [Parquet File Generation] --> [GCS Upload]
 [GCS Upload] --> [BigQuery External Tables]
 [BigQuery External Tables] --> [Analytics Application (Pull-Based)]
-````
+```
 
 ## Microservice responsibilities
 * Consume messages from **ActiveMQ**.
@@ -46,9 +44,10 @@
 * Handle upload **retries and errors** gracefully.
 
 ## File structure in GCS
-### File format
+### File Format
 * **Parquet** — compact, optimized for analytics.
 * Files contain **all registers** every 10 minutes (no delta filtering).
+
 ### File path convention
 ```
 /meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet
@@ -60,6 +59,7 @@
   * `timestamp_range`
   * `register_list`
   * `generation_time`
+
 ### Manifest or index files
 * Daily manifest files list all Parquet chunks for easier discovery and ingestion by the analytics team.
 
@@ -67,20 +67,21 @@
 * BigQuery uses **external tables** to directly query GCS-stored Parquet files.
 * No ingestion into native BigQuery tables — this keeps costs low and storage decoupled.
 * Schema evolution is handled on the Parquet side.
+
 ## Access control
-* If the 3rd party is trusted and you want rapid development, and the data schema is stable, you can give them direct read-only BigQuery access via IAM roles (e.g., roles/bigquery.dataViewer).
+* If the 3rd party is trusted and the data schema is stable, give them direct read-only BigQuery access via IAM roles (e.g., `roles/bigquery.dataViewer`).
   * Analytics vendor accesses BigQuery external tables.
   * IAM roles assigned to vendor to allow **read-only access**.
-* If you want tighter security, control, or expect complex query needs or usage patterns, build a dedicated API layer (e.g., a microservice or Cloud Run app) that queries BigQuery and exposes only required data.
-## Data delivery expectations
+* If tighter security or complex query needs are required, build a dedicated API layer (e.g., a microservice or Cloud Run app) that queries BigQuery and exposes only required data.
 
+## Data delivery expectations
 | Metric                | Value                         |
 | --------------------- | ----------------------------- |
 | Data frequency        | Every 10 minutes              |
 | File delivery batch   | Every 30 minutes (pull-based) |
 | Estimated devices     | 100,000                       |
 | Registers per device  | 20 (planned growth to 30–40)  |
-| Data volume per batch | \~200M records per 30 mins    |
+| Data volume per batch | ~200M records per 30 mins     |
 | Data format           | Parquet                       |
 | Storage               | Google Cloud Storage (GCS)    |
 | Query interface       | BigQuery (External Table)     |
@@ -101,7 +102,8 @@
 - It leverages GCS and BigQuery efficiently, enabling the analytics team to consume fresh data with minimal infrastructure friction.
 
 ## Options for GCS directory tree
-### Reading type followed by timestamp
+
+### Reading Type Followed by Timestamp
 ```
 meter-data/
 ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/   ← ReadingType (harmonics)
@@ -134,18 +136,7 @@ meter-data/
 └── ...
 ```
 
-```
-meter-data/
-├── interval/
-│   ├── 0.0.1.0.0.1.54.2.1.0.0.0.0.0.128.0.29.0/      ← Harmonics
-│   │   └── yyyy/MM/dd/HH/mm/
-│   │       └── part-xxxx.parquet
-│   └── 0.7.0.0.0.1.0.0.0.0.0.0.0.0.128.0.27.0/      ← TimeThresholdForCriticalUnderVoltage
-│       └── yyyy/MM/dd/HH/mm/
-│           └── part-xxxx.parquet
-```
-
-### Hive compatible folder structure
+### Hive Compatible Folder Structure
 ```
 gs://<bucket-name>/meter-data/
 ├── interval/
@@ -168,7 +159,8 @@ OPTIONS (
   require_hive_partition_filter = TRUE
 );
 ```
-- Benefits
+
+- Benefits:
   * Fast filtering by `year`, `month`, etc.
   * No need to define schema manually if Parquet includes it.
   * Works without loading data into BigQuery storage.

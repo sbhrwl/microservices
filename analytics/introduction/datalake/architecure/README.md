@@ -1,11 +1,38 @@
-# Data ingestion and storage architecture for Sensor data
-## Overview
+# Architecture
+- [Overview and Purpose](#overview-and-purpose)
+- [End to End Pipeline](#end-to-end-pipeline)
+- [Analysis](#analysis)
+- [Solution Options and Decisions](#solution-options-and-decisions)
+- [Summary of Analysis](#summary-of-analysis)
+- [Data Delivery Design](#data-delivery-design)
+- [Security and IAM Model](#security-and-iam-model)
+- [Next Steps](#next-steps)
+- [Evaluation of Plan](#evaluation-of-plan)
+  - [Minor Suggestions](#minor-suggestions)
+- [Final Summary](#final-summary)
+## Overview and purpose
 - The primary focus is to meet analytics requirements, ensure scalability, and prepare for expected data growth.
+- This microservice handles ingestion of 10-minute profile data from field sensors and makes it accessible to the analytics team through GCS and BigQuery external tables.
+- Data flow:
+  - Collect raw 10-minute data from sensors (via ActiveMQ).
+  - Convert it into analytics-friendly Parquet format.
+  - Upload files to Google Cloud Storage (GCS).
+  - Expose data via BigQuery external tables for analytics applications.
+
+## End to end pipeline
+```
+[ActiveMQ] --> [Ingestion Microservice]
+[Ingestion Microservice] --> [Parquet File Generation]
+[Parquet File Generation] --> [GCS Upload]
+[GCS Upload] --> [BigQuery External Tables]
+[BigQuery External Tables] --> [Analytics Application (Pull-Based)]
+```
+
 ## Analysis
 
 | **Category**                  | **Details**                      |
 | ----------------------------- | -------------------------------- |
-| **Database & Storage**        | - Current DB: Oracle (no partitioning, acceptable performance) <br> - Volume: 100k meters → \~500k rows/day <br> - Data retention: 90 days (Oracle) <br> - 10-min profile: \~14.4M rows/day <br> - 10-min data retention TBD (possibly 60 days) <br> - Open to migrating 10-min data to better storage solution |
+| **Database & Storage**        | - Current DB: Oracle (no partitioning, acceptable performance) <br> - Volume: 100k meters → ~500k rows/day <br> - Data retention: 90 days (Oracle) <br> - 10-min profile: ~14.4M rows/day <br> - 10-min data retention TBD (possibly 60 days) <br> - Open to migrating 10-min data to better storage solution |
 | **Data Ingestion & Pipeline** | - Pipeline: Kafka → service → protocol conversion → enrichment → Oracle DB <br> - Bottlenecks observed: CPU, IO, memory under load <br> - No raw message persistence (no replay/audit support)|
 | **Scalability & Performance** | - Current service is stateful and not horizontally scalable <br> - Target batch processing latency: ≤10 minutes <br> - Some tolerance for missing/late data|
 | **Query & Access Patterns**   | - Initial queries: batch processing acceptable <br> - Real-time queries to be revisited later <br> - Queries pushed downstream; no current direct heavy query load|
@@ -13,8 +40,7 @@
 | **Data Model & Growth**       | - Current sensor registers: 5 <br> - Expected growth to 15 registers <br> - Design must accommodate register growth|
 | **Messaging System**          | - Messaging uses ActiveMQ <br> - Scaling strategy for registers via ActiveMQ undefined <br> - Future options: clustering, partitioning, load balancing|
 
-
-## Solution options discussion
+## Solution options and decisions
 
 | **Category**                 | **Item**                                                                                          | **Decision**     |
 | ---------------------------- | ------------------------------------------------------------------------------------------------- | ---------------- |
@@ -30,7 +56,7 @@
 |                              | 5. No enrichment or joins before handing off the data.                                            | Data Lake        |
 |                              | 6. Preference to optimize for storage cost over query speed.                                      | Data Lake        |
 
-## Summary
+## Summary of analysis
 * Based on current needs, **Data Lake architecture** (e.g., Google Cloud Storage + Parquet + Iceberg or BigQuery) is the most suitable choice.
 * Time-series DBs might be preferred if requirements shift to:
   * Frequent, low-latency queries on recent data.
@@ -65,27 +91,12 @@
 | **Monitoring**              | - Basic logs on service host; no centralized logging yet.                                                                             |
 |                             | - Future enhancements may include metrics, dashboards, and alerting.                                                                  |
 
-
-## Store parquet files in GCS and expose them via BigQuery external tables
-### 🆚 Why This Option Wins
-
-| Option| Pros| Cons| Verdict|
-| ----- | --- | --- | ------ |
-| **1. Store in GCS (only)**                                  | ✅ Low cost  <br> ✅ Easy batch file access <br> ✅ Good for archival & delivery                   | ❌ Not queryable directly <br> ❌ Analytics app would need to download & process files              | ❌ Rejected — not suitable since the analytics team doesn't download files |
-| **2. Store in BigQuery (only)**                             | ✅ Fast queries <br> ✅ Full SQL power <br> ✅ Simplifies analytics access                         | ❌ Higher cost (storage + streaming insert/ingest) <br> ❌ Not optimal for rare scans of large data | ❌ Rejected — overkill and costly for rare, simple queries                 |
-| **✅ 3. Store in GCS + expose via BigQuery external tables** | ✅ Low storage cost (GCS) <br> ✅ On-demand querying via BigQuery <br> ✅ No ingestion duplication | ❌ Slightly slower than native BQ tables <br> ❌ Requires schema to be consistent across files      | ✅ **Chosen** — best balance of cost, simplicity, and functionality        |
-
-- This setup:
-  * lets you keep cheap, batch-optimized storage in GCS,
-  * avoids downloading files by enabling SQL access via BigQuery,
-  * and supports your current usage: stable schema, small data, rare queries.
-
-### Security
-- We don't need an API Gateway in front of BigQuery.** Here's why:
+## Security and IAM model
+- We don't need an API Gateway in front of BigQuery. Here's why:
   - BigQuery Already Handles Access Control:
     * You can **grant IAM permissions** (like `bigquery.dataViewer`) to the analytics vendor's service account.
     * You can **restrict access to specific datasets, tables, even columns**.
-    *  BigQuery **authenticates via Google Cloud IAM** and supports **fine-grained audit logging**.
+    * BigQuery **authenticates via Google Cloud IAM** and supports **fine-grained audit logging**.
   - Why Not API Gateway?
     * API Gateway is for **controlling HTTP requests to APIs** — not a natural fit for SQL workloads.
     * Putting an API Gateway in front of BigQuery would:
@@ -95,35 +106,33 @@
 - Better option:
   - If you want to restrict **network access**:
     - Use **Private Service Connect (PSC)** or **VPC-SC (Service Controls)** to limit where BigQuery can be accessed from (e.g., only from specific VPCs or IPs).
-### Next steps
-- Design the microservice(s) that
-  - consumes messages from ActiveMQ
-  - generates parquet files
-  - uploads parquet files to GCS
-- Structure your GCS bucket and file paths
+
+## Next steps
+- Design the microservice(s) that:
+  - Consumes messages from ActiveMQ.
+  - Generates Parquet files.
+  - Uploads Parquet files to GCS.
+- Structure your GCS bucket and file paths:
   - **File format and schema**
-    - Parquet chosen for compactness and analytics friendliness
-    - Schema evolution planned to support more registers in the future
-    - No schema versioning in metadata or file path planned currently
+    - Parquet chosen for compactness and analytics friendliness.
+    - Schema evolution planned to support more registers in the future.
+    - No schema versioning in metadata or file path planned currently.
   - **File organization**
-    - File path pattern: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`
+    - File path pattern: `/meter-data/{register}/yyyy/MM/dd/HH/mm/part-xxxx.parquet`.
     - Files will always include **all registers** every 10 minutes (no delta filtering).
   - **Metadata**
     - Separate `.json` metadata files per Parquet chunk, containing:
-      - Device count
-      - Timestamp range
-      - Register list
-      - Generation time
-    - Manifest or index files per time period (e.g., daily) for easy file discovery
-  - Upload failures handled with automatic retries
-- Define BigQuery external tables over Parquet files
-- IAM permissions for analytics vendor
-- Or a Private Service Connect flow if needed
+      - Device count.
+      - Timestamp range.
+      - Register list.
+      - Generation time.
+    - Manifest or index files per time period (e.g., daily) for easy file discovery.
+  - Upload failures handled with automatic retries.
+- Define BigQuery external tables over Parquet files.
+- IAM permissions for analytics vendor.
+- Or a Private Service Connect flow if needed.
 
-### ✅ **What’s Strong About the Plan**
-- This plan aligns **very well** with all your past inputs and decisions.
-- Here's a quick evaluation based on key themes from our recent discussion:
-
+## Evaluation of plan
 | Area                     | Review                                                                                                                                            |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Data Flow**            | Clear end-to-end flow: `ActiveMQ → Microservice → Parquet → GCS → BigQuery External Table`. Matches your architecture and separation of concerns. |
@@ -134,15 +143,14 @@
 | **Reliability**          | Automatic retry strategy + no dependency on manual status pushbacks. Great for scalable pipelines.                                                |
 | **Access Model**         | IAM for vendor access + external tables avoids unnecessary API layers. Minimal coupling, high control.                                            |
 
-### ⚠️ **Minor Suggestions / Confirmations**
-
+### Minor suggestions
 | Area                             | Comment                                                                                                        |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **No Schema Versioning in Path** | Okay for now. If schema changes become disruptive (e.g., field type change), consider adding versioning later. |
 | **All Registers Every 10 Min**   | Efficient for now, but if payloads become large in future, you may revisit delta-based design.                 |
 | **Manifest Granularity**         | Daily is fine for now. If ingestion SLA tightens, consider hourly manifests later.                             |
 
-### 🏁 Summary
+## Final summary
 - You're on the **right track** with a robust and scalable architecture:
   * Decoupled,
   * Storage-optimized,
