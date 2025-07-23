@@ -1,24 +1,24 @@
 # Data Lake Structure in GCS
 
 - [Objective](#objective)
-- [Transformation Options](#transformation-options)
-  - [Time Only](#time-only)
-  - [Time with Meter Id](#time-with-meter-id)
-  - [Time with OBIS Code](#time-with-obis-code)
-- [Mitigating Large Number of Files](#mitigating-large-number-of-files)
-- [Storage Access Efficiency](#storage-access-efficiency)
-- [GCS Directory Structure Options](#gcs-directory-structure-options)
-  - [Reading Type Followed by Timestamp](#reading-type-followed-by-timestamp)
-  - [Hive Compatible Folder Structure](#hive-compatible-folder-structure)
-- [BigQuery External Table Setup](#bigquery-external-table-setup)
-- [Query Options](#query-options)
+- [Transformation options](#transformation-options)
+  - [Time only](#time-only)
+  - [Time with meter id](#time-with-meter-id)
+  - [Time with OBIS code](#time-with-obis-code)
+- [Mitigating large number of files](#mitigating-large-number-of-files)
+- [Storage access efficiency](#storage-access-efficiency)
+- [GCS directory structure options](#gcs-directory-structure-options)
+  - [Reading type followed by timestamp](#reading-type-followed-by-timestamp)
+  - [Hive compatible folder structure](#hive-compatible-folder-structure)
+- [BigQuery external table setup](#bigquery-external-table-setup)
+- [Query options](#query-options)
 - [Summary](#summary)
 
 ## Objective
 - Store parsed DLMS smart meter data efficiently for periodic analytics, keeping it cloud-agnostic and query-ready.
 
-## Transformation Options
-### Time Only
+## Transformation options
+### Time only
 - [Time Only](#time-only)
 - All meters in one file per hour.
 - 🧩 Simplest structure.
@@ -26,14 +26,14 @@
 - 🚀 Fast for global batch queries.
 - Example path: `gs://pq-data/{year}/{month}/{day}/{hour}/all-meters.json`
 
-### Time with Meter Id
+### Time with meter id
 - Easy time-based filtering.
 - Can load data for specific meters.
 - Example path: `gs://pq-data/{year}/{month}/{day}/{hour}/meter-{meterId}.json`
 - File count estimate:
   - **500k meters × 24 pushes/day = 12 million files/day**.
 
-### Time with OBIS Code
+### Time with OBIS code
 - Optimized for analytical queries by metric type.
 - ⚠️ More complexity in ingestion.
 - ⚠️ Spreads one meter's data across multiple files.
@@ -41,7 +41,7 @@
 - File count estimate:
   - **500k meters × 10 OBIS codes × 24 pushes/day = 120 million OBIS readings/day**.
 
-## Mitigating Large Number of Files
+## Mitigating large number of files
 - **Batch** by group of meters or obis readings:
   - If we batch `500 meters` per file:
     - 12 million ÷ 500 = 24,000 files/day.
@@ -49,7 +49,7 @@
     - 120 million ÷ 5,000 = 24,000 files/day.
 - Use GCS compose or **Dataflow job** to consolidate small files hourly or daily.
 
-## Storage Access Efficiency
+## Storage access efficiency
 - Time + Meter vs Time + OBIS Code comparison:
 
 | Criteria                        | Time + Meter                             | Time + OBIS Code                            |
@@ -61,9 +61,9 @@
 | **File count (raw)**          | 12M/day (or 24k/day if batched)          | 24,000/day (with 5k OBIS readings/file)     |
 | **Best for**                  | Auditing, debugging per device           | Aggregation, trend detection                |
 
-## GCS Directory Structure Options
+## GCS directory structure options
 
-### Reading Type Followed by Timestamp
+### Reading type followed by timestamp
 
 ```
 meter-data/
@@ -97,7 +97,7 @@ meter-data/
 └── ...
 ```
 
-### Hive Compatible Folder Structure
+### Hive compatible folder structure
 
 ```
 gs://<bucket-name>/meter-data/
@@ -110,7 +110,7 @@ gs://<bucket-name>/meter-data/
 │           └── part-0001.parquet
 ```
 
-## BigQuery External Table Setup
+## BigQuery external table setup
 
 - Example DDL for Harmonics:
 ```sql
@@ -128,7 +128,7 @@ OPTIONS (
   * No need to define schema manually if Parquet includes it.
   * Works without loading data into BigQuery storage.
 
-## Query Options
+## Query options
 
 | Use case  | Best option |
 |-----------|-------------|
@@ -138,7 +138,6 @@ OPTIONS (
 | Lightweight script/local dev     | Pandas or DuckDB with GCSFS  |
 
 ## Summary
-
 - Choose **Time + Meter** if:
   - Your focus is **per-device investigation**, e.g., troubleshooting a faulty meter.
   - Simpler writing logic, no need to group by OBIS.
