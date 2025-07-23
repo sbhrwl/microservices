@@ -4,7 +4,7 @@
 - [Data source or initial discovery](#data-source-or-initial-discovery)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
-- [Datalake Vs Timeseries DB](#datalake-vs-timeseries-db)
+- [Timeseries DB Vs Datalake](#timeseries-db-vs-datalake)
 ## [Solving grid problems using power quality data](https://github.com/sbhrwl/energy/blob/main/meteringdata/PQadapter/README.md)
 - **Phase imbalance**
 - **Voltage fluctuations and sags**
@@ -92,7 +92,7 @@ Power quality ingestion service (to be built)
   }
   ```
 - (500,000 × 10 × 24) = **120 million records/day**
-## Datalake Vs Timeseries DB 
+## Timeseries DB Vs Datalake
 - [Timeseries DB](https://github.com/sbhrwl/system_design/blob/main/docs/datastores/timeseries/README.md)
 - [Datalake](datalake/README.md)
 
