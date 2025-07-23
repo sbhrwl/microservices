@@ -96,17 +96,17 @@ Power quality ingestion service (to be built)
 - [Timeseries DB](https://github.com/sbhrwl/system_design/blob/main/docs/datastores/timeseries/README.md)
 - [Datalake](datalake/README.md)
 
-| Aspect                 | GCS Data Lake                              | InfluxDB Time Series DB                    |
-|------------------------|-------------------------------------------|--------------------------------------------|
-| **Data type**           | Raw files (JSON, CSV, Parquet, etc.)      | Time series with schema (measurements, tags, fields) |
-| **Schema flexibility**  | Fully flexible (schema-on-read)            | Schema-on-write, structured for time series |
-| **Query type**          | Batch queries (e.g., BigQuery, Spark)      | Real-time queries, aggregations, analytics |
-| **Latency**             | Higher (minutes to hours)                   | Low latency (seconds to sub-seconds)       |
-| **Scalability**         | Virtually unlimited (object storage)       | High but limited by cluster size            |
-| **Cost**                | Low storage cost, pay per access            | Compute + storage costs, usually higher     |
-| **Data ingestion**      | Batch/streaming, can store raw and enriched | Optimized for high-frequency inserts        |
-| **Durability & backup** | Built-in durable storage, easy backups      | Built-in retention policies, backups possible |
-| **Flexibility for analytics** | Supports complex analytics with external tools | Limited to time-series analytics within DB |
-| **Cloud vendor lock-in**| Moderate (can migrate files but tooling may vary) | Some lock-in due to DB engine and query language |
-| **Setup complexity**    | Simple (upload files), but need query infra | Medium (DB setup, schema design, maintenance) |
-| **Use case fit**        | Long-term storage, historical analytics    | Real-time monitoring, anomaly detection     |
+| Aspect | InfluxDB Time Series DB                    | GCS Data Lake |
+|--------|--------------|------------|
+| **Data type**           | Time series with schema (measurements, tags, fields) | Raw files (JSON, CSV, Parquet, etc.)      |
+| **Schema flexibility**  | Schema-on-write, structured for time series | Fully flexible (schema-on-read)            |
+| **Query type**          | Real-time queries, aggregations, analytics | Batch queries (e.g., BigQuery, Spark)      |
+| **Latency**             | Low latency (seconds to sub-seconds)       | Higher (minutes to hours)                  |
+| **Scalability**         | High but limited by cluster size            | Virtually unlimited (object storage)       |
+| **Cost**                | Compute + storage costs, usually higher     | Low storage cost, pay per access            |
+| **Data ingestion**      | Optimized for high-frequency inserts        | Batch/streaming, can store raw and enriched |
+| **Durability & backup** | Built-in retention policies, backups possible | Built-in durable storage, easy backups      |
+| **Flexibility for analytics** | Limited to time-series analytics within DB | Supports complex analytics with external tools |
+| **Cloud vendor lock-in**| Some lock-in due to DB engine and query language | Moderate (can migrate files but tooling may vary) |
+| **Setup complexity**    | Medium (DB setup, schema design, maintenance) | Simple (upload files), but need query infra |
+| **Use case fit**        | Real-time monitoring, anomaly detection     | Long-term storage, historical analytics    |
