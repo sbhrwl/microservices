@@ -42,3 +42,4 @@
   - Serialization Deserialization, Transient keyword (Selective Serialization)
 - [Questions](questions/readme.md)
 - [Maven project: Subscribe to ActiveMQ](projects/activemq-demo/README.md)
+<img src="map-filter-functions.jpg">
