@@ -42,13 +42,8 @@
 
 ## Solution options and decisions
 
-| **Category**                 | **Item**                                                                                          | **Decision**     |
-| ---------------------------- | ------------------------------------------------------------------------------------------------- | ---------------- |
-| **Ingestion & Buffering**    | 1. Open to decoupling ingestion with raw data storage in object storage (e.g., GCS).              | Data Lake        |
-|                              | 2. Potential processing delay accepted to enable buffering and scalability.                       | Data Lake        |
-|                              | 3. Idea to write a service that reads from ActiveMQ, converts protocol, saves to GCS or DB.       | Neutral          |
-|                              | 4. Current service is stateful, enqueues converted data to another queue for DB saving.           | Neutral          |
-| **Scalability & Resilience** | 1. Benefits include improved resilience, scalability, and flexibility for growing data volumes.   | Data Lake        |
+| **Category**  | **Item** | **Decision**|
+| ------------- | -------- | ----------- |
 | **Storage vs. Query Needs**  | 1. Evaluating time-series DBs (InfluxDB, TimescaleDB) vs data lake solutions (BigQuery, Iceberg). | Under Evaluation |
 |                              | 2. Data mostly stored and passed downstream; minimal querying needs.                              | Data Lake        |
 |                              | 3. Data transformed and pushed to analytics in required formats.                                  | Data Lake        |
