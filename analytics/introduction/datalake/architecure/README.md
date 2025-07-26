@@ -44,12 +44,11 @@
 
 | **Category**  | **Item** | **Decision**|
 | ------------- | -------- | ----------- |
-| **Storage vs. Query Needs**  | 1. Evaluating time-series DBs (InfluxDB, TimescaleDB) vs data lake solutions (BigQuery, Iceberg). | Under Evaluation |
-|                              | 2. Data mostly stored and passed downstream; minimal querying needs.                              | Data Lake        |
-|                              | 3. Data transformed and pushed to analytics in required formats.                                  | Data Lake        |
-|                              | 4. Downstream apps don’t require structured SQL-like access.                                      | Data Lake        |
-|                              | 5. No enrichment or joins before handing off the data.                                            | Data Lake        |
-|                              | 6. Preference to optimize for storage cost over query speed.                                      | Data Lake        |
+| **Storage vs. Query Needs**       | 1. Data mostly stored and passed downstream; minimal querying needs.                              | Data Lake        |
+|                              | 2. Data transformed and pushed to analytics in required formats.                                  | Data Lake        |
+|                              | 3. Downstream apps don’t require structured SQL-like access.                                      | Data Lake        |
+|                              | 4. No enrichment or joins before handing off the data.                                            | Data Lake        |
+|                              | 5. Preference to optimize for storage cost over query speed.                                      | Data Lake        |
 
 ## Summary of analysis
 * Based on current needs, **Data Lake architecture** (e.g., Google Cloud Storage + Parquet + Iceberg or BigQuery) is the most suitable choice.
