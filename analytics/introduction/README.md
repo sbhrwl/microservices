@@ -110,3 +110,35 @@ Power quality ingestion service (to be built)
 | **Cloud vendor lock-in**| Some lock-in due to DB engine and query language | Moderate (can migrate files but tooling may vary) |
 | **Setup complexity**    | Medium (DB setup, schema design, maintenance) | Simple (upload files), but need query infra |
 | **Use case fit**        | Real-time monitoring, anomaly detection     | Long-term storage, historical analytics    |
+
+
+## Analysis
+
+| **Category**                  | **Details**                      |
+| ----------------------------- | -------------------------------- |
+| **Database & Storage**        | - Current DB: Oracle (no partitioning, acceptable performance) <br> - Volume: 100k meters → ~500k rows/day <br> - Data retention: 90 days (Oracle) <br> - 10-min profile: ~14.4M rows/day <br> - 10-min data retention TBD (possibly 60 days) <br> - Open to migrating 10-min data to better storage solution |
+| **Data Ingestion & Pipeline** | - Pipeline: ActiveMQ → service → protocol conversion → enrichment → Oracle DB <br> - Bottlenecks observed: CPU, IO, memory under load <br> - No raw message persistence (no replay/audit support)|
+| **Scalability & Performance** | - Current service is stateful and not horizontally scalable <br> - Target batch processing latency: ≤10 minutes <br> - Some tolerance for missing/late data|
+| **Query & Access Patterns**   | - Initial queries: batch processing acceptable <br> - Real-time queries to be revisited later <br> - Queries pushed downstream; no current direct heavy query load|
+| **Monitoring & Reliability**  | - Ingestion failure monitoring/alerting handled downstream <br> - No inbuilt observability or replay capability in ingestion flow|
+| **Data Model & Growth**       | - Current sensor registers: 5 <br> - Expected growth to 15 registers <br> - Design must accommodate register growth|
+| **Messaging System**          | - Messaging uses ActiveMQ <br> - Scaling strategy for registers via ActiveMQ undefined <br> - Future options: clustering, partitioning, load balancing|
+
+## Solution options and decisions
+
+| **Category**  | **Item** | **Decision**|
+| ------------- | -------- | ----------- |
+| **Storage vs. Query Needs**       | 1. Data mostly stored and passed downstream; minimal querying needs.                              | Data Lake        |
+|                              | 2. Data transformed and pushed to analytics in required formats.                                  | Data Lake        |
+|                              | 3. Downstream apps don’t require structured SQL-like access.                                      | Data Lake        |
+|                              | 4. No enrichment or joins before handing off the data.                                            | Data Lake        |
+|                              | 5. Preference to optimize for storage cost over query speed.                                      | Data Lake        |
+
+## Summary of analysis
+* Based on current needs, **Data Lake architecture** (e.g., Google Cloud Storage + Parquet + Iceberg or BigQuery) is the most suitable choice.
+* Time-series DBs might be preferred if requirements shift to:
+  * Frequent, low-latency queries on recent data.
+  * Built-in rollups, aggregations, alerting.
+  * Active dashboard use (Grafana, etc.).
+  * Efficient retention and compression policies.
+  * High-ingestion throughput with fast query performance.
