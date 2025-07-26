@@ -111,7 +111,9 @@ Power quality ingestion service (to be built)
 | **Setup complexity**    | Medium (DB setup, schema design, maintenance) | Simple (upload files), but need query infra |
 | **Use case fit**        | Real-time monitoring, anomaly detection     | Long-term storage, historical analytics    |
 
-
+- [Analysis](#analysis)
+- [Solution options and decisions](#solution-options-and-decisions)
+- [Summary of analysis](#summary-of-analysis)
 ## Analysis
 
 | **Category**                  | **Details**                      |
