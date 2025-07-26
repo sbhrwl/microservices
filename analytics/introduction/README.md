@@ -1,7 +1,7 @@
 # Analytics on timeseries data
 - [Solving grid problems using power quality data](#solving-grid-problems-using-power-quality-data)
 - [Event collection](#event-collection)
-- [Data source or initial discovery](#data-source-or-initial-discovery)
+- [Data source](#data-source)
 - [Ingestion flow](#ingestion-flow)
 - [Storage model](#storage-model)
 - [Timeseries DB Vs Datalake](#timeseries-db-vs-datalake)
@@ -19,7 +19,7 @@
 | Power Factor           |                  |                              | ✅                      |
 | Power Quality (THD, dips, swells) |        | ✅                           | ✅                      |
 
-## Data source or initial discovery
+## Data source
 - Data is collected from **DLMS smart meters** aka **sensors**
 - Smart meters **push power quality data hourly** using a **push profile** configured in a **push schedular**
 - Each push profile includes **individual OBIS codes** and corresponding values for:
