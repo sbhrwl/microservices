@@ -40,7 +40,7 @@ DLMS smart meter
 DLMS Gateway (parses DLMS → JSON)
    │
    ▼
-Queue-Analytics (JSON messages)
+Analytics-Queue (JSON messages)
    │
    ▼
 Power quality ingestion service (to be built)
@@ -56,9 +56,9 @@ Power quality ingestion service (to be built)
 - **DLMS gateway**
   - Parses incoming DLMS raw data.
   - Converts into structured JSON format.
-  - Pushes JSON to **Queue-Analytics**.
+  - Pushes JSON to **Analytics-Queue**.
 - **Ingestion start point**
-  - Subscribe to **Queue-Analytics** and consume parsed data:
+  - Subscribe to **Analytics-Queue** and consume parsed data:
      ```json
      {
        "meterId": "DLMS123456",
