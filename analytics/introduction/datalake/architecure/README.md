@@ -1,9 +1,6 @@
 # Architecture
 - [Overview and purpose](#overview-and-purpose)
 - [End to end pipeline](#end-to-end-pipeline)
-- [Analysis](#analysis)
-- [Solution options and decisions](#solution-options-and-decisions)
-- [Summary of analysis](#summary-of-analysis)
 - [Data delivery design](#data-delivery-design)
 - [Security and IAM model](#security-and-iam-model)
 - [Next steps](#next-steps)
