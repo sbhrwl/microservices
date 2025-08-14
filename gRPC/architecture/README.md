@@ -20,7 +20,6 @@
 6.  **Error Handling (Server):** Handle database errors or invalid input gracefully and return appropriate gRPC responses.
 7.  **Logging:** Log incoming gRPC requests, database operations, and responses/errors.
 8.  **Spring Boot Application:** Be a standalone Spring Boot application.
-<img src="images/architecture.jpg">
 
 ## Flow 
 * The Ingestion Service is set up to:
