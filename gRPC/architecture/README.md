@@ -3,6 +3,9 @@
 - [Ingestion service](#ingestion-service)
 - [Hub service](#hub-service)
 - [Brainstorming](brainstorming/README.md)
+
+<img src="images/architecture.jpg">
+
 ## Ingestion service
 1.  **Consume from ActiveMQ:** Listen for and receive messages from a specific ActiveMQ queue.
 2.  **Act as gRPC Client:** Be able to initiate and make gRPC calls to Service B.
