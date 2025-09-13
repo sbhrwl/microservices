@@ -180,3 +180,39 @@ GET /requests/{correlation_id}/events?limit=10&cursor=2025-09-12T10:00:00Z
 * REST API design aligns with UI requirements:
   * `/requests` → summary list with pagination.
   * `/requests/{id}/events` → detailed timeline with pagination.
+
+## MongoDB
+### Embedded events
+* Pros: single fetch for summary + timeline, simple UI queries.
+* Cons: document can grow very large with long timelines.
+```json
+{
+  "_id": "12345",
+  "latest_status": "ResponseForwarded",
+  "events": [
+    { "type": "RequestReceived", "payload": {...}, "created_at": ISODate(...) },
+    { "type": "RequestForwarded", "payload": {...}, "created_at": ISODate(...) }
+  ]
+}
+```
+
+
+### Separate events collection
+* Pros: unlimited event growth, easy to index and paginate.
+* Cons: requires a join-like query to fetch summary + timeline.
+
+```json
+// requests
+{ "_id": "12345", "latest_status": "ResponseForwarded" }
+
+// events
+{ "request_id": "12345", "type": "RequestReceived", "payload": {...}, "created_at": ISODate(...) }
+```
+## Key points
+* **Flexibility**: MongoDB handles schema changes easily.
+* **Scalability**: better horizontal write scaling for huge event volumes.
+* **Pagination**: cursor-based works naturally (`_id` or `created_at`).
+* **Trade-off**: Postgres is better for relational queries and strict integrity; MongoDB is better for heavy, flexible event logs and fast single-document reads.
+## Recommendation
+- Use MongoDB if you expect very large timelines per request and want flexible, schema-less event storage.
+- Keep separate collections if timelines can grow indefinitely; embed events if timelines are moderate and you want simple UI fetches.
