@@ -1,4 +1,4 @@
-# Hub to Device
+# Hub to Sensor
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
