@@ -5,4 +5,4 @@
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Analytics on sensor data](analytics/README.md)
 - [gRPC](gRPC/README.md)
-- [Hub to meter](hubToSensor/README.md)
+- [Hub to Sensor](hubToSensor/README.md)
