@@ -1,6 +1,7 @@
 # Command orchestration 
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
+- [Prerequisites](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/prerequisites/README.md)
 - [Services](command-orchestration/README.md)
   - [Task orchestrator](command-orchestration/task-orchestrator/README.md)
   - [Command orchestrator](command-orchestration/command-orchestrator/README.md)
