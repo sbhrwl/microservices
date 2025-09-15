@@ -2,7 +2,6 @@
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
-- [Keycloak parameters](#keycloak-parameters)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
 ## How to run
@@ -19,6 +18,3 @@ mvn spring-boot:run
 ```
 
 ## Test
-- `localhost:9081/`
-  - username: `endpointaccessuser`
-  - password: `password123`
