@@ -1,8 +1,9 @@
 # Services
-- [UI service](ui-service/README.md)
-- [Sensor service](sensor-service/README.md)
-- [Registration service](registration-service/README.md)
-- [Notification service](notification-service/README.md)
+- [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
+- [Flexibility bridge service](flexibility-bridge-service/README.md)
+- [Storage service](storage-service/README.md)
+- [IEC adapter service](iec-adapter-service/README.md)
+- [HES simulator](hes-simulator/README.md)
 
 <details>
   <summary>Parent pom.xml</summary>
