@@ -1,4 +1,4 @@
-# Sensor registration
+# Pre-requisites
 - [ActiveMQ setup](#activemq-setup)
 - [InfluxDB setup](#influxdb-setup)
 - [Grafana setup](#grafana-setup)
