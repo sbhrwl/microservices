@@ -1,6 +1,7 @@
 # Pre-requisites
 - [RabbitMq setup](#rabbitmq-setup)
   - [Create queues](#create-queues)
+- [PostgreSQL setup](#postgresql-setup)
 ## RabbitMq setup
 - Create a [`docker-compose.yml`](rabbitmq/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
@@ -13,3 +14,6 @@
   - `flexhub.request` and `flexhub.response`
   - `connector.request` and `connector.response`
   - `hes.request` and `hes.response`
+## PostgreSQL setup
+- Create a [`docker-compose.yml`](postgresql/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
