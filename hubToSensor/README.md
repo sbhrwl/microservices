@@ -2,11 +2,12 @@
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
-- [Services](sensor-registration/README.md)
-  - [UI service](sensor-registration/ui-service/README.md)
-  - [Sensor service](sensor-registration/sensor-service/README.md)
-  - [Registration service](sensor-registration/registration-service/README.md)
-  - [Notification service](sensor-registration/notification-service/README.md)
+- [Services](hubTosensor/README.md)
+  - [Flexibility Hub simulator](hubTosensor/flexibility-hub-simulator/README.md)
+  - [Flexibility bridge service](hubTosensor/flexibility-bridge-service/README.md)
+  - [Storage service](hubTosensor/storage-service/README.md)
+  - [IEC adapter service](hubTosensor/iec-adapter-service/README.md)
+  - [HES simulator](hubTosensor/hes-simulator/README.md)
 - [Containers](containers/README.md)
 - [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
@@ -33,7 +34,7 @@
           "email": "user@example.com"
       }
     ```
-- **Sensor service**
+- **Flexibility Hub simulator**
 ```bash
 [nio-9082-exec-5] c.e.s.service.KafkaProducerService       : Sending message to Kafka: {"sensorId":"sensor123","sensorModel":"ModelX","email":"user@example.com"}
 [nio-9082-exec-5] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Instantiated an idempotent producer.
@@ -44,13 +45,21 @@
 [ad | producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=producer-1] ProducerId set to 1000 with epoch 0
 [ad | producer-1] c.e.s.service.KafkaProducerService       : Sent sensor registration message with sensorId: {"sensorId":"sensor123","sensorModel":"ModelX","email":"user@example.com"}
 ```
-- **Registration service**
+- **Flexibility bridge service**
 ```bash
 [ntainer#0-0-C-1] c.e.r.consumer.RegistrationConsumer      : Received message from 'sensor-registrations': ConsumerRecord(topic = sensor-registrations, partition = 0, leaderEpoch = 0, offset = 0, CreateTime = 1750764150494, serialized key size = -1, serialized value size = 74, headers = RecordHeaders(headers = [], isReadOnly = false), key = null, value = {"sensorId":"sensor123","sensorModel":"ModelX","email":"user@example.com"})
 [ntainer#0-0-C-1] c.e.r.consumer.RegistrationConsumer      : Successfully saved registration for sensor ID: sensor123
 [ntainer#0-0-C-1] c.e.r.consumer.RegistrationConsumer      : Successfully sent notification email for sensor ID: sensor123
 ```
-- **Notification service**
+- **Storage service**
+```bash
+[nio-9084-exec-1] c.e.n.service.EmailService               : Simulating sending registration confirmation email to: user@example.com for sensor ID: sensor123
+```
+- **IEC adapter service**
+```bash
+[nio-9084-exec-1] c.e.n.service.EmailService               : Simulating sending registration confirmation email to: user@example.com for sensor ID: sensor123
+```
+- **HES simulator**
 ```bash
 [nio-9084-exec-1] c.e.n.service.EmailService               : Simulating sending registration confirmation email to: user@example.com for sensor ID: sensor123
 ```
