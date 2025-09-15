@@ -1,4 +1,4 @@
-# Sensor registration
+# Pre-requisites
 - [Keycloak setup](#keycloak-setup)
 - [Kafka setup](#kafka-setup)
 - [MongoDB setup](#mongodb-setup)
