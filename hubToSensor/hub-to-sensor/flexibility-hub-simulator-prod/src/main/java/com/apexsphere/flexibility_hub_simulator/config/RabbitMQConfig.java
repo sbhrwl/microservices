@@ -3,7 +3,7 @@ package com.apexsphere.flexibility_hub_simulator.config;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange; // Keep TopicExchange; fine for exact keys too
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -12,14 +12,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("dev") // ✅ load only in dev
 public class RabbitMQConfig {
 
     @Value("${messaging.rabbitmq.exchange}")
     private String exchangeName;
 
-    // ✅ Use distinct routing keys
     @Value("${messaging.rabbitmq.request-routing-key}")
     private String requestRoutingKey;
 
@@ -39,7 +40,6 @@ public class RabbitMQConfig {
 
     @Bean(name = "requestQueue")
     public Queue requestQueue() {
-        // Durable queues are generally preferred
         return new Queue(requestQueueName, true);
     }
 
@@ -50,13 +50,11 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding requestBinding(@Qualifier("requestQueue") Queue requestQueue, TopicExchange exchange) {
-        // ✅ Bind request queue with request routing key
         return BindingBuilder.bind(requestQueue).to(exchange).with(requestRoutingKey);
     }
 
     @Bean
     public Binding responseBinding(@Qualifier("responseQueue") Queue responseQueue, TopicExchange exchange) {
-        // ✅ Bind response queue with response routing key
         return BindingBuilder.bind(responseQueue).to(exchange).with(responseRoutingKey);
     }
 
@@ -69,7 +67,6 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(jsonMessageConverter());
-        // ✅ Default publisher settings: send to the exchange with the request routing key
         template.setExchange(exchangeName);
         template.setRoutingKey(requestRoutingKey);
         return template;

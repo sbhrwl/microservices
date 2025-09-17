@@ -16,9 +16,6 @@ public class MessagePublisher {
         this.config = config;
     }
 
-    /**
-     * Publish a message to the request queue using the request routing key.
-     */
     public void publishToRequestQueue(MessagePayload payload) {
         rabbitTemplate.convertAndSend(
             config.getExchangeName(),
@@ -38,15 +35,4 @@ public class MessagePublisher {
             payload
         );
     }
-
-    /**
-     * (Optional) If you want to rely on the RabbitTemplate defaults set in RabbitMQConfig:
-     * template.setExchange(exchangeName);
-     * template.setRoutingKey(requestRoutingKey);
-     * then you could simply call:
-     *
-     * rabbitTemplate.convertAndSend(payload);
-     *
-     * which will go to the request queue by default.
-     */
 }

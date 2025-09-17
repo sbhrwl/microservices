@@ -1,5 +1,6 @@
 # Services
 - [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
+  - [Production version](flexibility-hub-simulator-prod/README.md)
 - [Flexibility bridge service](flexibility-bridge-service/README.md)
 - [Storage service](storage-service/README.md)
 - [IEC adapter service](iec-adapter-service/README.md)
