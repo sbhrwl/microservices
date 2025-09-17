@@ -1,0 +1,24 @@
+application:
+  name: flexibility-hub-simulator
+server:
+  port: 8081
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+
+messaging:
+  rabbitmq:
+    exchange: flexibility-hub.exchange
+    request-queue: flexibility-hub.request
+    response-queue: flexibility-hub.response
+    request-routing-key: flexibility-hub.request
+    response-routing-key: flexibility-hub.response
+
+logging:
+  level:
+    org.springframework.amqp: INFO
+    com.apexsphere.flexibility_hub_simulator: DEBUG
