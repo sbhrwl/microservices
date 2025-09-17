@@ -18,3 +18,14 @@ mvn spring-boot:run
 ```
 
 ## Test
+- Push data to Broker
+  - `POST`: `http://localhost:8081/api/messages`
+  - Payload
+    ```json
+    {
+      "sensorId": "sensor-001",
+      "operation": "DIRECT-ON",
+      "relayNumber": 2,
+      "duration": 30
+    }
+    ```
