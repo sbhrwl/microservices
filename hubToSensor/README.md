@@ -4,6 +4,7 @@
 - [Prerequisites](prerequisites/README.md)
 - [Services](hub-to-sensor/README.md)
   - [Flexibility Hub simulator](hub-to-sensor/flexibility-hub-simulator/README.md)
+    - [Production version](hub-to-sensor/flexibility-hub-simulator-prod/README.md)
   - [Flexibility bridge service](hub-to-sensor/flexibility-bridge-service/README.md)
   - [Storage service](hub-to-sensor/storage-service/README.md)
   - [IEC adapter service](hub-to-sensor/iec-adapter-service/README.md)
