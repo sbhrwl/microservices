@@ -5,7 +5,6 @@
 - [Use the generated classes](#use-the-generated-classes)
 - [Troubleshooting checklist](#troubleshooting-checklist)
 - [Updating proto files](#updating-proto-files)
-- [Example](#example)
 ## Add your proto files
 - Place all your `.proto` files in the standard directory:
   ```
@@ -15,6 +14,27 @@
   ```
   src/main/proto/taskMessage.proto
   ```
+- `taskMessage.proto` file
+```proto
+syntax = "proto3";
+
+option java_package = "com.example.taskservice";
+option java_outer_classname = "TaskMessageProto";
+
+message TaskMessage {
+  string taskId = 1;
+  CommandType commandType = 2;
+  repeated string commandArgs = 3;
+  repeated string sensorList = 4;
+}
+
+enum CommandType {
+  DIRECT = 0;
+  OPEN = 1;
+  PULSE = 2;
+}
+```
+
 ## Add Protobuf dependencies and plugin to pom
 - Add the following to your `<dependencies>` section (use the latest compatible version):
 ```xml
@@ -70,24 +90,3 @@ mvn clean compile
   ```sh
   mvn clean compile
   ```
-## Example
-- TaskMessage.proto file
-```proto
-syntax = "proto3";
-
-option java_package = "com.example.taskservice";
-option java_outer_classname = "TaskMessageProto";
-
-message TaskMessage {
-  string taskId = 1;
-  CommandType commandType = 2;
-  repeated string commandArgs = 3;
-  repeated string sensorList = 4;
-}
-
-enum CommandType {
-  DIRECT = 0;
-  OPEN = 1;
-  PULSE = 2;
-}
-```
