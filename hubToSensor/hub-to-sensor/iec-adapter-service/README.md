@@ -1,9 +1,9 @@
-# IEC adapter service
+# IEC adapter
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
 ## Properties
-- [application.properties](src/main/resources/application.properties)
+- [application.yml](src/main/resources/application.yml)
 ## How to run
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
 - Build 
@@ -18,3 +18,4 @@ mvn spring-boot:run
 ```
 
 ## Test
+

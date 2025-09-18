@@ -1,0 +1,22 @@
+application:
+  name: flexibility-bridge
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+
+messaging:
+  rabbitmq:
+    exchange: connector.exchange
+    request-queue: flexibility-hub.request
+    response-queue: connector.response
+    request-routing-key: connector.request
+    response-routing-key: connector.response
+
+logging:
+  level:
+    org.springframework.amqp: INFO
+    com.apexsphere.flexibility_bridge: DEBUG
