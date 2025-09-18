@@ -20,8 +20,9 @@ public class RecordController {
     }
 
     @PostMapping
-    public ResponseEntity<Record> createRecord(@RequestBody Record record) {
-        Record savedRecord = recordService.saveRecord(record);
-        return new ResponseEntity<>(savedRecord, HttpStatus.CREATED);
+    public ResponseEntity<String> createRecord(@RequestBody Record record) {
+        recordService.saveRecord(record);
+        System.out.println("Message saved successfully");
+        return new ResponseEntity<>("Message saved successfully", HttpStatus.CREATED);
     }
 }
