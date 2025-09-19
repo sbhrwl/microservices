@@ -104,8 +104,9 @@ message RecordResponse {
 ```
 
 ## Generate gRPC code
-- Use a build tool like **Maven** or Gradle with the appropriate gRPC plugins to automatically generate the necessary Java classes from your `.proto` file.
-- This includes the `service interface` and the `message classes`.
+- `mvn clean install`
+  - Generates the necessary Java classes from `.proto` file.
+  - This includes the `service interface` and the `message classes`.
 ## Implement the gRPC service
 - Create a new Spring Boot class that implements the generated gRPC service interface.
 - This class will contain the business logic, similar to your previous REST controller.
