@@ -1,12 +1,17 @@
 # gRPC setup
+- [Install protobuf](#install-protobuf)
 - [Configure pom xml](#configure-pom-xml)
 - [Define Protocol Buffer file](#define-protocol-buffer-file)
 - [Generate gRPC code](#generate-grpc-code)
 - [Implement the gRPC service](#implement-the-grpc-service)
 - [Configure Spring Boot](#configure-spring-boot)
 - [Create a gRPC Client](#create-a-grpc-client)
+## Install protobuf 
+- Check version: `protoc --version`
+- Location: `where protoc`
 ## Configure pom xml
 - Versions in `properties` tag
+  - `<protobuf.version>3.24.4</protobuf.version>` - this should match the one installed on your machine 
 ```xml
 <properties>
     <java.version>17</java.version>
