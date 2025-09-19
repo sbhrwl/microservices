@@ -1,0 +1,117 @@
+# gRPC setup
+- [Define Protocol Buffer file](#define-protocol-buffer-file)
+- [Generate gRPC code](#generate-grpc-code)
+- [Implement the gRPC service](#implement-the-grpc-service)
+- [Configure Spring Boot](#configure-spring-boot)
+- [Create a gRPC Client](#create-a-grpc-client)
+## Define Protocol Buffer file
+- First, define the structure of your gRPC service and the messages it will use.
+- Create a file with a `.proto` extension.
+- This file specifies the service's methods, and the structure of the data it sends and receives.
+- Example `data.proto` file:
+```protobuf
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.service";
+option java_outer_classname = "DataProto";
+
+service DataService {
+  rpc SaveData (DataRequest) returns (DataResponse);
+}
+
+message DataRequest {
+  string some_field = 1;
+  int32 another_field = 2;
+}
+
+message DataResponse {
+  bool success = 1;
+  string message = 2;
+}
+```
+
+## Generate gRPC code
+- Use a build tool like **Maven** or Gradle with the appropriate gRPC plugins to automatically generate the necessary Java classes from your `.proto` file.
+- This includes the `service interface` and the `message classes`.
+## Implement the gRPC service
+- Create a new Spring Boot class that implements the generated gRPC service interface.
+- This class will contain the business logic, similar to your previous REST controller.
+- You'll need to annotate it with `@GrpcService`.
+```java
+import com.example.grpc.service.DataServiceGrpc;
+import com.example.grpc.service.DataRequest;
+import com.example.grpc.service.DataResponse;
+import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
+
+@GrpcService
+public class DataServiceImpl extends DataServiceGrpc.DataServiceImplBase {
+
+    @Override
+    public void saveData(DataRequest request, StreamObserver<DataResponse> responseObserver) {
+        // Access data from the gRPC request
+        String someField = request.getSomeField();
+        int anotherField = request.getAnotherField();
+
+        // Your database logic here to save the data
+        boolean saveSuccessful = false;
+        try {
+            // ... Call your database repository/service to save the data
+            saveSuccessful = true;
+        } catch (Exception e) {
+            // Handle exceptions
+        }
+
+        // Build the gRPC response
+        DataResponse response = DataResponse.newBuilder()
+            .setSuccess(saveSuccessful)
+            .setMessage(saveSuccessful ? "Data saved successfully" : "Failed to save data")
+            .build();
+
+        // Send the response back to the client
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+}
+```
+
+## Configure Spring Boot
+- Add the necessary gRPC dependencies to your `pom.xml` (Maven) or `build.gradle` (Gradle) file.
+- Also, configure your `application.properties` to specify the gRPC server port.
+```properties
+grpc.server.port=9090
+```
+
+## Create a gRPC Client 
+- Optional
+- To test your new service, you can create a simple gRPC client that communicates with it.
+- This client will also use the generated code to send the request and receive the response.
+```java
+import com.example.grpc.service.DataServiceGrpc;
+import com.example.grpc.service.DataRequest;
+import com.example.grpc.service.DataResponse;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+public class GrpcClient {
+    public static void main(String[] args) {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+            .usePlaintext() // For development only
+            .build();
+
+        DataServiceGrpc.DataServiceBlockingStub stub = DataServiceGrpc.newBlockingStub(channel);
+
+        DataRequest request = DataRequest.newBuilder()
+            .setSomeField("Hello gRPC")
+            .setAnotherField(123)
+            .build();
+
+        DataResponse response = stub.saveData(request);
+
+        System.out.println("Response from server: " + response.getMessage());
+
+        channel.shutdown();
+    }
+}
+```
