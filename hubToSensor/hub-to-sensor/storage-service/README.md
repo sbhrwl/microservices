@@ -39,9 +39,8 @@ WARNING: Console code page (850) differs from Windows code page (1252)
          page "Notes for Windows users" for details.
 Type "help" for help.
 
-mydatabase=# select * from records;
- id | duration | operation | relay_number | sensor_id
-----+----------+-----------+--------------+------------
-  1 |       30 | DIRECT-ON |            2 | sensor-005
-  2 |       30 | DIRECT-ON |            2 | sensor-005
-  ```
+mydatabase=# select * from control_requests;
+ id | duration | operation | relay_number | sensor_id  |  status
+----+----------+-----------+--------------+------------+----------
+  1 |       30 | DIRECT-ON |            2 | sensor-001 | Received
+```
