@@ -1,11 +1,11 @@
 # gRPC setup
-- [Add dependencies in pom file](#add-dependencies-in-pom-file)
+- [Configure pom xml](#configure-pom-xml)
 - [Define Protocol Buffer file](#define-protocol-buffer-file)
 - [Generate gRPC code](#generate-grpc-code)
 - [Implement the gRPC service](#implement-the-grpc-service)
 - [Configure Spring Boot](#configure-spring-boot)
 - [Create a gRPC Client](#create-a-grpc-client)
-## Add dependencies in pom file
+## Configure pom xml
 - Versions in `properties` tag
 ```xml
 <properties>
