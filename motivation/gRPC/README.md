@@ -6,7 +6,67 @@
 - [Configure Spring Boot](#configure-spring-boot)
 - [Create a gRPC Client](#create-a-grpc-client)
 ## Add dependencies in pom file
-
+- Versions in `properties` tag
+```xml
+<properties>
+    <java.version>17</java.version>
+    <grpc.version>1.59.0</grpc.version>
+    <protobuf.version>3.24.4</protobuf.version>
+    <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
+    <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
+    <grpc-spring-boot-starter.version>2.15.0.RELEASE</grpc-spring-boot-starter.version>
+</properties>
+```
+- Dependencies
+```xml
+<dependency>
+    <groupId>net.devh</groupId>
+    <artifactId>grpc-client-spring-boot-starter</artifactId>
+    <version>${grpc-spring-boot-starter.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-protobuf</artifactId>
+    <version>${grpc.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-stub</artifactId>
+    <version>${grpc.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-netty-shaded</artifactId>
+    <version>${grpc.version}</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>javax.annotation</groupId>
+    <artifactId>javax.annotation-api</artifactId>
+    <version>1.3.2</version>
+</dependency>
+```
+- Plugins
+```xml
+<plugin>
+    <groupId>org.xolstice.maven.plugins</groupId>
+    <artifactId>protobuf-maven-plugin</artifactId>
+    <version>${protobuf-plugin.version}</version>
+    <configuration>
+        <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+        <pluginId>grpc-java</pluginId>
+        <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>compile</goal>
+                <goal>compile-custom</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
 ## Define Protocol Buffer file
 - First, define the structure of your gRPC service and the messages it will use.
 - Create a file with a `.proto` extension.
