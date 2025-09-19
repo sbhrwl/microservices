@@ -6,7 +6,7 @@
 * [Microservice example: `Generate message`](generatemessage/README.md)
 * [Spring framework](springframework/README.md)
 * [Protobuf usage](#protobuf-usage)
-* [gRPC setup](motivation/gRPC/README.md)
+* [gRPC setup](gRPC/README.md)
 * [Kafka consumer groups](#kafka-consumer-groups)
 ## Introduction
 * Motivation for shift to microservices
