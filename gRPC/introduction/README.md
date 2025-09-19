@@ -11,6 +11,7 @@
       - [Challenges with websockets](#challenges-with-websockets)
     - [How WebTransport helps](#how-webtransport-helps)
 - [gRPC Vs WebTransport](#grpc-vs-webtransport)
+- [gRPC setup](https://github.com/sbhrwl/microservices/blob/main/motivation/gRPC/README.md)
 ## HTTP and gRPC
 - Both HTTP and [gRPC](https://github.com/sbhrwl/system_design/blob/main/docs/services/grpc/README.md) can be used to build APIs.
 - When you use HTTP for an API (often called a REST API), you're usually sending data as `text` (like JSON or XML).
