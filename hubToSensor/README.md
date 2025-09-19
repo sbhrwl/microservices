@@ -7,7 +7,7 @@
     - [Production version](hub-to-sensor/flexibility-hub-simulator-prod/README.md)
   - [Flexibility bridge service](hub-to-sensor/flexibility-bridge-service/README.md)
   - [Storage service gRPC](hub-to-sensor/storage-service-grpc/README.md)
-    - [Storage service](hub-to-sensor/storage-service/README.md)
+    - [Storage service restful](hub-to-sensor/storage-service/README.md)
   - [IEC adapter service](hub-to-sensor/iec-adapter-service/README.md)
   - [HES simulator](hub-to-sensor/hes-simulator/README.md)
 - [Containers](containers/README.md)
