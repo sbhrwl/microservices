@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "records")
+@Table(name = "control_requests")
 public class Record {
 
     @Id
@@ -18,15 +18,17 @@ public class Record {
     private String operation;
     private Integer relayNumber;
     private Integer duration;
+    private Integer status;
 
     public Record() {
     }
 
-    public Record(String sensorId, String operation, Integer relayNumber, Integer duration) {
+    public Record(String sensorId, String operation, Integer relayNumber, Integer duration, Integer status) {
         this.sensorId = sensorId;
         this.operation = operation;
         this.relayNumber = relayNumber;
         this.duration = duration;
+        this.status = status;
     }
 
     public Long getId() {
@@ -67,5 +69,13 @@ public class Record {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
