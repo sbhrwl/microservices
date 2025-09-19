@@ -1,9 +1,12 @@
 # gRPC setup
+- [Add dependencies in pom file](#add-dependencies-in-pom-file)
 - [Define Protocol Buffer file](#define-protocol-buffer-file)
 - [Generate gRPC code](#generate-grpc-code)
 - [Implement the gRPC service](#implement-the-grpc-service)
 - [Configure Spring Boot](#configure-spring-boot)
 - [Create a gRPC Client](#create-a-grpc-client)
+## Add dependencies in pom file
+
 ## Define Protocol Buffer file
 - First, define the structure of your gRPC service and the messages it will use.
 - Create a file with a `.proto` extension.
@@ -12,22 +15,31 @@
 ```protobuf
 syntax = "proto3";
 
+// Defines the Java package and class names for the generated code.
 option java_multiple_files = true;
-option java_package = "com.example.grpc.service";
-option java_outer_classname = "DataProto";
+option java_package = "com.apexsphere.storage_service.service";
+option java_outer_classname = "RecordProto";
 
-service DataService {
-  rpc SaveData (DataRequest) returns (DataResponse);
+// The service definition. This will contain the RPC methods.
+service RecordService {
+    // Add this line to define the method for saving a record
+    rpc saveRecord (RecordRequest) returns (RecordResponse);
 }
 
-message DataRequest {
-  string some_field = 1;
-  int32 another_field = 2;
+// A message to represent the data you want to send and receive.
+// It mirrors the fields in your Record class.
+message RecordRequest {
+    string sensor_id = 1;
+    string operation = 2;
+    int32 relay_number = 3;
+    int32 duration = 4;
+    string status = 5;
 }
 
-message DataResponse {
-  bool success = 1;
-  string message = 2;
+// A message for the response after saving a record.
+message RecordResponse {
+    bool success = 1;
+    string message = 2;
 }
 ```
 
