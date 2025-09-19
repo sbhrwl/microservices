@@ -18,12 +18,12 @@ public class Record {
     private String operation;
     private Integer relayNumber;
     private Integer duration;
-    private Integer status;
+    private String status;
 
     public Record() {
     }
 
-    public Record(String sensorId, String operation, Integer relayNumber, Integer duration, Integer status) {
+    public Record(String sensorId, String operation, Integer relayNumber, Integer duration, String status) {
         this.sensorId = sensorId;
         this.operation = operation;
         this.relayNumber = relayNumber;
@@ -71,11 +71,11 @@ public class Record {
         this.duration = duration;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

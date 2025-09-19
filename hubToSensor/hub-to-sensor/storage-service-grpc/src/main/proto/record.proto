@@ -18,7 +18,7 @@ message RecordRequest {
     string operation = 2;
     int32 relay_number = 3;
     int32 duration = 4;
-    int32 status = 5;
+    string status = 5;
 }
 
 // A message for the response after saving a record.
