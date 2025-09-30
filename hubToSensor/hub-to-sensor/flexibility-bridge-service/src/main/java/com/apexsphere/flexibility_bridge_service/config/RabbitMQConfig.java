@@ -1,4 +1,4 @@
-package com.apexsphere.flexibility_hub_simulator.config;
+package com.apexsphere.flexibility_bridge_service.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

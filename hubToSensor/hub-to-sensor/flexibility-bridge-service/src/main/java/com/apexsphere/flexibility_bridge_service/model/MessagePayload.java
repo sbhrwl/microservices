@@ -1,4 +1,4 @@
-package com.apexsphere.flexibility_hub_simulator.model;
+package com.apexsphere.flexibility_bridge_service.model;
 
 import java.io.Serializable;
 

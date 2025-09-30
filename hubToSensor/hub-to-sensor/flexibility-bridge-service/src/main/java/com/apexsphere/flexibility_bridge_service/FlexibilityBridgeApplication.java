@@ -1,4 +1,4 @@
-package com.apexsphere.flexibility_hub_simulator;
+package com.apexsphere.flexibility_bridge_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
