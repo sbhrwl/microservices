@@ -36,7 +36,7 @@ mvn spring-boot:run
 INBOUND HEADERS: streamId=5 headers=GrpcHttp2ResponseHeaders[grpc-status: 0] padding=0 endStream=true ?? Sending to Storage Service via gRPC...
 ? gRPC call successful. Server message: Record saved successfully with ID: 7
 ```
-- Verify `storage service logs`
+- Verify `storage service` logs
 ```
 c.a.s.StorageServiceApplication          : Started StorageServiceApplication in 9.19 seconds (process running for 9.879)
 Hibernate: insert into control_requests (duration,operation,relay_number,sensor_id,status) values (?,?,?,?,?)
