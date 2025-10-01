@@ -40,6 +40,11 @@ public class RequestConsumer {
             producerService.sendRequestToConnector(payload);
             
             // 3. Update status in DB as SENT (Next Step)
+            RecordRequest updateRequest = convertToGrpcRequest(payload, "SENT");
+            String updateResponse = grpcClient.updateRecordStatus(updateRequest);
+            
+            log.info("📢 Updated record status to SENT after publishing message.");
+            log.debug("✅ gRPC update successful. Server message: {}", updateResponse);
 
         } catch (Exception e) {
             log.error("❌ Fatal error in RequestConsumer for Sensor ID {}: {}", 

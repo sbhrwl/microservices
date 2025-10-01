@@ -7,13 +7,18 @@ option java_outer_classname = "RecordProto";
 
 // The service definition. This will contain the RPC methods.
 service RecordService {
-    // Add this line to define the method for saving a record
+    // save a record (Status: REQUESTED)
     rpc saveRecord (RecordRequest) returns (RecordResponse);
+    
+    // update the status of an existing record (Status: SENT, etc.)
+    rpc updateRecord (RecordRequest) returns (RecordResponse); 
 }
 
 // A message to represent the data you want to send and receive.
 // It mirrors the fields in your Record class.
 message RecordRequest {
+    // Note: If you need a unique ID (like a DB ID or UUID) for updates, 
+    // you should add it here (e.g., string record_id = 6;).
     string sensor_id = 1;
     string operation = 2;
     int32 relay_number = 3;
@@ -21,7 +26,7 @@ message RecordRequest {
     string status = 5;
 }
 
-// A message for the response after saving a record.
+// A message for the response after saving/updating a record.
 message RecordResponse {
     bool success = 1;
     string message = 2;

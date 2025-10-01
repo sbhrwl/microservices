@@ -21,4 +21,5 @@ public class RecordGrpcClient {
     public String updateRecordStatus(RecordRequest request) {
     RecordResponse response = blockingStub.updateRecord(request); 
     return response.getMessage();
+    }
 }
