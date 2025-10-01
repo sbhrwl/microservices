@@ -19,54 +19,67 @@ public class RabbitMQConfig {
     @Value("${messaging.rabbitmq.exchange}")
     private String exchangeName;
 
-    // FIX: Using the inbound queue property for the Hub request consumer
     @Value("${messaging.rabbitmq.request-inbound-queue}")
     private String requestInboundQueueName;
 
-    // FIX: Using the inbound queue property for the Connector response consumer
     @Value("${messaging.rabbitmq.response-inbound-queue}")
     private String responseInboundQueueName;
 
-    // FIX: Using the outbound routing key for publishing to the Connector
     @Value("${messaging.rabbitmq.request-outbound-routing-key}")
-    private String requestOutboundRoutingKey;
+    private String requestOutboundRoutingKey; // Value: connector.request (used for publishing/binding)
 
-    // FIX: Using the outbound routing key for publishing to the Hub
     @Value("${messaging.rabbitmq.response-outbound-routing-key}")
     private String responseOutboundRoutingKey;
 
+    // --- Exchange ---
     @Bean
     public TopicExchange exchange() {
-        // Exchange name: flexibility-bridge.exchange
         return new TopicExchange(exchangeName);
     }
 
+    // --- 1. Queue Definitions (Inbound and Outbound destinations) ---
+    
+    // 1A. Hub Request (Inbound consumer queue for this service)
     @Bean(name = "requestInboundQueue")
     public Queue requestInboundQueue() {
-        // Queue name: flexibility-hub.request
-        return new Queue(requestInboundQueueName, true);
+        return new Queue(requestInboundQueueName, true); // flexibility-hub.request
     }
 
+    // 1B. Connector Response (Inbound consumer queue for this service)
     @Bean(name = "responseInboundQueue")
     public Queue responseInboundQueue() {
-        // Queue name: connector.response
-        return new Queue(responseInboundQueueName, true);
+        return new Queue(responseInboundQueueName, true); // connector.response
+    }
+    
+    // 1C. Connector Request (Outbound destination queue for this service's producer)
+    @Bean(name = "connectorRequestQueue") 
+    public Queue connectorRequestQueue() {
+        // The queue name matches the routing key 'connector.request'
+        return new Queue(requestOutboundRoutingKey, true); 
     }
 
+    // --- 2. Binding Definitions ---
+
+    // 2A. Binds Hub Request Queue to its assumed publishing key
     @Bean
     public Binding requestInboundBinding(@Qualifier("requestInboundQueue") Queue queue, TopicExchange exchange) {
-        // We bind the INBOUND queue for consumption to the OUTBOUND routing key 
-        // that the HUB service uses to send messages. (This requires coordination 
-        // with the Hub's publication key, assuming the Hub publishes using the queue name).
-        // Since we don't know the Hub's key, we'll assume the binding key is the queue name for simplicity.
         return BindingBuilder.bind(queue).to(exchange).with(requestInboundQueueName);
     }
 
+    // 2B. Binds Connector Response Queue to its assumed publishing key
     @Bean
     public Binding responseInboundBinding(@Qualifier("responseInboundQueue") Queue queue, TopicExchange exchange) {
-        // The Connector publishes to a key that binds to this queue. Assume the binding key is the queue name.
         return BindingBuilder.bind(queue).to(exchange).with(responseInboundQueueName);
     }
+    
+    // 2C. FIX: Binds the Connector Request Queue to the OUTBOUND routing key 
+    @Bean
+    public Binding connectorRequestBinding(@Qualifier("connectorRequestQueue") Queue queue, TopicExchange exchange) {
+        // The message producer uses 'requestOutboundRoutingKey' (connector.request)
+        return BindingBuilder.bind(queue).to(exchange).with(requestOutboundRoutingKey);
+    }
+
+    // --- 3. Utilities ---
 
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -77,8 +90,6 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(jsonMessageConverter());
-        // NOTE: Default exchange and routing key settings are optional since 
-        // MessageProducerService will use the explicit exchange/routing key for each send.
         return template;
     }
 }

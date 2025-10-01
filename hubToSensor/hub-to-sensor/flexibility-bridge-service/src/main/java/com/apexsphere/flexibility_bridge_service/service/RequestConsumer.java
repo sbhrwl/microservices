@@ -2,6 +2,8 @@ package com.apexsphere.flexibility_bridge_service.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.apexsphere.flexibility_bridge_service.model.MessagePayload;
 import com.apexsphere.storage_service.service.RecordRequest;
@@ -9,48 +11,55 @@ import com.apexsphere.storage_service.service.RecordRequest;
 @Service
 public class RequestConsumer {
     
-    // Inject the gRPC client service
+    private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
+    
     private final RecordGrpcClient grpcClient;
+    // NEW: Inject the message producer
+    private final MessageProducerService producerService; 
 
-    // Use constructor injection for dependencies
-    public RequestConsumer(RecordGrpcClient grpcClient) {
+    // Constructor with both dependencies
+    public RequestConsumer(RecordGrpcClient grpcClient, MessageProducerService producerService) {
         this.grpcClient = grpcClient;
+        this.producerService = producerService;
     }
 
-    // FIX: Updated property name to match the latest application.yml
+    // Use the correct inbound queue name from application.yml
     @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
     public void receiveResponse(MessagePayload payload) {
-        System.out.println("✅ Received request from external service:");
-        System.out.println("Sensor ID: " + payload.getSensorId());
+        log.info("✅ Received request for Sensor ID: {}", payload.getSensorId());
         
         try {
-            // 1. Convert the DTO to the gRPC Request
-            RecordRequest grpcRequest = convertToGrpcRequest(payload);
+            // 1. Save to DB with status: REQUESTED
+            RecordRequest saveRequest = convertToGrpcRequest(payload, "REQUESTED");
+            String saveResponse = grpcClient.saveRecord(saveRequest);
             
-            // 2. Call the gRPC client service
-            String serverResponse = grpcClient.saveRecord(grpcRequest);
+            log.info("➡️ Saved initial record to Storage Service. Status: REQUESTED");
+            log.debug("✅ gRPC save successful. Server message: {}", saveResponse);
+
+            // 2. PUBLISH to the Connector queue
+            producerService.sendRequestToConnector(payload);
             
-            System.out.println("➡️ Sending to Storage Service via gRPC...");
-            System.out.println("✅ gRPC call successful. Server message: " + serverResponse);
+            // 3. Update status in DB as SENT (Next Step)
 
         } catch (Exception e) {
-            // Log the error if the gRPC call or conversion fails
-            System.err.println("❌ Error processing request or calling gRPC service: " + e.getMessage());
+            log.error("❌ Fatal error in RequestConsumer for Sensor ID {}: {}", 
+                      payload.getSensorId(), e.getMessage(), e);
+            // Proper AMQP exception handling (e.g., throwing AmqpRejectAndDontRequeueException) 
+            // is recommended for production.
         }
     }
 
     /**
-     * Converts the internal MessagePayload object to the gRPC RecordRequest message.
+     * Converts the internal MessagePayload object to the gRPC RecordRequest message, 
+     * setting the required status.
      */
-    private RecordRequest convertToGrpcRequest(MessagePayload payload) {
-        // Build the gRPC RecordRequest from the received payload data
+    private RecordRequest convertToGrpcRequest(MessagePayload payload, String status) {
         return RecordRequest.newBuilder()
                 .setSensorId(payload.getSensorId())
                 .setOperation(payload.getOperation())
                 .setRelayNumber(payload.getRelayNumber())
                 .setDuration(payload.getDuration())
-                // Assuming you want to set a default status, as it's required by the proto but not in MessagePayload
-                .setStatus("REQUESTED") 
+                .setStatus(status) // Set the dynamic status
                 .build();
     }
 }
