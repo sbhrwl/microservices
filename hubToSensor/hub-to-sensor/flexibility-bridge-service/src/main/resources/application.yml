@@ -10,11 +10,16 @@ spring:
 
 messaging:
   rabbitmq:
-    exchange: connector.exchange
-    request-queue: flexibility-hub.request
-    response-queue: connector.response
-    request-routing-key: connector.request
-    response-routing-key: connector.response
+    # --- Exchange used for all routing ---
+    exchange: flexibility-bridge.exchange 
+    
+    # --- Request Path (Hub -> Connector) ---
+    request-inbound-queue: flexibility-hub.request
+    request-outbound-routing-key: connector.request
+
+    # --- Response Path (Connector -> Hub) ---
+    response-inbound-queue: connector.response
+    response-outbound-routing-key: flexibility-hub.response
 
 logging:
   level:
@@ -26,4 +31,3 @@ grpc:
     storage-service:
       host: localhost
       port: 9090
-

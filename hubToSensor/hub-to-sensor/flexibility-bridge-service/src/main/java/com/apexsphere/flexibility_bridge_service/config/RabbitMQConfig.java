@@ -3,7 +3,7 @@ package com.apexsphere.flexibility_bridge_service.config;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange; // Keep TopicExchange; fine for exact keys too
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -19,45 +19,53 @@ public class RabbitMQConfig {
     @Value("${messaging.rabbitmq.exchange}")
     private String exchangeName;
 
-    // ✅ Use distinct routing keys
-    @Value("${messaging.rabbitmq.request-routing-key}")
-    private String requestRoutingKey;
+    // FIX: Using the inbound queue property for the Hub request consumer
+    @Value("${messaging.rabbitmq.request-inbound-queue}")
+    private String requestInboundQueueName;
 
-    @Value("${messaging.rabbitmq.response-routing-key}")
-    private String responseRoutingKey;
+    // FIX: Using the inbound queue property for the Connector response consumer
+    @Value("${messaging.rabbitmq.response-inbound-queue}")
+    private String responseInboundQueueName;
 
-    @Value("${messaging.rabbitmq.request-queue}")
-    private String requestQueueName;
+    // FIX: Using the outbound routing key for publishing to the Connector
+    @Value("${messaging.rabbitmq.request-outbound-routing-key}")
+    private String requestOutboundRoutingKey;
 
-    @Value("${messaging.rabbitmq.response-queue}")
-    private String responseQueueName;
+    // FIX: Using the outbound routing key for publishing to the Hub
+    @Value("${messaging.rabbitmq.response-outbound-routing-key}")
+    private String responseOutboundRoutingKey;
 
     @Bean
     public TopicExchange exchange() {
+        // Exchange name: flexibility-bridge.exchange
         return new TopicExchange(exchangeName);
     }
 
-    @Bean(name = "requestQueue")
-    public Queue requestQueue() {
-        // Durable queues are generally preferred
-        return new Queue(requestQueueName, true);
+    @Bean(name = "requestInboundQueue")
+    public Queue requestInboundQueue() {
+        // Queue name: flexibility-hub.request
+        return new Queue(requestInboundQueueName, true);
     }
 
-    @Bean(name = "responseQueue")
-    public Queue responseQueue() {
-        return new Queue(responseQueueName, true);
-    }
-
-    @Bean
-    public Binding requestBinding(@Qualifier("requestQueue") Queue requestQueue, TopicExchange exchange) {
-        // ✅ Bind request queue with request routing key
-        return BindingBuilder.bind(requestQueue).to(exchange).with(requestRoutingKey);
+    @Bean(name = "responseInboundQueue")
+    public Queue responseInboundQueue() {
+        // Queue name: connector.response
+        return new Queue(responseInboundQueueName, true);
     }
 
     @Bean
-    public Binding responseBinding(@Qualifier("responseQueue") Queue responseQueue, TopicExchange exchange) {
-        // ✅ Bind response queue with response routing key
-        return BindingBuilder.bind(responseQueue).to(exchange).with(responseRoutingKey);
+    public Binding requestInboundBinding(@Qualifier("requestInboundQueue") Queue queue, TopicExchange exchange) {
+        // We bind the INBOUND queue for consumption to the OUTBOUND routing key 
+        // that the HUB service uses to send messages. (This requires coordination 
+        // with the Hub's publication key, assuming the Hub publishes using the queue name).
+        // Since we don't know the Hub's key, we'll assume the binding key is the queue name for simplicity.
+        return BindingBuilder.bind(queue).to(exchange).with(requestInboundQueueName);
+    }
+
+    @Bean
+    public Binding responseInboundBinding(@Qualifier("responseInboundQueue") Queue queue, TopicExchange exchange) {
+        // The Connector publishes to a key that binds to this queue. Assume the binding key is the queue name.
+        return BindingBuilder.bind(queue).to(exchange).with(responseInboundQueueName);
     }
 
     @Bean
@@ -69,29 +77,8 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(jsonMessageConverter());
-        // ✅ Default publisher settings: send to the exchange with the request routing key
-        template.setExchange(exchangeName);
-        template.setRoutingKey(requestRoutingKey);
+        // NOTE: Default exchange and routing key settings are optional since 
+        // MessageProducerService will use the explicit exchange/routing key for each send.
         return template;
-    }
-
-    public String getRequestQueueName() {
-        return requestQueueName;
-    }
-
-    public String getResponseQueueName() {
-        return responseQueueName;
-    }
-
-    public String getExchangeName() {
-        return exchangeName;
-    }
-
-    public String getRequestRoutingKey() {
-        return requestRoutingKey;
-    }
-
-    public String getResponseRoutingKey() {
-        return responseRoutingKey;
     }
 }

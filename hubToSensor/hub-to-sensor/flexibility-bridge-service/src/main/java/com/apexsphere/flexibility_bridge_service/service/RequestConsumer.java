@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import com.apexsphere.flexibility_bridge_service.model.MessagePayload;
-import com.apexsphere.storage_service.service.RecordRequest; // Import the generated gRPC Request
+import com.apexsphere.storage_service.service.RecordRequest;
 
 @Service
 public class RequestConsumer {
@@ -17,7 +17,8 @@ public class RequestConsumer {
         this.grpcClient = grpcClient;
     }
 
-    @RabbitListener(queues = "${messaging.rabbitmq.request-queue}")
+    // FIX: Updated property name to match the latest application.yml
+    @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
     public void receiveResponse(MessagePayload payload) {
         System.out.println("✅ Received request from external service:");
         System.out.println("Sensor ID: " + payload.getSensorId());
@@ -35,7 +36,6 @@ public class RequestConsumer {
         } catch (Exception e) {
             // Log the error if the gRPC call or conversion fails
             System.err.println("❌ Error processing request or calling gRPC service: " + e.getMessage());
-            // In a real application, you would handle message reprocessing/DLQs here
         }
     }
 
