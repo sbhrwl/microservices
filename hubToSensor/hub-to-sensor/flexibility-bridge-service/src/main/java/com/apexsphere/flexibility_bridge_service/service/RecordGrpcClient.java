@@ -17,4 +17,8 @@ public class RecordGrpcClient {
         RecordResponse response = blockingStub.saveRecord(request);
         return response.getMessage();
     }
+
+    public String updateRecordStatus(RecordRequest request) {
+    RecordResponse response = blockingStub.updateRecord(request); 
+    return response.getMessage();
 }
