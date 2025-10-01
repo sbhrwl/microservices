@@ -21,3 +21,9 @@ logging:
     org.springframework.amqp: INFO
     com.apexsphere.flexibility_bridge: DEBUG
     io.grpc: DEBUG
+grpc:
+  client:
+    storage-service:
+      host: localhost
+      port: 9090
+
