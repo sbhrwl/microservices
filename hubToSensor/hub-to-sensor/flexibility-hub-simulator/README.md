@@ -26,6 +26,7 @@ mvn spring-boot:run
       "sensorId": "sensor-001",
       "operation": "DIRECT-ON",
       "relayNumber": 2,
-      "duration": 30
+      "duration": 30,
+      "status": "Received"
     }
     ```
