@@ -14,57 +14,67 @@ public class RequestConsumer {
     private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
     
     private final RecordGrpcClient grpcClient;
-    // NEW: Inject the message producer
     private final MessageProducerService producerService; 
 
-    // Constructor with both dependencies
     public RequestConsumer(RecordGrpcClient grpcClient, MessageProducerService producerService) {
         this.grpcClient = grpcClient;
         this.producerService = producerService;
     }
 
-    // Use the correct inbound queue name from application.yml
     @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
     public void receiveResponse(MessagePayload payload) {
         log.info("✅ Received request for Sensor ID: {}", payload.getSensorId());
         
+        String recordId = null; // Variable to store the generated ID
+
         try {
             // 1. Save to DB with status: REQUESTED
-            RecordRequest saveRequest = convertToGrpcRequest(payload, "REQUESTED");
-            String saveResponse = grpcClient.saveRecord(saveRequest);
+            // For saving, we use the simpler conversion method (no ID needed)
+            RecordRequest saveRequest = convertToGrpcRequest(payload, "REQUESTED", null);
             
-            log.info("➡️ Saved initial record to Storage Service. Status: REQUESTED");
-            log.debug("✅ gRPC save successful. Server message: {}", saveResponse);
+            // grpcClient.saveRecord now returns the generated unique ID (String)
+            recordId = grpcClient.saveRecord(saveRequest);
+            
+            log.info("➡️ Saved initial record to Storage Service. Status: REQUESTED. Generated ID: {}", recordId);
+            log.debug("✅ gRPC save successful. Record ID returned: {}", recordId);
 
             // 2. PUBLISH to the Connector queue
             producerService.sendRequestToConnector(payload);
             
-            // 3. Update status in DB as SENT (Next Step)
-            RecordRequest updateRequest = convertToGrpcRequest(payload, "SENT");
+            // 3. Update status in DB as SENT 
+            // We use the generated recordId from step 1 for the update request.
+            RecordRequest updateRequest = convertToGrpcRequest(payload, "SENT", recordId);
             String updateResponse = grpcClient.updateRecordStatus(updateRequest);
             
-            log.info("📢 Updated record status to SENT after publishing message.");
+            log.info("📢 Updated record status to SENT for ID: {}. Publishing successful.", recordId);
             log.debug("✅ gRPC update successful. Server message: {}", updateResponse);
 
         } catch (Exception e) {
-            log.error("❌ Fatal error in RequestConsumer for Sensor ID {}: {}", 
-                      payload.getSensorId(), e.getMessage(), e);
-            // Proper AMQP exception handling (e.g., throwing AmqpRejectAndDontRequeueException) 
-            // is recommended for production.
+            log.error("❌ Fatal error in RequestConsumer for Sensor ID {} (Record ID {}): {}", 
+                      payload.getSensorId(), recordId != null ? recordId : "N/A", e.getMessage(), e);
         }
     }
 
     /**
-     * Converts the internal MessagePayload object to the gRPC RecordRequest message, 
-     * setting the required status.
+     * Converts the internal MessagePayload object to the gRPC RecordRequest message.
+     * * @param payload The original message payload.
+     * @param status The status to set (e.g., REQUESTED, SENT).
+     * @param recordId The unique ID of the record (required for updates, can be null for saves).
+     * @return A RecordRequest object ready for gRPC consumption.
      */
-    private RecordRequest convertToGrpcRequest(MessagePayload payload, String status) {
-        return RecordRequest.newBuilder()
+    private RecordRequest convertToGrpcRequest(MessagePayload payload, String status, String recordId) {
+        RecordRequest.Builder builder = RecordRequest.newBuilder()
                 .setSensorId(payload.getSensorId())
                 .setOperation(payload.getOperation())
                 .setRelayNumber(payload.getRelayNumber())
                 .setDuration(payload.getDuration())
-                .setStatus(status) // Set the dynamic status
-                .build();
+                .setStatus(status);
+
+        // Include the ID only if it is provided (needed for updates)
+        if (recordId != null && !recordId.isEmpty()) {
+            builder.setRecordId(recordId);
+        }
+        
+        return builder.build();
     }
 }

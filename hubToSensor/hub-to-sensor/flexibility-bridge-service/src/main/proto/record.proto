@@ -24,10 +24,12 @@ message RecordRequest {
     int32 relay_number = 3;
     int32 duration = 4;
     string status = 5;
+    string record_id = 6;
 }
 
 // A message for the response after saving/updating a record.
 message RecordResponse {
     bool success = 1;
     string message = 2;
+    string record_id = 3;
 }
