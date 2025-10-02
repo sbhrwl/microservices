@@ -30,12 +30,12 @@ public class RequestConsumer {
         try {
             // 1. Save to DB with status: REQUESTED
             // For saving, we use the simpler conversion method (no ID needed)
-            RecordRequest saveRequest = convertToGrpcRequest(payload, "REQUESTED", null);
+            RecordRequest saveRequest = convertToGrpcRequest(payload, "Control Requested", null);
             
             // grpcClient.saveRecord now returns the generated unique ID (String)
             recordId = grpcClient.saveRecord(saveRequest);
             
-            log.info("➡️ Saved initial record to Storage Service. Status: REQUESTED. Generated ID: {}", recordId);
+            log.info("➡️ Saved initial record to Storage Service. Status: Control Requested. Generated ID: {}", recordId);
             log.debug("✅ gRPC save successful. Record ID returned: {}", recordId);
 
             // 2. PUBLISH to the Connector queue
@@ -43,10 +43,10 @@ public class RequestConsumer {
             
             // 3. Update status in DB as SENT 
             // We use the generated recordId from step 1 for the update request.
-            RecordRequest updateRequest = convertToGrpcRequest(payload, "SENT", recordId);
+            RecordRequest updateRequest = convertToGrpcRequest(payload, "Sent for protocol conversion", recordId);
             String updateResponse = grpcClient.updateRecordStatus(updateRequest);
-            
-            log.info("📢 Updated record status to SENT for ID: {}. Publishing successful.", recordId);
+
+            log.info("📢 Updated record status to Sent for protocol conversion for request ID: {}. Publishing successful.", recordId);
             log.debug("✅ gRPC update successful. Server message: {}", updateResponse);
 
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class RequestConsumer {
 
     /**
      * Converts the internal MessagePayload object to the gRPC RecordRequest message.
-     * * @param payload The original message payload.
+     * @param payload The original message payload.
      * @param status The status to set (e.g., REQUESTED, SENT).
      * @param recordId The unique ID of the record (required for updates, can be null for saves).
      * @return A RecordRequest object ready for gRPC consumption.
