@@ -5,24 +5,24 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.apexsphere.flexibility_bridge_service.model.MessagePayload;
+import com.apexsphere.flexibility_bridge_service.model.RequestPayload;
 import com.apexsphere.storage_service.service.RecordRequest;
 
 @Service
-public class RequestConsumer {
+public class RequestConsumerFromHub {
     
-    private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
+    private static final Logger log = LoggerFactory.getLogger(RequestConsumerFromHub.class); 
     
     private final RecordGrpcClient grpcClient;
-    private final MessageProducerService producerService; 
+    private final RequestProducerForProtocolConversionService producerService; 
 
-    public RequestConsumer(RecordGrpcClient grpcClient, MessageProducerService producerService) {
+    public RequestConsumerFromHub(RecordGrpcClient grpcClient, RequestProducerForProtocolConversionService producerService) {
         this.grpcClient = grpcClient;
         this.producerService = producerService;
     }
 
     @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
-    public void receiveResponse(MessagePayload payload) {
+    public void receiveResponse(RequestPayload payload) {
         log.info("✅ Received request for Sensor ID: {}", payload.getSensorId());
         
         String recordId = null; // Variable to store the generated ID
@@ -62,7 +62,7 @@ public class RequestConsumer {
      * @param recordId The unique ID of the record (required for updates, can be null for saves).
      * @return A RecordRequest object ready for gRPC consumption.
      */
-    private RecordRequest convertToGrpcRequest(MessagePayload payload, String status, String recordId) {
+    private RecordRequest convertToGrpcRequest(RequestPayload payload, String status, String recordId) {
         RecordRequest.Builder builder = RecordRequest.newBuilder()
                 .setSensorId(payload.getSensorId())
                 .setOperation(payload.getOperation())

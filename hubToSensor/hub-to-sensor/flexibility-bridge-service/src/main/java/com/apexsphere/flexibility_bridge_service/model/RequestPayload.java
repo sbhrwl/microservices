@@ -2,7 +2,7 @@ package com.apexsphere.flexibility_bridge_service.model;
 
 import java.io.Serializable;
 
-public class MessagePayload implements Serializable {
+public class RequestPayload implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class MessagePayload implements Serializable {
     // --- ADDED for debugging and logging ---
     @Override
     public String toString() {
-        return "MessagePayload{" +
+        return "RequestPayload{" +
                 "recordId='" + recordId + '\'' +
                 ", sensorId='" + sensorId + '\'' +
                 ", operation='" + operation + '\'' +
