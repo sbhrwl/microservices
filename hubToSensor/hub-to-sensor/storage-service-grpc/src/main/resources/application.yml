@@ -1,7 +1,5 @@
 application:
-  name: storage service
-server:
-  port: 8083
+  name: storage-service
 
 spring:
   datasource:
