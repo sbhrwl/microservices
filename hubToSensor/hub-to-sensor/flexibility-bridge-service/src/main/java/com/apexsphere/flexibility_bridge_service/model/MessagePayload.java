@@ -10,6 +10,9 @@ public class MessagePayload implements Serializable {
     private String operation;
     private int relayNumber;
     private int duration;
+    
+    // --- FIX: ADDED FIELD FOR TRACEABILITY ---
+    private String recordId;
 
 
     public String getSensorId() {
@@ -42,5 +45,26 @@ public class MessagePayload implements Serializable {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+    
+    // --- FIX: ADDED GETTER AND SETTER FOR recordId ---
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
+    
+    // --- ADDED for debugging and logging ---
+    @Override
+    public String toString() {
+        return "MessagePayload{" +
+                "recordId='" + recordId + '\'' +
+                ", sensorId='" + sensorId + '\'' +
+                ", operation='" + operation + '\'' +
+                ", relayNumber=" + relayNumber +
+                ", duration=" + duration +
+                '}';
     }
 }

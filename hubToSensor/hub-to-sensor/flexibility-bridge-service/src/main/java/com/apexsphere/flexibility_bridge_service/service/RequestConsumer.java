@@ -39,7 +39,7 @@ public class RequestConsumer {
             log.debug("✅ gRPC save successful. Record ID returned: {}", recordId);
 
             // 2. PUBLISH to the Connector queue
-            producerService.sendRequestToConnector(payload);
+            producerService.sendRequestToConnector(payload, recordId);
             
             // 3. Update status in DB as SENT 
             // We use the generated recordId from step 1 for the update request.
