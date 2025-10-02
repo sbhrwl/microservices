@@ -8,7 +8,7 @@
   - [Flexibility bridge service](hub-to-sensor/flexibility-bridge-service/README.md)
   - [Storage service gRPC](hub-to-sensor/storage-service-grpc/README.md)
     - [Storage service restful](hub-to-sensor/storage-service/README.md)
-  - [IEC adapter service](hub-to-sensor/iec-adapter-service/README.md)
+  - [Protocol adapter service](hub-to-sensor/protocol-adapter-service/README.md)
   - [HES simulator](hub-to-sensor/hes-simulator/README.md)
 - [Containers](containers/README.md)
 - [Kubernetes](kubernetes/README.md)
@@ -57,7 +57,7 @@
 ```bash
 [nio-9084-exec-1] c.e.n.service.EmailService               : Simulating sending registration confirmation email to: user@example.com for sensor ID: sensor123
 ```
-- **IEC adapter service**
+- **Protocol adapter service**
 ```bash
 [nio-9084-exec-1] c.e.n.service.EmailService               : Simulating sending registration confirmation email to: user@example.com for sensor ID: sensor123
 ```
