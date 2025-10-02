@@ -53,3 +53,24 @@ Type "help" for help.
 
 mydatabase=# select * from control_requests;
 ```
+
+### Response
+- Success
+```xml
+<FlexibilityResponse>
+    <RequestID>30</RequestID>
+    <Status>SUCCESS</Status>
+    <Message>Operation DIRECT-ON for sensor-001 completed successfully.</Message>
+    <Timestamp>2025-10-02T10:15:00Z</Timestamp>
+</FlexibilityResponse>
+```
+- Error
+```xml
+<FlexibilityResponse>
+    <RequestID>30</RequestID>
+    <Status>ERROR</Status>
+    <ErrorCode>404</ErrorCode>
+    <Message>Target sensor 'sensor-001' not found or offline.</Message>
+    <Timestamp>2025-10-02T10:15:05Z</Timestamp>
+</FlexibilityResponse>
+```
