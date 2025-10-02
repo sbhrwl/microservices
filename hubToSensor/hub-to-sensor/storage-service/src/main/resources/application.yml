@@ -1,5 +1,5 @@
 application:
-  name: storage service
+  name: storage-service
 server:
   port: 8083
 
