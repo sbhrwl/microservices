@@ -1,5 +1,5 @@
 application:
-  name: IEC-adapter
+  name: iec-adapter
 
 spring:
   rabbitmq:
@@ -10,13 +10,24 @@ spring:
 
 messaging:
   rabbitmq:
-    exchange: connector.exchange
-    request-queue: flexibility-hub.request
-    response-queue: connector.response
-    request-routing-key: connector.request
-    response-routing-key: connector.response
+    # --- Exchange used for all routing ---
+    exchange: flexibility-bridge.exchange 
+    
+    # --- Request Path (Connector -> HES) ---
+    request-inbound-queue: connector.request
+    request-outbound-routing-key: hes.request
+
+    # --- Response Path (HES -> Connector) ---
+    response-inbound-queue: hes.response
+    response-outbound-routing-key: connector.response
 
 logging:
   level:
     org.springframework.amqp: INFO
     com.apexsphere.flexibility_bridge: DEBUG
+    io.grpc: DEBUG
+grpc:
+  client:
+    storage-service:
+      host: localhost
+      port: 9090

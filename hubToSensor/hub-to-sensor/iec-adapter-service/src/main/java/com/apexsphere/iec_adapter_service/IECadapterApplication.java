@@ -1,4 +1,4 @@
-package com.apexsphere.flexibility_hub_simulator;
+package com.apexsphere.iec_adapter_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class IECadapterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FlexibilityBridgeApplication.class, args);
+		SpringApplication.run(IECadapterApplication.class, args);
 	}
 
 }
