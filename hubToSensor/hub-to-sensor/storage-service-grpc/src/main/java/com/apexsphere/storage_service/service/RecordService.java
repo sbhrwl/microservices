@@ -29,7 +29,7 @@ public class RecordService {
         // 1. Log the creation
         RequestChangeLog log = new RequestChangeLog(
             savedRecord.getId(),
-            "Request created"
+            "Control Requested"
         );
         changeLogRepository.save(log);
 
@@ -49,7 +49,7 @@ public class RecordService {
         }
         
         Record existingRecord = existingRecordOpt.get();
-        String oldStatus = existingRecord.getStatus();
+        // String oldStatus = existingRecord.getStatus();
 
         // 2. Update only the status field
         existingRecord.setStatus(record.getStatus());
@@ -60,7 +60,7 @@ public class RecordService {
         // 4. Log the update
         RequestChangeLog log = new RequestChangeLog(
             updatedRecord.getId(),
-            String.format("Status updated from '%s' to '%s'", oldStatus, updatedRecord.getStatus())
+            updatedRecord.getStatus()
         );
         changeLogRepository.save(log);
 
