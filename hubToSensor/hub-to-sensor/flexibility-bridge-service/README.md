@@ -19,7 +19,6 @@ mvn spring-boot:run
 
 ## Test
 ### Request
-- Test it together with `Flexibility bridge service` as it has implemented a gRPC client
 - Push data to Broker
   - `POST`: `http://localhost:8081/api/messages`
   - Payload
