@@ -15,10 +15,13 @@ public class ResponseConsumer {
     
     // 1. Inject the gRPC client directly
     private final RecordGrpcClient grpcClient; 
+    // Inject the producer service to send the final response back to the Hub
+    private final ResponseProducerToHub producerToHub;
 
     @Autowired
-    public ResponseConsumer(RecordGrpcClient grpcClient) {
+    public ResponseConsumer(RecordGrpcClient grpcClient, ResponseProducerToHub producerToHub) {
         this.grpcClient = grpcClient;
+        this.producerToHub = producerToHub;
     }
     
     // We specify the containerFactory to ensure this listener uses the XML MessageConverter
@@ -63,6 +66,10 @@ public class ResponseConsumer {
             
             log.info("📢 Updated status for RequestID {} to {} via gRPC. Server response: {}", 
                      response.getRequestId(), internalStatus, updateResponse);
+
+            // 4. Send the original response back to the Hub via the XML producer
+            log.info("Attempting to publish final response for RequestID {} to Hub...", response.getRequestId());
+            producerToHub.sendResponseToHub(response);
 
         } catch (Exception e) {
             log.error("❌ Failed to update status for RequestID {} in Storage Service: {}", response.getRequestId(), e.getMessage(), e);

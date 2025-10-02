@@ -141,4 +141,13 @@ factory.setConnectionFactory(connectionFactory);
 factory.setMessageConverter(xmlMessageConverter);
 return factory;
 }
+    
+    // 4D. XML Rabbit Template (Used specifically by the ResponseProducerToHub to publish XML responses)
+    @Bean(name = "xmlRabbitTemplate")
+    public RabbitTemplate xmlRabbitTemplate(ConnectionFactory connectionFactory, 
+                                            @Qualifier("xmlMessageConverter") MessageConverter xmlMessageConverter) {
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(xmlMessageConverter); // Uses XML converter
+        return template;
+    }
 }
