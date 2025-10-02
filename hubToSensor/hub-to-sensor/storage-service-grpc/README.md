@@ -27,8 +27,7 @@ mvn spring-boot:run
       "sensorId": "sensor-001",
       "operation": "DIRECT-ON",
       "relayNumber": 2,
-      "duration": 30,
-      "status": "Received"
+      "duration": 30
     }
     ```
 - Verify `flexibility bridge service` logs
@@ -53,4 +52,6 @@ WARNING: Console code page (850) differs from Windows code page (1252)
 Type "help" for help.
 
 mydatabase=# select * from control_requests;
+
+mydatabase=# select * from request_change_log;
 ```
