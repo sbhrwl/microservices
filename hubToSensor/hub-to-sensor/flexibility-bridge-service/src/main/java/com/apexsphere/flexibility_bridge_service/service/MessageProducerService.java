@@ -36,7 +36,7 @@ public class MessageProducerService {
         // 1. Set the generated recordId on the payload object for traceability
         payload.setRecordId(recordId); 
 
-        // 2. Logging the full payload object before sending (requires DEBUG logging level)
+        // 2. Logging the full payload object before sending (change to DEBUG logging level)
         log.info("📄 Final payload being sent to connector queue: {}", payload);
 
         // 3. Publish the updated payload
