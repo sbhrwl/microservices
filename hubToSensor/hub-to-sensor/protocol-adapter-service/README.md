@@ -1,4 +1,4 @@
-# protocol adapter
+# Protocol adapter
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
@@ -9,7 +9,7 @@
 - Build 
 ```bash
 mvn clean install
-
+mvn clean install -U
 mvn clean install -DskipTests
 ```
 - Run
@@ -19,7 +19,6 @@ mvn spring-boot:run
 
 ## Test
 ### Request
-- Test it together with `Flexibility bridge service` as it has implemented a gRPC client
 - Push data to Broker
   - `POST`: `http://localhost:8081/api/messages`
   - Payload
