@@ -10,10 +10,10 @@
     </parent>
     
     <groupId>com.apexsphere</groupId>
-    <artifactId>flexibility-bridge</artifactId>
+    <artifactId>protocol-adapter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>FlexibilityBridge</name>
-    <description>gRPC Client for Storage Service</description>
+    <name>ProtocolAdapter</name>
+    <description>Protocol adapter</description>
     
     <properties>
         <java.version>17</java.version>

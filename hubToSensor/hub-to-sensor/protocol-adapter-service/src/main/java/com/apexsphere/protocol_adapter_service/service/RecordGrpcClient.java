@@ -1,4 +1,4 @@
-package com.apexsphere.iec_adapter_service.service;
+package com.apexsphere.protocol_adapter_service.service;
 
 import com.apexsphere.storage_service.service.RecordRequest;
 import com.apexsphere.storage_service.service.RecordResponse;

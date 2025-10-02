@@ -1,13 +1,13 @@
-package com.apexsphere.iec_adapter_service;
+package com.apexsphere.protocol_adapter_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IECadapterApplication {
+public class ProtocolAdapterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IECadapterApplication.class, args);
+		SpringApplication.run(ProtocolAdapterApplication.class, args);
 	}
 
 }

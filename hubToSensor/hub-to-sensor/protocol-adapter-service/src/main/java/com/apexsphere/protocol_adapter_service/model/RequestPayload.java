@@ -1,4 +1,4 @@
-package com.apexsphere.iec_adapter_service.model;
+package com.apexsphere.protocol_adapter_service.model;
 
 import java.io.Serializable;
 

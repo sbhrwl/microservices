@@ -1,4 +1,4 @@
-# Flexibility bridge
+# protocol adapter
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)

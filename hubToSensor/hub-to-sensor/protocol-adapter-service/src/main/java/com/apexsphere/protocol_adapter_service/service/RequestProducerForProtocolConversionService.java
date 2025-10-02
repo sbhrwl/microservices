@@ -1,9 +1,11 @@
-package com.apexsphere.iec_adapter_service.service;
+package com.apexsphere.protocol_adapter_service.service;
 
-import com.apexsphere.iec_adapter_service.model.RequestPayload;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.apexsphere.protocol_adapter_service.model.RequestPayload;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

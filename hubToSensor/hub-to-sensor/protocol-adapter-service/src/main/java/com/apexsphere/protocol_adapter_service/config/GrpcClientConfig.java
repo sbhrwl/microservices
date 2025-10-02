@@ -1,4 +1,4 @@
-package com.apexsphere.iec_adapter_service.config;
+package com.apexsphere.protocol_adapter_service.config;
 
 import com.apexsphere.storage_service.service.RecordServiceGrpc;
 import io.grpc.ManagedChannel;

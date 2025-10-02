@@ -1,5 +1,5 @@
 application:
-  name: iec-adapter
+  name: protocol-adapter
 
 spring:
   rabbitmq:
@@ -24,7 +24,7 @@ messaging:
 logging:
   level:
     org.springframework.amqp: INFO
-    com.apexsphere.flexibility_bridge: DEBUG
+    com.apexsphere.protocol-adapter-service: DEBUG
     io.grpc: DEBUG
 grpc:
   client:

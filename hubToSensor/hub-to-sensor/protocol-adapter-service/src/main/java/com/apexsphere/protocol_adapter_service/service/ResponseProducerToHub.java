@@ -1,9 +1,11 @@
-package com.apexsphere.iec_adapter_service.service;
+package com.apexsphere.protocol_adapter_service.service;
 
-import com.apexsphere.iec_adapter_service.model.FlexibilityResponse;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.apexsphere.protocol_adapter_service.model.FlexibilityResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,7 +36,7 @@ public class ResponseProducerToHub {
 
     /**
      * Publishes the final FlexibilityResponse (XML format) back to the hub.
-     * This completes the request/response cycle for the bridge service.
+     * This completes the request/response cycle for the protocol adapter service.
      * @param response The response object containing the final status (SUCCESS/ERROR).
      */
     public void sendResponseToHub(FlexibilityResponse response) {

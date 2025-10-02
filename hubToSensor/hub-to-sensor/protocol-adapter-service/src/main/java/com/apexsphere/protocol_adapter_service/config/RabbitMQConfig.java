@@ -1,4 +1,4 @@
-package com.apexsphere.iec_adapter_service.config;
+package com.apexsphere.protocol_adapter_service.config;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
@@ -135,7 +135,7 @@ public class RabbitMQConfig {
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         // Set the package where the @XmlRootElement class (FlexibilityResponse) is located
-        marshaller.setPackagesToScan("com.apexsphere.flexibility_bridge_service.model"); 
+        marshaller.setPackagesToScan("com.apexsphere.protocol_adapter_service.model"); 
         return marshaller;
     }
 

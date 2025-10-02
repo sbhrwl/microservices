@@ -1,11 +1,11 @@
-package com.apexsphere.iec_adapter_service.service;
+package com.apexsphere.protocol_adapter_service.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.apexsphere.flexibility_bridge_service.model.RequestPayload;
+import com.apexsphere.protocol_adapter_service.model.RequestPayload;
 import com.apexsphere.storage_service.service.RecordRequest;
 
 @Service

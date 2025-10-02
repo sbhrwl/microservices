@@ -1,6 +1,6 @@
-package com.apexsphere.iec_adapter_service.service;
+package com.apexsphere.protocol_adapter_service.service;
 
-import com.apexsphere.iec_adapter_service.model.FlexibilityResponse; 
+import com.apexsphere.protocol_adapter_service.model.FlexibilityResponse;
 import com.apexsphere.storage_service.service.RecordRequest; 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
