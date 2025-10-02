@@ -9,7 +9,7 @@
 - Build 
 ```bash
 mvn clean install
-
+mvn clean install -U
 mvn clean install -DskipTests
 ```
 - Run
