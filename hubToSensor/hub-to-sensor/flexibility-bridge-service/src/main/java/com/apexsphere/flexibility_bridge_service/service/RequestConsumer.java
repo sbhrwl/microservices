@@ -9,14 +9,14 @@ import com.apexsphere.flexibility_bridge_service.model.RequestPayload;
 import com.apexsphere.storage_service.service.RecordRequest;
 
 @Service
-public class RequestConsumerFromHub {
+public class RequestConsumer {
     
-    private static final Logger log = LoggerFactory.getLogger(RequestConsumerFromHub.class); 
+    private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
     
     private final RecordGrpcClient grpcClient;
     private final RequestProducerForProtocolConversionService producerService; 
 
-    public RequestConsumerFromHub(RecordGrpcClient grpcClient, RequestProducerForProtocolConversionService producerService) {
+    public RequestConsumer(RecordGrpcClient grpcClient, RequestProducerForProtocolConversionService producerService) {
         this.grpcClient = grpcClient;
         this.producerService = producerService;
     }
