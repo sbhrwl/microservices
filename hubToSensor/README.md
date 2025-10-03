@@ -145,7 +145,29 @@ Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sen
 2025-10-03T13:23:03.284+03:00 ERROR 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    Error Code:
 2025-10-03T13:23:03.288+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    RAW RESPONSE JSON: MessageResponse{requestId='42', status='SUCCESS', message='Operation DIRECT-ON for sensor-001 completed successfully.', errorCode='', timestamp='null'}
 2025-10-03T13:23:03.289+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           : =========================================================================================
+```
+- Database
+```sql
+mydatabase=# select * from control_requests;
+ id | duration | operation | relay_number | sensor_id  |          status
+----+----------+-----------+--------------+------------+--------------------------
+ 42 |        0 | DIRECT-ON |            1 | sensor-001 | Request staus: Completed
+(1 row)
 
+
+mydatabase=# select * from request_change_log;
+ id  |                change_description                 |       change_timestamp        | record_id
+-----+---------------------------------------------------+-------------------------------+-----------
+ 132 | Control Requested                                 | 2025-10-03 10:16:41.105162+00 |        42
+ 133 | Sent for protocol conversion                      | 2025-10-03 10:16:41.170938+00 |        42
+ 134 | message recieved for protocol conversion          | 2025-10-03 10:16:41.179569+00 |        42
+ 135 | protocol conversion done                          | 2025-10-03 10:16:41.212662+00 |        42
+ 136 | Sent to HES                                       | 2025-10-03 10:16:41.262414+00 |        42
+ 137 | Response recieved from HES                        | 2025-10-03 10:23:03.118948+00 |        42
+ 138 | Protocol conversion done for response             | 2025-10-03 10:23:03.149661+00 |        42
+ 139 | Response sent to Bridge - Final Status: COMPLETED | 2025-10-03 10:23:03.18456+00  |        42
+ 140 | Parsed response recieved from Protocol adapter    | 2025-10-03 10:23:03.222596+00 |        42
+ 141 | Request staus: Completed                          | 2025-10-03 10:23:03.257418+00 |        42
 ```
 #### Error
 ```xml
