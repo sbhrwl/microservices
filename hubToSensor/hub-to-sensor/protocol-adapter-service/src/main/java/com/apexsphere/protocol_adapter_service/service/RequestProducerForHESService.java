@@ -36,9 +36,13 @@ public class RequestProducerForHESService {
      * @param recordId The unique tracing ID for logging.
      */
     public void sendRequestToHes(String xmlPayload, String recordId) {
+        // NOTE: The temporary workaround logic to inject <RequestID> has been removed, 
+        // as the ProtocolConverter is now confirmed to generate the correct XML structure.
+        
         try {
-            log.debug("Publishing XML request for Record ID {} to Exchange: {} with Routing Key: {}", 
-                      recordId, exchangeName, hesRequestRoutingKey);
+            // Use the original xmlPayload for publishing
+            log.debug("Publishing XML request for Record ID {} to Exchange: {} with Routing Key: {}\nXML Payload:\n{}", 
+                      recordId, exchangeName, hesRequestRoutingKey, xmlPayload);
             
             // Sends the XML string payload
             rabbitTemplate.convertAndSend(exchangeName, hesRequestRoutingKey, xmlPayload);

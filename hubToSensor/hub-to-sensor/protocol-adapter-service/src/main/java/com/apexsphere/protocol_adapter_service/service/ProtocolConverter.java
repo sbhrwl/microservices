@@ -12,27 +12,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProtocolConverter {
 
-    // The simpleMessageConverter @Bean method has been removed as it is now redundant, 
-    // given the MarshallingMessageConverter is correctly configured in RabbitMQConfig.
-
     /**
      * Converts the JSON request payload object into an XML string format.
-     * @param payload The incoming JSON-based RequestPayload.
+     * * IMPORTANT FIX: Injects the <RequestID> tag using the Record ID from the payload.
+     * * @param payload The incoming JSON-based RequestPayload.
      * @return A String representing the XML version of the request.
      */
     public String convertPayloadToXml(RequestPayload payload) {
-        // --- PLACEHOLDER LOGIC (Kept from previous version) ---
-        // TODO: Implement actual JSON-to-XML conversion logic here, 
-        // using libraries like Jackson XML, JAXB, or similar.
-
-        // For now, we return a simple XML structure for demonstration:
+        // We now return the XML structure including the mandatory <RequestID> tag
+        // which the HES simulator expects to echo in its response.
         return String.format(
             "<HesRequest id=\"%s\">" +
-            "<operation>%s</operation>" +
-            "<relay>%d</relay>" +
-            "<duration>%d</duration>" +
+            "    <RequestID>%s</RequestID>" + // <-- REQUIRED HES REQUEST ID TAG ADDED
+            "    <operation>%s</operation>" +
+            "    <relay>%d</relay>" +
+            "    <duration>%d</duration>" +
             "</HesRequest>",
             payload.getSensorId(),
+            payload.getRecordId(), // <-- Using the recordId from the payload
             payload.getOperation(),
             payload.getRelayNumber(),
             payload.getDuration()
@@ -49,13 +46,6 @@ public class ProtocolConverter {
      */
     public String convertResponseToJson(FlexibilityResponse response) {
         try {
-            // 1. Convert the Java Object (FlexibilityResponse) into a JSON String
-            
-            // --- PLACEHOLDER LOGIC ---
-            // In a real application, you would use an ObjectMapper from Jackson or Gson here:
-            // ObjectMapper mapper = new ObjectMapper();
-            // String jsonString = mapper.writeValueAsString(response);
-            
             // For now, we manually create a simple JSON representation from the object's properties:
             return String.format(
                 "{\"requestId\":\"%s\", \"status\":\"%s\", \"message\":\"%s\", \"errorCode\":\"%s\"}",
