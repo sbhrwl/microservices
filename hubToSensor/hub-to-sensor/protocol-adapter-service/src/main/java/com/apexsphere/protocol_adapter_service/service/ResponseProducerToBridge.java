@@ -31,12 +31,16 @@ public class ResponseProducerToBridge {
 
     /**
      * Publishes the final JSON response message back to the Bridge/Hub service.
-     * * @param jsonPayload The final message body in JSON format (String).
+     * @param jsonPayload The final message body in JSON format (String).
      * @param recordId The unique ID for logging and tracing purposes.
      */
     public void sendResponseToHub(String jsonPayload, String recordId) {
         log.info("Sending final JSON response (ID: {}) to Exchange: {} with Routing Key: {}", 
                  recordId, exchangeName, responseRoutingKey);
+        
+        // --- Added logging for the full JSON payload ---
+        log.info("📢 JSON Payload being sent: {}", jsonPayload);
+        // ----------------------------------------------
         
         try {
             // Send the JSON string payload
@@ -44,7 +48,6 @@ public class ResponseProducerToBridge {
             log.debug("Successfully published response for ID: {}", recordId);
         } catch (Exception e) {
             log.error("❌ Failed to publish final response (ID: {}). Error: {}", recordId, e.getMessage(), e);
-            // Depending on requirements, retry logic or dead-letter queue handling may be added here.
             throw new RuntimeException("Failed to send message to RabbitMQ.", e);
         }
     }

@@ -11,12 +11,13 @@ import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.amqp.support.converter.MarshallingMessageConverter; 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller; 
+
+// NEW IMPORT
+import com.fasterxml.jackson.databind.ObjectMapper; 
 
 @Configuration
 public class RabbitMQConfig {
@@ -100,98 +101,64 @@ public class RabbitMQConfig {
 
 
     // --- 3. Utilities / Converters ---
-
-    // 3A. JSON Converter (Default for Requests)
+    
+    // 3A-NEW. Shared ObjectMapper for JSON conversion and manual parsing (used in ResponseConsumer)
     @Bean
-    public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
-    // 3B. Default Rabbit Template (Uses JSON converter)
+    // 3B. JSON Converter (Default for Requests and Responses)
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+        // Injecting the shared ObjectMapper ensures consistent serialization/deserialization logic.
+        return new Jackson2JsonMessageConverter(objectMapper);
+    }
+
+    // 3C. Default Rabbit Template (Uses JSON converter)
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter jsonMessageConverter) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter()); // Uses JSON converter
+        template.setMessageConverter(jsonMessageConverter); // Uses JSON converter
         return template;
     }
 
-    // 3C. Default Listener Container Factory (Used by RequestConsumerFromHub for JSON)
+    // 3D. Default Listener Container Factory (Used by consumers for JSON)
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
             ConnectionFactory connectionFactory,
-            @Qualifier("jsonMessageConverter") MessageConverter jsonMessageConverter) {
+            MessageConverter jsonMessageConverter) {
 
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
+        // The converter is provided directly, eliminating the need for @Qualifier here.
         factory.setMessageConverter(jsonMessageConverter);
         return factory;
     }
-
-
-    // --- 4. XML Configuration for Responses (Used by ResponseConsumer) ---
-
-    // 4A. JAXB Marshaller/Unmarshaller for FlexibilityResponse model
-    @Bean
-    public Jaxb2Marshaller marshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        // Set the package where the @XmlRootElement class (FlexibilityResponse) is located
-        marshaller.setPackagesToScan("com.apexsphere.flexibility_bridge_service.model"); 
-        return marshaller;
-    }
-
-    // 4B. XML Message Converter
-    @Bean
-    public MessageConverter xmlMessageConverter(@Qualifier("marshaller") Jaxb2Marshaller marshaller) {
-        // MarshallingMessageConverter uses the JAXB marshaller to convert XML content
-        return new MarshallingMessageConverter(marshaller, marshaller);
-    }
-
-    // 4C. XML Rabbit Template (Used by ResponseProducerToHub)
-    @Bean(name = "xmlRabbitTemplate")
-    public RabbitTemplate xmlRabbitTemplate(ConnectionFactory connectionFactory) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        // Explicitly call the message converter with its dependency chain (marshaller)
-        template.setMessageConverter(xmlMessageConverter(marshaller())); 
-        return template;
-    }
-
-    // 4D. XML Listener Container Factory (Used specifically by the ResponseConsumer)
-    @Bean(name = "xmlListenerContainerFactory")
-    public SimpleRabbitListenerContainerFactory xmlListenerContainerFactory(
-            ConnectionFactory connectionFactory, 
-            @Qualifier("xmlMessageConverter") MessageConverter xmlMessageConverter) {
-        
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(xmlMessageConverter);
-        return factory;
-    }
     
-    // --- 5. Queue and Binding Initialization (Guaranteed Declaration) ---
+    // --- 4. Queue and Binding Initialization (Guaranteed Declaration) ---
 
-    // Creates the Admin for manual declaration
     @Bean
     public AmqpAdmin amqpAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
     
-    /**
-     * Explicitly declares the Hub Response queue and binding to ensure they are set up 
-     * immediately on application startup, overriding potential timing issues with auto-declaration.
-     */
+    // This part is for declaration, keeping it simple as an example
     @Bean
-    public Object initializeHubResponseQueueAndBinding(AmqpAdmin amqpAdmin,
-                                                     @Qualifier("hubResponseQueue") Queue hubResponseQueue) {
-        // Ensure the exchange is also declared
-        TopicExchange topicExchange = exchange();
-        amqpAdmin.declareExchange(topicExchange);
-
-        // Declare the queue
+    public Object declareQueuesAndBindings(AmqpAdmin amqpAdmin,
+                                         @Qualifier("requestInboundQueue") Queue requestQueue,
+                                         @Qualifier("responseInboundQueue") Queue responseQueue,
+                                         @Qualifier("hubResponseQueue") Queue hubResponseQueue,
+                                         TopicExchange exchange) {
+        
+        amqpAdmin.declareExchange(exchange);
+        amqpAdmin.declareQueue(requestQueue);
+        amqpAdmin.declareQueue(responseQueue);
         amqpAdmin.declareQueue(hubResponseQueue);
         
-        // Manually declare the binding using the explicit parameters to guarantee the key is used.
-        Binding binding = BindingBuilder.bind(hubResponseQueue).to(topicExchange).with(responseOutboundRoutingKey);
-        amqpAdmin.declareBinding(binding);
+        amqpAdmin.declareBinding(requestInboundBinding(requestQueue, exchange));
+        amqpAdmin.declareBinding(responseInboundBinding(responseQueue, exchange));
+        amqpAdmin.declareBinding(hubResponseBinding(hubResponseQueue, exchange));
         
         return null; 
     }
