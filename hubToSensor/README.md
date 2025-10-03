@@ -179,3 +179,73 @@ mydatabase=# select * from request_change_log;
     <Timestamp>2025-10-02T10:15:05Z</Timestamp>
 </FlexibilityResponse>
 ```
+- Verify **`protocol adapter service`** logs
+```
+2025-10-03T13:29:17.428+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseConsumer           : ? Received object response for RequestID: 42
+2025-10-03T13:29:17.475+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseConsumer           : ?? Updated status to 'Response recieved from HES' for ID: 42
+2025-10-03T13:29:17.475+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseConsumer           : ? Starting protocol conversion (Object to JSON String) for Record ID: 42
+2025-10-03T13:29:17.503+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseConsumer           : ? Updated status to 'Protocol conversion done for response' for ID: 42
+2025-10-03T13:29:17.504+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseProducerToBridge   : Sending final JSON response (ID: 42) to Exchange: flexibility-bridge.exchange with Routing Key: connector.response
+2025-10-03T13:29:17.505+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseProducerToBridge   : ? JSON Payload being sent: {"requestId":"42", "status":"ERROR", "message":"Target sensor 'sensor-001' not found or offline.", "errorCode":"404"}
+2025-10-03T13:29:17.531+03:00  INFO 31916 --- [ntContainer#1-1] c.a.p.service.ResponseConsumer           : ? Updated status to 'Response sent to Bridge' for ID: 42. Final status: FAILED (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)
+```
+- Verify **`storage service`** logs
+```
+Hibernate: select r1_0.id,r1_0.duration,r1_0.operation,r1_0.relay_number,r1_0.sensor_id,r1_0.status from control_requests r1_0 where r1_0.id=?
+Hibernate: insert into request_change_log (change_description,change_timestamp,record_id) values (?,?,?)
+Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sensor_id=?,status=? where id=?
+Hibernate: select r1_0.id,r1_0.duration,r1_0.operation,r1_0.relay_number,r1_0.sensor_id,r1_0.status from control_requests r1_0 where r1_0.id=?
+Hibernate: insert into request_change_log (change_description,change_timestamp,record_id) values (?,?,?)
+Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sensor_id=?,status=? where id=?
+Hibernate: select r1_0.id,r1_0.duration,r1_0.operation,r1_0.relay_number,r1_0.sensor_id,r1_0.status from control_requests r1_0 where r1_0.id=?
+Hibernate: insert into request_change_log (change_description,change_timestamp,record_id) values (?,?,?)
+Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sensor_id=?,status=? where id=?
+```
+- Verify **`flexibility bridge service`** logs
+```
+2025-10-03T13:29:17.514+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseConsumer           : ? Received and successfully parsed JSON response for RequestID: 42
+2025-10-03T13:29:17.540+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseConsumer           : ?? Updated status to 'Parsed response recieved from Protocol adapter' for ID: 42
+2025-10-03T13:29:17.541+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseConsumer           : Attempting to publish final response (JSON object) for RequestID 42 back to Hub...
+2025-10-03T13:29:17.541+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseProducerToHub      : Attempting to publish final JSON response object (status: ERROR) for Request ID 42 to Exchange 'flexibility-bridge.exchange' with Routing Key 'flexibility-hub.response'
+2025-10-03T13:29:17.542+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseProducerToHub      : ? Successfully published final JSON response for Request ID 42 with status ERROR.
+2025-10-03T13:29:17.544+03:00 ERROR 24820 --- [ntContainer#1-1] c.a.f.service.ResponseConsumer           : Request 42 failed. Final status: Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)
+2025-10-03T13:29:17.567+03:00  INFO 24820 --- [ntContainer#1-1] c.a.f.service.ResponseConsumer           : ? Final status updated for RequestID 42 to Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.). Server response: Record status updated to Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.) for ID: 42
+```
+- Verify **`Flexibility hub simulator`** logs
+```
+2025-10-03T13:29:17.548+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           : =========================================================================================
+2025-10-03T13:29:17.549+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           : ? FINAL RESPONSE RECEIVED from Bridge for Request ID: 42
+2025-10-03T13:29:17.549+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    Status: ERROR
+2025-10-03T13:29:17.549+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    Message: Target sensor 'sensor-001' not found or offline.
+2025-10-03T13:29:17.549+03:00 ERROR 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    Error Code: 404
+2025-10-03T13:29:17.550+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           :    RAW RESPONSE JSON: MessageResponse{requestId='42', status='ERROR', message='Target sensor 'sensor-001' not found or offline.', errorCode='404', timestamp='null'}
+2025-10-03T13:29:17.551+03:00  INFO 16244 --- [ntContainer#0-1] c.a.f.service.ResponseConsumer           : =========================================================================================
+```
+- Database
+```sql
+mydatabase=# select * from control_requests;
+ id | duration | operation | relay_number | sensor_id  |                                          status
+----+----------+-----------+--------------+------------+------------------------------------------------------------------------------------------
+ 42 |        0 | DIRECT-ON |            1 | sensor-001 | Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)
+(1 row)
+
+
+mydatabase=# select * from request_change_log;
+ id  |                                                change_description                                                 |       change_timestamp        | record_id
+-----+-------------------------------------------------------------------------------------------------------------------+-------------------------------+-----------
+ 132 | Control Requested                                                                                                 | 2025-10-03 10:16:41.105162+00 |        42
+ 133 | Sent for protocol conversion                                                                                      | 2025-10-03 10:16:41.170938+00 |        42
+ 134 | message recieved for protocol conversion                                                                          | 2025-10-03 10:16:41.179569+00 |        42
+ 135 | protocol conversion done                                                                                          | 2025-10-03 10:16:41.212662+00 |        42
+ 136 | Sent to HES                                                                                                       | 2025-10-03 10:16:41.262414+00 |        42
+ 137 | Response recieved from HES                                                                                        | 2025-10-03 10:23:03.118948+00 |        42
+ 138 | Protocol conversion done for response                                                                             | 2025-10-03 10:23:03.149661+00 |        42
+ 139 | Response sent to Bridge - Final Status: COMPLETED                                                                 | 2025-10-03 10:23:03.18456+00  |        42
+ 140 | Parsed response recieved from Protocol adapter                                                                    | 2025-10-03 10:23:03.222596+00 |        42
+ 141 | Request staus: Completed                                                                                          | 2025-10-03 10:23:03.257418+00 |        42
+ 142 | Response recieved from HES                                                                                        | 2025-10-03 10:29:17.447798+00 |        42
+ 143 | Protocol conversion done for response                                                                             | 2025-10-03 10:29:17.482692+00 |        42
+ 144 | Response sent to Bridge - Final Status: FAILED (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.) | 2025-10-03 10:29:17.517319+00 |        42
+ 145 | Parsed response recieved from Protocol adapter                                                                    | 2025-10-03 10:29:17.524501+00 |        42
+ 146 | Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)                          | 2025-10-03 10:29:17.553575+00 |        42
+```
