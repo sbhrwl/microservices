@@ -14,55 +14,71 @@ public class RequestConsumer {
     private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
     
     private final RecordGrpcClient grpcClient;
-    private final RequestProducerForProtocolConversionService producerService; 
+    private final RequestProducerForHESService producerService; // RENAMED
+    private final ProtocolConverter protocolConverter;
 
-    public RequestConsumer(RecordGrpcClient grpcClient, RequestProducerForProtocolConversionService producerService) {
+    public RequestConsumer(
+            RecordGrpcClient grpcClient, 
+            RequestProducerForHESService producerService, // RENAMED
+            ProtocolConverter protocolConverter) {
         this.grpcClient = grpcClient;
         this.producerService = producerService;
+        this.protocolConverter = protocolConverter;
     }
 
     @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
     public void receiveResponse(RequestPayload payload) {
-        log.info("✅ Received request for Sensor ID: {}", payload.getSensorId());
+        // --- NEW: Retrieve the existing recordId from the incoming payload ---
+        String recordId = payload.getRecordId(); 
         
-        String recordId = null; // Variable to store the generated ID
+        log.info("✅ Received request for Sensor ID: {} with existing Record ID: {}", payload.getSensorId(), recordId);
+        
+        if (recordId == null || recordId.isEmpty()) {
+            log.error("❌ Incoming RequestPayload is missing a required recordId. Aborting processing.");
+            // In a production system, you might throw an exception here to dead-letter the message.
+            return;
+        }
 
         try {
-            // 1. Save to DB with status: REQUESTED
-            // For saving, we use the simpler conversion method (no ID needed)
-            RecordRequest saveRequest = convertToGrpcRequest(payload, "Control Requested", null);
+            // 1. UPDATE initial status to RECEIVED using the ID from the payload
+            RecordRequest initialUpdateRequest = convertToGrpcRequest(payload, "message recieved for protocol conversion", recordId);
+            grpcClient.updateRecordStatus(initialUpdateRequest);
             
-            // grpcClient.saveRecord now returns the generated unique ID (String)
-            recordId = grpcClient.saveRecord(saveRequest);
-            
-            log.info("➡️ Saved initial record to Storage Service. Status: Control Requested. Generated ID: {}", recordId);
-            log.debug("✅ gRPC save successful. Record ID returned: {}", recordId);
+            log.info("➡️ Updated initial record status to RECEIVED. ID: {}", recordId);
 
-            // 2. PUBLISH to the Connector queue
-            producerService.sendRequestToConnector(payload, recordId);
+            // 2. CONVERT JSON to XML
+            log.info("🔄 Starting protocol conversion for Record ID: {}", recordId);
+            String xmlPayload = protocolConverter.convertPayloadToXml(payload);
             
-            // 3. Update status in DB as SENT 
-            // We use the generated recordId from step 1 for the update request.
-            RecordRequest updateRequest = convertToGrpcRequest(payload, "Sent for protocol conversion", recordId);
-            String updateResponse = grpcClient.updateRecordStatus(updateRequest);
+            // 3. UPDATE status in DB as CONVERSION DONE
+            RecordRequest conversionDoneUpdate = convertToGrpcRequest(payload, "protocol conversion done", recordId);
+            grpcClient.updateRecordStatus(conversionDoneUpdate);
+            log.info("📝 Updated status to 'protocol conversion done' for ID: {}", recordId);
+            log.debug("Converted XML payload snippet: {}", xmlPayload.substring(0, Math.min(xmlPayload.length(), 100)));
 
-            log.info("📢 Updated record status to Sent for protocol conversion for request ID: {}. Publishing successful.", recordId);
+            // 4. PUBLISH to HES queue using the XML payload
+            producerService.sendRequestToHes(xmlPayload, recordId); 
+            
+            // 5. UPDATE status in DB as SENT TO HES
+            RecordRequest sentToHesUpdate = convertToGrpcRequest(payload, "Sent to HES", recordId);
+            String updateResponse = grpcClient.updateRecordStatus(sentToHesUpdate);
+
+            log.info("📢 Updated status to 'Sent to HES' for ID: {}. Publishing successful.", recordId);
             log.debug("✅ gRPC update successful. Server message: {}", updateResponse);
 
         } catch (Exception e) {
             log.error("❌ Fatal error in RequestConsumer for Sensor ID {} (Record ID {}): {}", 
-                      payload.getSensorId(), recordId != null ? recordId : "N/A", e.getMessage(), e);
+                      payload.getSensorId(), recordId, e.getMessage(), e);
         }
     }
 
     /**
      * Converts the internal MessagePayload object to the gRPC RecordRequest message.
-     * @param payload The original message payload.
-     * @param status The status to set (e.g., REQUESTED, SENT).
-     * @param recordId The unique ID of the record (required for updates, can be null for saves).
-     * @return A RecordRequest object ready for gRPC consumption.
+     * The recordId is now always expected to be present.
      */
     private RecordRequest convertToGrpcRequest(RequestPayload payload, String status, String recordId) {
+        // We now rely on recordId always being passed from the RequestPayload 
+        // to convertToGrpcRequest.
         RecordRequest.Builder builder = RecordRequest.newBuilder()
                 .setSensorId(payload.getSensorId())
                 .setOperation(payload.getOperation())
@@ -70,7 +86,7 @@ public class RequestConsumer {
                 .setDuration(payload.getDuration())
                 .setStatus(status);
 
-        // Include the ID only if it is provided (needed for updates)
+        // Record ID is required for update operation
         if (recordId != null && !recordId.isEmpty()) {
             builder.setRecordId(recordId);
         }
