@@ -16,6 +16,8 @@
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
+  - [Request](#request)
+  - [Response](#response)
 
 ## Verification
 ### Request
