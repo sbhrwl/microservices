@@ -1,7 +1,9 @@
 application:
-  name: IEC-adapter
+  name: hes-simulator
 
 spring:
+  main:
+    web-application-type: none # Explicitly disables the embedded web server, fixing the port conflict for broker services
   rabbitmq:
     host: localhost
     port: 5672
@@ -10,13 +12,19 @@ spring:
 
 messaging:
   rabbitmq:
-    exchange: connector.exchange
-    request-queue: flexibility-hub.request
-    response-queue: connector.response
-    request-routing-key: connector.request
-    response-routing-key: connector.response
+    # --- Exchange used for all routing ---
+    exchange: flexibility-bridge.exchange
+
+    # --- Request Path (Protocol adapter -> HES/Simulator) ---
+    request-inbound-queue: hes.request
+    request-outbound-routing-key: hes.request 
+
+    # --- Response Path (HES/Simulator -> Protocol adapter) ---
+    response-inbound-queue: hes.response
+    response-outbound-routing-key: hes.response
 
 logging:
   level:
     org.springframework.amqp: INFO
-    com.apexsphere.flexibility_bridge: DEBUG
+    # Assuming this will be the base package for your new HES simulator service
+    com.apexsphere.hes_simulator: DEBUG
