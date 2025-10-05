@@ -1,6 +1,5 @@
-# UiApp
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.
+# UI app
+- [Building new Angular app](https://github.com/sbhrwl/system_design/blob/main/docs/webapplication/new-app/README.md)
 
 ## Development server
 
