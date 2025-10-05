@@ -10,6 +10,7 @@
     - [Storage service restful](hub-to-sensor/storage-service/README.md)
   - [Protocol adapter service](hub-to-sensor/protocol-adapter-service/README.md)
   - [HES simulator](hub-to-sensor/hes-simulator/README.md)
+  - [UI app](hub-to-sensor/ui-app/README.md)
 - [Containers](containers/README.md)
 - [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
