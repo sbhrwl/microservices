@@ -30,4 +30,4 @@
 - `GET /requests/{id}/tracker`
 
 ## Swagger API documentation
-- [Swagger APU](https://github.com/sbhrwl/system_design/blob/main/docs/services/swaggerapi/README.md)
+- [Swagger API](https://github.com/sbhrwl/system_design/blob/main/docs/services/swaggerapi/README.md)
