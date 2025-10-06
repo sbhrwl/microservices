@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.apexsphere</groupId>
-	<artifactId>api-gateway </artifactId>
+	<artifactId>data-api-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api-gateway </name>
-	<description>API Gateway </description>
+	<name>data-api-service</name>
+	<description>Data api service</description>
 	<url/>
 	<licenses>
 		<license/>

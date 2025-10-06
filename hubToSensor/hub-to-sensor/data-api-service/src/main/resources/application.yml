@@ -1,0 +1,7 @@
+application:
+  name: data-api-service
+server:
+  port: 8085
+logging:
+  level:
+    com.apexsphere.data_api_service: DEBUG
