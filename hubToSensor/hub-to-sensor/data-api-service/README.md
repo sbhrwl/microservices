@@ -4,6 +4,7 @@
 - [Test control request](#test-control-request)
 - [Test request change log](#test-request-change-log)
 - [Test request tracker](#test-request-tracker)
+- [Swagger OpenAPI documentation](#swagger-openapi-documentation)
 ## APIs
 | API Name	| Endpoint	| Return Type (DTO)	| Implementation Focus (Java/Spring Boot)|
 | --------- | --------- | ----------------- | -------------------------------------- | 
@@ -27,3 +28,5 @@
 
 ## Test request tracker
 - `GET /requests/{id}/tracker`
+
+## Swagger OpenAPI documentation
