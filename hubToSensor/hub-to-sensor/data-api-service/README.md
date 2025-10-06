@@ -22,11 +22,11 @@
 - `Entity` → `Repository` → `DTO` → `Service` → `Controller`
 ## Test control request
 - `GET /requests/{id}`
-
+- `http://localhost:8085/api/v1/requests/42`
 ## Test request change log
 - `GET /requests/{id}/logs`
-
+- `http://localhost:8085/api/v1/requests/42/logs`
 ## Test request tracker
 - `GET /requests/{id}/tracker`
-
+- `http://localhost:8085/api/v1/requests/42/tracker`
 ## Swagger OpenAPI documentation
