@@ -20,7 +20,10 @@
 - **Controller** (REST Endpoints)
 - `Entity` → `Repository` → `DTO` → `Service` → `Controller`
 ## Test control request
+- `GET /requests/{id}`
 
 ## Test request change log
+- `GET /requests/{id}/logs`
 
 ## Test request tracker
+- `GET /requests/{id}/tracker`
