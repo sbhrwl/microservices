@@ -4,9 +4,10 @@
 - [Flexibility bridge service](flexibility-bridge-service/README.md)
 - [Storage service gRPC](storage-service-grpc/README.md)
   - [Storage service restful](storage-service/README.md)
-- [IEC adapter service](iec-adapter-service/README.md)
+- [Protocol adapter service](protocol-adapter-service/README.md)
 - [HES simulator](hes-simulator/README.md)
-
+- [Data API service](data-api-service/README.md)
+- [UI app](ui-app/README.md)
 <details>
   <summary>Parent pom.xml</summary>
 
