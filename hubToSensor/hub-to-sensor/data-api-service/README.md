@@ -4,7 +4,7 @@
 - [Test control request](#test-control-request)
 - [Test request change log](#test-request-change-log)
 - [Test request tracker](#test-request-tracker)
-- [Swagger OpenAPI documentation](#swagger-openapi-documentation)
+- [Swagger API documentation](#swagger-api-documentation)
 ## APIs
 | API Name	| Endpoint	| Return Type (DTO)	| Implementation Focus (Java/Spring Boot)|
 | --------- | --------- | ----------------- | -------------------------------------- | 
@@ -29,4 +29,5 @@
 ## Test request tracker
 - `GET /requests/{id}/tracker`
 - `http://localhost:8085/api/v1/requests/42/tracker`
-## Swagger OpenAPI documentation
+## Swagger API documentation
+- [Swagger API](https://github.com/sbhrwl/system_design/blob/main/docs/services/swaggerapi/README.md)
