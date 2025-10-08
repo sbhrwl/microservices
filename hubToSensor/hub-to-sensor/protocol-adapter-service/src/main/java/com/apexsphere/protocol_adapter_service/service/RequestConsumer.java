@@ -41,7 +41,7 @@ public class RequestConsumer {
 
         try {
             // 1. UPDATE initial status to RECEIVED using the ID from the payload
-            RecordRequest initialUpdateRequest = convertToGrpcRequest(payload, "message recieved for protocol conversion", recordId);
+            RecordRequest initialUpdateRequest = convertToGrpcRequest(payload, "Message recieved for protocol conversion", recordId);
             grpcClient.updateRecordStatus(initialUpdateRequest);
             
             log.info("➡️ Updated initial record status to RECEIVED. ID: {}", recordId);
@@ -51,7 +51,7 @@ public class RequestConsumer {
             String xmlPayload = protocolConverter.convertPayloadToXml(payload);
             
             // 3. UPDATE status in DB as CONVERSION DONE
-            RecordRequest conversionDoneUpdate = convertToGrpcRequest(payload, "protocol conversion done", recordId);
+            RecordRequest conversionDoneUpdate = convertToGrpcRequest(payload, "Protocol conversion done for request", recordId);
             grpcClient.updateRecordStatus(conversionDoneUpdate);
             log.info("📝 Updated status to 'protocol conversion done' for ID: {}", recordId);
             log.debug("Converted XML payload snippet: {}", xmlPayload.substring(0, Math.min(xmlPayload.length(), 100)));
@@ -60,7 +60,7 @@ public class RequestConsumer {
             producerService.sendRequestToHes(xmlPayload, recordId); 
             
             // 5. UPDATE status in DB as SENT TO HES
-            RecordRequest sentToHesUpdate = convertToGrpcRequest(payload, "Sent to HES", recordId);
+            RecordRequest sentToHesUpdate = convertToGrpcRequest(payload, "Request sent to HES", recordId);
             String updateResponse = grpcClient.updateRecordStatus(sentToHesUpdate);
 
             log.info("📢 Updated status to 'Sent to HES' for ID: {}. Publishing successful.", recordId);
