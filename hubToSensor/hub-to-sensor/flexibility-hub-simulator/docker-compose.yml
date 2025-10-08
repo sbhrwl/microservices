@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  flexibility-hub-simulator:
+    build:
+      context: .
+    image: flexibility-hub-simulator:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
