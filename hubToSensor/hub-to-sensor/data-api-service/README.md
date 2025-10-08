@@ -2,6 +2,7 @@
 - [APIs](#apis)
 - [Implementation order](#implementation-order)
 - [Test control request](#test-control-request)
+- [Test control request by ID](#test-control-request-by-id)
 - [Test request change log](#test-request-change-log)
 - [Test request tracker](#test-request-tracker)
 - [Swagger API documentation](#swagger-api-documentation)
@@ -21,6 +22,9 @@
 - **Controller** (REST Endpoints)
 - `Entity` → `Repository` → `DTO` → `Service` → `Controller`
 ## Test control request
+- `GET /requests/`
+- `http://localhost:8085/api/v1/requests`
+## Test control request by ID
 - `GET /requests/{id}`
 - `http://localhost:8085/api/v1/requests/42`
 ## Test request change log
