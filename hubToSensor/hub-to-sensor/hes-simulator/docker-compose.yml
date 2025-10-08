@@ -1,21 +1,5 @@
 version: '3.8'
 services:
-  # Message Broker
-  rabbitmq:
-    image: 'rabbitmq:3-management-alpine'
-    hostname: 'rabbitmq'
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-    ports:
-      - '5672:5672' # AMQP port
-      - '15672:15672' # Management console
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   # HES Simulator Service
   hes-simulator:
     build: . # Uses the Dockerfile in the current directory
@@ -26,6 +10,3 @@ services:
       - SPRING_RABBITMQ_HOST=rabbitmq 
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
-    depends_on:
-      rabbitmq:
-        condition: service_healthy # Waits for RabbitMQ to be ready
