@@ -20,7 +20,7 @@ public class ResponseConsumer {
      * The message converter automatically deserializes the JSON payload into a MessageResponse object.
      * @param response The deserialized final response object.
      */
-    @RabbitListener(queues = "${messaging.rabbitmq.response-inbound-queue}")
+    @RabbitListener(queues = "${messaging.rabbitmq.response-queue}")
     public void handleFinalResponse(MessageResponse response) {
         
         log.info("=========================================================================================");

@@ -21,10 +21,6 @@ messaging:
     request-routing-key: flexibility-hub.request
 
     # --- Response Path (Connector -> Hub) ---
-    # This property is required by the @RabbitListener in the ResponseConsumer.
-    response-inbound-queue: flexibility-hub.response
-
-    # These properties are required by the RabbitMQConfig for binding/template setup.
     response-queue: flexibility-hub.response
     response-routing-key: flexibility-hub.response
 

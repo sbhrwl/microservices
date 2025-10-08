@@ -3,28 +3,22 @@ application:
 
 spring:
   main:
-    web-application-type: none # Explicitly disables the embedded web server, fixing the port conflict for broker services
+    web-application-type: none
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: admin
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:admin}
 
 messaging:
   rabbitmq:
-    # --- Exchange used for all routing ---
-    exchange: flexibility-bridge.exchange
-
-    # --- Request Path (Protocol adapter -> HES/Simulator) ---
-    request-inbound-queue: hes.request
-    request-outbound-routing-key: hes.request 
-
-    # --- Response Path (HES/Simulator -> Protocol adapter) ---
-    response-inbound-queue: hes.response
-    response-outbound-routing-key: hes.response
+    exchange: ${FLEX_BRIDGE_EXCHANGE:flexibility-bridge.exchange}
+    request-inbound-queue: ${HES_REQUEST_INBOUND_QUEUE:hes.request}
+    request-outbound-routing-key: ${HES_REQUEST_OUTBOUND_KEY:hes.request}
+    response-inbound-queue: ${HES_RESPONSE_INBOUND_QUEUE:hes.response}
+    response-outbound-routing-key: ${HES_RESPONSE_OUTBOUND_KEY:hes.response}
 
 logging:
   level:
     org.springframework.amqp: INFO
-    # Assuming this will be the base package for your new HES simulator service
     com.apexsphere.hes_simulator: DEBUG
