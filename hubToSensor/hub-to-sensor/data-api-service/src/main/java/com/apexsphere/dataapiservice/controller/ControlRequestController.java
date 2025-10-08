@@ -61,4 +61,16 @@ public class ControlRequestController {
         RequestTrackerDTO dto = controlRequestService.getRequestTracker(id);
         return ResponseEntity.ok(dto);
     }
+
+    // ... inside ControlRequestController.java
+
+    /**
+     * API 0: All Request Details (New)
+     * Endpoint: GET /api/v1/requests
+     */
+    @GetMapping
+    public ResponseEntity<List<ControlRequestDTO>> getAllRequests() {
+        List<ControlRequestDTO> dtoList = controlRequestService.getAllRequestDetails();
+        return ResponseEntity.ok(dtoList);
+    }
 }

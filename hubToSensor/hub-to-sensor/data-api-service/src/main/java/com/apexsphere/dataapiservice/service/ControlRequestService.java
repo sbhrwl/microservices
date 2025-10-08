@@ -9,6 +9,7 @@ import com.apexsphere.dataapiservice.repository.ControlRequestRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List; // <-- FIXED: Added missing List import
 import java.util.stream.Collectors;
 
 @Service
@@ -39,12 +40,21 @@ public class ControlRequestService {
     @Transactional(readOnly = true)
     public RequestTrackerDTO getRequestTracker(Long id) {
         // FindById is sufficient; the @OneToMany relationship will load the logs (depending on FetchType).
-        // Since we need the logs for the DTO, EAGER or an explicit FETCH join is often used here for performance, 
-        // but we rely on the Entity definition for now.
         ControlRequest request = controlRequestRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Control Request not found with ID: " + id));
 
         return mapToRequestTrackerDTO(request);
+    }
+
+    /**
+     * Retrieves ALL Control Requests and maps them to a list of DTOs.
+     * Required for the initial list view.
+     */
+    @Transactional(readOnly = true)
+    public List<ControlRequestDTO> getAllRequestDetails() {
+        return controlRequestRepository.findAll().stream()
+            .map(this::mapToControlRequestDTO)
+            .collect(Collectors.toList());
     }
 
     // --- Mapping Methods (private) ---
