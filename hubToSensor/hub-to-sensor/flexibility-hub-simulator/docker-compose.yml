@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+  # Flexibility Hub Simulator Service
   flexibility-hub-simulator:
     build:
       context: .
@@ -7,6 +8,13 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_RABBITMQ_HOST=rabbitmq
+      # RabbitMQ Connection Details
+      - SPRING_RABBITMQ_HOST=rabbitmq 
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
+      # Messaging Config (Queues, Exchanges, Keys)
+      - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
+      - HUB_REQUEST_QUEUE=flexibility-hub.request
+      - HUB_REQUEST_KEY=flexibility-hub.request
+      - HUB_RESPONSE_QUEUE=flexibility-hub.response
+      - HUB_RESPONSE_KEY=flexibility-hub.response

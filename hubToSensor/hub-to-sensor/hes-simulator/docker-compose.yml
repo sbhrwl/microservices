@@ -1,12 +1,18 @@
-version: '3.8'
 services:
   # HES Simulator Service
   hes-simulator:
-    build: . # Uses the Dockerfile in the current directory
+    build: 
+      context: .
     image: hes-simulator:latest
     container_name: hes-simulator
     environment:
-      # Overrides the 'localhost' default in application.yml for container networking
+      # RabbitMQ Connection Details
       - SPRING_RABBITMQ_HOST=rabbitmq 
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
+      # Messaging Config (Queues, Exchanges, Keys)
+      - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
+      - HES_REQUEST_INBOUND_QUEUE=hes.request
+      - HES_REQUEST_OUTBOUND_KEY=hes.request
+      - HES_RESPONSE_INBOUND_QUEUE=hes.response
+      - HES_RESPONSE_OUTBOUND_KEY=hes.response
