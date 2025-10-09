@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  # Flexibility Bridge Service (Uses RabbitMQ and gRPC client)
+  flexibility-bridge:
+    build:
+      context: .
+    image: flexibility-bridge:latest
+    container_name: flexibility-bridge
+    environment:
+      # RabbitMQ Connection Details (Assumes "rabbitmq" is the hostname/alias)
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
+      
+      # Messaging Queues/Keys
+      - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
+      - HUB_REQUEST_INBOUND_QUEUE=flexibility-hub.request
+      - CONNECTOR_REQUEST_OUTBOUND_KEY=connector.request
+      - CONNECTOR_RESPONSE_INBOUND_QUEUE=connector.response
+      - HUB_RESPONSE_OUTBOUND_KEY=flexibility-hub.response
+      
+      # gRPC Client Connection (Assumes "storage-service" is the hostname/alias)
+      - STORAGE_SERVICE_HOST=storage-service
+      - STORAGE_SERVICE_PORT=9090

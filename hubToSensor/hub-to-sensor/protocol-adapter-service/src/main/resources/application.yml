@@ -3,31 +3,27 @@ application:
 
 spring:
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: admin
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:admin}
 
 messaging:
   rabbitmq:
-    # --- Exchange used for all routing ---
-    exchange: flexibility-bridge.exchange 
-    
-    # --- Request Path (Connector -> HES) ---
-    request-inbound-queue: connector.request
-    request-outbound-routing-key: hes.request
-
-    # --- Response Path (HES -> Connector) ---
-    response-inbound-queue: hes.response
-    response-outbound-routing-key: connector.response
+    exchange: ${FLEX_BRIDGE_EXCHANGE:flexibility-bridge.exchange}
+    request-inbound-queue: ${CONNECTOR_REQUEST_INBOUND_QUEUE:connector.request}
+    request-outbound-routing-key: ${HES_REQUEST_OUTBOUND_KEY:hes.request}
+    response-inbound-queue: ${HES_RESPONSE_INBOUND_QUEUE:hes.response}
+    response-outbound-routing-key: ${CONNECTOR_RESPONSE_OUTBOUND_KEY:connector.response}
 
 logging:
   level:
     org.springframework.amqp: INFO
     com.apexsphere.protocol-adapter-service: DEBUG
     io.grpc: DEBUG
+    
 grpc:
   client:
     storage-service:
-      host: localhost
-      port: 9090
+      host: ${STORAGE_SERVICE_HOST:localhost}
+      port: ${STORAGE_SERVICE_PORT:9090}
