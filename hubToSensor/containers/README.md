@@ -9,15 +9,15 @@
 
 | Steps                   | Flexibility hub simulator | Flexibility bridge |
 |-------------------------|-------------------|-------------|
-| application.yml | [application.yml](https://github.com/sbhrwl/microservices/blob/main/hub-to-sensor/flexibility-hub-simulator/src/main/resources/application.yml)    |[application.yml](https://github.com/sbhrwl/microservices/blob/main/hub-to-sensor/flexibility-bridge-service/src/main/resources/application.yml)    |
+| application.yml | [application.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/src/main/resources/application.yml)    |[application.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/src/main/resources/application.yml)    |
 | Build jar       | `mvn clean package`  |`mvn clean package`   |
-| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hub-to-sensor/flexibility-hub-simulator/Dockerfile)  |[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hub-to-sensor/flexibility-bridge-service/Dockerfile)  |
+| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/Dockerfile)  |[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/Dockerfile)  |
 
 ### Using docker compose
 
 | Steps                  | Flexibility hub simulator | Flexibility bridge |
 |------------------------|-------------------|------------- |
-| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hub-to-sensor/flexibility-hub-simulator/docker-compose.yml) |[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hub-to-sensor/flexibility-bridge-service/docker-compose.yml)|
+| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/docker-compose.yml) |[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/docker-compose.yml)|
 | Run container          | `docker-compose up --build -d` |`docker-compose up --build -d`  |
 | Stop container         | `docker-compose stop`   |`docker-compose stop`   |
 | Stop & remove resources| `docker-compose down`   |`docker-compose down`   |
