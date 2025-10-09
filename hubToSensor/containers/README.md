@@ -15,9 +15,9 @@
 
 ### Using docker compose
 
-| Steps                  | Flexibility hub simulator | Flexibility bridge |
-|------------------------|-------------------|------------- |
-| docker-compose.yml     | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/docker-compose.yml) |[docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/docker-compose.yml)|
-| Run container          | `docker-compose up --build -d` |`docker-compose up --build -d`  |
-| Stop container         | `docker-compose stop`   |`docker-compose stop`   |
-| Stop & remove resources| `docker-compose down`   |`docker-compose down`   |
+| Steps | Flexibility hub simulator | Flexibility bridge | Storage service | Protocol adapter | HES simulator | Data API | UI app |
+|---|---|---|---|---|---|---|---|
+| docker-compose.yml | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/storage-service-grpc/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/protocol-adapter-service/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/hes-simulator/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/data-api-service/docker-compose.yml) | [docker-compose.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/docker-compose.yml) |
+| Run container | `docker-compose up --build -d` | `docker-compose up --build -d` | `docker-compose up --build -d` | `docker-compose up --build -d` | `docker-compose up --build -d` | `docker-compose up --build -d` | `docker-compose up --build -d` |
+| Stop container | `docker-compose stop` | `docker-compose stop` | `docker-compose stop` | `docker-compose stop` | `docker-compose stop` | `docker-compose stop` | `docker-compose stop` |
+| Stop & remove resources| `docker-compose down` | `docker-compose down` | `docker-compose down` | `docker-compose down` | `docker-compose down` | `docker-compose down` | `docker-compose down` |
