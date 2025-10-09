@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  # Storage Service (Uses PostgreSQL)
+  storage-service:
+    build:
+      context: .
+    image: storage-service:latest
+    container_name: storage-service
+    ports:
+      - "9090:9090" # gRPC Port
+    environment:
+      # Database Connection (Assumes "postgres" is the hostname/alias)
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASS=mypassword
+      # gRPC Server Port
+      - GRPC_SERVER_PORT=9090
