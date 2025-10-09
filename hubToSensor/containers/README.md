@@ -11,7 +11,7 @@
 |-------------------------|-------------------|-------------|
 | application.yml | [application.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/src/main/resources/application.yml)    |[application.yml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/src/main/resources/application.yml)    |
 | Build jar       | `mvn clean package`  |`mvn clean package`   |
-| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/Dockerfile)  |[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/Dockerfile)  |
+| Dockerfile      | [Dockerfile](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-hub-simulator/Dockerfile)  |[Dockerfile](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/flexibility-bridge-service/Dockerfile)  |
 
 ### Using docker compose
 
