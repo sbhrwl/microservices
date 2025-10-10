@@ -9,7 +9,7 @@ services:
       - "8081:8081"
     environment:
       # RabbitMQ Connection Details
-      - SPRING_RABBITMQ_HOST=rabbitmq 
+      - SPRING_RABBITMQ_HOST=host.docker.internal
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
       # Messaging Config (Queues, Exchanges, Keys)

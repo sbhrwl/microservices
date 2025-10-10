@@ -9,7 +9,7 @@ services:
     ports:
       - "9090:9090" # gRPC Port
     environment:
-      # Database Connection (Assumes "postgres" is the hostname/alias)
+      # Database Connection
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_NAME=mydatabase

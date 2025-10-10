@@ -7,8 +7,8 @@ services:
     image: flexibility-bridge:latest
     container_name: flexibility-bridge
     environment:
-      # RabbitMQ Connection Details (Assumes "rabbitmq" is the hostname/alias)
-      - SPRING_RABBITMQ_HOST=rabbitmq
+      # RabbitMQ Connection Details
+      - SPRING_RABBITMQ_HOST=host.docker.internal
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
       
