@@ -7,18 +7,18 @@ services:
     image: protocol-adapter:latest
     container_name: protocol-adapter
     environment:
-      # RabbitMQ Connection Details
+      # RabbitMQ connection details
       - SPRING_RABBITMQ_HOST=host.docker.internal
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
       
-      # Messaging Queues/Keys
+      # Messaging queues/keys
       - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
       - CONNECTOR_REQUEST_INBOUND_QUEUE=connector.request
       - HES_REQUEST_OUTBOUND_KEY=hes.request
       - HES_RESPONSE_INBOUND_QUEUE=hes.response
       - CONNECTOR_RESPONSE_OUTBOUND_KEY=connector.response
       
-      # gRPC Client Connection (Assumes "storage-service" is the hostname/alias)
+      # gRPC client connection ("storage-service" is the hostname/alias)
       - STORAGE_SERVICE_HOST=storage-service
       - STORAGE_SERVICE_PORT=9090

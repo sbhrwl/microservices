@@ -7,18 +7,18 @@ services:
     image: flexibility-bridge:latest
     container_name: flexibility-bridge
     environment:
-      # RabbitMQ Connection Details
+      # RabbitMQ connection details
       - SPRING_RABBITMQ_HOST=host.docker.internal
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
       
-      # Messaging Queues/Keys
+      # Messaging queues/keys
       - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
       - HUB_REQUEST_INBOUND_QUEUE=flexibility-hub.request
       - CONNECTOR_REQUEST_OUTBOUND_KEY=connector.request
       - CONNECTOR_RESPONSE_INBOUND_QUEUE=connector.response
       - HUB_RESPONSE_OUTBOUND_KEY=flexibility-hub.response
       
-      # gRPC Client Connection (Assumes "storage-service" is the hostname/alias)
+      # gRPC client connection ("storage-service" is the hostname/alias)
       - STORAGE_SERVICE_HOST=storage-service
       - STORAGE_SERVICE_PORT=9090
