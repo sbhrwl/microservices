@@ -93,13 +93,13 @@ hes-simulator-deployment-977b4865c-lrs8t                1/1     Running   0     
 protocol-adapter-deployment-5567c667f8-8r6hb            1/1     Running   0          22s
 storage-service-deployment-6c896f58bc-pkjbg             1/1     Running   0          22s
 ui-app-deployment-5467d4fbf8-pvf82                      1/1     Running   0          22s
-C:\Git\microservices\hubToSensor\kubernetes>kubectl get services
+C:\Git\microservices\hubToSensor\kubernetes>kubectl get svc
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-data-api-service                    NodePort    10.100.157.121   <none>        8085:30748/TCP   12s
-flexibility-hub-simulator-service   NodePort    10.96.92.244     <none>        8081:32024/TCP   12s
+data-api-service                    NodePort    10.100.198.123   <none>        8085:30885/TCP   11s
+flexibility-hub-simulator-service   NodePort    10.101.32.144    <none>        8081:30881/TCP   11s
 kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          159d
-storage-service-service             ClusterIP   10.99.149.151    <none>        9090/TCP         12s
-ui-app-service                      NodePort    10.101.147.103   <none>        8080:32688/TCP   12s
+storage-service-service             ClusterIP   10.108.210.58    <none>        9090/TCP         11s
+ui-app-service                      NodePort    10.96.99.235     <none>        8080:30880/TCP   11s
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
