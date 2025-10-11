@@ -95,20 +95,19 @@ storage-service-deployment-6c896f58bc-pkjbg             1/1     Running   0     
 ui-app-deployment-5467d4fbf8-pvf82                      1/1     Running   0          22s
 C:\Git\microservices\hubToSensor\kubernetes>kubectl get services
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-data-api-service                    NodePort    10.108.126.10    <none>        8085:30411/TCP   16s
-flexibility-hub-simulator-service   ClusterIP   10.104.94.2      <none>        8081/TCP         16s
+data-api-service                    NodePort    10.100.157.121   <none>        8085:30748/TCP   12s
+flexibility-hub-simulator-service   NodePort    10.96.92.244     <none>        8081:32024/TCP   12s
 kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          159d
-storage-service-service             ClusterIP   10.107.61.60     <none>        9090/TCP         16s
-ui-app-service                      NodePort    10.106.194.160   <none>        8080:32711/TCP   16s
+storage-service-service             ClusterIP   10.99.149.151    <none>        9090/TCP         12s
+ui-app-service                      NodePort    10.101.147.103   <none>        8080:32688/TCP   12s
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/` → `flexibility-hub-simulator`
-  * ClusterIP service → `storage-service`
-  * rabbitmq listener → `flexibility-bridge`
-  * ClusterIP service → `hes-simulator`
+  * `http://localhost:32024/api/messages` → `flexibility-hub-simulator`
+  * `http://192.168.0.103:30748/` → `data-api-servic`
+  * `http://192.168.0.103:32497/` → `ui-app`
 ## Cleanup
 ```
 kubectl delete -f orchestrate-hubtosensor-services.yaml
