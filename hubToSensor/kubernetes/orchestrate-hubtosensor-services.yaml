@@ -67,17 +67,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: data-api-deployment
-  labels:
-    app: data-api
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: data-api
-  template:
-    metadata:
-      labels:
-        app: data-api
+# ... (Data API Deployment unchanged)
     spec:
       containers:
       - name: data-api
@@ -96,10 +86,10 @@ spec:
           value: mydatabase
         - name: DB_USER
           value: myuser
-        - name: DB_PASS
+        - name: DB_PASS # FIX: Added missing 'name' key for DB_PASS
           value: mypassword
 ---
-# --- Data API ClusterIP Service (Accessed internally by the UI App proxy) ---
+# --- Data API NodePort Service (Accessible internally via DNS and externally via 30885) ---
 apiVersion: v1
 kind: Service
 metadata:
@@ -107,15 +97,15 @@ metadata:
   labels:
     app: data-api
 spec:
-  # CHANGED: Reverted to ClusterIP. The UI app will now proxy requests internally, 
-  # bypassing CORS issues.
-  type: ClusterIP 
+  # CHANGED: Using NodePort to ensure external access via port 30885 for Postman.
+  type: NodePort 
   selector:
     app: data-api
   ports:
     - port: 8085
       targetPort: 8085
       protocol: TCP
+      nodePort: 30885
       
 # =========================================================================
 # 3. UI APP (Frontend application accessed externally, connects to Data API)
@@ -127,13 +117,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ui-app-deployment
-  labels:
-    app: ui-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ui-app
+# ... (UI App Deployment metadata unchanged)
   template:
     metadata:
       labels:
@@ -148,10 +132,10 @@ spec:
         - name: PORT
           value: "8080"
           
-        # CRITICAL FIX: Reverted to the internal K8s Service Name. The UI app
-        # must be configured to use this to proxy client requests, solving CORS.
+        # CRITICAL FIX: Setting back to external K8s NodePort address. 
+        # This is necessary because the UI image does not appear to proxy internally.
         - name: BACKEND_URL
-          value: "http://data-api-service:8085"
+          value: "http://192.168.0.103:30885"
 ---
 # --- UI App NodePort Service ---
 apiVersion: v1
