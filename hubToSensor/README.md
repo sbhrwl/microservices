@@ -75,6 +75,14 @@ Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sen
 2025-10-03T13:16:41.242+03:00  INFO 31916 --- [ntContainer#0-1] c.a.p.s.RequestProducerForHESService     : ? Successfully published HES request for Record ID: 42
 2025-10-03T13:16:41.298+03:00  INFO 31916 --- [ntContainer#0-1] c.a.p.service.RequestConsumer            : ? Updated status to 'Sent to HES' for ID: 42. Publishing successful.
 ```
+- Verify **`hes simulator`** logs
+```
+2025-10-11T16:35:46.096Z  INFO 1 --- [           main] c.a.h.HESsimulatorApplication            : Started HESsimulatorApplication in 3.781 seconds (process running for 4.475)
+2025-10-11T16:38:16.933Z DEBUG 1 --- [ntContainer#0-1] c.a.h.service.HESSimulatorService        : Full received HES Request XML:
+"<HesRequest id=\"sensor-002\">    <RequestID>54</RequestID>    <operation>DIRECT-ON</operation>    <relay>1</relay>    <duration>0</duration></HesRequest>"
+2025-10-11T16:38:16.936Z  INFO 1 --- [ntContainer#0-1] c.a.h.service.HESSimulatorService        : 📧 Received HES Request with ID: 54. Starting 60-second simulation delay.
+2025-10-11T16:38:16.959Z  INFO 1 --- [ntContainer#0-1] c.a.h.service.HESSimulatorService        : ✅ HES Response sent for ID: 54. Status: ERROR
+```
 - Verify PostgreSQL
 ```sql
 PS C:\Users\sabharwalr> psql -h localhost -U myuser -d mydatabase
