@@ -17,7 +17,7 @@ spec:
       containers:
       - name: flexibility-hub-simulator
         # Use the image name from your docker-compose
-        image: flexibility-hub-simulator:latest
+        image: sbhrwldocker/flexibility-hub-simulator:latest
         ports:
         # The internal port the application listens on
         - containerPort: 8081
