@@ -95,7 +95,7 @@ spec:
           value: mydatabase
         - name: DB_USER
           value: myuser
-        - name: DB_PASS # FIX: Added missing 'name' key for DB_PASS
+        - name: DB_PASS
           value: mypassword
 ---
 # --- Data API NodePort Service ---
@@ -147,9 +147,10 @@ spec:
         - name: PORT
           value: "8080"
           
-        # NOTE: Internal K8s Service name for Data API
+        # CRITICAL FIX: The UI is accessed externally, so its client-side API
+        # calls must point to the Data API's external NodePort (30885).
         - name: BACKEND_URL
-          value: "http://data-api-service:8085"
+          value: "http://192.168.0.103:30885"
 ---
 # --- UI App NodePort Service ---
 apiVersion: v1
@@ -358,7 +359,7 @@ spec:
           value: "192.168.0.103" 
         - name: SPRING_RABBITMQ_USERNAME
           value: admin
-        - name: SPRING_RABBITMQ_PASSWORD # FIX: Added missing 'name' key for RabbitMQ Password
+        - name: SPRING_RABBITMQ_PASSWORD
           value: admin
         - name: FLEX_BRIDGE_EXCHANGE
           value: flexibility-bridge.exchange
