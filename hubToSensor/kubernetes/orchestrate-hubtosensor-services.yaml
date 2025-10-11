@@ -95,7 +95,6 @@ spec:
           value: mydatabase
         - name: DB_USER
           value: myuser
-        - name: DB_PASS
           value: mypassword
 ---
 # --- Data API NodePort Service ---
@@ -271,7 +270,8 @@ spec:
     - protocol: TCP
       port: 8081 
       targetPort: 8081
-  type: ClusterIP # Change to NodePort/LoadBalancer if you need external access
+  # CHANGED: Use NodePort to allow external access (like cURL or Postman)
+  type: NodePort 
 
 # =========================================================================
 # 6. FLEXIBILITY BRIDGE (Connects to Storage Service (gRPC) and RabbitMQ)
@@ -354,7 +354,6 @@ spec:
           value: "192.168.0.103" 
         - name: SPRING_RABBITMQ_USERNAME
           value: admin
-        - name: SPRING_RABBITMQ_PASSWORD
           value: admin
         - name: FLEX_BRIDGE_EXCHANGE
           value: flexibility-bridge.exchange
