@@ -95,6 +95,7 @@ spec:
           value: mydatabase
         - name: DB_USER
           value: myuser
+        - name: DB_PASS # FIX: Added missing 'name' key for DB_PASS
           value: mypassword
 ---
 # --- Data API NodePort Service ---
@@ -354,6 +355,7 @@ spec:
           value: "192.168.0.103" 
         - name: SPRING_RABBITMQ_USERNAME
           value: admin
+        - name: SPRING_RABBITMQ_PASSWORD
           value: admin
         - name: FLEX_BRIDGE_EXCHANGE
           value: flexibility-bridge.exchange
