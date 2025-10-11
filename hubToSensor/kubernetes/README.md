@@ -9,6 +9,7 @@
 - [Cleanup](#cleanup)
 ## Push images to Docker registry
 - [Docker repository](https://hub.docker.com/repositories/sbhrwldocker)
+- Make sure you are logged in via docker desktop to Docker registry and then push images to docker registry
 ```
 docker push sbhrwldocker/flexibility-hub-simulator:latest
 docker push sbhrwldocker/storage-service:latest
