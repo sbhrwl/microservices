@@ -13,7 +13,10 @@
 docker push sbhrwldocker/flexibility-hub-simulator:latest
 docker push sbhrwldocker/storage-service:latest
 docker push sbhrwldocker/flexibility-bridge:latest
+docker push sbhrwldocker/protocol-adapter:latest
 docker push sbhrwldocker/hes-simulator:latest
+docker push sbhrwldocker/data-api:latest
+docker push sbhrwldocker/ui-app:latest
 ```
 ## Deployment files 
 - We need to configue deployment files such that rabbitmq and postgresql are accessible from kubernetes
