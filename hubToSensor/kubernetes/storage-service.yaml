@@ -1,60 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: task-orchestrator
+  name: storage-service-deployment
+  labels:
+    app: storage-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: task-orchestrator
+      app: storage-service
   template:
     metadata:
       labels:
-        app: task-orchestrator
+        app: storage-service
     spec:
       containers:
-        - name: task-orchestrator
-          image: sbhrwldocker/task-orchestrator:latest
-          ports:
-            - containerPort: 9081
-          env:
-            - name: SERVER_PORT
-              value: "9081"
-            - name: KEYCLOAK_ISSUER_URI
-              value: "http://10.158.22.221:8080/realms/master"
-            - name: KEYCLOAK_JWK_SET_URI
-              value: "http://10.158.22.221:8080/realms/master/protocol/openid-connect/certs"
-            - name: KEYCLOAK_CLIENT_ID
-              value: "task-service"
-            - name: KEYCLOAK_PROVIDER
-              value: "keycloak"
-            - name: CORS_ALLOWED_ORIGINS
-              value: "http://localhost:9081"
-            - name: KAFKA_HOST
-              value: "host.docker.internal"
-            - name: KAFKA_PORT
-              value: "29092"
-            - name: KAFKA_TASK_REG_TOPIC
-              value: "task-topic"
-            - name: MONGO_HOST
-              value: "host.docker.internal"
-            - name: MONGO_PORT
-              value: "27017"
-            - name: MONGO_USERNAME
-              value: "root"
-            - name: MONGO_PASSWORD
-              value: "root123"
-
+      - name: storage-service
+        # Using the fully qualified image name from your compose file
+        image: sbhrwldocker/storage-service:latest
+        ports:
+        # Port for internal traffic (gRPC)
+        - containerPort: 9090
+        env:
+        # NOTE: Using external PostgreSQL IP
+        # Replace 192.168.0.103 with the actual IP address of your external PostgreSQL host.
+        - name: DB_HOST
+          value: "192.168.0.103" 
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: mydatabase
+        - name: DB_USER
+          value: myuser
+        - name: DB_PASS
+          value: mypassword
+        - name: GRPC_SERVER_PORT
+          value: "9090"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: task-orchestrator
+  name: storage-service-service
 spec:
-  type: NodePort
   selector:
-    app: task-orchestrator
+    app: storage-service
   ports:
-    - port: 9081
-      targetPort: 9081
-      nodePort: 30081
+    # Service Port -> Target Port (container port)
+    - protocol: TCP
+      port: 9090 
+      targetPort: 9090
+      name: grpc
+  type: ClusterIP # Use ClusterIP since this is likely an internal gRPC service
