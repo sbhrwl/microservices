@@ -16,15 +16,13 @@ docker push sbhrwldocker/flexibility-bridge:latest
 docker push sbhrwldocker/hes-simulator:latest
 ```
 ## Deployment files 
-- We need to configue deployment files such that MongoDB, Kafka and Keycloak are accessible from kubernetes
-  - Set the right **`hostname/IP`** in the Deployment env vars so that Kubernetes pod can reach MongoDB, Kafka and Keycloak
-  - Check IP address of your laptop where these are running as docker containers: `ipconfig` - **192.168.0.102**
-  - **mongo-test**: `kubectl run mongo-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 27017`
-  - **kafka-test**: `kubectl run kafka-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 29092`
-  - **keycloak-test**: `kubectl run keycloak-test --rm -it --image=busybox --restart=Never -- sh`
-    - `nc -zv 192.168.0.102 8080`
+- We need to configue deployment files such that rabbitmq and postgresql are accessible from kubernetes
+  - Set the right **`hostname/IP`** in the Deployment env vars so that Kubernetes pod can reach rabbitmq and postgresql
+  - Check IP address of your laptop where these are running as docker containers: `ipconfig` - **192.168.0.103**
+  - **rabbitmq-test**: `kubectl run rabbitmq-test --rm -it --image=busybox --restart=Never -- sh`
+    - `nc -zv 192.168.0.103 15672`
+  - **postgresql-test**: `kubectl run postgresql-test --rm -it --image=busybox --restart=Never -- sh`
+    - `nc -zv 192.168.0.103 5432`
 - [`flexibility-hub-simulator.yaml`](flexibility-hub-simulator.yaml)
 - [`storage-service.yaml`](storage-service.yaml)
 - [`flexibility-bridge.yaml`](flexibility-bridge.yaml)
@@ -97,7 +95,7 @@ flexibility-hub-simulator      NodePort    10.107.144.94   <none>        9081:30
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/` → `flexibility-hub-simulator`
   * ClusterIP service → `storage-service`
-  * Kafka listener → `flexibility-bridge`
+  * rabbitmq listener → `flexibility-bridge`
   * ClusterIP service → `hes-simulator`
 ## Cleanup
 ```
