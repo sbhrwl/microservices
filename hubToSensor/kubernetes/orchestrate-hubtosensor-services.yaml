@@ -35,6 +35,7 @@ spec:
           value: mydatabase
         - name: DB_USER
           value: myuser
+          # FIX: Added missing 'name' key for DB_PASS
         - name: DB_PASS
           value: mypassword
         - name: GRPC_SERVER_PORT
@@ -98,7 +99,7 @@ spec:
         - name: DB_PASS
           value: mypassword
 ---
-# --- Data API NodePort Service ---
+# --- Data API ClusterIP Service (Accessed internally by the UI App proxy) ---
 apiVersion: v1
 kind: Service
 metadata:
@@ -106,15 +107,15 @@ metadata:
   labels:
     app: data-api
 spec:
-  # Expose as NodePort only if external access is needed, otherwise ClusterIP is fine
-  type: NodePort 
+  # CHANGED: Reverted to ClusterIP. The UI app will now proxy requests internally, 
+  # bypassing CORS issues.
+  type: ClusterIP 
   selector:
     app: data-api
   ports:
     - port: 8085
       targetPort: 8085
       protocol: TCP
-      nodePort: 30885 # Fixed NodePort adjusted to fall within the K8s default range (30000-32767)
       
 # =========================================================================
 # 3. UI APP (Frontend application accessed externally, connects to Data API)
@@ -147,10 +148,10 @@ spec:
         - name: PORT
           value: "8080"
           
-        # CRITICAL FIX: The UI is accessed externally, so its client-side API
-        # calls must point to the Data API's external NodePort (30885).
+        # CRITICAL FIX: Reverted to the internal K8s Service Name. The UI app
+        # must be configured to use this to proxy client requests, solving CORS.
         - name: BACKEND_URL
-          value: "http://192.168.0.103:30885"
+          value: "http://data-api-service:8085"
 ---
 # --- UI App NodePort Service ---
 apiVersion: v1
