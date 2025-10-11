@@ -72,26 +72,34 @@ kubectl delete -f ui-app.yaml
 ```
 ## Verify deployment
 ```
-PS C:\Git\microservices\hubToSensor\kubernetes> kubectl apply -f orchestrate-hubtosensor-services.yaml
-deployment.apps/flexibility-hub-simulator created
-service/flexibility-hub-simulator created
-deployment.apps/storage-service created
-service/storage-service created
-deployment.apps/flexibility-bridge created
-deployment.apps/hes-simulator created
-service/hes-simulator created
-PS C:\Git\microservices\hubToSensor\kubernetes> kubectl get pods
-NAME                                   READY   STATUS    RESTARTS   AGE
-storage-service-8589d7f68-7q6bd   1/1     Running   0          28s
-flexibility-bridge-f468cfc55-j9d6z       1/1     Running   0          27s
-hes-simulator-5b7686d8c-qqmt5       1/1     Running   0          27s
-flexibility-hub-simulator-7cb78c878-88khr      1/1     Running   0          28s
-PS C:\Git\microservices\hubToSensor\kubernetes> kubectl get services
-NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-storage-service   ClusterIP   10.104.94.116   <none>        9082/TCP         36s
-kubernetes             ClusterIP   10.96.0.1       <none>        443/TCP          35d
-hes-simulator       ClusterIP   10.98.42.15     <none>        9084/TCP         35s
-flexibility-hub-simulator      NodePort    10.107.144.94   <none>        9081:30081/TCP   36s
+C:\Git\microservices\hubToSensor\kubernetes>kubectl apply -f orchestrate-hubtosensor-services.yaml
+deployment.apps/storage-service-deployment created
+service/storage-service-service created
+deployment.apps/data-api-deployment created
+service/data-api-service created
+deployment.apps/ui-app-deployment created
+service/ui-app-service created
+deployment.apps/hes-simulator-deployment created
+deployment.apps/flexibility-hub-simulator-deployment created
+service/flexibility-hub-simulator-service created
+deployment.apps/flexibility-bridge-deployment created
+deployment.apps/protocol-adapter-deployment created
+C:\Git\microservices\hubToSensor\kubernetes>kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS   AGE
+data-api-deployment-79777d6b4-xg2vg                     1/1     Running   0          22s
+flexibility-bridge-deployment-97b6d9955-zcgnj           1/1     Running   0          22s
+flexibility-hub-simulator-deployment-5856885dc6-mp6bz   1/1     Running   0          22s
+hes-simulator-deployment-977b4865c-lrs8t                1/1     Running   0          22s
+protocol-adapter-deployment-5567c667f8-8r6hb            1/1     Running   0          22s
+storage-service-deployment-6c896f58bc-pkjbg             1/1     Running   0          22s
+ui-app-deployment-5467d4fbf8-pvf82                      1/1     Running   0          22s
+C:\Git\microservices\hubToSensor\kubernetes>kubectl get services
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+data-api-service                    NodePort    10.108.126.10    <none>        8085:30411/TCP   16s
+flexibility-hub-simulator-service   ClusterIP   10.104.94.2      <none>        8081/TCP         16s
+kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          159d
+storage-service-service             ClusterIP   10.107.61.60     <none>        9090/TCP         16s
+ui-app-service                      NodePort    10.106.194.160   <none>        8080:32711/TCP   16s
 ```
 
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
