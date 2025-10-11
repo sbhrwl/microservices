@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexibility-hub-simulator-deployment
+  labels:
+    app: flexibility-hub-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flexibility-hub-simulator
+  template:
+    metadata:
+      labels:
+        app: flexibility-hub-simulator
+    spec:
+      containers:
+      - name: flexibility-hub-simulator
+        # Use the image name from your docker-compose
+        image: flexibility-hub-simulator:latest
+        ports:
+        # The internal port the application listens on
+        - containerPort: 8081
+        env:
+        # NOTE: 'host.docker.internal' is for Docker Desktop.
+        # In K8s, we use the host IP or service name for external dependencies.
+        # ipconfig and check ip of your machine
+        - name: SPRING_RABBITMQ_HOST
+          value: "192.168.0.103" 
+        - name: SPRING_RABBITMQ_USERNAME
+          value: admin
+        - name: SPRING_RABBITMQ_PASSWORD
+          value: admin
+        # Messaging Config
+        - name: FLEX_BRIDGE_EXCHANGE
+          value: flexibility-bridge.exchange
+        - name: HUB_REQUEST_QUEUE
+          value: flexibility-hub.request
+        - name: HUB_REQUEST_KEY
+          value: flexibility-hub.request
+        - name: HUB_RESPONSE_QUEUE
+          value: flexibility-hub.response
+        - name: HUB_RESPONSE_KEY
+          value: flexibility-hub.response
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flexibility-hub-simulator-service
+spec:
+  selector:
+    app: flexibility-hub-simulator
+  ports:
+    # Service Port (what K8s exposes) -> Target Port (container port)
+    - protocol: TCP
+      port: 8081 
+      targetPort: 8081
+  type: LoadBalancer # Use LoadBalancer to expose externally (or ClusterIP/NodePort as needed)

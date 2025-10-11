@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-simulator
+  template:
+    metadata:
+      labels:
+        app: sensor-simulator
+    spec:
+      containers:
+        - name: sensor-simulator
+          image: sbhrwldocker/sensor-simulator:latest
+          ports:
+            - containerPort: 9084
+          env:
+            - name: SERVER_PORT
+              value: "9084"
+            - name: SENSOR_SIMULATOR_ENDPOINT
+              value: "/simulate"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-simulator
+spec:
+  selector:
+    app: sensor-simulator
+  ports:
+    - port: 9084
+      targetPort: 9084
+  type: ClusterIP

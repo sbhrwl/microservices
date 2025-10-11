@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: protocol-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: protocol-gateway
+  template:
+    metadata:
+      labels:
+        app: protocol-gateway
+    spec:
+      containers:
+        - name: protocol-gateway
+          image: sbhrwldocker/protocol-gateway:latest
+          ports:
+            - containerPort: 9083
+          env:
+            - name: SERVER_PORT
+              value: "9083"
+            - name: KAFKA_HOST
+              value: "host.docker.internal"
+            - name: KAFKA_PORT
+              value: "29092"
+            - name: KAFKA_COMMAND_TOPIC
+              value: "command-topic"
+            - name: PROTOCOL_TYPE
+              value: "dlms"
+            - name: SENSOR_SIMULATOR_URL
+              value: "http://sensor-simulator:9084/simulate"
