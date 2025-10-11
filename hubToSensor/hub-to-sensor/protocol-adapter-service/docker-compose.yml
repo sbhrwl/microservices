@@ -4,7 +4,7 @@ services:
   protocol-adapter:
     build:
       context: .
-    image: protocol-adapter:latest
+    image: sbhrwldocker/protocol-adapter:latest
     container_name: protocol-adapter
     environment:
       # RabbitMQ connection details

@@ -4,7 +4,7 @@ services:
   flexibility-hub-simulator:
     build:
       context: .
-    image: flexibility-hub-simulator:latest
+    image: sbhrwldocker/flexibility-hub-simulator:latest
     ports:
       - "8081:8081"
     environment:

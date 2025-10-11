@@ -4,7 +4,7 @@ services:
   data-api-service:
     build:
       context: .
-    image: data-api-service:latest
+    image: sbhrwldocker/data-api-service:latest
     container_name: data-api-service
     ports:
       - "8085:8085"

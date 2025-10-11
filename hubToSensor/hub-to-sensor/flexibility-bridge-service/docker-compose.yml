@@ -4,7 +4,7 @@ services:
   flexibility-bridge:
     build:
       context: .
-    image: flexibility-bridge:latest
+    image: sbhrwldocker/flexibility-bridge:latest
     container_name: flexibility-bridge
     environment:
       # RabbitMQ connection details

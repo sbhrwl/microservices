@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ui-app:latest
+    image: sbhrwldocker/ui-app:latest
     environment:
       - PORT=8080
       - BACKEND_URL=http://host.docker.internal:8085
