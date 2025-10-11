@@ -1,60 +1,48 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: task-orchestrator
+  name: ui-app-deployment
+  labels:
+    app: ui-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: task-orchestrator
+      app: ui-app
   template:
     metadata:
       labels:
-        app: task-orchestrator
+        app: ui-app
     spec:
       containers:
-        - name: task-orchestrator
-          image: sbhrwldocker/task-orchestrator:latest
-          ports:
-            - containerPort: 9081
-          env:
-            - name: SERVER_PORT
-              value: "9081"
-            - name: KEYCLOAK_ISSUER_URI
-              value: "http://10.158.22.221:8080/realms/master"
-            - name: KEYCLOAK_JWK_SET_URI
-              value: "http://10.158.22.221:8080/realms/master/protocol/openid-connect/certs"
-            - name: KEYCLOAK_CLIENT_ID
-              value: "task-service"
-            - name: KEYCLOAK_PROVIDER
-              value: "keycloak"
-            - name: CORS_ALLOWED_ORIGINS
-              value: "http://localhost:9081"
-            - name: KAFKA_HOST
-              value: "host.docker.internal"
-            - name: KAFKA_PORT
-              value: "29092"
-            - name: KAFKA_TASK_REG_TOPIC
-              value: "task-topic"
-            - name: MONGO_HOST
-              value: "host.docker.internal"
-            - name: MONGO_PORT
-              value: "27017"
-            - name: MONGO_USERNAME
-              value: "root"
-            - name: MONGO_PASSWORD
-              value: "root123"
-
+      - name: ui-app
+        image: sbhrwldocker/ui-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        # --- Application Port ---
+        - name: PORT
+          value: "8080"
+          
+        # --- Backend API Connection (Internal K8s Service) ---
+        # The Pod now uses the internal ClusterIP service name of the data-api-service
+        - name: BACKEND_URL
+          value: "http://data-api-service:8085"
 ---
+# Service (exposes the Deployment via a NodePort)
 apiVersion: v1
 kind: Service
 metadata:
-  name: task-orchestrator
+  name: ui-app-service
+  labels:
+    app: ui-app
 spec:
-  type: NodePort
+  # NodePort allows external access (e.g., via your browser)
+  type: NodePort 
   selector:
-    app: task-orchestrator
+    app: ui-app
   ports:
-    - port: 9081
-      targetPort: 9081
-      nodePort: 30081
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP

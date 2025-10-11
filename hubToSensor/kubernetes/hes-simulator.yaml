@@ -1,37 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sensor-simulator
+  name: hes-simulator-deployment
+  labels:
+    app: hes-simulator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sensor-simulator
+      app: hes-simulator
   template:
     metadata:
       labels:
-        app: sensor-simulator
+        app: hes-simulator
     spec:
       containers:
-        - name: sensor-simulator
-          image: sbhrwldocker/sensor-simulator:latest
-          ports:
-            - containerPort: 9084
-          env:
-            - name: SERVER_PORT
-              value: "9084"
-            - name: SENSOR_SIMULATOR_ENDPOINT
-              value: "/simulate"
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sensor-simulator
-spec:
-  selector:
-    app: sensor-simulator
-  ports:
-    - port: 9084
-      targetPort: 9084
-  type: ClusterIP
+      - name: hes-simulator
+        # Image from your docker-compose file
+        image: sbhrwldocker/hes-simulator:latest
+        env:
+        # --- RabbitMQ Connection (External) ---
+        # Using the host IP confirmed in previous steps for RabbitMQ
+        - name: SPRING_RABBITMQ_HOST
+          value: "192.168.0.103" 
+        - name: SPRING_RABBITMQ_USERNAME
+          value: admin
+        - name: SPRING_RABBITMQ_PASSWORD
+          value: admin
+          
+        # --- Messaging Queues/Keys ---
+        - name: FLEX_BRIDGE_EXCHANGE
+          value: flexibility-bridge.exchange
+        - name: HES_REQUEST_INBOUND_QUEUE
+          value: hes.request
+        - name: HES_REQUEST_OUTBOUND_KEY
+          value: hes.request
+        - name: HES_RESPONSE_INBOUND_QUEUE
+          value: hes.response
+        - name: HES_RESPONSE_OUTBOUND_KEY
+          value: hes.response

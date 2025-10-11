@@ -1,60 +1,60 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: task-orchestrator
+  name: data-api-deployment
+  labels:
+    app: data-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: task-orchestrator
+      app: data-api
   template:
     metadata:
       labels:
-        app: task-orchestrator
+        app: data-api
     spec:
       containers:
-        - name: task-orchestrator
-          image: sbhrwldocker/task-orchestrator:latest
-          ports:
-            - containerPort: 9081
-          env:
-            - name: SERVER_PORT
-              value: "9081"
-            - name: KEYCLOAK_ISSUER_URI
-              value: "http://10.158.22.221:8080/realms/master"
-            - name: KEYCLOAK_JWK_SET_URI
-              value: "http://10.158.22.221:8080/realms/master/protocol/openid-connect/certs"
-            - name: KEYCLOAK_CLIENT_ID
-              value: "task-service"
-            - name: KEYCLOAK_PROVIDER
-              value: "keycloak"
-            - name: CORS_ALLOWED_ORIGINS
-              value: "http://localhost:9081"
-            - name: KAFKA_HOST
-              value: "host.docker.internal"
-            - name: KAFKA_PORT
-              value: "29092"
-            - name: KAFKA_TASK_REG_TOPIC
-              value: "task-topic"
-            - name: MONGO_HOST
-              value: "host.docker.internal"
-            - name: MONGO_PORT
-              value: "27017"
-            - name: MONGO_USERNAME
-              value: "root"
-            - name: MONGO_PASSWORD
-              value: "root123"
+      - name: data-api
+        image: sbhrwldocker/data-api:latest
+        ports:
+        - containerPort: 8085
+        env:
+        # --- Application Port ---
+        - name: SERVER_PORT
+          value: "8085"
+          
+        # --- Database Connection (External) ---
+        # Using the host IP confirmed in previous steps
+        - name: DB_HOST
+          value: "192.168.0.103" 
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: mydatabase
+        - name: DB_USER
+          value: myuser
+        - name: DB_PASS
+          value: mypassword
 
 ---
+# Service (exposes the Deployment via a NodePort)
 apiVersion: v1
 kind: Service
 metadata:
-  name: task-orchestrator
+  name: data-api-service
+  labels:
+    app: data-api
 spec:
-  type: NodePort
+  # Use NodePort to expose the service externally, which is helpful 
+  # for frontends running outside the cluster.
+  type: NodePort 
   selector:
-    app: task-orchestrator
+    app: data-api
   ports:
-    - port: 9081
-      targetPort: 9081
-      nodePort: 30081
+    # Service port (used for internal communication)
+    - port: 8085
+      # Target port on the container (matches the SERVER_PORT env var)
+      targetPort: 8085
+      protocol: TCP
