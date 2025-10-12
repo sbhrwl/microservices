@@ -47,6 +47,7 @@
 - [**data-api-deployment**](orchestrate-hubtosensor-services/templates/data-api-deployment.yaml)
 - [**data-api-service**](orchestrate-hubtosensor-services/templates/data-api-service.yaml)
 - [**ui-app-deployment**](orchestrate-hubtosensor-services/templates/ui-app-deployment.yaml)
+- [**ui-app-service**](orchestrate-hubtosensor-services/templates/ui-app-service.yaml)
 - [**`values.yaml`**](orchestrate-hubtosensor-services/values.yaml)
 ### Chart structure
 ```pgsql
