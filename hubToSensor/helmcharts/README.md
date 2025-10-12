@@ -37,25 +37,31 @@
   _helpers.tpl
   ```
 ## Convert deployment YAMLs into a Helm template
-- [**task-orchestrator-deployment**](orchestrate-hubtosensor-services/templates/task-orchestrator-deployment.yaml)
-- [**task-orchestrator-service**](orchestrate-hubtosensor-services/templates/task-orchestrator-service.yaml)
-- [**command-orchestrator-deployment**](orchestrate-hubtosensor-services/templates/command-orchestrator-deployment.yaml)
-- [**command-orchestrator-service**](orchestrate-hubtosensor-services/templates/command-orchestrator-service.yaml)
-- [**protocol-gateway-deployment**](orchestrate-hubtosensor-services/templates/protocol-gateway-deployment.yaml)
-- [**sensor-simulator-deployment**](orchestrate-hubtosensor-services/templates/sensor-simulator-deployment.yaml)
-- [**sensor-simulator-service**](orchestrate-hubtosensor-services/templates/sensor-simulator-service.yaml)
+- [**flexibility-hub-simulator-deployment**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-deployment.yaml)
+- [**flexibility-hub-simulator-service**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-service.yaml)
+- [**storage-service-deployment**](orchestrate-hubtosensor-services/templates/storage-service-deployment.yaml)
+- [**storage-service-service**](orchestrate-hubtosensor-services/templates/storage-service-service.yaml)
+- [**flexibility-bridge-deployment**](orchestrate-hubtosensor-services/templates/flexibility-bridge-deployment.yaml)
+- [**protocol-adapter-deployment**](orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml)
+- [**hes-simulator-deployment**](orchestrate-hubtosensor-services/templates/hes-simulator-deployment.yaml)
+- [**data-api-deployment**](orchestrate-hubtosensor-services/templates/data-api-deployment.yaml)
+- [**data-api-service**](orchestrate-hubtosensor-services/templates/data-api-service.yaml)
+- [**ui-app-deployment**](orchestrate-hubtosensor-services/templates/ui-app-deployment.yaml)
 - [**`values.yaml`**](orchestrate-hubtosensor-services/values.yaml)
 ### Chart structure
 ```pgsql
 orchestrate-hubtosensor-services/
 ├── templates/
-│   ├── task-orchestrator-deployment.yaml
-│   ├── task-orchestrator-service.yaml
-│   ├── command-orchestrator-deployment.yaml
-│   ├── command-orchestrator-service.yaml
-│   ├── protocol-gateway-deployment.yaml
-│   ├── sensor-simulator-deployment.yaml
-│   ├── sensor-simulator-service.yaml
+│   ├── flexibility-hub-simulator-deployment.yaml
+│   ├── flexibility-hub-simulator-service.yaml
+│   ├── storage-service-deployment.yaml
+│   ├── storage-service-service.yaml
+│   ├── flexibility-bridge-deployment.yaml
+│   ├── protocol-adapter-deployment.yaml
+│   ├── hes-simulator-deployment.yaml
+│   ├── data-api-deployment.yaml
+│   ├── data-api-service.yaml
+│   ├── ui-app-deployment.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
