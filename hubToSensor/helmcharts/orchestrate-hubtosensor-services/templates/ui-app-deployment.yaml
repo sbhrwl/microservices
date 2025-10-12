@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "uiApp.name" . }}
+  labels:
+    app: {{ .Values.uiApp.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.uiApp.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.uiApp.name }}
+    spec:
+      containers:
+      - name: {{ .Values.uiApp.name }}
+        image: "{{ .Values.uiApp.image }}:{{ .Values.uiApp.tag }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.uiApp.port }}
+        env:
+        - name: PORT
+          value: "{{ .Values.uiApp.port }}"
+        # UI App connects to the external NodePort of the Data API
+        - name: BACKEND_URL
+          value: {{ .Values.uiApp.backendUrl }}

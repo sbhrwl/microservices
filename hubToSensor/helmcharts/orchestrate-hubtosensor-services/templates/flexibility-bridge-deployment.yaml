@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexibility-bridge-deployment
+  labels:
+    app: flexibility-bridge
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: flexibility-bridge
+  template:
+    metadata:
+      labels:
+        app: flexibility-bridge
+    spec:
+      containers:
+      - name: flexibility-bridge
+        image: "{{ .Values.flexibilityBridge.image | default "sbhrwldocker/flexibility-bridge" }}:{{ .Values.flexibilityBridge.tag | default "latest" }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        env:
+        # External RabbitMQ Connection
+        - name: SPRING_RABBITMQ_HOST
+          value: "{{ .Values.rabbitmq.host }}"
+        - name: SPRING_RABBITMQ_USERNAME
+          value: {{ .Values.rabbitmq.username }}
+        - name: SPRING_RABBITMQ_PASSWORD
+          value: {{ .Values.rabbitmq.password }}
+        - name: FLEX_BRIDGE_EXCHANGE
+          value: {{ .Values.rabbitmq.exchange }}
+        
+        # Messaging Config
+        - name: HUB_REQUEST_INBOUND_QUEUE
+          value: flexibility-hub.request
+        - name: CONNECTOR_REQUEST_OUTBOUND_KEY
+          value: connector.request
+        - name: CONNECTOR_RESPONSE_INBOUND_QUEUE
+          value: connector.response
+        - name: HUB_RESPONSE_OUTBOUND_KEY
+          value: flexibility-hub.response
+
+        # Internal Storage Service Connection (K8s Service Name)
+        - name: STORAGE_SERVICE_HOST
+          value: {{ .Values.storageService.name }}-service
+        - name: STORAGE_SERVICE_PORT
+          value: "{{ .Values.storageService.grpcPort }}"

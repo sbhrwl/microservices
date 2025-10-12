@@ -62,6 +62,7 @@ orchestrate-hubtosensor-services/
 │   ├── data-api-deployment.yaml
 │   ├── data-api-service.yaml
 │   ├── ui-app-deployment.yaml
+│   ├── ui-app-service.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml

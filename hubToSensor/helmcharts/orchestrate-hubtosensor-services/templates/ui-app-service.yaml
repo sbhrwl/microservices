@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "uiApp.name" . }}-service
+  labels:
+    app: {{ .Values.uiApp.name }}
+spec:
+  # NodePort to access the frontend from your browser
+  type: NodePort 
+  selector:
+    app: {{ .Values.uiApp.name }}
+  ports:
+    - port: {{ .Values.uiApp.port }}
+      targetPort: {{ .Values.uiApp.port }}
+      protocol: TCP
+      nodePort: {{ .Values.uiApp.nodePort }}
