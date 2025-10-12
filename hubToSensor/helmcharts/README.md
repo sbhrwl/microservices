@@ -117,10 +117,9 @@ ui-app-676567d78f-smk9m                                 1/1     Running   0     
 
 C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-data-api-service                    NodePort    10.109.147.145   <none>        8085:30885/TCP   47s
 flexibility-hub-simulator-service   NodePort    10.102.128.78    <none>        8081:30881/TCP   47s
-kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          160d
 storage-service-service             ClusterIP   10.98.125.63     <none>        9090/TCP         47s
+data-api-service                    NodePort    10.109.147.145   <none>        8085:30885/TCP   47s
 ui-app-service                      NodePort    10.106.186.119   <none>        8080:30880/TCP   47s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
