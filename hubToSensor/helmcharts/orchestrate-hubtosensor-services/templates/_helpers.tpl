@@ -60,3 +60,42 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+# --- START: Service-Specific Name Helpers (Required for all components) ---
+
+{{/*
+Service Name: storageService
+*/}}
+{{- define "storageService.name" -}}
+{{- .Values.storageService.name -}}
+{{- end }}
+
+{{/*
+Service Name: dataApi
+*/}}
+{{- define "dataApi.name" -}}
+{{- .Values.dataApi.name -}}
+{{- end }}
+
+{{/*
+Service Name: uiApp
+*/}}
+{{- define "uiApp.name" -}}
+{{- .Values.uiApp.name -}}
+{{- end }}
+
+{{/*
+Service Name: hesSimulator
+*/}}
+{{- define "hesSimulator.name" -}}
+{{- .Values.hesSimulator.name -}}
+{{- end }}
+
+{{/*
+Service Name: flexibilityHubSimulator
+*/}}
+{{- define "flexibilityHubSimulator.name" -}}
+{{- .Values.flexibilityHubSimulator.name -}}
+{{- end }}
+
+# --- END: Service-Specific Name Helpers ---
