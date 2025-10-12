@@ -101,7 +101,15 @@ kubernetes                          ClusterIP   10.96.0.1        <none>        4
 storage-service-service             ClusterIP   10.108.210.58    <none>        9090/TCP         11s
 ui-app-service                      NodePort    10.96.99.235     <none>        8080:30880/TCP   11s
 ```
-
+- Flow among services
+```
+Postman → NodePort (30881) → Flexibility Hub Simulator
+Hub Simulator → ClusterIP → Flexibility Bridge
+Flexibility Bridge → ClusterIP → Storage Service
+Protocol Adapter → ClusterIP → HES Simulator
+Browser (localhost:30880) → NodePort → UI App
+UI App → ClusterIP → Data API
+```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
