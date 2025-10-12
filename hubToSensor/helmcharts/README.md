@@ -75,13 +75,13 @@ kubectl delete -f orchestrate-hubtosensor-services.yaml
 ## Install Helm release
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 ```powershell
-helm install ocs-release .
+helm install ocs-h2s-release .
 ```
-- **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
+- **`ocs-h2s-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> helm install ocs-release .
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> helm install ocs-h2s-release .
 NAME: ocs-release
 LAST DEPLOYED: Mon Jun  9 15:52:31 2025
 NAMESPACE: default
@@ -110,12 +110,11 @@ ocs-release-microservices-task-orchestrator      NodePort    10.106.218.124   <n
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `http://localhost:30081/` → `task-orchestrator`
-  * ClusterIP service → `command-orchestrator`
-  * Kafka listener → `protocol-gateway`
-  * ClusterIP service → `sensor-simulator`
+  * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
+  * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
+  * `ui-app` → `http://localhost:30880/`
 ## Uninstall Helm release
-- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
+- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-h2s-release`
 ```
-helm uninstall ocs-release
+helm uninstall ocs-h2s-release
 ``` 
