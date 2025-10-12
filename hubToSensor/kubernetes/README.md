@@ -95,11 +95,11 @@ storage-service-deployment-6c896f58bc-pkjbg             1/1     Running   0     
 ui-app-deployment-5467d4fbf8-pvf82                      1/1     Running   0          22s
 C:\Git\microservices\hubToSensor\kubernetes>kubectl get svc
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-data-api-service                    NodePort    10.100.198.123   <none>        8085:30885/TCP   11s
 flexibility-hub-simulator-service   NodePort    10.101.32.144    <none>        8081:30881/TCP   11s
-kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          159d
 storage-service-service             ClusterIP   10.108.210.58    <none>        9090/TCP         11s
+data-api-service                    NodePort    10.100.198.123   <none>        8085:30885/TCP   11s
 ui-app-service                      NodePort    10.96.99.235     <none>        8080:30880/TCP   11s
+kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          159d
 ```
 - Flow among services
 ```
