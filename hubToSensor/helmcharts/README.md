@@ -82,31 +82,45 @@ helm install ocs-h2s-release .
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> helm install ocs-h2s-release .
-NAME: ocs-release
-LAST DEPLOYED: Mon Jun  9 15:52:31 2025
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+Error: INSTALLATION FAILED: template: orchestrate-hubtosensor-services/templates/ui-app-service.yaml:4:11: executing "orchestrate-hubtosensor-services/templates/ui-app-service.yaml" at <include "uiApp.name" .>: error calling include: template: no template "uiApp.name" associated with template "gotpl"
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+Error: INSTALLATION FAILED: template: orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml:19:26: executing "orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml" at <.Values.protocolAdapter.image>: nil pointer evaluating interface {}.image
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+NAME: ocs-h2s-release
+LAST DEPLOYED: Sun Oct 12 11:31:07 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> helm list
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-release     default         1               2025-06-09 15:52:31.1892375 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-release     default         1               2025-06-09 15:52:31.1892375 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> kubectl get pods
-NAME                                                              READY   STATUS    RESTARTS   AGE
-ocs-release-microservices-command-orchestrator-789c6d7877-sxt82   1/1     Running   0          15s
-ocs-release-microservices-protocol-gateway-7f86cfb765-hzdd4       1/1     Running   0          15s
-ocs-release-microservices-sensor-simulator-5b7686d8c-xrkqd        1/1     Running   0          15s
-ocs-release-microservices-task-orchestrator-69555b676c-jnqt2      1/1     Running   0          15s
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-hubtosensor-services> kubectl get svc
-NAME                                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes                                       ClusterIP   10.96.0.1        <none>        443/TCP          35d
-ocs-release-microservices-command-orchestrator   ClusterIP   10.110.54.37     <none>        9082/TCP         19s
-ocs-release-microservices-sensor-simulator       ClusterIP   10.106.33.26     <none>        9084/TCP         19s
-ocs-release-microservices-task-orchestrator      NodePort    10.106.218.124   <none>        9081:31200/TCP   19s
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list -A
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS     AGE
+data-api-65c7b7b9d7-n5nnv                               1/1     Running   0            36s
+flexibility-bridge-deployment-54884f5cc4-qrpqg          1/1     Running   1 (9s ago)   36s
+flexibility-hub-simulator-deployment-6d4c545887-7rgkt   1/1     Running   0            36s
+hes-simulator-deployment-6f8f6b66-5vnhh                 1/1     Running   0            36s
+protocol-adapter-deployment-5b499cb96c-bkxnf            1/1     Running   1 (9s ago)   36s
+storage-service-deployment-6f99954b-8tdmn               1/1     Running   1 (4s ago)   36s
+ui-app-676567d78f-smk9m                                 1/1     Running   0            36s
+
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+data-api-service                    NodePort    10.109.147.145   <none>        8085:30885/TCP   47s
+flexibility-hub-simulator-service   NodePort    10.102.128.78    <none>        8081:30881/TCP   47s
+kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          160d
+storage-service-service             ClusterIP   10.98.125.63     <none>        9090/TCP         47s
+ui-app-service                      NodePort    10.106.186.119   <none>        8080:30880/TCP   47s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
