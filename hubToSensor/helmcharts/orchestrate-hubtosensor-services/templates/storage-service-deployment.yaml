@@ -23,7 +23,7 @@ spec:
         env:
         # External PostgreSQL Connection
         - name: DB_HOST
-          value: "{{ .Values.db.host }}"
+          value: "{{ .Values.global.hostIp }}"
         - name: DB_PORT
           value: "{{ .Values.db.port }}"
         - name: DB_NAME

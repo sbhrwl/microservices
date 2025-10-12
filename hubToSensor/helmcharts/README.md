@@ -8,6 +8,7 @@
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
+- [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
@@ -128,6 +129,10 @@ ui-app-service                      NodePort    10.106.186.119   <none>        8
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
   * `ui-app` → `http://localhost:30880/`
+## Update Helm release
+```
+helm upgrade --install ocs-h2s-release .
+```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-h2s-release`
 ```

@@ -23,7 +23,7 @@ spec:
         env:
         # External RabbitMQ Connection
         - name: SPRING_RABBITMQ_HOST
-          value: "{{ .Values.rabbitmq.host }}"
+          value: "{{ .Values.global.hostIp }}"
         - name: SPRING_RABBITMQ_USERNAME
           value: {{ .Values.rabbitmq.username }}
         - name: SPRING_RABBITMQ_PASSWORD
