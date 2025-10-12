@@ -103,12 +103,11 @@ ui-app-service                      NodePort    10.96.99.235     <none>        8
 ```
 - Flow among services
 ```
-Postman → NodePort (30881) → Flexibility Hub Simulator
-Hub Simulator → ClusterIP → Flexibility Bridge
-Flexibility Bridge → ClusterIP → Storage Service
-Protocol Adapter → ClusterIP → HES Simulator
-Browser (localhost:30880) → NodePort → UI App
-UI App → ClusterIP → Data API
+Postman → NodePort 30881 → Flexibility Hub Simulator
+Flexibility Bridge/Protocol adapter→ ClusterIP → Storage Service
+Browser → NodePort 30880 → UI App
+UI App → NodePort 30885 → Data API
+External clients → NodePort 30885 → Data API
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
