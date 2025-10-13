@@ -44,7 +44,7 @@ ocs-release# Horizontal Pod Autoscalar
   ├── .helmignore
   ```
 ## Install Helm release
-- Go to Helm chart folder (e.g., [orchestrate-hubtosensor-services](orchestrate-hubtosensor-services)), run this command:
+- Go to Helm chart folder (e.g., [orchestrate-hubtosensor-services](orchestrate-hubtosensor-services), run this command:
   ```bash
   helm install ocs-h2shpa-release .
   ```
