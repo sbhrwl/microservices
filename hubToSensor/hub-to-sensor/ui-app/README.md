@@ -8,8 +8,8 @@
 ## Kubernetes deployment
 ### Get the IP for cluster
 - `kubectl get nodes -o wide`: `192.168.65.3`
-- Port:`30880/`
-- [Build app](src\environments\environment.prod.ts): `ng build --configuration=production`
+- Port:`30880`
+- [Build app](src/environments/environment.prod.ts): `ng build --configuration=production`
 - App Url: `http://192.168.65.3:30880/`
 - This is still failing, so refer section **Port forward**
 ### Port forward
