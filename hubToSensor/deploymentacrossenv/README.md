@@ -91,27 +91,62 @@ helm install ocs-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm install ocs-dev . -n dev
-NAME: ocs-dev
-LAST DEPLOYED: Mon Jun  9 20:43:34 2025
-NAMESPACE: dev
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl create namespace staging
+namespace/staging created
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm install ocs-staging . -f values-staging.yaml -n staging
+NAME: ocs-staging
+LAST DEPLOYED: Mon Oct 13 11:06:27 2025
+NAMESPACE: staging
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm list -n dev
-NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-dev dev             1               2025-06-09 20:43:34.7918091 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get pods -n dev
-NAME                                                          READY   STATUS    RESTARTS   AGE
-ocs-dev-microservices-command-orchestrator-789c6d7877-4h5hs   1/1     Running   0          26s
-ocs-dev-microservices-protocol-gateway-7f86cfb765-b59lb       1/1     Running   0          26s
-ocs-dev-microservices-sensor-simulator-5b7686d8c-8lthj        1/1     Running   0          26s
-ocs-dev-microservices-task-orchestrator-69555b676c-ms6ft      1/1     Running   0          26s
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get svc -n dev
-NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-ocs-dev-microservices-command-orchestrator   ClusterIP   10.110.31.157   <none>        9082/TCP         32s
-ocs-dev-microservices-sensor-simulator       ClusterIP   10.107.86.93    <none>        9084/TCP         32s
-ocs-dev-microservices-task-orchestrator      NodePort    10.108.173.61   <none>        9081:30557/TCP   32s
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -A
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-staging     staging         1               2025-10-13 11:06:27.5528108 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -n staging
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-staging     staging         1               2025-10-13 11:06:27.5528108 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get all -n staging
+NAME                                                        READY   STATUS             RESTARTS   AGE
+pod/data-api-546dbcd7c5-dwjxv                               0/1     ErrImagePull       0          21s
+pod/flexibility-bridge-deployment-6d5d5c5cc8-j976f          0/1     ErrImagePull       0          21s
+pod/flexibility-hub-simulator-deployment-77fdf75db9-g6gzz   0/1     ErrImagePull       0          21s
+pod/hes-simulator-deployment-5fc6b865d6-rpg47               0/1     ErrImagePull       0          21s
+pod/protocol-adapter-deployment-67bdb4db9c-l79ds            0/1     ImagePullBackOff   0          21s
+pod/storage-service-deployment-795bf87594-nxq6f             0/1     ImagePullBackOff   0          21s
+pod/ui-app-8bf7fb47c-p8mxr                                  0/1     ErrImagePull       0          21s
+
+NAME                                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/data-api-service                    NodePort    10.106.179.103   <none>        8085:30885/TCP   21s
+service/flexibility-hub-simulator-service   NodePort    10.96.63.5       <none>        8081:30881/TCP   21s
+service/storage-service-service             ClusterIP   10.99.13.202     <none>        9090/TCP         21s
+service/ui-app-service                      NodePort    10.96.200.210    <none>        8080:30880/TCP   21s
+
+NAME                                                   READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/data-api                               0/1     1            0           21s
+deployment.apps/flexibility-bridge-deployment          0/1     1            0           21s
+deployment.apps/flexibility-hub-simulator-deployment   0/1     1            0           21s
+deployment.apps/hes-simulator-deployment               0/1     1            0           21s
+deployment.apps/protocol-adapter-deployment            0/1     1            0           21s
+deployment.apps/storage-service-deployment             0/1     1            0           21s
+deployment.apps/ui-app                                 0/1     1            0           21s
+
+NAME                                                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/data-api-546dbcd7c5                               1         1         0       21s
+replicaset.apps/flexibility-bridge-deployment-6d5d5c5cc8          1         1         0       21s
+replicaset.apps/flexibility-hub-simulator-deployment-77fdf75db9   1         1         0       21s
+replicaset.apps/hes-simulator-deployment-5fc6b865d6               1         1         0       21s
+replicaset.apps/protocol-adapter-deployment-67bdb4db9c            1         1         0       21s
+replicaset.apps/storage-service-deployment-795bf87594             1         1         0       21s
+replicaset.apps/ui-app-8bf7fb47c                                  1         1         0       21s
+
+NAME                                                                REFERENCE                                         TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/data-api-deployment                    cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          21s
+horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          21s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
