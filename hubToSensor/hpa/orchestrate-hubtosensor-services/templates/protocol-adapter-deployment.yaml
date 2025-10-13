@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: protocol-adapter-deployment
+  labels:
+    app: protocol-adapter
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: protocol-adapter
+  template:
+    metadata:
+      labels:
+        app: protocol-adapter
+    spec:
+      containers:
+      - name: protocol-adapter
+        image: "{{ .Values.protocolAdapter.image | default "sbhrwldocker/protocol-adapter" }}:{{ .Values.protocolAdapter.tag | default "latest" }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        env:
+        # External RabbitMQ Connection
+        - name: SPRING_RABBITMQ_HOST
+          value: "{{ .Values.global.hostIp }}"
+        - name: SPRING_RABBITMQ_USERNAME
+          value: {{ .Values.rabbitmq.username }}
+        - name: SPRING_RABBITMQ_PASSWORD
+          value: {{ .Values.rabbitmq.password }}
+        - name: FLEX_BRIDGE_EXCHANGE
+          value: {{ .Values.rabbitmq.exchange }}
+        
+        # Messaging Config
+        - name: CONNECTOR_REQUEST_INBOUND_QUEUE
+          value: connector.request
+        - name: HES_REQUEST_OUTBOUND_KEY
+          value: hes.request
+        - name: HES_RESPONSE_INBOUND_QUEUE
+          value: hes.response
+        - name: CONNECTOR_RESPONSE_OUTBOUND_KEY
+          value: connector.response
+
+        # Internal Storage Service Connection (K8s Service Name)
+        - name: STORAGE_SERVICE_HOST
+          value: {{ .Values.storageService.name }}-service
+        - name: STORAGE_SERVICE_PORT
+          value: "{{ .Values.storageService.grpcPort }}"
