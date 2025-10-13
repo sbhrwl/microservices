@@ -51,67 +51,76 @@ ocs-release# Horizontal Pod Autoscalar
 
 ## Verify release
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> helm install ocs-h2shpa-release .
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm install ocs-h2shpa-release .
 NAME: ocs-h2shpa-release
-LAST DEPLOYED: Mon Jun  9 20:33:04 2025
+LAST DEPLOYED: Mon Oct 13 10:51:34 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> helm list
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-h2shpa-release default         1               2025-06-09 20:33:04.8829931 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-h2shpa-release default         1               2025-06-09 20:33:04.8829931 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> kubectl get pods
-NAME                                                              READY   STATUS    RESTARTS   AGE
-ocs-h2shpa-release-microservices-command-orchestrator-789c6d7sbdgq   1/1     Running   0          26s
-ocs-h2shpa-release-microservices-protocol-gateway-7f86cfb765-mtzl4   1/1     Running   0          26s
-ocs-h2shpa-release-microservices-sensor-simulator-5b7686d8c-n86fm    1/1     Running   0          26s
-ocs-h2shpa-release-microservices-task-orchestrator-69555b676cbzc25   1/1     Running   0          26s
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> kubectl get svc
-NAME                                                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-kubernetes                                           ClusterIP   10.96.0.1       <none>        443/TCP          35d
-ocs-h2shpa-release-microservices-command-orchestrator   ClusterIP   10.108.97.239   <none>        9082/TCP         32s
-ocs-h2shpa-release-microservices-sensor-simulator       ClusterIP   10.97.46.170    <none>        9084/TCP         32s
-ocs-h2shpa-release-microservices-task-orchestrator      NodePort    10.96.175.72    <none>        9081:32147/TCP   32s
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-h2shpa-release      default         1               2025-10-13 10:51:34.5736087 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -A
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-h2shpa-release      default         1               2025-10-13 10:51:34.5736087 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get pods
+NAME                                                    READY   STATUS    RESTARTS   AGE
+data-api-66c7b99b9-4qndq                                1/1     Running   0          38s
+flexibility-bridge-deployment-5d787fbd76-klxkg          1/1     Running   0          38s
+flexibility-hub-simulator-deployment-6567556765-kjr67   1/1     Running   0          38s
+hes-simulator-deployment-58fdc95776-mpf4m               1/1     Running   0          38s
+protocol-adapter-deployment-7668d7b9b5-ml5n9            1/1     Running   0          38s
+storage-service-deployment-6f6bd769c6-88xdr             1/1     Running   0          38s
+ui-app-676567d78f-wn785                                 1/1     Running   0          38s
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get svc
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+data-api-service                    NodePort    10.110.32.148    <none>        8085:30885/TCP   44s
+flexibility-hub-simulator-service   NodePort    10.108.117.126   <none>        8081:30881/TCP   44s
+kubernetes                          ClusterIP   10.96.0.1        <none>        443/TCP          161d
+storage-service-service             ClusterIP   10.103.232.43    <none>        9090/TCP         44s
+ui-app-service                      NodePort    10.100.68.173    <none>        8080:30880/TCP   44s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> kubectl get hpa
-NAME                       REFERENCE                         TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-command-orchestrator-hpa   Deployment/command-orchestrator   cpu: <unknown>/80%   1         5         0          49s
-protocol-gateway-hpa       Deployment/protocol-gateway       cpu: <unknown>/80%   1         5         0          49s
-sensor-simulator-hpa       Deployment/sensor-simulator       cpu: <unknown>/80%   1         5         0          49s
-task-orchestrator-hpa      Deployment/task-orchestrator      cpu: <unknown>/80%   1         5         0          49s
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get hpa
+NAME                            REFERENCE                                         TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
+data-api-hpa                    Deployment/data-api-deployment                    cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          77s
+flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         1          77s
 ```
 - Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-hubtosensor-services> kubectl describe hpa task-orchestrator-hpa
-Name:                                                  task-orchestrator-hpa
-Namespace:                                             default
-Labels:                                                app=task-orchestrator
-                                                       app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: ocs-h2shpa-release
-                                                       meta.helm.sh/release-namespace: default
-CreationTimestamp:                                     Mon, 09 Jun 2025 20:33:05 +0300
-Reference:                                             Deployment/task-orchestrator
-Metrics:                                               ( current / target )
-  resource cpu on pods  (as a percentage of request):  <unknown> / 80%
-Min replicas:                                          1
-Max replicas:                                          5
-Deployment pods:                                       0 current / 0 desired
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl describe hpa flexibility-hub-simulator-hpa
+Name:                                                     flexibility-hub-simulator-hpa
+Namespace:                                                default
+Labels:                                                   app.kubernetes.io/managed-by=Helm
+Annotations:                                              meta.helm.sh/release-name: ocs-h2shpa-release
+                                                          meta.helm.sh/release-namespace: default
+CreationTimestamp:                                        Mon, 13 Oct 2025 10:51:35 +0300
+Reference:                                                Deployment/flexibility-hub-simulator-deployment
+Metrics:                                                  ( current / target )
+  resource cpu on pods  (as a percentage of request):     <unknown> / 50%
+  resource memory on pods  (as a percentage of request):  <unknown> / 60%
+Min replicas:                                             1
+Max replicas:                                             2
+Deployment pods:                                          1 current / 0 desired
 Conditions:
-  Type         Status  Reason          Message
-  ----         ------  ------          -------
-  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "task-orchestrator" not found
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 Events:
-  Type     Reason          Age   From                       Message
-  ----     ------          ----  ----                       -------
-  Warning  FailedGetScale  13s   horizontal-pod-autoscaler  deployments/scale.apps "task-orchestrator" not found
+  Type     Reason                        Age               From                       Message
+  ----     ------                        ----              ----                       -------
+  Warning  FailedGetResourceMetric       4s (x2 over 64s)  horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedGetResourceMetric       4s (x2 over 64s)  horizontal-pod-autoscaler  failed to get memory utilization: unable to get metrics for resource memory: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  4s (x2 over 64s)  horizontal-pod-autoscaler  invalid metrics (2 invalid out of 2), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 ```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
