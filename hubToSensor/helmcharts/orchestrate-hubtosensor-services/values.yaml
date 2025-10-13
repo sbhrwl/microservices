@@ -1,7 +1,7 @@
 global:
   # The IP address of your host machine where external services (DB, RabbitMQ) are running.
   # This is crucial for services running in Kubernetes to reach external resources.
-  hostIp: "192.168.0.103"
+  hostIp: "10.158.22.221"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
   
