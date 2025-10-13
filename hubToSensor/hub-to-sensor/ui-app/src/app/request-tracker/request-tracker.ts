@@ -2,9 +2,9 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { environment } from '@env/environment';
 
 // Define interfaces to match your DTOs for type safety
 interface ControlRequestDTO {
@@ -27,24 +27,18 @@ export class RequestDataService {
   constructor(private http: HttpClient) {}
 
   getAllRequests(): Observable<ControlRequestDTO[]> {
-    // Replace with actual API endpoint as needed
-    return this.http
-      ? this.http.get<ControlRequestDTO[]>('/api/v1/requests')
-      : of([]);
+    return this.http.get<ControlRequestDTO[]>(`${environment.apiBaseUrl}/v1/requests`);
   }
 
   getRequestLogs(id: number): Observable<ChangeLogDTO[]> {
-    // Replace with actual API endpoint as needed
-    return this.http
-      ? this.http.get<ChangeLogDTO[]>(`/api/v1/requests/${id}/logs`)
-      : of([]);
+    return this.http.get<ChangeLogDTO[]>(`${environment.apiBaseUrl}/v1/requests/${id}/logs`);
   }
 }
 
 @Component({
   selector: 'app-request-tracker',
   standalone: true,
-  imports: [CommonModule, DatePipe, HttpClientModule], 
+  imports: [CommonModule, DatePipe, HttpClientModule],
   template: `
     @if (error()) {
       <p class="error-message">{{ error() }}</p>
@@ -52,7 +46,6 @@ export class RequestDataService {
       <p class="loading">Loading requests...</p>
     } @else {
       <div class="tracker-container">
-        
         <div class="request-list">
           <h2>All Requests ({{ allRequests().length }})</h2>
           <table>
@@ -116,52 +109,44 @@ export class RequestDataService {
         display: flex;
         gap: 20px;
       }
-
       .request-list, .log-details {
         flex: 1;
         padding: 15px;
-        border: 1px solid #E0E0E0; /* Light border */
+        border: 1px solid #E0E0E0;
         border-radius: 6px;
-        background-color: #FAFAFA; /* Very light gray background */
+        background-color: #FAFAFA;
       }
-
       h2 {
-        border-bottom: 1px solid #F0F0F0; /* Lighter divider */
+        border-bottom: 1px solid #F0F0F0;
         padding-bottom: 8px;
-        color: #555; /* Medium gray text */
+        color: #555;
         margin-top: 0;
       }
-
       table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
         font-size: 0.9em;
       }
-
       th {
-        background-color: #EFEFEF; /* Light shade for header */
+        background-color: #EFEFEF;
         color: #333;
         padding: 10px 8px;
         text-align: left;
         border-bottom: 1px solid #D0D0D0;
       }
-
       td {
         padding: 8px;
-        border-bottom: 1px solid #F7F7F7; /* Very light line for rows */
+        border-bottom: 1px solid #F7F7F7;
       }
-
       tr:hover {
-        background-color: #F0F8FF; /* Light blue on hover for lists */
+        background-color: #F0F8FF;
         cursor: pointer;
       }
-      
       tr.selected {
-        background-color: #E6F3FF; /* Light blue for selected row */
+        background-color: #E6F3FF;
         font-weight: bold;
       }
-
       .selection-prompt, .no-logs {
         padding: 20px;
         text-align: center;
@@ -170,7 +155,6 @@ export class RequestDataService {
         border-radius: 4px;
         border: 1px dashed #DDD;
       }
-      
       .error-message {
         color: #C00;
         background-color: #FEE;
@@ -178,7 +162,6 @@ export class RequestDataService {
         border: 1px solid #FAA;
         border-radius: 4px;
       }
-      
       .loading {
         color: #007bff;
         padding: 10px;
@@ -187,8 +170,6 @@ export class RequestDataService {
   ]
 })
 export class RequestTrackerComponent implements OnInit {
-
-  // Signals hold the component state
   allRequests = signal<ControlRequestDTO[]>([]);
   selectedRequest = signal<ControlRequestDTO | null>(null);
   changeLogs = signal<ChangeLogDTO[]>([]);
@@ -196,7 +177,6 @@ export class RequestTrackerComponent implements OnInit {
   error = signal<string | null>(null);
 
   private dataService = inject(RequestDataService);
-
   private platformId = inject(PLATFORM_ID);
 
   ngOnInit(): void {
@@ -207,9 +187,6 @@ export class RequestTrackerComponent implements OnInit {
     }
   }
 
-  /**
-   * Calls API 0: Fetches the initial list of all control requests.
-   */
   loadAllRequests(): void {
     this.isLoading.set(true);
     this.error.set(null);
@@ -226,13 +203,9 @@ export class RequestTrackerComponent implements OnInit {
     });
   }
 
-  /**
-   * Handles request selection and loads the change logs for the detail view.
-   * Uses API 2: GET /api/v1/requests/{id}/logs
-   */
   selectRequest(request: ControlRequestDTO): void {
     this.selectedRequest.set(request);
-    this.changeLogs.set([]); // Clear previous logs
+    this.changeLogs.set([]);
     this.error.set(null);
 
     this.dataService.getRequestLogs(request.id).subscribe({
