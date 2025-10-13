@@ -17,4 +17,4 @@
   - `kubectl port-forward service/ui-app-service 4200:8080`
   - `kubectl port-forward service/data-api-service 8085:8085`
 - Run the app `http://localhost:4200/`
-  - This connects to data-api running on kubernetes(?)
+  - This connects to **data-api running on kubernetes**
