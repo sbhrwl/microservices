@@ -22,12 +22,12 @@
 7. **Message Broker → Flexibility Hub Simulator**
    * Consumes final responses over **TLS** to track the **status of its requests**.
 8. **Data API Layer → User Interface**
-   * Exposes APIs to fetch request statuses, telemetry, and results via **Storage Service**.
-   * **UI and API Layer are secured via Keycloak**.
+   * Exposes APIs to fetch request statuses, telemetry, and results.
+   * **UI and Data API Layer are secured via Keycloak**.
    * UI is exposed over **HTTPS**.
 ## Key aspects
 * **Storage Service** handles all database operations.
-* **HES Simulator** only generates responses; no DB access.
+* **HES Simulator** generates responses.
 * **Message Broker** orchestrates async communication and is secured via **TLS**.
 * **Flexibility Hub Simulator** tracks requests through broker responses.
 * **UI and Data API Layer** secured with **Keycloak**, with HTTPS for encrypted client access.
