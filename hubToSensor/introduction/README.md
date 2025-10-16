@@ -1,20 +1,33 @@
 # Introduction
-- **Sensor registration**
-  -  **Direct user input** 
-     - A user logs in through the UI and enters their sensor details and email address directly. The send button on UI calls **Sensor Service**.
-  -  **Secured API endpoint** 
-     - An external client sends a POST request to a secured endpoint of the **Sensor Service**. 
-- **Flow**
-  - **Sensor Service** enqueues message to Kafka topic
-  - **Registration Service** consumes message from kafka, saves the data to MongoDB, and then calls the **Notification Service**.
-  - **Notification Service** sends an email to the user for `successful registration`
-- **Different integration points** into our system
-  - The first method is for direct user interaction
-  - The second method is for automated registrations or integrations with other platforms.
-```
-sensor-registration/
-└── ui-service/           (Provides the user interface)
-├── sensor-service/       (Handles direct UI submissions and API endpoint, publishes to Kafka)
-├── registration-service/ (Consumes Kafka messages and processes registrations to mongodb)
-├── notification-service/ (Sends email notifications)
-```
+- [Services and flow of information](#services-and-flow-of-information)
+- [Key aspects](#key-aspects)
+## Services and flow of information
+1. **Flexibility Hub Simulator → Message Broker**
+   * Publishes flexibility requests/events over **TLS-secured connections**.
+2. **Message Broker → Flexibility Bridge**
+   * Consumes requests over **TLS**.
+   * **Creates request records in the database via Storage Service**.
+   * Pushes requests back to the broker for protocol conversion.
+3. **Message Broker → Protocol Adapter Service**
+   * Consumes requests over **TLS**, converts them to the target protocol, and republishes to the broker.
+4. **Message Broker → HES Simulator**
+   * Consumes converted requests over **TLS**.
+   * Simulates execution and sends a **response** (success/failure) back to the broker.
+5. **Message Broker → Protocol Adapter Service**
+   * Consumes simulated responses over **TLS**, parses them, and republishes to the broker.
+6. **Message Broker → Flexibility Bridge**
+   * Consumes parsed responses over **TLS**.
+   * **Updates the final status of requests in the database via Storage Service**.
+   * Publishes **final responses** to the broker for the Flexibility Hub Simulator.
+7. **Message Broker → Flexibility Hub Simulator**
+   * Consumes final responses over **TLS** to track the **status of its requests**.
+8. **Data API Layer → User Interface**
+   * Exposes APIs to fetch request statuses, telemetry, and results via **Storage Service**.
+   * **UI and API Layer are secured via Keycloak**.
+   * UI is exposed over **HTTPS**.
+## Key aspects
+* **Storage Service** handles all database operations.
+* **HES Simulator** only generates responses; no DB access.
+* **Message Broker** orchestrates async communication and is secured via **TLS**.
+* **Flexibility Hub Simulator** tracks requests through broker responses.
+* **UI and Data API Layer** secured with **Keycloak**, with HTTPS for encrypted client access.
