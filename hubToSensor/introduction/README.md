@@ -34,6 +34,100 @@
 * The vision
   * End with what this means for their future:
     * “You might start as a developer writing one service, but you’ll soon realize you’re part of a system that scales to millions. That’s when software turns from code to impact.”
+
+Section 9: Live Demo / Walkthrough (10 min)
+
+
+---
+
+🖥️ Slide 1 – End-to-End Flow Overview
+
+Visual: Simplified diagram showing:
+Flex Hub Simulator → Message Broker → Flexibility Bridge → Protocol Adapter → HES Simulator → Message Broker → Storage Service → UI.
+
+Speaker note:
+
+> “Here’s the full journey of a request — from creation to final status update in the UI.”
+
+
+
+
+
+---
+
+🔄 Slide 2 – Step-by-Step Simulation
+
+Visual: Animated arrows or numbered steps showing:
+
+1. Flex Hub Simulator creates request.
+
+
+2. Storage Service saves request.
+
+
+3. Message Broker forwards to Flexibility Bridge.
+
+
+4. Protocol Adapter converts protocol and returns to broker.
+
+
+5. HES Simulator responds to broker.
+
+
+6. Flexibility Bridge updates status via Storage Service.
+
+
+7. Flex Hub Simulator consumes final response.
+
+
+
+Speaker note:
+
+> “We can see how microservices interact asynchronously while keeping the system resilient.”
+
+
+
+
+
+---
+
+🐳 Slide 3 – Deployment Demonstration
+
+Visual: Screenshot or schematic of Helm deployment:
+
+helm install / helm upgrade logs.
+
+Multiple pods for services showing scaling.
+
+
+Speaker note:
+
+> “This is how we deploy the system in Kubernetes using Helm — everything is automated and repeatable.”
+
+
+
+
+
+---
+
+📊 Slide 4 – Live Status & Monitoring
+
+Visual: Grafana dashboard or logging console.
+
+Speaker note:
+
+> “While the demo runs, we monitor logs and metrics — verifying performance, errors, and request lifecycle.”
+
+
+
+
+
+---
+
+This section should tie theory to practice, leaving students with a concrete mental model of your architecture and flow.
+
+Next, we can draft Section 10: Q&A + Career Insights (5 min). Do you want me to do that?
+
 ## Tools
 
 | Tool                         | Steps                                                                                                                                                                                               | Result quality                                           |
