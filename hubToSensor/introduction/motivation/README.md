@@ -2,7 +2,6 @@
 * [Evolution of software architecture](#evolution-of-software-architecture)
 * [The monolith era — strengths and struggles](#the-monolith-era--strengths-and-struggles)
 * [The shift to microservices](#the-shift-to-microservices)
-* [Real-world transformation example](#real-world-transformation-example)
 * [Enabling microservices — DevOps & cloud](#enabling-microservices--devops--cloud)
 * [The industry transition](#the-industry-transition)
 * [Why microservices matter](#why-microservices-matter)
@@ -31,7 +30,6 @@
   * Fault isolation and resilience
   * Faster iteration and delivery cycles
   * *Speaker note:* “Microservices let each service evolve or fail independently — reducing systemic risk.”
-## Real-world transformation example
 * **Before:** Single monolithic app → slow deployments, high risk
 * **After:** Modular microservices → parallel updates, independent scaling
   * *Speaker note:* “E-commerce analogy: payments, inventory, and shipping evolve separately without blocking each other.”
