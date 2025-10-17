@@ -35,3 +35,4 @@
 * **Message Broker** orchestrates async communication and is secured via **TLS**.
 * **Flexibility Hub Simulator** tracks requests through broker responses.
 * **UI and Data API Layer** secured with **Keycloak**, with HTTPS for encrypted client access.
+* **[Data store and API design](datastore/README.md)**
