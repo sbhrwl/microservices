@@ -9,7 +9,8 @@
 - [Configuration and service discovery](configuration_servicediscovery/README.md)
 ## Demo
 * End-to-end flow:
-  Flex Hub Simulator → Broker → Bridge → Protocol Adapter → HES Simulator → Broker → DB → UI.
+  * `Flex Hub Simulator` → Broker → `Bridge` → Broker → `Protocol Adapter` → Broker → `HES Simulator`
+  * `HES Simulator` → Broker → `Protocol Adapter` → Broker → `Bridge` → Broker → `Flex Hub Simulator`
 * Show Helm deployment logs and live status updates.
 ## Discussion
 * How these concepts map to cloud, DevOps, and backend jobs.
