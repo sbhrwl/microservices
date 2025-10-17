@@ -36,3 +36,95 @@
 * **Flexibility Hub Simulator** tracks requests through broker responses.
 * **UI and Data API Layer** secured with **Keycloak**, with HTTPS for encrypted client access.
 * **[Data store and API design](datastore/README.md)**
+
+
+---
+
+Excellent 👌 here’s the **slide plan for Section 2 – System Architecture Overview (10 min)** — designed to be high-level, visual, and easy for students to follow.
+
+---
+
+### 🎯 Section 2: System Architecture Overview (10 min)
+
+---
+
+#### 🖥️ **Slide 1 – System Architecture at a Glance**
+
+* **Visual:** Clean layered diagram showing all services.
+* **Content:**
+
+  * Flex Hub Simulator
+  * Message Broker (TLS)
+  * Flexibility Bridge
+  * Protocol Adapter
+  * HES Simulator
+  * Storage Service
+  * Data API + UI (Keycloak secured)
+* **Speaker note:**
+
+  > “This is our end-to-end simulation ecosystem — each box is a microservice working independently yet securely connected through TLS.”
+
+---
+
+#### 🔁 **Slide 2 – Request Flow: From Creation to Response**
+
+* **Visual:** Sequential arrows or animation showing message movement.
+* **Flow:**
+
+  1. Flex Hub Simulator creates request → Storage Service (saves to DB)
+  2. Request → Message Broker (TLS)
+  3. Flexibility Bridge → Protocol Adapter → Message Broker
+  4. HES Simulator simulates response → Message Broker
+  5. Flexibility Bridge updates status via Storage Service → Message Broker → Flex Hub Simulator
+* **Speaker note:**
+
+  > “Here’s how one command travels across services and comes back as a simulated response.”
+
+---
+
+#### 🧩 **Slide 3 – Microservice Roles**
+
+* **Visual:** Table or grid with two columns (Service | Purpose).
+* **Examples:**
+
+  * Flex Hub Simulator – Generates requests and listens for results.
+  * Flexibility Bridge – Manages orchestration & status updates.
+  * Protocol Adapter – Performs protocol conversion.
+  * HES Simulator – Mocks the external system’s response.
+  * Storage Service – Centralized DB access and updates.
+  * Data API + UI – Secure access via Keycloak.
+* **Speaker note:**
+
+  > “Notice how each service owns a single responsibility — this is the power of microservices.”
+
+---
+
+#### 🔐 **Slide 4 – Security & Transport**
+
+* **Visual:** Lock icons over lines, Keycloak logo near UI, TLS label near broker.
+* **Content:**
+
+  * UI + API secured by Keycloak (OIDC).
+  * All broker communications → TLS.
+  * HTTPS exposure for UI.
+* **Speaker note:**
+
+  > “Security isn’t an afterthought — every service talks over TLS, and access is controlled centrally.”
+
+---
+
+#### ☁️ **Slide 5 – Scalability & Modularity**
+
+* **Visual:** Cloud background, multiple pods of Protocol Adapter/Bridge.
+* **Content:**
+
+  * Independent scaling per service.
+  * Asynchronous messaging for elasticity.
+  * Fault-isolation by design.
+* **Speaker note:**
+
+  > “We can scale or upgrade any part without stopping the system — that’s the real-world advantage.”
+
+---
+
+Would you like me to **add a draft architecture diagram sketch (text-based layout)** next, or start writing the **slide text + speaker notes** in PowerPoint-ready format?
