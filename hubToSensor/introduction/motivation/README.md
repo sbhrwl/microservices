@@ -6,7 +6,6 @@
 * [Enabling microservices — devops & cloud](#enabling-microservices--devops--cloud)
 * [Independent scaling](#independent-scaling)
 * [Observability and resilience](#observability-and-resilience)
-* [Practical case — flexibility hub simulator](#practical-case--flexibility-hub-simulator)
 * [Key takeaway](#key-takeaway)
 ## Motivation
 * Growing software complexity and scalability demands require flexible architectures
@@ -50,10 +49,6 @@
 * Retry and dead-letter queues for reliability
 * Circuit breakers to prevent cascading failures
 * *Speaker note:* observability enables proactive system management
-## Practical case — flexibility hub simulator
-* Illustrates microservices integration in a real-world scenario:
-  * Hub Simulator → Message Broker → Flexibility Bridge → Protocol Adapter → HES Simulator → Storage Service → UI
-* *Speaker note:* demonstrates how microservices, DevOps, and cloud combine to deliver robust systems
 ## Key takeaway
 * Microservices break complexity into manageable, independent units
 * Enable agility, reliability, and scalable growth
