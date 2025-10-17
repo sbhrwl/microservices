@@ -1,6 +1,5 @@
 # Introduction
 - [Motivation](motivation/README.md)
-- [Microservices in action](services/README.md)
 - [Architecture](architecture/README.md)
 - [Containerization](containerization/README.md)
 - [DevOps](devops/README.md)
