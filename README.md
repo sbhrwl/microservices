@@ -26,7 +26,7 @@
 > 6. Ensure the content follows a **logical flow** and build a story line (problem → motivation → evolution → solution → implementation → takeaway).
 > 7. Maintain a professional, minimal, and **presentation-friendly structure**
 > 8. Do not use horizontal dividers (`---`) between major sections.
-> Once done, output only the final Markdown, no explanations or commentary.
+> 9. Once done, output only the final Markdown, no explanations or commentary.
 
 </details>
 
