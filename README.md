@@ -6,11 +6,10 @@
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
----
+<details>
+  <summary>prompt</summary>
 
 Here’s a reusable **prompt template** you can use next time you want to convert a presentation-style text into a clean Markdown summary, following the exact approach we refined in this chat:
-
----
 
 **Prompt:**
 
@@ -31,6 +30,9 @@ Here’s a reusable **prompt template** you can use next time you want to conver
 >      (match anchor formatting to GitHub-style — all lowercase, spaces replaced by hyphens, punctuation removed).
 > 6. Ensure the content follows a **logical flow** (problem → motivation → evolution → solution → implementation → takeaway).
 > 7. Maintain a professional, minimal, and **presentation-friendly structure**, using horizontal dividers (`---`) between major sections.
->
-> Once done, output only the final Markdown — no explanations or commentary.
+
+- Once done, output only the final Markdown
+- no explanations or commentary.
+
+</details>
 
