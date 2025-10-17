@@ -6,8 +6,8 @@
 * [Enabling microservices — DevOps & cloud](#enabling-microservices--devops--cloud)
 * [The industry transition](#the-industry-transition)
 * [Why microservices matter](#why-microservices-matter)
-- [Independent scaling](#independent-scaling)
-- [Observability and resilience](#observability-and-resilience)
+* [Independent scaling](#independent-scaling)
+* [Observability and resilience](#observability-and-resilience)
 * [Practical case — flexibility hub simulator](#practical-case--flexibility-hub-simulator)
 * [Key takeaway](#key-takeaway)
 ## Evolution of software architecture
