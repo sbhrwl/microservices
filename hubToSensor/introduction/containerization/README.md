@@ -1,95 +1,32 @@
-# Containerization
-* **Docker**: each service runs in its own container.
-* **Artifact Registry**: CI pushes built images (versioned).
-* **Helm Charts**:
-
-  * Define K8s manifests.
-  * Handle config separation (ConfigMaps, Secrets).
-  * Manage service dependencies and upgrades.
-* **Infrastructure as Code**: mention Terraform for cloud setup.
-* Deployment Flow:
-  1. Build →
-  2. Push artifact →
-  3. Deploy via Helm →
-  4. Monitor rollout.
----
-
-Section 4: Containerization & Cloud Deployment (15 min)
-
-
----
-
-🐳 Slide 1 – From Code to Container
-
-Visual: Developer → Dockerfile → Image → Container icons.
-
-Key points:
-Each service packaged as a Docker image.
-Ensures consistent runtime across environments.
-Lightweight, fast to deploy, easy to version.
-
-
-Speaker note:
-
-> “Containers make ‘it works on my machine’ a thing of the past — the same image runs everywhere.”
----
-
-🏗️ Slide 2 – Artifact Registry Integration
-
-Visual: Pipeline pushing Docker images to Artifact Registry.
-
-Key points:
-CI pipeline builds and tags images (e.g., bridge:v1.0).
-Pushed to secure registry (GCR, ECR, or private).
-Versioning allows rollbacks and controlled releases.
-
-
-Speaker note:
-
-> “Every successful build becomes an artifact — a reusable, traceable snapshot of your code.”
----
-
-⚙️ Slide 3 – Deploying with Helm Charts
-
-Visual: Helm chart box → Kubernetes cluster (multiple pods).
-
-Key points:
-Helm manages Kubernetes manifests.
-Separates configuration (values.yaml) from templates.
-Simplifies upgrades and rollbacks.
-
-
-Speaker note:
-
-> “Helm is like a package manager for Kubernetes — one command can deploy your whole ecosystem.”
----
-
-🔐 Slide 4 – Secrets, Certificates & Secure Configs
-
-Visual: Locks around ConfigMaps, Secrets, TLS certificates.
-
-Key points:
-Secrets managed via Kubernetes Secrets or Vault.
-Certificates auto-managed with cert-manager.
-TLS and HTTPS ensure encrypted communication.
-
-
-Speaker note:
-
-> “Every service must assume the network is untrusted — encryption and secret management make it safe.”
----
-
-🚀 Slide 5 – Deployment Flow Overview
-
-Visual: CI/CD flow diagram
-Build → Push → Helm Deploy → Monitor.
-
-Key points:
-Build artifacts via CI.
-Push to registry.
-Helm deploys to K8s.
-Monitoring ensures rollout health.
-
-
-Speaker note:
-> “This end-to-end automation closes the loop — from developer code to production containers in minutes.”
+# Containerization and cloud deployment
+- [From code to container](#from-code-to-container)
+- [Artifact registry integration](#artifact-registry-integration)
+- [Deploying with helm charts](#deploying-with-helm-charts)
+- [Secrets certificates and secure configs](#secrets-certificates-and-secure-configs)
+- [Deployment flow overview](#deployment-flow-overview)
+## From code to container
+- Each microservice is packaged as a Docker image.
+- Ensures consistent runtime across environments.
+- Lightweight, versioned, and fast to deploy.
+- *Speaker note:* Containers eliminate environment inconsistencies — the same image runs everywhere.
+## Artifact registry integration
+- CI pipeline builds and tags Docker images (e.g., `bridge:v1.0`).
+- Images are pushed to a secure Artifact Registry (GCR, ECR, or private).
+- Versioning supports rollbacks and controlled releases.
+- *Speaker note:* Each successful build becomes a traceable, reusable artifact of your codebase.
+## Deploying with helm charts
+- Helm manages Kubernetes manifests and configurations.
+- Separates static templates from dynamic values (`values.yaml`).
+- Simplifies deployment, upgrades, and rollbacks.
+- *Speaker note:* Helm acts as a package manager for Kubernetes — enabling one-command deployments across services.
+## Secrets certificates and secure configs
+- Secrets managed using Kubernetes Secrets or Vault.
+- Certificates issued and renewed automatically with cert-manager.
+- TLS and HTTPS enforce encrypted communication.
+- *Speaker note:* Every service treats the network as untrusted — encryption and secret management ensure secure operation.
+## Deployment flow overview
+- **Build:** CI generates versioned Docker images.
+- **Push:** Artifacts are stored in the registry.
+- **Deploy:** Helm deploys services to Kubernetes.
+- **Monitor:** Observability tools track rollout and health.
+- *Speaker note:* This automated flow enables rapid, reliable deployments from code commit to production containers.
