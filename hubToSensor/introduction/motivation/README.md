@@ -13,6 +13,9 @@
 * Microservices provide modularity, agility, and independent evolution
 ## Evolution of software architecture
 * Shift from monoliths to microservices and cloud-native systems
+* **2000s:** Monoliths
+* **2010s:** Microservices adoption
+* **2020s:** Cloud-native + DevOps ecosystems
 * Goal: improve scalability, resilience, and speed of delivery
 * Analogy: monolith as a single building; microservices as independent departments
 ## The monolith era — strengths and struggles
@@ -29,9 +32,6 @@
   * Independent development and deployment
   * Fault isolation and resilience
   * Parallel team workflows and faster iterations
-* **2000s:** Monoliths
-* **2010s:** Microservices adoption
-* **2020s:** Cloud-native + DevOps ecosystems
 * Industry adoption: Netflix, Amazon, Uber
 * *Speaker note:* modular services evolve separately, reducing systemic risk
 ## Enabling microservices — devops & cloud
