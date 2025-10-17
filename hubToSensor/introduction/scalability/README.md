@@ -1,113 +1,28 @@
 # Scalability and cloud resilience
-* Horizontal Pod Autoscaling based on CPU/queue depth.
-* Load balancing (internal & external).
-* Fault tolerance & self-healing pods.
-* Blue-green or rolling updates with zero downtime.
-* Cost optimization: scale-to-zero for idle services.
-
-🚀 Section 7: Scalability & Cloud Resilience (10 min)
-
-
----
-
-📈 Slide 1 – Horizontal Scaling
-
-Visual: Multiple pods for Protocol Adapter and Flexibility Bridge in Kubernetes.
-
-Key points:
-
-Each service can scale independently based on CPU or message queue depth.
-
-Autoscaling ensures performance under heavy load.
-
-
-Speaker note:
-
-> “If one service is overloaded, we just spin up more instances — the rest of the system keeps running smoothly.”
-
-
-
-
-
----
-
-⚖️ Slide 2 – Load Balancing
-
-Visual: Incoming traffic distributed among service pods.
-
-Key points:
-
-Internal load balancing for microservices.
-
-External load balancing for UI/API endpoints.
-
-Ensures even distribution of requests.
-
-
-Speaker note:
-
-> “Load balancers prevent hotspots and make sure no single pod becomes a bottleneck.”
-
-
-
-
-
----
-
-💥 Slide 3 – Fault Tolerance
-
-Visual: Pod crash icon → self-healing arrow.
-
-Key points:
-
-Kubernetes restarts failed pods automatically.
-
-Dead-letter queues and retry mechanisms for message loss.
-
-Circuit breakers to isolate failing services.
-
-
-Speaker note:
-
-> “Failures happen — but the system recovers automatically without human intervention.”
-
-
-
-
-
----
-
-🔄 Slide 4 – Deployment Strategies
-
-Visual: Blue-green or rolling update illustration.
-
-Key points:
-
-Rolling updates for zero-downtime upgrades.
-
-Blue-green or canary deployments for safe feature rollouts.
-
-
-Speaker note:
-
-> “We can deploy updates safely without affecting users, which is critical in production systems.”
-
-
-
-
-
----
-
-💰 Slide 5 – Cost Optimization
-
-Visual: Cloud resource scaling graph (scale-to-zero, variable pods).
-
-Key points:
-Idle services can scale down to reduce cost.
-Dynamic scaling ensures optimal cloud resource usage.
-
-
-Speaker note:
-
-> “Scalability isn’t just about performance — it’s about using resources efficiently to save costs.”
-
+- [Horizontal scaling](#horizontal-scaling)
+- [Load balancing](#load-balancing)
+- [Fault tolerance](#fault-tolerance)
+- [Deployment strategies](#deployment-strategies)
+- [Cost optimization](#cost-optimization)
+## Horizontal scaling
+- Services scale independently based on CPU or message queue depth.  
+- Autoscaling ensures consistent performance under heavy load.  
+- *Speaker note:* Overloaded services can spin up additional instances while the rest of the system continues smoothly.
+## Load balancing
+- Internal load balancing for microservices.  
+- External load balancing for UI and API endpoints.  
+- Ensures even distribution of incoming requests.  
+- *Speaker note:* Balancers prevent hotspots and avoid single-pod bottlenecks.
+## Fault tolerance
+- Kubernetes automatically restarts failed pods.  
+- Dead-letter queues and retries handle message loss.  
+- Circuit breakers isolate failing services.  
+- *Speaker note:* System recovers automatically without human intervention.
+## Deployment strategies
+- Rolling updates for zero-downtime upgrades.  
+- Blue-green or canary deployments for safe feature rollouts.  
+- *Speaker note:* Updates are deployed safely without affecting users, essential for production systems.
+## Cost optimization
+- Idle services scale down to minimize cloud costs.  
+- Dynamic scaling ensures optimal resource usage.  
+- *Speaker note:* Scalability balances performance with efficient use of resources.
