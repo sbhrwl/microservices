@@ -1,111 +1,56 @@
-# Motivation
-* Evolution: monolith → microservices → cloud-native.
-* Why enterprises moved away from monoliths.
-* Real-world example: scaling a billing or energy system.
-* Benefits: agility, independent deployment, tech flexibility.
-* Quick analogy: “monolith is a single school building; microservices are separate departments working in sync.”
-
----
-
-## 🎞 **Section 1: Introduction & Motivation**
-
-### **Slide 1 — Title: “From Monoliths to Microservices”**
-
-**Visual:**
-
-* Split image: on the left, one large box labeled *Monolith*; on the right, several small boxes labeled *Microservices*.
-* Simple arrows showing evolution.
-
-**Speaker note:**
-🗣️ *“We started with monoliths — one big block of code. It worked, until teams grew and systems became complex. Microservices let us break this giant into manageable, independent parts.”*
-
----
-
-### **Slide 2 — Title: “What’s Wrong with Monoliths?”**
-
-**Visual:**
-
-* Cartoonish image of a tangled ball labeled “Codebase.”
-* Bulleted words: *Tight coupling*, *Hard to scale*, *One failure = whole system down*, *Slow releases.*
-
-**Speaker note:**
-🗣️ *“In monoliths, one small bug can bring down everything — like pulling one thread and unraveling the sweater.”*
-
----
-
-### **Slide 3 — Title: “Why Microservices?”**
-
-**Visual:**
-
-* Network of small boxes (services) connected via arrows.
-* Keywords below: *Autonomy*, *Scalability*, *Resilience*, *Speed.*
-
-**Speaker note:**
-🗣️ *“Microservices give teams freedom — each service can evolve, scale, and even fail independently without hurting the rest.”*
-
----
-
-### **Slide 4 — Title: “Real-World Example”**
-
-**Visual:**
-
-* Before/after graphic:
-
-  * *Before*: One large monolithic app (slow deployment).
-  * *After*: Microservices (independent updates).
-
-**Speaker note:**
-🗣️ *“Think of an e-commerce app: payments, inventory, and shipping don’t need to wait for each other’s updates anymore.”*
-
----
-
-### **Slide 5 — Title: “Where DevOps & Cloud Fit In”**
-
-**Visual:**
-
-* Pipeline diagram: *Code → Build → Test → Deploy → Monitor*.
-* Cloud icons (containers, registry, Kubernetes).
-
-**Speaker note:**
-🗣️ *“Microservices alone aren’t enough — we need DevOps and cloud automation to build, deploy, and manage them efficiently.”*
-
----
-
-### **Slide 6 — Title: “The Industry Shift”**
-
-**Visual:**
-
-* Timeline:
-
-  * 2000s: Monoliths
-  * 2010s: Microservices
-  * 2020s: Cloud-native and DevOps
-* Logos of Netflix, Amazon, or Uber (all microservice adopters).
-
-**Speaker note:**
-🗣️ *“Every major tech company went through this shift — not for fun, but for survival. Scalability became a business advantage.”*
-
----
-
-### **Slide 7 — Title: “Our System Example: Flexibility Hub Simulator”**
-
-**Visual:**
-
-* Simple block diagram of your system (high-level):
-  *Hub Simulator → Message Broker → Bridge → Protocol Adapter → HES Simulator → Storage Service → UI.*
-
-**Speaker note:**
-🗣️ *“This is the system we’ll use today to explore how microservices, CI/CD, and cloud deployment come together in practice.”*
-
----
-
-### **Slide 8 — Title: “Takeaway”**
-
-**Visual:**
-
-* Minimalistic slide with a quote:
-
-  > “Microservices are not just about breaking code apart — they’re about breaking limits.”
-
-**Speaker note:**
-🗣️ *“What you’ll see next isn’t just architecture. It’s how we design software for scale, reliability, and change.”*
+#  Motivation
+* [Evolution of software architecture](## evolution-of-software-architecture)
+* [The monolith era — strengths and struggles](## the-monolith-era--strengths-and-struggles)
+* [The shift to microservices](## the-shift-to-microservices)
+* [Real-world transformation example](## real-world-transformation-example)
+* [Enabling microservices — DevOps & cloud](## enabling-microservices--devops--cloud)
+* [The industry transition](## the-industry-transition)
+* [Practical case — flexibility hub simulator](## practical-case--flexibility-hub-simulator)
+* [Key takeaway](## key-takeaway)
+##  Evolution of software architecture
+* **From monoliths to cloud-native systems**
+  * Architecture evolution: *Monolith → Microservices → Cloud-native*
+  * Goal: enable agility, scalability, and faster innovation
+  * Analogy: *A monolith is one giant school building; microservices are independent departments working together*
+##  The monolith era — strengths and struggles
+* Initially simple to develop and deploy
+* Challenges emerged as systems and teams scaled:
+  * Tight coupling and large codebases
+  * Difficult to scale individual features
+  * One failure can bring down the entire system
+  * Slow, risk-heavy releases
+  * *Speaker note:* “Like pulling one thread and unraveling the sweater — one small bug impacts everything.”
+##  The shift to microservices
+* Introduced to solve scalability and agility problems
+* Core advantages:
+  * Independent development and deployment
+  * Team and technology autonomy
+  * Fault isolation and resilience
+  * Faster iteration and delivery cycles
+  * *Speaker note:* “Microservices let each service evolve or fail independently — reducing systemic risk.”
+##  Real-world transformation example
+* **Before:** Single monolithic app → slow deployments, high risk
+* **After:** Modular microservices → parallel updates, independent scaling
+  * *Speaker note:* “E-commerce analogy: payments, inventory, and shipping evolve separately without blocking each other.”
+##  Enabling microservices — DevOps & cloud
+* Microservices need automation and orchestration:
+  * CI/CD pipeline: *Code → Build → Test → Deploy → Monitor*
+  * Cloud-native stack: containers, image registries, Kubernetes
+  * *Speaker note:* “Microservices alone aren’t enough — automation and cloud make them sustainable.”
+##  The industry transition
+* **2000s:** Monoliths
+* **2010s:** Microservices adoption
+* **2020s:** Cloud-native + DevOps ecosystems
+* Adopted by Netflix, Amazon, Uber for scalability and reliability
+  * *Speaker note:* “This shift was a necessity — scalability became a competitive advantage.”
+##  Practical case — flexibility hub simulator
+* Illustrates real-world microservice architecture:
+  * Hub Simulator → Message Broker → Flexibility Bridge → Protocol Adapter → HES Simulator → Storage Service → UI
+  * *Speaker note:* “We’ll use this as a live example to see how microservices, DevOps, and cloud integration come together.”
+##  Key takeaway
+* Microservices are about:
+  * Breaking complexity into manageable units
+  * Achieving agility, reliability, and scalability
+* Quote:
+  * “Microservices are not just about breaking code apart — they’re about breaking limits.”
+  * *Speaker note:* “Next, we’ll look at how these principles shape real-world system design and operations.”
