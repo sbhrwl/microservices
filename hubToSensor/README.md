@@ -1,6 +1,6 @@
 # Hub to Sensor
 - [Introduction](introduction/README.md)
-- [Architecture](architecture/README.md)
+- [Architecture](introduction/architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
 - [Services](hub-to-sensor/README.md)
   - [Flexibility Hub simulator](hub-to-sensor/flexibility-hub-simulator/README.md)
