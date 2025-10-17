@@ -29,7 +29,8 @@ Here’s a reusable **prompt template** you can use next time you want to conver
 >      `- [Heading text](#heading-text)`
 >      (match anchor formatting to GitHub-style — all lowercase, spaces replaced by hyphens, punctuation removed).
 > 6. Ensure the content follows a **logical flow** (problem → motivation → evolution → solution → implementation → takeaway).
-> 7. Maintain a professional, minimal, and **presentation-friendly structure**, using horizontal dividers (`---`) between major sections.
+> 7. Maintain a professional, minimal, and **presentation-friendly structure**
+> 8. Do not use horizontal dividers (`---`) between major sections.
 
 - Once done, output only the final Markdown
 - no explanations or commentary.
