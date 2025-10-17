@@ -15,9 +15,8 @@
 ## Discussion
 * How these concepts map to cloud, DevOps, and backend jobs.
 * Closing thought: “Microservices are not just technology — they’re a mindset for scalable software delivery.”
-* That’s a sharp and reflective question — and you’re already 95% there.
 ## Presentation aspect
-* The Why Behind the Architecture
+* The Why behind the architecture
   * Instead of just showing how microservices work, tell *why this design matters* —
     * e.g., “This architecture isn’t just fancy — it means one failure doesn’t crash everything, and teams can move faster without blocking each other.”
   * Real-world consequence: “In production, 10 minutes of downtime can cost €50,000. That’s why microservices matter.”
@@ -27,7 +26,7 @@
     * Move to microservices as a response to real challenges.
     * End with DevOps and cloud as enablers of agility and safety.
   * It makes the story *narrative-driven* instead of *technical checklist*.
-* The People Factor**
+* The People factor
   * Mention how microservices aren’t just about code — they reshape teams.
     * “Small, autonomous teams own their services end-to-end.”
     * “DevOps bridges the wall between developers and operations.”
