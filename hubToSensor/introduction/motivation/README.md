@@ -7,12 +7,6 @@
 
 ---
 
-Perfect 👍
-Let’s start with **Section 1: Introduction & Motivation (10 minutes)** — setting the tone for your talk.
-The goal here is to warm up students, help them grasp *why microservices matter*, and prepare them for the deeper technical sections later.
-
----
-
 ## 🎞 **Section 1: Introduction & Motivation**
 
 ### **Slide 1 — Title: “From Monoliths to Microservices”**
@@ -115,7 +109,3 @@ The goal here is to warm up students, help them grasp *why microservices matter*
 
 **Speaker note:**
 🗣️ *“What you’ll see next isn’t just architecture. It’s how we design software for scale, reliability, and change.”*
-
----
-
-Would you like me to now create **Section 2 (System Architecture Overview)** in the same format (slides + visuals + speaker notes)?
