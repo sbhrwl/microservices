@@ -3,7 +3,6 @@
 * [The monolith era — strengths and struggles](#the-monolith-era--strengths-and-struggles)
 * [The shift to microservices](#the-shift-to-microservices)
 * [Enabling microservices — DevOps & cloud](#enabling-microservices--devops--cloud)
-* [The industry transition](#the-industry-transition)
 * [Why microservices matter](#why-microservices-matter)
 * [Independent scaling](#independent-scaling)
 * [Observability and resilience](#observability-and-resilience)
@@ -33,17 +32,16 @@
 * **Before:** Single monolithic app → slow deployments, high risk
 * **After:** Modular microservices → parallel updates, independent scaling
   * *Speaker note:* “E-commerce analogy: payments, inventory, and shipping evolve separately without blocking each other.”
-## Enabling microservices — DevOps & cloud
-* Microservices need automation and orchestration:
-  * CI/CD pipeline: *Code → Build → Test → Deploy → Monitor*
-  * Cloud-native stack: containers, image registries, Kubernetes
-  * *Speaker note:* “Microservices alone aren’t enough — automation and cloud make them sustainable.”
-## The industry transition
 * **2000s:** Monoliths
 * **2010s:** Microservices adoption
 * **2020s:** Cloud-native + DevOps ecosystems
 * Adopted by Netflix, Amazon, Uber for scalability and reliability
   * *Speaker note:* “This shift was a necessity — scalability became a competitive advantage.”
+## Enabling microservices — DevOps & cloud
+* Microservices need automation and orchestration:
+  * CI/CD pipeline: *Code → Build → Test → Deploy → Monitor*
+  * Cloud-native stack: containers, image registries, Kubernetes
+  * *Speaker note:* “Microservices alone aren’t enough — automation and cloud make them sustainable.”
 ## Why microservices matter
 - Each service has a single, well-defined responsibility.
 - Enables parallel development and independent deployment.
