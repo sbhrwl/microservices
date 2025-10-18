@@ -53,7 +53,7 @@ skinparam rectangle {
 }
 
 ' Packages for visual grouping
-package "External Services (Exposed to Users)" #ADD8E6 {
+package "Kubernetes Cluster - External Services" #ADD8E6 {
     RECTANGLE "UI_App"
     RECTANGLE "Data_API"
     RECTANGLE "Flex_Hub_Simulator"
