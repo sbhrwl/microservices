@@ -30,8 +30,6 @@
   - This connects to locally running `ui-app` to `data-api-service` **running on kubernetes**
 #### App running on kubernetes
 - Run the app `http://localhost:30880/`
-  - This connects to locally running `ui-app` to `data-api-service` **running on kubernetes**
 ## Staging release
 - Port forward: `kubectl port-forward service/data-api-service 8085:8085 -n staging`
 - Run the app `http://localhost:30880/`
-  - This connects to locally running `ui-app` to `data-api-service` **running on kubernetes**
