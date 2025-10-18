@@ -1,18 +1,18 @@
 # Service mesh
 - [Internal services and TLS traffic](#internal-services-and-tls-traffic)
-- [Database for storage service](#database-for-storage-service)
+  - [Storage service](#storage-service)
 - [External access](#external-access)
 - [Observability and debugging](#observability-and-debugging)
 - [Optional improvements](#optional-improvements)
 - [UML](#uml)
 ## Internal services and TLS traffic
-* **Message Broker ↔ Flexibility Bridge / Protocol Adapter / HES Simulator**
+* **Message Broker ↔ Flexibility hub simulator/ Flexibility Bridge / Protocol Adapter / HES Simulator**
   * Istio can **automatically inject Envoy sidecars** into all services.
   * **mTLS**: all TLS traffic between services can be managed by Istio. 
     * **`No need`** to handle custom TLS in your services.
   * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) 
     * **`No hardcoded endpoints`**.
-## Database for storage service
+### Storage service
 * Accessed by Flexibility Bridge and Protocol Adapter.
 * With Istio:
   * gRPC traffic can be routed via sidecars.
