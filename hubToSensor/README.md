@@ -17,6 +17,7 @@
 - [Helm charts](helmcharts/README.md)
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across environments](deploymentacrossenv/README.md)
+- [Service discovery](servicediscovery/README.md)
 - [Verification](#verification)
   - [Request](#request)
   - [Response](#response)
