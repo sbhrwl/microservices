@@ -3,7 +3,6 @@
 - [Services and flow of information](#services-and-flow-of-information)
 - [Key aspects](#key-aspects)
 - [Security and transport](#security-and-transport)
-- [Scalability and modularity](#scalability-and-modularity)
 ## Overview
 <img src="images/architecture.jpg">
 
@@ -43,8 +42,3 @@
 - All broker communications use TLS.
 - UI is exposed over HTTPS.
 - *Speaker note:* Security is integrated throughout — all communication is encrypted and access is centrally managed.
-## Scalability and modularity
-- Each microservice scales independently.
-- Asynchronous messaging provides elasticity.
-- Fault isolation ensures system resilience.
-- *Speaker note:* Services can scale or upgrade independently without system downtime.
