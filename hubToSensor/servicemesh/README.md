@@ -104,6 +104,9 @@ package "External Systems" #F0E68C {
 "Protocol_Adapter" --> "Storage_Service" : gRPC read/write
 "Storage_Service" --> "Database" : persist / read data
 
+' Data_API direct connection to Database
+"Data_API" --> "Database" : direct read/write
+
 @enduml
 ```
 
