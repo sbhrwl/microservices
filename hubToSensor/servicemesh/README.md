@@ -50,57 +50,58 @@ skinparam rectangle {
 }
 
 ' Packages for visual grouping
-package "External Services (Exposed to Users)" #LightSkyBlue {
-    RECTANGLE UI_App
-    RECTANGLE Data_API
-    RECTANGLE Flex_Hub_Simulator
+package "External Services (Exposed to Users)" #ADD8E6 {
+    RECTANGLE "UI_App"
+    RECTANGLE "Data_API"
+    RECTANGLE "Flex_Hub_Simulator"
 }
 
-package "Kubernetes Cluster - Internal Services" #LightGreen {
-    RECTANGLE Flexibility_Bridge
-    RECTANGLE Protocol_Adapter
-    RECTANGLE HES_Simulator
-    RECTANGLE Storage_Service
+package "Kubernetes Cluster - Internal Services" #90EE90 {
+    RECTANGLE "Flexibility_Bridge"
+    RECTANGLE "Protocol_Adapter"
+    RECTANGLE "HES_Simulator"
+    RECTANGLE "Storage_Service"
 
-    note right of Flexibility_Bridge #LightGray : Envoy sidecar
-    note right of Protocol_Adapter #LightGray : Envoy sidecar
-    note right of HES_Simulator #LightGray : Envoy sidecar
-    note right of Storage_Service #LightGray : Envoy sidecar
+    ' Sidecars as separate color
+    note right of "Flexibility_Bridge" #D3D3D3 : Envoy sidecar
+    note right of "Protocol_Adapter" #D3D3D3 : Envoy sidecar
+    note right of "HES_Simulator" #D3D3D3 : Envoy sidecar
+    note right of "Storage_Service" #D3D3D3 : Envoy sidecar
 }
 
-package "Exposed Infrastructure (Outside Cluster)" #LightSalmon {
-    RECTANGLE IngressGateway
+package "Exposed Infrastructure (Outside Cluster)" #FFA07A {
+    RECTANGLE "IngressGateway"
 }
 
-package "External Systems" #Khaki {
-    RECTANGLE Message_Broker
-    RECTANGLE Database
+package "External Systems" #F0E68C {
+    RECTANGLE "Message_Broker"
+    RECTANGLE "Database"
 }
 
 ' External access
-UI_App --> IngressGateway : HTTPS
-Data_API --> IngressGateway : HTTPS
-Flex_Hub_Simulator --> IngressGateway : HTTPS
+"UI_App" --> "IngressGateway" : HTTPS
+"Data_API" --> "IngressGateway" : HTTPS
+"Flex_Hub_Simulator" --> "IngressGateway" : HTTPS
 
 ' Routing
-IngressGateway --> Data_API : /api
-IngressGateway --> UI_App : /ui
-IngressGateway --> Flex_Hub_Simulator : /simulator
+"IngressGateway" --> "Data_API" : /api
+"IngressGateway" --> "UI_App" : /ui
+"IngressGateway" --> "Flex_Hub_Simulator" : /simulator
 
 ' Broker flow
-Flex_Hub_Simulator --> Message_Broker : publish requests/events (TLS)
-Message_Broker --> Flexibility_Bridge : consume & store via Storage_Service
-Message_Broker --> Protocol_Adapter : consume & convert protocol
-Message_Broker --> HES_Simulator : consume converted requests
-HES_Simulator --> Message_Broker : publish responses (TLS)
-Message_Broker --> Protocol_Adapter : consume responses & parse
-Message_Broker --> Flexibility_Bridge : consume parsed responses & update Storage_Service
-Flex_Hub_Simulator --> Message_Broker : consume final responses
+"Flex_Hub_Simulator" --> "Message_Broker" : publish requests/events (TLS)
+"Message_Broker" --> "Flexibility_Bridge" : consume & store via Storage_Service
+"Message_Broker" --> "Protocol_Adapter" : consume & convert protocol
+"Message_Broker" --> "HES_Simulator" : consume converted requests
+"HES_Simulator" --> "Message_Broker" : publish responses (TLS)
+"Message_Broker" --> "Protocol_Adapter" : consume responses & parse
+"Message_Broker" --> "Flexibility_Bridge" : consume parsed responses & update Storage_Service
+"Flex_Hub_Simulator" --> "Message_Broker" : consume final responses
 
 ' Storage service to Database
-Flexibility_Bridge --> Storage_Service : gRPC write/update
-Protocol_Adapter --> Storage_Service : gRPC read/write
-Storage_Service --> Database : persist / read data
+"Flexibility_Bridge" --> "Storage_Service" : gRPC write/update
+"Protocol_Adapter" --> "Storage_Service" : gRPC read/write
+"Storage_Service" --> "Database" : persist / read data
 
 @enduml
 ```
