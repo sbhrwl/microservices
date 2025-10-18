@@ -42,26 +42,40 @@
 @startuml
 !define RECTANGLE class
 
-' External
-RECTANGLE UI_App
-RECTANGLE Data_API
-RECTANGLE Flex_Hub_Simulator
+' Colors
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor Black
+  Shadowing true
+}
 
-' Istio Gateway
-RECTANGLE IngressGateway
+' Packages for visual grouping
+package "External Services (Exposed to Users)" #LightSkyBlue {
+    RECTANGLE UI_App
+    RECTANGLE Data_API
+    RECTANGLE Flex_Hub_Simulator
+}
 
-' Internal services
-RECTANGLE Message_Broker
-RECTANGLE Flexibility_Bridge
-RECTANGLE Protocol_Adapter
-RECTANGLE HES_Simulator
-RECTANGLE Storage_Service
+package "Kubernetes Cluster - Internal Services" #LightGreen {
+    RECTANGLE Flexibility_Bridge
+    RECTANGLE Protocol_Adapter
+    RECTANGLE HES_Simulator
+    RECTANGLE Storage_Service
 
-' Sidecars
-note right of Flexibility_Bridge : Envoy sidecar
-note right of Protocol_Adapter : Envoy sidecar
-note right of HES_Simulator : Envoy sidecar
-note right of Storage_Service : Envoy sidecar
+    note right of Flexibility_Bridge #LightGray : Envoy sidecar
+    note right of Protocol_Adapter #LightGray : Envoy sidecar
+    note right of HES_Simulator #LightGray : Envoy sidecar
+    note right of Storage_Service #LightGray : Envoy sidecar
+}
+
+package "Exposed Infrastructure (Outside Cluster)" #LightSalmon {
+    RECTANGLE IngressGateway
+}
+
+package "External Systems" #Khaki {
+    RECTANGLE Message_Broker
+    RECTANGLE Database
+}
 
 ' External access
 UI_App --> IngressGateway : HTTPS
@@ -83,9 +97,10 @@ Message_Broker --> Protocol_Adapter : consume responses & parse
 Message_Broker --> Flexibility_Bridge : consume parsed responses & update Storage_Service
 Flex_Hub_Simulator --> Message_Broker : consume final responses
 
-' Storage service
+' Storage service to Database
 Flexibility_Bridge --> Storage_Service : gRPC write/update
 Protocol_Adapter --> Storage_Service : gRPC read/write
+Storage_Service --> Database : persist / read data
 
 @enduml
 ```
