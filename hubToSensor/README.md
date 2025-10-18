@@ -18,6 +18,7 @@
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Service discovery](servicediscovery/README.md)
+- [Service mesh](servicemesh/README.md)
 - [Verification](#verification)
   - [Request](#request)
   - [Response](#response)
