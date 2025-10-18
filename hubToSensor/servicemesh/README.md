@@ -33,7 +33,7 @@
 * **Rate limiting**: protect Message Broker from sudden spikes.
 * **Fault injection**: simulate failures in HES Simulator or adapters.
 ## UML
-<img src="images/sidecar-1.jpg">
+<img src="images/sidecar.jpg">
 
 <details>
   <summary>prompt</summary>
