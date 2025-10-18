@@ -1,1 +1,33 @@
 # Service mesh
+- [Internal services and TLS traffic](#internal-services-and-tls-traffic)
+- [Database for storage service](#database-for-storage-service)
+- [External access](#external-access)
+- [Observability and debugging](#observability-and-debugging)
+- [Optional improvements](#optional-improvements)
+## Internal services and TLS traffic
+* **Message Broker ↔ Flexibility Bridge / Protocol Adapter / HES Simulator**
+  * Istio can **automatically inject Envoy sidecars** into all services.
+  * **mTLS**: all TLS traffic between services can be managed by Istio. No need to handle custom TLS in your services.
+  * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) → no hardcoded endpoints.
+## Database for storage service
+* Accessed by Flexibility Bridge and Protocol Adapter.
+* With Istio:
+  * gRPC traffic can be routed via sidecars.
+  * Only healthy pods receive traffic (readiness checks).
+  * **Retries / circuit breaking** can protect Storage Service from overload.
+## External access
+* External access for UI, Data API and Flexibility hub simulator)
+* Istio **IngressGateway** replaces your Ingress controller:
+  * Expose **single public endpoint**.
+  * Routing paths `/api`, `/ui`, `/simulator` → **VirtualService rules**.
+  * TLS termination at the gateway.
+  * Can integrate with **Keycloak** for auth.
+## Observability and debugging
+* Istio adds:
+  * Metrics per service / per path.
+  * Distributed tracing: track **Flexibility request through broker → services → back**.
+  * Logs automatically include source/destination service info.
+## Optional improvements
+* **Traffic splitting**: test new versions of Protocol Adapter or Flexibility Bridge.
+* **Rate limiting**: protect Message Broker from sudden spikes.
+* **Fault injection**: simulate failures in HES Simulator or adapters.
