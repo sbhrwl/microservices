@@ -3,6 +3,8 @@
 - [Create environment wise values file](#create-environment-wise-values-file)
 - [Use Kubernetes namespaces](#use-kubernetes-namespaces)
 - [Helm releases per environment](#install-helm-releases-per-environment)
+  - [Push images for staging](#push-images-for-staging)
+  - [Make a release](#make-a-release)
   - [Verify release](#verify-release)
   - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrades per environment](#upgrades-per-environment)
@@ -61,6 +63,30 @@ orchestrate-command-services-with-hpa/
     kubectl get all -n dev
     ``` 
 ## Helm release per environment
+### Push images for staging
+```
+docker tag sbhrwldocker/flexibility-hub-simulator:latest sbhrwldocker/flexibility-hub-simulator:staging
+docker push sbhrwldocker/flexibility-hub-simulator:staging
+
+docker tag sbhrwldocker/flexibility-bridge:latest sbhrwldocker/flexibility-bridge:staging
+docker push sbhrwldocker/flexibility-bridge:staging
+
+docker tag sbhrwldocker/storage-service:latest sbhrwldocker/storage-service:staging
+docker push sbhrwldocker/storage-service:staging
+
+docker tag sbhrwldocker/protocol-adapter:latest sbhrwldocker/protocol-adapter:staging
+docker push sbhrwldocker/protocol-adapter:staging
+
+docker tag sbhrwldocker/hes-simulator:latest sbhrwldocker/hes-simulator:staging
+docker push sbhrwldocker/hes-simulator:staging
+
+docker tag sbhrwldocker/ui-app:latest sbhrwldocker/ui-app:staging
+docker push sbhrwldocker/ui-app:staging
+
+docker tag sbhrwldocker/data-api:latest sbhrwldocker/data-api:staging
+docker push sbhrwldocker/data-api:staging
+```
+### Make a release
 - Go to Helm chart folder [orchestrate-hubtosensor-services](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/hpa/orchestrate-hubtosensor-services)
 ```bash
 # For dev (default values.yaml)
@@ -88,8 +114,8 @@ helm install ocs-prod . -f values-prod.yaml -n prod
   kubectl get all -n staging
   kubectl get all -n prod
   ```
-- `kubectl get pods -n dev`
-- `kubectl get svc -n dev`
+- `kubectl get pods -n staging`
+- `kubectl get svc -n staging`
 ```
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl create namespace staging
 namespace/staging created
