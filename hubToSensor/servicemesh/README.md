@@ -38,7 +38,7 @@
 <img src="images/sidecar.jpg">
 
 <details>
-  <summary>prompt</summary>
+  <summary>uml</summary>
  
 **UML**
 ```uml
