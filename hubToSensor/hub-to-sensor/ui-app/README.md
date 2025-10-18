@@ -1,20 +1,13 @@
 # UI app
 - [Building new Angular app](https://github.com/sbhrwl/system_design/blob/main/docs/webapplication/new-app/README.md)
 - [Run the app](#run-the-app)
+  - [Port forward](#port-forward)
   - [App running locally and connected to data api service on running on kubernetes](#app-running-locally-and-connected-to-data-api-service-on-running-on-kubernetes)
   - [App running on kubernetes](#app-running-on-kubernetes)
 - [Staging release](#staging-release)
 ## Run the app
 - `ng serve`
 - `http://localhost:4200/`
-
-## Kubernetes deployment
-### Get the IP for cluster
-- `kubectl get nodes -o wide`: `192.168.65.3`
-- Port:`30880`
-- [Build app](src/environments/environment.prod.ts): `ng build --configuration=production`
-- App Url: `http://192.168.65.3:30880/`
-- This is still failing, so refer section **Port forward**
 ### Port forward
 - Run app locally using `ng serve`
 - Perform Port forwarding
@@ -25,10 +18,10 @@
     - Any traffic you send to `http://localhost:8085` will be **tunnelled** through the Kubernetes API server.
     - This traffic is then automatically directed to **port 8085** on one of the **Pods** managed by the `data-api-service` Service inside the cluster.
     - In simple terms, it makes your remote service accessible locally at `localhost:8085`, allowing you to test or debug it as if it were running on your machine.
-#### App running locally and connected to data api service on running on kubernetes
+### App running locally and connected to data api service on running on kubernetes
 - Run the app `http://localhost:4200/`
   - This connects to locally running `ui-app` to `data-api-service` **running on kubernetes**
-#### App running on kubernetes
+### App running on kubernetes
 - Run the app `http://localhost:30880/`
 ## Staging release
 - Port forward: `kubectl port-forward service/data-api-service 8085:8085 -n staging`
