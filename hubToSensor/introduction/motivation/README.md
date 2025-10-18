@@ -4,7 +4,7 @@
 * [The monolith era — strengths and struggles](#the-monolith-era--strengths-and-struggles)
 * [The shift to microservices](#the-shift-to-microservices)
 * [Enabling microservices — devops & cloud](#enabling-microservices--devops--cloud)
-* [Independent scaling](#independent-scaling)
+* [Scalability and modularity](#scalability-and-modularity)
 * [Observability and resilience](#observability-and-resilience)
 * [Key takeaway](#key-takeaway)
 ## Motivation
@@ -39,11 +39,13 @@
   * CI/CD pipelines: code → build → test → deploy → monitor
   * Cloud-native tools: containers, registries, Kubernetes
 * *Speaker note:* microservices without automation and cloud support are hard to sustain
-## Independent scaling
-* Services scale independently based on load
-* Autoscaling driven by queue depth or CPU usage
-* Optimizes cloud efficiency and responsiveness
-* *Speaker note:* additional pods handle load without affecting other services
+## Scalability and modularity
+- Each microservice scales independently.
+- Autoscaling driven by queue depth or CPU usage
+- Asynchronous messaging provides elasticity.
+- Fault isolation ensures system resilience.
+- Optimizes cloud efficiency and responsiveness
+- *Speaker note:* Services can scale or upgrade independently without system downtime.
 ## Observability and resilience
 * Centralized logging and metrics collection
 * Retry and dead-letter queues for reliability
