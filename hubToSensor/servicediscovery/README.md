@@ -10,7 +10,7 @@
 * **HES Simulator** → communicates only with RabbitMQ (external)
 * **Other message-driven services** → decoupled via RabbitMQ, no direct discovery needed
 ### Service discovery
-* Only needed for **Storage Service** so that gRPC clients (Flexibility Bridge + Protocol Adapter) can locate it dynamically
+* Only needed for **Storage Service** so that gRPC clients (Flexibility Bridge + Protocol Adapter) can **`locate it dynamically`**
 * Avoids hardcoding IPs or ports
 * Can use **Kubernetes DNS / ClusterIP** or a lightweight service registry for gRPC resolution
 * Health-aware: only healthy Storage Service instances are returned to clients
