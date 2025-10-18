@@ -15,7 +15,7 @@
 * Can use **Kubernetes DNS / ClusterIP** or a lightweight service registry for gRPC resolution
 * Health-aware: only healthy Storage Service instances are returned to clients
 ## External services
-* **UI App** → web frontend
+* **UI App** → Web frontend
 * **Data API** → REST API for external clients
 * **Flexibility Hub Simulator** → REST entry point
 ### Ingress controller for external routing
