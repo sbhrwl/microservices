@@ -4,6 +4,7 @@
 - [External access](#external-access)
 - [Observability and debugging](#observability-and-debugging)
 - [Optional improvements](#optional-improvements)
+- [UML](#uml)
 ## Internal services and TLS traffic
 * **Message Broker ↔ Flexibility Bridge / Protocol Adapter / HES Simulator**
   * Istio can **automatically inject Envoy sidecars** into all services.
@@ -25,9 +26,68 @@
 ## Observability and debugging
 * Istio adds:
   * Metrics per service / per path.
+
   * Distributed tracing: track **Flexibility request through broker → services → back**.
   * Logs automatically include source/destination service info.
 ## Optional improvements
 * **Traffic splitting**: test new versions of Protocol Adapter or Flexibility Bridge.
 * **Rate limiting**: protect Message Broker from sudden spikes.
 * **Fault injection**: simulate failures in HES Simulator or adapters.
+## UML
+<details>
+  <summary>prompt</summary>
+ 
+**UML**
+```uml
+@startuml
+!define RECTANGLE class
+
+' External
+RECTANGLE UI_App
+RECTANGLE Data_API
+RECTANGLE Flex_Hub_Simulator
+
+' Istio Gateway
+RECTANGLE IngressGateway
+
+' Internal services
+RECTANGLE Message_Broker
+RECTANGLE Flexibility_Bridge
+RECTANGLE Protocol_Adapter
+RECTANGLE HES_Simulator
+RECTANGLE Storage_Service
+
+' Sidecars
+note right of Flexibility_Bridge : Envoy sidecar
+note right of Protocol_Adapter : Envoy sidecar
+note right of HES_Simulator : Envoy sidecar
+note right of Storage_Service : Envoy sidecar
+
+' External access
+UI_App --> IngressGateway : HTTPS
+Data_API --> IngressGateway : HTTPS
+Flex_Hub_Simulator --> IngressGateway : HTTPS
+
+' Routing
+IngressGateway --> Data_API : /api
+IngressGateway --> UI_App : /ui
+IngressGateway --> Flex_Hub_Simulator : /simulator
+
+' Broker flow
+Flex_Hub_Simulator --> Message_Broker : publish requests/events (TLS)
+Message_Broker --> Flexibility_Bridge : consume & store via Storage_Service
+Message_Broker --> Protocol_Adapter : consume & convert protocol
+Message_Broker --> HES_Simulator : consume converted requests
+HES_Simulator --> Message_Broker : publish responses (TLS)
+Message_Broker --> Protocol_Adapter : consume responses & parse
+Message_Broker --> Flexibility_Bridge : consume parsed responses & update Storage_Service
+Flex_Hub_Simulator --> Message_Broker : consume final responses
+
+' Storage service
+Flexibility_Bridge --> Storage_Service : gRPC write/update
+Protocol_Adapter --> Storage_Service : gRPC read/write
+
+@enduml
+```
+
+</details>
