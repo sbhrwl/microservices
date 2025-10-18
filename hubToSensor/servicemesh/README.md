@@ -26,7 +26,6 @@
 ## Observability and debugging
 * Istio adds:
   * Metrics per service / per path.
-
   * Distributed tracing: track **Flexibility request through broker → services → back**.
   * Logs automatically include source/destination service info.
 ## Optional improvements
