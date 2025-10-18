@@ -26,6 +26,6 @@
 - *Speaker note:* Secrets require controlled storage and lifecycle management.
 ## Compliance and auditability
 - Audit logs capture all requests and responses.  
-- Traceability maintained across message flow (Hub → Bridge → Adapter → HES).  
+- Traceability maintained across message flow (Hub → Bridge → Storage → Adapter → HES).  
 - Aligns with enterprise standards (ISO 27001, GDPR, NERC CIP, IEC 62351).  
 - *Speaker note:* Security also means accountability — every action is traceable.
