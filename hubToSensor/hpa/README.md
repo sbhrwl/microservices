@@ -1,4 +1,4 @@
-ocs-release# Horizontal Pod Autoscalar
+# Horizontal Pod Autoscalar
 - [Introduction](#introduction)
 - [Chart structure](#chart-structure)
 - [HPA configuration](#hpa-configuration)
