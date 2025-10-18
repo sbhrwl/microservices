@@ -7,13 +7,13 @@
 * **Storage Service** → gRPC server on `9090`
 * **Flexibility Bridge** → gRPC client → communicates with Storage Service
 * **Protocol Adapter** → gRPC client → communicates with Storage Service
-* **HES Simulator** → communicates only with RabbitMQ (external)
-* **Other message-driven services** → decoupled via RabbitMQ, no direct discovery needed
 ### Service discovery
 * Only needed for **Storage Service** so that gRPC clients (Flexibility Bridge + Protocol Adapter) can **`locate it dynamically`**
-* Avoids hardcoding IPs or ports
-* Can use **Kubernetes DNS / ClusterIP** or a lightweight service registry for gRPC resolution
-* Health-aware: only healthy Storage Service instances are returned to clients
+* Avoids **hardcoding** `IPs` or `ports`
+* For `gRPC resolution`, storage service can use
+  * **Kubernetes DNS / ClusterIP** or a
+  * **Lightweight service registry**
+* `Health-aware`: `only healthy storage service instances` are returned to clients
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
