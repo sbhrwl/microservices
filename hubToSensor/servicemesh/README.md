@@ -10,7 +10,8 @@
   * Istio can **automatically inject Envoy sidecars** into all services.
   * **mTLS**: all TLS traffic between services can be managed by Istio. 
     * **`No need`** to handle custom TLS in your services.
-  * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) → no hardcoded endpoints.
+  * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) 
+    * **`No hardcoded endpoints`**.
 ## Database for storage service
 * Accessed by Flexibility Bridge and Protocol Adapter.
 * With Istio:
