@@ -41,8 +41,8 @@
 * *Speaker note:* microservices without automation and cloud support are hard to sustain
 ## Scalability and modularity
 - Each microservice scales independently.
-- Autoscaling driven by queue depth or CPU usage
 - Asynchronous messaging provides elasticity.
+  - Autoscaling driven by queue depth or CPU usage
 - Fault isolation ensures system resilience.
 - Optimizes cloud efficiency and responsiveness
 - *Speaker note:* Services can scale or upgrade independently without system downtime.
