@@ -64,6 +64,8 @@ orchestrate-command-services-with-hpa/
     ``` 
 ## Helm release per environment
 ### Push images for staging
+- Tag the image with `staging` tag
+- Push the image
 ```
 docker tag sbhrwldocker/flexibility-hub-simulator:latest sbhrwldocker/flexibility-hub-simulator:staging
 docker push sbhrwldocker/flexibility-hub-simulator:staging
