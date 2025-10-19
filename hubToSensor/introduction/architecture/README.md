@@ -53,11 +53,11 @@
 ## Summary
 - **Flex Hub Simulator → Broker → Bridge → Broker → Protocol Adapter → Broker → HES Simulator**
 - **Bridge & Protocol Adapter**:
-  - Insert/update request/response status in DB via Storage Service.
+  - Insert/update request/response status in DB via **Storage service**.
   - Route commands/responses through broker.
 - **HES Simulator**:
   - Executes commands on devices (heaters, boilers).
   - Sends responses back through the same path.
-- **Storage Service**: Handles request tracking, DB persistence, analytics.
+- **Storage service**: Handles request tracking, DB persistence, analytics.
 - **Message Broker**: Orchestrates async communication, TLS-secured.
 - **Data API + UI**: Exposes request/response status, telemetry.
