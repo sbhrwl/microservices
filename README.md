@@ -15,7 +15,7 @@
 > Follow these rules carefully:
 > 1. Treat the content as **technical**, assuming you’re a **microservices expert**.
 > 2. **Remove duplicate or redundant text**, keeping only essential technical information.
-> 3. Convert all sections into **clean bullet-point summaries** and feel free to add new sextions
+> 3. Convert all sections into **clean bullet-point summaries** and feel free to add new sections
 > 4. Ensure the content follows a **logical flow** and build a story line (problem → motivation → evolution → solution → implementation → takeaway).
 > 5. Apply the following Markdown formatting standards:
 >    * Only the **first word** of each **heading** starts with a capital letter, the following words follow lower case.
@@ -28,4 +28,5 @@
 > 8. Once done, output only the final Markdown, no explanations or commentary.
 
 </details>
+
 
