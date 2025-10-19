@@ -1,4 +1,4 @@
-<img width="1401" height="719" alt="image" src="https://github.com/user-attachments/assets/2f8fb06b-8bed-421a-a0fc-e5577cef9e61" /># Dapr
+# DAPR
 * [Problem](#problem)
 * [Original architecture](#original-architecture)
 * [Challenges](#challenges)
@@ -8,11 +8,11 @@
 * [Service interaction](#service-interaction)
 * [Takeaway](#takeaway)
 * [UML](#uml)
-# Problem
+## Problem
 * Microservices promise agility and scalability but face portability issues across GCP, AWS, and Azure.
 * Hardcoded dependencies on specific brokers and databases limit maintainability and cloud migration.
 
-# Original architecture
+## Original architecture
 * **Flex Hub Simulator**: communicates with RabbitMQ.
 * **Storage Service**: persists data in PostgreSQL.
 * **ServiceMesh (Istio)**: provides mTLS and routing.
@@ -20,10 +20,10 @@
 * **Flow overview**:
   * Flex Hub Simulator → RabbitMQ → Bridge → Protocol Adapter → HES Simulator
   * Storage Service → PostgreSQL → Analytics / persistence
-# Challenges
+## Challenges
 * Hardcoded clients (RabbitMQ, JDBC/PostgreSQL) in services.
 * Cloud migration requires swapping brokers and databases, resulting in code changes and increased testing.
-# Approaches for cloud-agnostic microservices
+## Approaches for cloud-agnostic microservices
 
 | approach                       | messaging/db abstraction                      | ease of use | cloud portability | maintenance                   |
 | ------------------------------ | --------------------------------------------- | ----------- | ----------------- | ----------------------------- |
@@ -31,13 +31,13 @@
 | spring cloud stream            | abstracts messaging only                      | medium      | medium            | db still hardcoded            |
 | dapr                           | abstracts messaging, state, bindings, secrets | medium      | high              | single codebase across clouds |
 
-# Dapr advantages
+## Dapr advantages
 * Decouples services from broker and database implementations.
 * Cloud-agnostic components defined in YAML; swapping backends requires no code changes.
 * Works seamlessly with Kubernetes and Istio mTLS.
 * Reduces maintenance overhead with a single, portable codebase.
 
-# Dapr implementation changes
+## Dapr implementation changes
 * Remove hardcoded broker/DB configs from Spring configuration.
 * Retain only service-specific settings (ports, logging, feature flags).
 * **Minimal `application.yml` example**:
@@ -88,7 +88,7 @@ spec:
     value: "host=postgres dbname=mydatabase user=myuser password=mypassword sslmode=disable"
 ```
 
-# Service interaction
+## Service interaction
 * **Flex Hub Simulator → Pub/Sub**
 ```http
 POST http://localhost:3500/v1.0/publish/message-broker/flexibility-hub.request
@@ -102,13 +102,13 @@ POST http://localhost:3500/v1.0/state/storage-db
 * No code changes needed for broker or DB swaps; only YAML updates.
 * Istio mTLS, service discovery, and Kubernetes orchestration remain intact.
 
-## Takeaway
+### Takeaway
 * Dapr enables truly cloud-native, portable microservices.
 * Maintenance overhead is reduced with a single codebase.
 * Flex Hub Simulator and Storage Service can switch messaging and DB backends with zero code changes.
 * Sidecar-based abstraction aligns with multi-cloud, containerized architectures.
 
-## UML
+### UML
 <img src="images/dapr.jpg">
 
 <details>
