@@ -31,7 +31,7 @@
    * Insert request in database 
    * Update request and response status in database.
 10. **Protocol adapter** → **Storage service**
-   * Update request and response status in database.
+    * Update request and response status in database.
 11. **Data API Layer → User Interface**
    * Exposes APIs to fetch request statuses, telemetry, and results.
    * **UI and Data API Layer are secured via Keycloak**.
