@@ -7,6 +7,7 @@
 * [Dapr implementation changes](#dapr-implementation-changes)
 * [Service interaction](#service-interaction)
 * [Takeaway](#takeaway)
+* [Dapr vs Istio sidecar](#dapr-vs-istio-sidecar)
 * [UML](#uml)
 ## Problem
 * Microservices promise agility and scalability but face portability issues across GCP, AWS, and Azure.
@@ -102,13 +103,17 @@ POST http://localhost:3500/v1.0/state/storage-db
 * No code changes needed for broker or DB swaps; only YAML updates.
 * Istio mTLS, service discovery, and Kubernetes orchestration remain intact.
 
-### Takeaway
+## Takeaway
 * Dapr enables truly cloud-native, portable microservices.
 * Maintenance overhead is reduced with a single codebase.
 * Flex Hub Simulator and Storage Service can switch messaging and DB backends with zero code changes.
 * Sidecar-based abstraction aligns with multi-cloud, containerized architectures.
 
-### UML
+## Dapr vs Istio sidecar
+- Dapr sidecar: handles application-level integrations (message broker, state store, pub/sub, bindings, etc.).
+- Istio sidecar: handles network-level concerns (mTLS, retries, routing, observability for service-to-service calls).
+
+## UML
 <img src="images/dapr.jpg">
 
 <details>
