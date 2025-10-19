@@ -26,7 +26,13 @@
    * Publishes **final responses** to the broker for the Flexibility Hub Simulator.
 7. **Message Broker → Flexibility Hub Simulator**
    * Consumes final responses over **TLS** to track the **status of its requests**.
-8. **Data API Layer → User Interface**
+8. **Storage Service** handles all database operations.
+9. **Flexibility bridge** → **Storage service**
+   * Insert request in database 
+   * Update request and response status in database.
+10. **Protocol adapter** → **Storage service**
+   * Update request and response status in database.
+11. **Data API Layer → User Interface**
    * Exposes APIs to fetch request statuses, telemetry, and results.
    * **UI and Data API Layer are secured via Keycloak**.
    * UI is exposed over **HTTPS**.
