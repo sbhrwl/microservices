@@ -48,3 +48,39 @@
 - All broker communications use TLS.
 - UI is exposed over HTTPS.
 - *Speaker note:* Security is integrated throughout — all communication is encrypted and access is centrally managed.
+
+# Kalix vs Current Flexibility Architecture
+
+## 1. Current Architecture
+- **Flex Hub Simulator → Broker → Bridge → Broker → Protocol Adapter → Broker → HES Simulator**
+- **Bridge & Protocol Adapter**:
+  - Insert/update request/response status in DB via Storage Service.
+  - Route commands/responses through broker.
+- **HES Simulator**:
+  - Executes commands on devices (heaters, boilers).
+  - Sends responses back through the same path.
+- **Storage Service**: Handles request tracking, DB persistence, analytics.
+- **Message Broker**: Orchestrates async communication, TLS-secured.
+- **Data API + UI**: Exposes request/response status, telemetry.
+
+## 2. Kalix Capabilities
+- **Actor Model / Entities**: Each device is a stateful entity.
+- **Automatic State Persistence**: No manual DB writes for device state.
+- **Event Sourcing**: Full history of commands automatically stored.
+- **Scalability & Fault Tolerance**: Entities activated on demand, distributed across nodes.
+- **API Exposure**: Entities can be called via HTTP/gRPC.
+
+## 3. Fit Analysis
+| Aspect                     | Kalix                     | Your Current Setup                          |
+|-----------------------------|---------------------------|---------------------------------------------|
+| Device State Management      | Internal to entity       | Managed via DB by Bridge/Storage Service    |
+| Request Tracking             | Not automatic             | Explicit DB updates at multiple stages      |
+| Async Orchestration          | Can emit events to broker | Already handled by message broker           |
+| HES Device Execution         | Not replaced              | Managed by HES Simulator                     |
+| Scaling & Persistence        | Automatic                 | Partially handled via DB + broker           |
+
+## 4. Conclusion
+- Kalix **does not add significant benefit** in your current architecture.
+- Most of its features (device state management, event sourcing, scaling) are **already addressed by your existing services**.
+- Integrating Kalix would **add complexity without improving the workflow**.
+- Current architecture is **sufficient, scalable, and maintains clear request/response tracking**.
