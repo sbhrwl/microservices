@@ -23,7 +23,7 @@
   - [Request](#request)
   - [Response](#response)
 
-## [Verification](verification/README.md
+## [Verification](verification/README.md)
 ### Request
 - Push data to Broker
   - `POST`: `http://localhost:8081/api/messages`
