@@ -19,4 +19,5 @@
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Service discovery](servicediscovery/README.md)
 - [Service mesh](servicemesh/README.md)
+- [DAPR](dapr/README.md)
 - [Verification](verification/README.md)
