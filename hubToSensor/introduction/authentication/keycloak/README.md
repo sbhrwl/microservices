@@ -14,8 +14,7 @@
 - A Keycloak realm is often used as a way to implement a tenant in the context of a SaaS application.
 - However, it's more accurate to say that using one realm per tenant is a **common multi-tenancy model** in Keycloak, but not the only one.
   - For many applications, especially B2B SaaS where strong separation is critical, the `"one realm per tenant"` model is the most straightforward, as the isolation is enforced directly by Keycloak.
-- [Keycloak realms (Part -2). configuring realms](https://medium.com/@gauravswarankar/keycloak-realms-part-2-6f8170003add)
-  - This video discusses Keycloak realms and their configuration, which is a key concept in understanding how they map to SaaS tenants.
+- [Configuring realms](https://medium.com/@gauravswarankar/keycloak-realms-part-2-6f8170003add)
 
 | Model | Description | Isolation | Scalability |
 | :--- | :--- | :--- | :--- |
