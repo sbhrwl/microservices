@@ -1,10 +1,10 @@
 # Authentication
 
 ## Scenario
-- You host Keycloak yourself in Google Cloud.
-- Keycloak acts as the identity provider (not just a broker).
-- All users are created directly in Keycloak.
-- Each user has:
+- Keycloak hosted in Google Cloud.
+  - Keycloak acts as the identity provider (not just a broker).
+  - All users are created directly in Keycloak.
+- Each user has
   - Roles (for RBAC)
   - Tenant ID (matches tenant_id in your database)
 - The app will enforce data isolation based on tenant_id from the token.
