@@ -7,3 +7,4 @@
 - [Scalability](scalability/README.md)
 - [Configuration and service discovery](configuration_servicediscovery/README.md)
 - [Demo](demo/README.md)
+- [Authentication](authentication/README.md)
