@@ -3,6 +3,7 @@
   - [Service discovery](#service-discovery) 
 - [External services](#external-services)
   - [Ingress controller for external routing](#ingress-controller-for-external-routing)
+- [Ingress setup](#ingress-setup)
 ## Internal services
 * **Storage Service** → gRPC server on `9090`
 * **Flexibility Bridge** → gRPC client → communicates with Storage Service
@@ -25,3 +26,12 @@
   * `/ui` → `ui-app`
   * `/simulator` → `flexibility-hub-simulator`
 * Purpose: clean external access without exposing multiple NodePorts
+## Ingress setup
+- Verify: `kubectl get pods -n ingress-nginx`
+- Install
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+```
