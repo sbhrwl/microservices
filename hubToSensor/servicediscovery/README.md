@@ -1,6 +1,8 @@
 # Service discovery
 - [Internal services](#internal-services)
 - [Service discovery](#service-discovery) 
+  - [Kubernetes](#kubernetes)
+- [Summary](#summary)
 ## Internal services
 * **Storage Service** → gRPC server on `9090`
 * **Flexibility Bridge** → gRPC client → communicates with Storage Service
@@ -19,7 +21,7 @@
   - Any pod in the same cluster can reach it using:
 `storage-service:<grpcPort>`
   - You don’t need to use the host IP for internal communication.
-- As long as your |flexibility-bridge` and `protocol-adapter` are in the same namespace, they can connect using:
+- As long as `flexibility-bridge` and `protocol-adapter` are in the same namespace, they can connect using:
 `storage-service:9090`
 - Kubernetes handles load balancing between replicas automatically.
 ## Summary 
