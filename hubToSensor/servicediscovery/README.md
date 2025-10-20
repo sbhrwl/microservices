@@ -13,8 +13,8 @@
   * **Lightweight service registry**
 * `Health-aware`: `only healthy storage service instances` are returned to clients
 ### Kubernetes
-- In Kubernetes, service discovery happens automatically through DNS.
-  - When you create a Service (e.g., storage-service), Kubernetes assigns it a cluster DNS name:
+- In Kubernetes, service discovery happens automatically through `DNS`.
+  - When you create a Service (e.g., storage-service), Kubernetes assigns it a **cluster `DNS` name**:
 `storage-service.<namespace>.svc.cluster.local`
   - Any pod in the same cluster can reach it using:
 `storage-service:<grpcPort>`
