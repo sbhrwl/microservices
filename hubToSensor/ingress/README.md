@@ -5,6 +5,7 @@
   - [Get repo](#get-repo)
   - [Install](#install)
   - [Verify](#verify)
+- [Changes to existing helm charts](#changes-to-existing-helm-charts)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
@@ -58,4 +59,18 @@ ingress-nginx   ingress-nginx   1               2025-10-21 19:57:47.7135786 +030
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get pods -n ingress-nginx
 NAME                                        READY   STATUS              RESTARTS   AGE
 ingress-nginx-controller-7d8cffd99c-rqz6d   0/1     ContainerCreating   0          2m2s
+```
+## Changes to existing helm charts
+- Copy existing helm charts to [ingress folder](orchestrate-hubtosensor-services)
+  - Lets not update the existing one
+- Modify [values.yaml](orchestrate-hubtosensor-services/values.yaml) and add section for `ingress`
+```
+ingress:
+  enabled: true
+  host: fhs.local
+  paths:
+    uiApp: /ui
+    dataApi: /api
+    flexibilityHubSimulator: /simulator
+  tls: false   # set true later when you configure TLS/Keycloak
 ```
