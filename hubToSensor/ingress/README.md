@@ -2,6 +2,9 @@
 - [External services](#external-services)
 - [Ingress controller for external routing](#ingress-controller-for-external-routing)
 - [Ingress setup](#ingress-setup)
+  - [Get repo](#get-repo)
+  - [Install](#install)
+  - [Verify](#verify)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
@@ -15,7 +18,7 @@
 * Purpose: clean external access without exposing multiple NodePorts
 ## Ingress setup
 - Verify: `kubectl get pods -n ingress-nginx`
-- Get `repo`
+### Get repo
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
@@ -44,3 +47,9 @@ helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
  ingressClassName: nginx
  ```
 * **Multiple applications across different namespaces** can `share` this **single ingress controller** while defining their own routing rules and services independently.
+### Verify
+- `helm list -A | grep ingress-nginx`
+```
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -A | grep ingress-nginx
+ingress-nginx   ingress-nginx   1               2025-10-21 19:57:47.7135786 +0300 EEST  deployed        ingress-nginx-4.13.3    1.13.3
+```
