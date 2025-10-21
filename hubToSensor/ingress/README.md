@@ -23,7 +23,7 @@
 - Copy existing helm charts to [ingress folder](orchestrate-hubtosensor-services)
   - Lets not update the existing one
 - Modify [values.yaml](orchestrate-hubtosensor-services/values.yaml) and add section for `ingress`
-```
+```yaml
 ingress:
   enabled: true
   host: fhs.local
