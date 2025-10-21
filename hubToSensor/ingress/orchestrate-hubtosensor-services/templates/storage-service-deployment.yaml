@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "storageService.name" . }}-deployment
+  labels:
+    app: {{ .Values.storageService.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.storageService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.storageService.name }}
+    spec:
+      containers:
+      - name: {{ .Values.storageService.name }}
+        image: "{{ .Values.storageService.image }}:{{ .Values.storageService.tag }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.storageService.grpcPort }}
+        env:
+        # External PostgreSQL Connection
+        - name: DB_HOST
+          value: "{{ .Values.global.hostIp }}"
+        - name: DB_PORT
+          value: "{{ .Values.db.port }}"
+        - name: DB_NAME
+          value: {{ .Values.db.name }}
+        - name: DB_USER
+          value: {{ .Values.db.user }}
+        - name: DB_PASS
+          value: {{ .Values.db.pass }}
+        - name: GRPC_SERVER_PORT
+          value: "{{ .Values.storageService.grpcPort }}"

@@ -1,0 +1,76 @@
+global:
+  # The IP address of your host machine where external services (DB, RabbitMQ) are running.
+  # This is crucial for services running in Kubernetes to reach external resources.
+  hostIp: "10.49.145.134"
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
+  
+db:
+  host: "{{ .Values.global.hostIp }}"
+  port: "5432"
+  name: mydatabase
+  user: myuser
+  pass: mypassword
+
+rabbitmq:
+  host: "{{ .Values.global.hostIp }}"
+  username: admin
+  password: admin
+  exchange: flexibility-bridge.exchange
+
+storageService:
+  name: storage-service
+  image: sbhrwldocker/storage-service
+  tag: staging
+  grpcPort: 9090
+
+dataApi:
+  name: data-api
+  image: sbhrwldocker/data-api
+  tag: staging
+  serverPort: 8085
+  nodePort: 30885
+  hpa:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 2
+    cpuTarget: 50
+    memoryTarget: 60
+
+uiApp:
+  name: ui-app
+  image: sbhrwldocker/ui-app
+  tag: staging
+  port: 8080
+  nodePort: 30880 # External port for the UI App
+  # The UI app talks directly to the external NodePort of the Data API
+  backendUrl: "http://{{ .Values.global.hostIp }}:{{ .Values.dataApi.nodePort }}"
+
+hesSimulator:
+  name: hes-simulator
+  image: sbhrwldocker/hes-simulator
+  tag: staging
+
+flexibilityHubSimulator:
+  name: flexibility-hub-simulator
+  image: sbhrwldocker/flexibility-hub-simulator
+  tag: staging
+  port: 8081
+  nodePort: 30881
+  hpa:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 2
+    cpuTarget: 50
+    memoryTarget: 60
+
+
+protocolAdapter:
+  name: protocol-adapter
+  image: sbhrwldocker/protocol-adapter
+  tag: staging
+
+flexibilityBridge:
+  name: flexibility-bridge
+  image: sbhrwldocker/flexibility-bridge
+  tag: staging

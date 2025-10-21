@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "storageService.name" . }}-service
+spec:
+  selector:
+    app: {{ .Values.storageService.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.storageService.grpcPort }}
+      targetPort: {{ .Values.storageService.grpcPort }}
+      name: grpc
+  # ClusterIP is used because this is an internal-only service
+  type: ClusterIP
