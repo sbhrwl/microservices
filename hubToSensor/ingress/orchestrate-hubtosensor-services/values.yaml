@@ -41,7 +41,7 @@ uiApp:
   image: sbhrwldocker/ui-app
   tag: latest
   port: 8080
-  backendUrl: "http://data-api:8085"
+  backendUrl: "http://fhs.local/api"
 
 hesSimulator:
   name: hes-simulator

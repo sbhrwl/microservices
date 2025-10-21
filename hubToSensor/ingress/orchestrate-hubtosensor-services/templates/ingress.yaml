@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "yourchart.fullname" . }}-ingress
+  name: {{ include "orchestrate-hubtosensor-services.fullname" . }}-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -21,21 +21,21 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.uiApp.name }}
+                name: {{ include "uiApp.name" . }}
                 port:
                   number: {{ .Values.uiApp.port }}
           - path: {{ .Values.ingress.paths.dataApi }}
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.dataApi.name }}
+                name: {{ include "dataApi.name" . }}
                 port:
                   number: {{ .Values.dataApi.serverPort }}
           - path: {{ .Values.ingress.paths.flexibilityHubSimulator }}
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.flexibilityHubSimulator.name }}
+                name: {{ include "flexibilityHubSimulator.name" . }}
                 port:
                   number: {{ .Values.flexibilityHubSimulator.port }}
 {{- end }}

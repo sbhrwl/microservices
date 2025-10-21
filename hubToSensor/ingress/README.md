@@ -5,11 +5,11 @@
   - [Get repo](#get-repo)
   - [Install](#install)
   - [Verify](#verify)
+- [Map DNS to localhost on windows machine to test Ingress routing](#map-dns-to-localhost-on-windows-machine-to-test-ingress-routing)
+  - [Test ingress routing](#test-ingress-routing)
 - [Changes to existing helm charts](#changes-to-existing-helm-charts)
 - [Install Helm release](#install-helm-release)
 - [Verify release](#verify-release)
-- [Map DNS to localhost on windows machine to test Ingress routing](#map-dns-to-localhost-on-windows-machine-to-test-ingress-routing)
-  - [Test ingress routing](#test-ingress-routing)
 - [Access services](#access-services)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
@@ -66,6 +66,56 @@ ingress-nginx   ingress-nginx   1               2025-10-21 19:57:47.7135786 +030
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get pods -n ingress-nginx
 NAME                                        READY   STATUS              RESTARTS   AGE
 ingress-nginx-controller-7d8cffd99c-rqz6d   0/1     ContainerCreating   0          2m2s
+```
+## Map DNS to localhost on windows machine to test Ingress routing
+- Map `fhs.local` to localhost on your Windows machine so Ingress routes correctly.
+1. **Open hosts file as Administrator**
+```text
+C:\Windows\System32\drivers\etc\hosts
+```
+* I already have an entry for `kubernetes.docker.internal`
+```text
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+```
+2. **Add the mapping at the end of the file**
+```text
+# Map fhs.local to localhost so Ingress routes can be tested on the local machine
+127.0.0.1 fhs.local
+```
+
+3. **Save the file** (you need admin rights).
+### Test ingress routing
+* Find the NodePort of the ingress controller
+```bash
+kubectl get svc -n ingress-nginx
+```
+* If ingress pod is not running or crashed, restart the deployment
+```
+kubectl rollout restart deployment ingress-nginx-controller -n ingress-nginx
+```
+* Suppose `ingress-nginx-controller` shows `NodePort: 30080` for HTTP (or your NodePort for dev).
+  * Nodeport
+    * When `NodePort matters`
+      * **For direct host access**
+       *If you want to test your Ingress from your **Windows host** without setting up a LoadBalancer, the host connects to `127.0.0.1:<NodePort>`.
+      * Example:
+        ```bash
+        curl http://127.0.0.1:30171/ui
+        ```
+      * This bypasses DNS (`fhs.local`) and verifies the ingress controller is serving traffic.
+    * When `NodePort doesn’t matter`
+      * Once you map `fhs.local → 127.0.0.1` in `hosts` file, you can just do:
+        ```bash
+        curl http://fhs.local/ui
+        ```
+      * The Ingress controller automatically listens on the NodePort internally, so you don’t need to type it manually.
+  * NodePort is useful for debugging or local access without a DNS entry. With `hosts` mapping, you can just use your domain (`fhs.local`) directly.
+* Test access in browser or curl:
+```bash
+curl http://fhs.local/ui      # should reach UI
+curl http://fhs.local/api     # should reach Data API
+curl -X POST http://fhs.local/simulator -H "Content-Type: application/json" -d '{"test":"ok"}'
 ```
 ## Changes to existing helm charts
 - Copy existing helm charts to [ingress folder](orchestrate-hubtosensor-services)
@@ -149,56 +199,6 @@ horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/d
 horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          53s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
-## Map DNS to localhost on windows machine to test Ingress routing
-- Map `fhs.local` to localhost on your Windows machine so Ingress routes correctly.
-1. **Open hosts file as Administrator**
-```text
-C:\Windows\System32\drivers\etc\hosts
-```
-* I already have an entry for `kubernetes.docker.internal`
-```text
-# To allow the same kube context to work on the host and the container:
-127.0.0.1 kubernetes.docker.internal
-```
-2. **Add the mapping at the end of the file**
-```text
-# Map fhs.local to localhost so Ingress routes can be tested on the local machine
-127.0.0.1 fhs.local
-```
-
-3. **Save the file** (you need admin rights).
-### Test ingress routing
-* Find the NodePort of the ingress controller
-```bash
-kubectl get svc -n ingress-nginx
-```
-* If ingress pod is not running or crashed, restart the deployment
-```
-kubectl rollout restart deployment ingress-nginx-controller -n ingress-nginx
-```
-* Suppose `ingress-nginx-controller` shows `NodePort: 30080` for HTTP (or your NodePort for dev).
-  * Nodeport
-    * When `NodePort matters`
-      * **For direct host access**
-       *If you want to test your Ingress from your **Windows host** without setting up a LoadBalancer, the host connects to `127.0.0.1:<NodePort>`.
-      * Example:
-        ```bash
-        curl http://127.0.0.1:30171/ui
-        ```
-      * This bypasses DNS (`fhs.local`) and verifies the ingress controller is serving traffic.
-    * When `NodePort doesn’t matter`
-      * Once you map `fhs.local → 127.0.0.1` in `hosts` file, you can just do:
-        ```bash
-        curl http://fhs.local/ui
-        ```
-      * The Ingress controller automatically listens on the NodePort internally, so you don’t need to type it manually.
-  * NodePort is useful for debugging or local access without a DNS entry. With `hosts` mapping, you can just use your domain (`fhs.local`) directly.
-* Test access in browser or curl:
-```bash
-curl http://fhs.local/ui      # should reach UI
-curl http://fhs.local/api     # should reach Data API
-curl -X POST http://fhs.local/simulator -H "Content-Type: application/json" -d '{"test":"ok"}'
-```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
