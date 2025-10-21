@@ -23,10 +23,7 @@ helm repo update
 ### Install
 - This command installs a cluster-wide NGINX Ingress Controller in an `isolated namespace`, exposes it via `NodePort` for local access, and enables routing traffic to multiple applications across namespaces through their respective Ingress definitions.
 ```bash
-helm install ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx --create-namespace \
-  --set controller.service.type=NodePort \
-  --set controller.progressDeadlineSeconds=600
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace --set controller.service.type=NodePort --set controller.progressDeadlineSeconds=600
 ```
 
 * **`helm install`** – installs a Helm chart (a packaged Kubernetes application).
@@ -35,6 +32,8 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
 * **`--namespace ingress-nginx`** – deploys all ingress controller resources into a dedicated namespace called `ingress-nginx`.
 * **`--create-namespace`** – creates the namespace automatically if it doesn’t exist.
 * **`--set controller.service.type=NodePort`** – exposes the ingress controller via NodePort, which is suitable for **local setups** (like Docker Desktop or Minikube) where **`LoadBalancer`** is not available.
+* **`--set controller.progressDeadlineSeconds=600`** → explicitly sets a valid timeout (10 minutes).
+  * Prevents the Deployment validation error (must be greater than minReadySeconds).
 * Why use a separate namespace?
   * Keeps ingress controller isolated from application workloads.
   * Simplifies upgrades, troubleshooting, and access control.
