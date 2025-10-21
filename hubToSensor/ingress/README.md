@@ -9,6 +9,7 @@
 - [Install Helm release](#install-helm-release)
 - [Verify release](#verify-release)
 - [Map DNS to localhost on windows machine to test Ingress routing](#map-dns-to-localhost-on-windows-machine-to-test-ingress-routing)
+  - [Test ingress routing](#test-ingress-routing)
 - [Access services](#access-services)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
@@ -148,7 +149,28 @@ horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/f
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Map DNS to localhost on windows machine to test Ingress routing
-- 
+- Map `fhs.local` to localhost on your Windows machine so Ingress routes correctly.
+1. **Open hosts file as Administrator**
+```text
+C:\Windows\System32\drivers\etc\hosts
+```
+2. **Add the mapping at the end of the file**
+```text
+127.0.0.1 fhs.local
+```
+3. **Save the file** (you need admin rights).
+### Test ingress routing
+* Find the NodePort of the ingress controller:
+```bash
+kubectl get svc -n ingress-nginx
+```
+* Suppose `ingress-nginx-controller` shows `NodePort: 30080` for HTTP (or your NodePort for dev).
+* Test access in browser or curl:
+```bash
+curl http://fhs.local/ui      # should reach UI
+curl http://fhs.local/api     # should reach Data API
+curl -X POST http://fhs.local/simulator -H "Content-Type: application/json" -d '{"test":"ok"}'
+```
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
