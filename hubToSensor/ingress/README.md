@@ -8,8 +8,8 @@
 - [Changes to existing helm charts](#changes-to-existing-helm-charts)
 - [Install Helm release](#install-helm-release)
 - [Verify release](#verify-release)
+- [Map DNS to localhost on windows machine to test Ingress routing](#map-dns-to-localhost-on-windows-machine-to-test-ingress-routing)
 - [Access services](#access-services)
-  - [Map DNS to localhost on windows machine to test Ingress routing](#map-dns-to-localhost-on-windows-machine-to-test-ingress-routing)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
 ## External services
@@ -147,8 +147,9 @@ horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/d
 horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          53s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
+## Map DNS to localhost on windows machine to test Ingress routing
+- 
 ## Access services
-### Map DNS to localhost on windows machine to test Ingress routing
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
