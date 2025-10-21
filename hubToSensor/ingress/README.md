@@ -53,3 +53,9 @@ helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -A | grep ingress-nginx
 ingress-nginx   ingress-nginx   1               2025-10-21 19:57:47.7135786 +0300 EEST  deployed        ingress-nginx-4.13.3    1.13.3
 ```
+- Ingress `pod`
+```
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get pods -n ingress-nginx
+NAME                                        READY   STATUS              RESTARTS   AGE
+ingress-nginx-controller-7d8cffd99c-rqz6d   0/1     ContainerCreating   0          2m2s
+```
