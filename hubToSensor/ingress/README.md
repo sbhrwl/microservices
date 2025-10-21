@@ -87,3 +87,58 @@ helm install ocs-staging . -f values-staging.yaml -n staging --set ingress.enabl
 
 ## Verify release
 ```
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm install ocs-staging . -f values-staging.yaml -n staging --set ingress.enabled=true --set ingress.host=fhs.local
+NAME: ocs-staging
+LAST DEPLOYED: Tue Oct 21 20:30:56 2025
+NAMESPACE: staging
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -A
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ingress-nginx   ingress-nginx   1               2025-10-21 19:57:47.7135786 +0300 EEST  deployed        ingress-nginx-4.13.3                    1.13.3
+ocs-staging     staging         1               2025-10-21 20:30:56.6490242 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>helm list -n staging
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
+ocs-staging     staging         1               2025-10-21 20:30:56.6490242 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get all -n staging
+NAME                                                       READY   STATUS    RESTARTS     AGE
+pod/data-api-5786ddb557-xndhn                              1/1     Running   0            52s
+pod/flexibility-bridge-deployment-bdcf89c84-ddbsh          1/1     Running   1 (4s ago)   52s
+pod/flexibility-hub-simulator-deployment-b56c88d6c-5p9kf   1/1     Running   0            52s
+pod/hes-simulator-deployment-6d5c5849d4-jrjtq              1/1     Running   0            52s
+pod/protocol-adapter-deployment-764d97944c-xrgwd           1/1     Running   1 (6s ago)   52s
+pod/storage-service-deployment-556c68b9b4-dm2j2            1/1     Running   1 (4s ago)   52s
+pod/ui-app-8bf7fb47c-c7qqw                                 1/1     Running   0            52s
+
+NAME                                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/data-api-service                    NodePort    10.101.251.234   <none>        8085:30885/TCP   54s
+service/flexibility-hub-simulator-service   NodePort    10.109.43.97     <none>        8081:30881/TCP   54s
+service/storage-service-service             ClusterIP   10.106.208.122   <none>        9090/TCP         54s
+service/ui-app-service                      NodePort    10.100.249.111   <none>        8080:30880/TCP   54s
+
+NAME                                                   READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/data-api                               1/1     1            1           53s
+deployment.apps/flexibility-bridge-deployment          1/1     1            1           53s
+deployment.apps/flexibility-hub-simulator-deployment   1/1     1            1           53s
+deployment.apps/hes-simulator-deployment               1/1     1            1           53s
+deployment.apps/protocol-adapter-deployment            1/1     1            1           53s
+deployment.apps/storage-service-deployment             1/1     1            1           53s
+deployment.apps/ui-app                                 1/1     1            1           53s
+
+NAME                                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/data-api-5786ddb557                              1         1         1       53s
+replicaset.apps/flexibility-bridge-deployment-bdcf89c84          1         1         1       53s
+replicaset.apps/flexibility-hub-simulator-deployment-b56c88d6c   1         1         1       53s
+replicaset.apps/hes-simulator-deployment-6d5c5849d4              1         1         1       53s
+replicaset.apps/protocol-adapter-deployment-764d97944c           1         1         1       53s
+replicaset.apps/storage-service-deployment-556c68b9b4            1         1         1       53s
+replicaset.apps/ui-app-8bf7fb47c                                 1         1         1       53s
+
+NAME                                                                REFERENCE                                         TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/data-api-deployment                    cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          53s
+horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          53s
+```
