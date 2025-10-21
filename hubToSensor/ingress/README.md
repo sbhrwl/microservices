@@ -31,7 +31,7 @@ helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
 * **`ingress-nginx/ingress-nginx` (second)** – chart reference from the Helm repository (`ingress-nginx` repo).
 * **`--namespace ingress-nginx`** – deploys all ingress controller resources into a dedicated namespace called `ingress-nginx`.
 * **`--create-namespace`** – creates the namespace automatically if it doesn’t exist.
-* **`--set controller.service.type=NodePort`** – exposes the ingress controller via NodePort, which is suitable for local setups (like Docker Desktop or Minikube) where LoadBalancer is not available.
+* **`--set controller.service.type=NodePort`** – exposes the ingress controller via NodePort, which is suitable for **local setups** (like Docker Desktop or Minikube) where **`LoadBalancer`** is not available.
 * Why use a separate namespace?
   * Keeps ingress controller isolated from application workloads.
   * Simplifies upgrades, troubleshooting, and access control.
