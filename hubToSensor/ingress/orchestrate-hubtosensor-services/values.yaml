@@ -74,3 +74,12 @@ flexibilityBridge:
   name: flexibility-bridge
   image: sbhrwldocker/flexibility-bridge
   tag: latest
+
+ingress:
+  enabled: true
+  host: fhs.local
+  paths:
+    uiApp: /ui
+    dataApi: /api
+    flexibilityHubSimulator: /simulator
+  tls: false   # set true later when you configure TLS/Keycloak
