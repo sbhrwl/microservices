@@ -6,6 +6,8 @@
   - [Install](#install)
   - [Verify](#verify)
 - [Changes to existing helm charts](#changes-to-existing-helm-charts)
+- [Install Helm release](#install-helm-release)
+- [Verify release](#verify-release)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
@@ -77,3 +79,11 @@ ingress:
 - Create [ingress.yaml](orchestrate-hubtosensor-services/template/ingress.yaml)
 - Update [values.yaml](orchestrate-hubtosensor-services/values.yaml) ports to ClusterIP and remove nodePort for these services so **`Ingress` can route them `internally`**.
   - Remove rows with `  nodePort: ` for `dataApi`, `uiApp` and `flexibilityHubSimulator`
+## Install Helm release
+- Go to Helm chart folder (e.g., [orchestrate-hubtosensor-services](orchestrate-hubtosensor-services), run this command:
+```bash
+helm install ocs-staging . -f values-staging.yaml -n staging --set ingress.enabled=true --set ingress.host=fhs.local
+```
+
+## Verify release
+```

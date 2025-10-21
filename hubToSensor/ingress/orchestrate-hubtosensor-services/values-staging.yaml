@@ -29,7 +29,6 @@ dataApi:
   image: sbhrwldocker/data-api
   tag: staging
   serverPort: 8085
-  nodePort: 30885
   hpa:
     enabled: true
     minReplicas: 1
@@ -42,9 +41,7 @@ uiApp:
   image: sbhrwldocker/ui-app
   tag: staging
   port: 8080
-  nodePort: 30880 # External port for the UI App
-  # The UI app talks directly to the external NodePort of the Data API
-  backendUrl: "http://{{ .Values.global.hostIp }}:{{ .Values.dataApi.nodePort }}"
+  backendUrl: "http://data-api:8085"
 
 hesSimulator:
   name: hes-simulator
@@ -56,7 +53,6 @@ flexibilityHubSimulator:
   image: sbhrwldocker/flexibility-hub-simulator
   tag: staging
   port: 8081
-  nodePort: 30881
   hpa:
     enabled: true
     minReplicas: 1
@@ -74,3 +70,12 @@ flexibilityBridge:
   name: flexibility-bridge
   image: sbhrwldocker/flexibility-bridge
   tag: staging
+
+ingress:
+  enabled: true
+  host: fhs.local
+  paths:
+    uiApp: /ui
+    dataApi: /api
+    flexibilityHubSimulator: /simulator
+  tls: false   # set true later when you configure TLS/Keycloak

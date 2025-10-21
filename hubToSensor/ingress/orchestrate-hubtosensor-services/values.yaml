@@ -41,8 +41,7 @@ uiApp:
   image: sbhrwldocker/ui-app
   tag: latest
   port: 8080
-  # The UI app talks directly to the external NodePort of the Data API
-  backendUrl: "http://{{ .Values.global.hostIp }}:{{ .Values.dataApi.nodePort }}"
+  backendUrl: "http://data-api:8085"
 
 hesSimulator:
   name: hes-simulator
