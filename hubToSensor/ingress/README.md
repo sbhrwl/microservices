@@ -15,10 +15,32 @@
 * Purpose: clean external access without exposing multiple NodePorts
 ## Ingress setup
 - Verify: `kubectl get pods -n ingress-nginx`
-- Install
+- Get `repo`
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
 ```
+### Install
+- This command installs a cluster-wide NGINX Ingress Controller in an `isolated namespace`, exposes it via `NodePort` for local access, and enables routing traffic to multiple applications across namespaces through their respective Ingress definitions.
+```bash
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace --set controller.service.type=NodePort
+```
+
+* **`helm install`** – installs a Helm chart (a packaged Kubernetes application).
+* **`ingress-nginx` (first)** – release name; identifies this specific installation instance.
+* **`ingress-nginx/ingress-nginx` (second)** – chart reference from the Helm repository (`ingress-nginx` repo).
+* **`--namespace ingress-nginx`** – deploys all ingress controller resources into a dedicated namespace called `ingress-nginx`.
+* **`--create-namespace`** – creates the namespace automatically if it doesn’t exist.
+* **`--set controller.service.type=NodePort`** – exposes the ingress controller via NodePort, which is suitable for local setups (like Docker Desktop or Minikube) where LoadBalancer is not available.
+
+* Why use a separate namespace?
+ * Keeps ingress controller isolated from application workloads.
+ * Simplifies upgrades, troubleshooting, and access control.
+ * Allows you to manage system components (like ingress, monitoring, or logging) independently of app namespaces.
+* Usage for other apps
+* The NGINX Ingress Controller is **cluster-wide** — it watches all namespaces for `Ingress` resources with
+ ```yaml
+ ingressClassName: nginx
+ ```
+* Multiple applications across different namespaces can share this single ingress controller while defining their own routing rules and services independently.
+
