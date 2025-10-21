@@ -154,10 +154,17 @@ horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/f
 ```text
 C:\Windows\System32\drivers\etc\hosts
 ```
+* I already have an entry for `kubernetes.docker.internal`
+```text
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+```
 2. **Add the mapping at the end of the file**
 ```text
+# Map fhs.local to localhost so Ingress routes can be tested on the local machine
 127.0.0.1 fhs.local
 ```
+
 3. **Save the file** (you need admin rights).
 ### Test ingress routing
 * Find the NodePort of the ingress controller:
@@ -165,6 +172,22 @@ C:\Windows\System32\drivers\etc\hosts
 kubectl get svc -n ingress-nginx
 ```
 * Suppose `ingress-nginx-controller` shows `NodePort: 30080` for HTTP (or your NodePort for dev).
+  * Nodeport
+    * When `NodePort matters`
+      * **For direct host access**
+       *If you want to test your Ingress from your **Windows host** without setting up a LoadBalancer, the host connects to `127.0.0.1:<NodePort>`.
+      * Example:
+        ```bash
+        curl http://127.0.0.1:30171/ui
+        ```
+      * This bypasses DNS (`fhs.local`) and verifies the ingress controller is serving traffic.
+    * When `NodePort doesn’t matter`
+      * Once you map `fhs.local → 127.0.0.1` in `hosts` file, you can just do:
+        ```bash
+        curl http://fhs.local/ui
+        ```
+      * The Ingress controller automatically listens on the NodePort internally, so you don’t need to type it manually.
+  * NodePort is useful for debugging or local access without a DNS entry. With `hosts` mapping, you can just use your domain (`fhs.local`) directly.
 * Test access in browser or curl:
 ```bash
 curl http://fhs.local/ui      # should reach UI
