@@ -167,9 +167,13 @@ C:\Windows\System32\drivers\etc\hosts
 
 3. **Save the file** (you need admin rights).
 ### Test ingress routing
-* Find the NodePort of the ingress controller:
+* Find the NodePort of the ingress controller
 ```bash
 kubectl get svc -n ingress-nginx
+```
+* If ingress pod is not running or crashed, restart the deployment
+```
+kubectl rollout restart deployment ingress-nginx-controller -n ingress-nginx
 ```
 * Suppose `ingress-nginx-controller` shows `NodePort: 30080` for HTTP (or your NodePort for dev).
   * Nodeport
