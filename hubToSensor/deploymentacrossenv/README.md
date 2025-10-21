@@ -6,6 +6,7 @@
   - [Push images for staging](#push-images-for-staging)
   - [Make a release](#make-a-release)
   - [Verify release](#verify-release)
+  - [Access services](#access-services)
   - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrades per environment](#upgrades-per-environment)
 - [Environment specific secrets and configs](#environment-specific-secrets-and-configs)
@@ -177,7 +178,7 @@ horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/d
 horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          21s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
-## Access services
+### Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
