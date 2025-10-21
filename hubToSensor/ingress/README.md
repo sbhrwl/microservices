@@ -74,3 +74,5 @@ ingress:
     flexibilityHubSimulator: /simulator
   tls: false   # set true later when you configure TLS/Keycloak
 ```
+- Create [ingress.yaml](orchestrate-hubtosensor-services/template/ingress.yaml)
+- Update [values.yaml](orchestrate-hubtosensor-services/values.yaml) ports to ClusterIP and remove nodePort for these services so **`Ingress` can route them `internally`**.
