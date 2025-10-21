@@ -76,3 +76,4 @@ ingress:
 ```
 - Create [ingress.yaml](orchestrate-hubtosensor-services/template/ingress.yaml)
 - Update [values.yaml](orchestrate-hubtosensor-services/values.yaml) ports to ClusterIP and remove nodePort for these services so **`Ingress` can route them `internally`**.
+  - Remove rows with `  nodePort: ` for `dataApi`, `uiApp` and `flexibilityHubSimulator`
