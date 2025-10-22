@@ -1,4 +1,4 @@
-# Service mesh
+# [Service mesh](istio/README.md)
 - [Internal services and TLS traffic](#internal-services-and-tls-traffic)
   - [Storage service](#storage-service)
 - [External access](#external-access)
