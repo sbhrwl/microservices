@@ -1,7 +1,7 @@
 global:
   # The IP address of your host machine where external services (DB, RabbitMQ) are running.
   # This is crucial for services running in Kubernetes to reach external resources.
-  hostIp: "10.49.148.121"
+  hostIp: "10.49.149.16"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
   
@@ -44,7 +44,7 @@ uiApp:
   backendUrl: "http://fhs.local/api"
 
 hesSimulator:
-  name: hes-simulator-service
+  name: hes-simulator
   image: sbhrwldocker/hes-simulator
   tag: latest
 
@@ -78,6 +78,7 @@ ingress:
     uiApp: /ui(/|$)(.*)
     dataApi: /api(/|$)(.*)
     flexibilityHubSimulator: /simulator(/|$)(.*)
-  tls: false   # set true later when you configure TLS/Keycloak
+  tls: false
   annotations:
+    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
