@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hesSimulator.name" . }}-deployment
+  name: {{ .Values.hesSimulator.name }}-deployment
   labels:
     app: {{ .Values.hesSimulator.name }}
 spec:

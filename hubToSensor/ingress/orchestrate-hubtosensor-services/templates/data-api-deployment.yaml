@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dataApi.name" . }}
+  name: {{ .Values.dataApi.name }}
   labels:
     app: {{ .Values.dataApi.name }}
 spec:
