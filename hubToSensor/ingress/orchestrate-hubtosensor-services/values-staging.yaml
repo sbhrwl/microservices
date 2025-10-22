@@ -25,7 +25,7 @@ storageService:
   grpcPort: 9090
 
 dataApi:
-  name: data-api-service
+  name: data-api
   image: sbhrwldocker/data-api
   tag: staging
   serverPort: 8085
@@ -37,7 +37,7 @@ dataApi:
     memoryTarget: 60
 
 uiApp:
-  name: ui-app-service
+  name: ui-app
   image: sbhrwldocker/ui-app
   tag: staging
   port: 8080
@@ -49,7 +49,7 @@ hesSimulator:
   tag: staging
 
 flexibilityHubSimulator:
-  name: flexibility-hub-simulator-service
+  name: flexibility-hub-simulator
   image: sbhrwldocker/flexibility-hub-simulator
   tag: staging
   port: 8081
