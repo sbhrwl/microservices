@@ -8,6 +8,7 @@
 - [Access services](#access-services)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
+- [Migration plan for production](prod/README.md)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
