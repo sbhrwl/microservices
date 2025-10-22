@@ -2,6 +2,7 @@
 - [External services](#external-services)
 - [Ingress controller for external routing](#ingress-controller-for-external-routing)
 - [Ingress setup](setup/README.md)
+  - [Restarting Ingress controller](restartIngress/README.md)
 - [Changes to existing helm charts](#changes-to-existing-helm-charts)
 - [Install Helm release](#install-helm-release)
 - [Verify release](#verify-release)
