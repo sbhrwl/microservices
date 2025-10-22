@@ -75,7 +75,9 @@ ingress:
   enabled: true
   host: fhs.local
   paths:
-    uiApp: /ui
-    dataApi: /api
-    flexibilityHubSimulator: /simulator
+    uiApp: /ui(/|$)(.*)
+    dataApi: /api(/|$)(.*)
+    flexibilityHubSimulator: /simulator(/|$)(.*)
   tls: false   # set true later when you configure TLS/Keycloak
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2

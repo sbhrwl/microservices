@@ -6,6 +6,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:
@@ -18,24 +21,24 @@ spec:
       http:
         paths:
           - path: {{ .Values.ingress.paths.uiApp }}
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Values.uiApp.name }}
+                name: {{ include "uiApp.name" . }}-service
                 port:
                   number: {{ .Values.uiApp.port }}
           - path: {{ .Values.ingress.paths.dataApi }}
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Values.dataApi.name }}
+                name: {{ include "dataApi.name" . }}-service
                 port:
                   number: {{ .Values.dataApi.serverPort }}
           - path: {{ .Values.ingress.paths.flexibilityHubSimulator }}
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Values.flexibilityHubSimulator.name }}
+                name: {{ include "flexibilityHubSimulator.name" . }}-service
                 port:
                   number: {{ .Values.flexibilityHubSimulator.port }}
 {{- end }}
