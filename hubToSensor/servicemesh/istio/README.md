@@ -32,3 +32,24 @@
   * Route all external traffic via **Istio Ingress Gateway**.
   * Use **VirtualService and DestinationRule** for traffic policies.
   * Observability via **Prometheus, Grafana, tracing**.
+Absolutely! Here’s a concise summary of our understanding from the previous set of advanced Istio questions (Q9–Q14):
+* **Canary Deployments**
+  * Deploy new service version alongside old version.
+  * Use VirtualService to split traffic by weight (e.g., 10% new, 90% old).
+  * Allows gradual rollout, monitoring, and quick rollback.
+* **Observability**
+  * Provided by Envoy sidecars + Prometheus/Grafana + Jaeger/Zipkin.
+  * Collects metrics, logs, and distributed traces.
+  * Requires no changes to application code.
+* **Security Policies**
+  * Enforced via DestinationRule and AuthorizationPolicy.
+  * Works with mTLS for secure, authenticated service-to-service communication.
+  * Implements a zero-trust security model.
+* **DestinationRule**
+  * Applies traffic policies to a specific service.
+  * Examples: load balancing, retries, timeouts, circuit breaking, TLS/mTLS settings.
+  * Works with VirtualService, which defines routing paths and traffic weights.
+* **Automatic Sidecar Injection**
+  * Automatically adds Envoy proxies to pods in a namespace.
+  * Ensures consistent security, observability, and traffic control across all services.
+  * Reduces manual errors and simplifies mesh management
