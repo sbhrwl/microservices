@@ -40,3 +40,4 @@ helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
 ```
 * Wait for the new pods to be ready. 
   * They should now show `2/2 containers` (your app + Envoy sidecar).
+## Istio gateway
