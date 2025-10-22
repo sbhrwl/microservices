@@ -35,7 +35,7 @@
 * **Rate limiting**: protect Message Broker from sudden spikes.
 * **Fault injection**: simulate failures in HES Simulator or adapters.
 ## UML
-<img src="images/sidecar.jpg">
+<img src="images/istio.jpg">
 
 <details>
   <summary>uml</summary>
@@ -64,6 +64,7 @@ package "Kubernetes Cluster - Internal Services" #90EE90 {
     RECTANGLE "Protocol Adapter"
     RECTANGLE "HES Simulator"
     RECTANGLE "Storage Service"
+    RECTANGLE "Istio Service Mesh\n- mTLS\n- Retries / Circuit Breaking\n- Observability (Prometheus/Grafana)"
 
     ' Sidecars as separate color
     note right of "Flexibility Bridge" #D3D3D3 : Envoy sidecar
@@ -73,7 +74,7 @@ package "Kubernetes Cluster - Internal Services" #90EE90 {
 }
 
 package "Exposed Infrastructure (Outside Cluster)" #FFA07A {
-    RECTANGLE "IngressGateway"
+    RECTANGLE "Istio IngressGateway"
 }
 
 package "External Systems" #F0E68C {
@@ -82,14 +83,14 @@ package "External Systems" #F0E68C {
 }
 
 ' External access
-"UI App" --> "IngressGateway" : HTTPS
-"Data API" --> "IngressGateway" : HTTPS
-"Flex Hub Simulator" --> "IngressGateway" : HTTPS
+"UI App" --> "Istio IngressGateway" : HTTPS
+"Data API" --> "Istio IngressGateway" : HTTPS
+"Flex Hub Simulator" --> "Istio IngressGateway" : HTTPS
 
 ' Routing
-"IngressGateway" --> "Data API" : /api
-"IngressGateway" --> "UI App" : /ui
-"IngressGateway" --> "Flex Hub Simulator" : /simulator
+"Istio IngressGateway" --> "Data API" : /api
+"Istio IngressGateway" --> "UI App" : /ui
+"Istio IngressGateway" --> "Flex Hub Simulator" : /simulator
 
 ' Broker flow
 "Flex Hub Simulator" --> "Message Broker" : publish requests/events (TLS)
