@@ -2,8 +2,8 @@
 - [Introduction](#introduction)
 - [Concepts](#concepts)
 ## Introduction 
-- A service mesh is a dedicated infrastructure layer for handling service-to-service communication within a microservices architecture. 
-- Istio provides the necessary features to secure, connect, and observe these services. 
+- A service mesh is a dedicated **infrastructure layer** for handling `service-to-service` communication within a microservices architecture. 
+- Istio provides the necessary features to `secure`, `connect`, and `observe` these services. 
 ## Concepts
 * **Sidecar Proxy (Envoy)**
   * Deployed alongside each pod in the mesh.
