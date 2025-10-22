@@ -27,13 +27,15 @@ helm install istio-base istio/base -n istio-system --set defaultRevision=default
 helm install istiod istio/istiod -n istio-system --wait
 ```
 
- * Onboarding Change (Application Namespace): Label the namespace where your services are deployed.
-   * Terminal/WSL Command:
-     kubectl label namespace <YOUR_APP_NAMESPACE> istio-injection=enabled
-
-   * Note: Replace <YOUR_APP_NAMESPACE> with the actual namespace your Helm charts target (e.g., default, dev, etc.).
- * Redeploy Services: Upgrade your existing service Helm charts to trigger the injection.
-   * Terminal/WSL Command:
-     helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
-
-   * Wait for the new pods to be ready. They should now show 2/2 containers (your app + Envoy sidecar).
+## Application onboarding 
+* Label the namespace where your services are deployed.
+```
+kubectl label namespace <YOUR_APP_NAMESPACE> istio-injection=enabled
+```
+  * Note: Replace <YOUR_APP_NAMESPACE> with the actual namespace your Helm charts target (e.g., default, dev, etc.).
+* Redeploy Services: Upgrade your existing service Helm charts to trigger the injection.
+```
+helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
+```
+* Wait for the new pods to be ready. 
+  * They should now show `2/2 containers` (your app + Envoy sidecar).
