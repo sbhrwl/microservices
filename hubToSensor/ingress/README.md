@@ -9,6 +9,7 @@
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
 - [Migration plan for production](prod/README.md)
+- [UML](#uml)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
@@ -127,3 +128,77 @@ helm uninstall ocs-prod -n prod
 ```
 helm upgrade ocs-staging . -f values-staging.yaml -n staging --set ingress.enabled=true --set ingress.host=fhs.local
 ```
+
+## UML
+<img src="images/ingress.jpg">
+
+<details>
+  <summary>uml</summary>
+ 
+**UML**
+```uml
+@startuml
+!define RECTANGLE class
+
+' Colors
+skinparam rectangle {
+  BackgroundColor White
+  BorderColor Black
+  Shadowing true
+}
+
+' Packages for visual grouping
+package "Kubernetes Cluster - External Services" #ADD8E6 {
+    RECTANGLE "UI App"
+    RECTANGLE "Data API"
+    RECTANGLE "Flex Hub Simulator"
+}
+
+package "Kubernetes Cluster - Internal Services" #90EE90 {
+    RECTANGLE "Flexibility Bridge"
+    RECTANGLE "Protocol Adapter"
+    RECTANGLE "HES Simulator"
+    RECTANGLE "Storage Service"
+}
+
+package "Exposed Infrastructure (Outside Cluster)" #FFA07A {
+    RECTANGLE "IngressGateway"
+}
+
+package "External Systems" #F0E68C {
+    RECTANGLE "Message Broker"
+    RECTANGLE "Database"
+}
+
+' External access
+"UI App" --> "IngressGateway" : HTTPS
+"Data API" --> "IngressGateway" : HTTPS
+"Flex Hub Simulator" --> "IngressGateway" : HTTPS
+
+' Routing
+"IngressGateway" --> "Data API" : /api
+"IngressGateway" --> "UI App" : /ui
+"IngressGateway" --> "Flex Hub Simulator" : /simulator
+
+' Broker flow
+"Flex Hub Simulator" --> "Message Broker" : publish requests/events (TLS)
+"Message Broker" --> "Flexibility Bridge" : consume & store via Storage Service
+"Message Broker" --> "Protocol Adapter" : consume & convert protocol
+"Message Broker" --> "HES Simulator" : consume converted requests
+"HES Simulator" --> "Message Broker" : publish responses (TLS)
+"Message Broker" --> "Protocol Adapter" : consume responses & parse
+"Message Broker" --> "Flexibility Bridge" : consume parsed responses & update Storage Service
+"Flex Hub Simulator" --> "Message Broker" : consume final responses
+
+' Storage service to Database
+"Flexibility Bridge" --> "Storage Service" : gRPC write/update
+"Protocol Adapter" --> "Storage Service" : gRPC read/write
+"Storage Service" --> "Database" : persist / read data
+
+' Data API direct connection to Database
+"Data API" --> "Database" : direct read/write
+
+@enduml
+```
+
+</details>
