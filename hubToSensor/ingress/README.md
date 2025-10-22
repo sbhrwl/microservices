@@ -104,10 +104,19 @@ horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/f
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
-* List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
-  * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
-  * `ui-app` → `http://localhost:30880/`
+- After moving these services behind **Ingress**, the URLs change because the **NodePorts are no longer used externally**.
+- Instead, you use the `fhs.local` host + the paths defined in your Ingress.
+  * Paths come from `values.yaml.ingress.paths`.
+  * The host `fhs.local` replaces `localhost` because Ingress uses it for routing.
+  * Internal service-to-service calls (like `ui-app` → `data-api`) should use **ClusterIP service names**, e.g., `http://data-api:8085`, not the Ingress URL.
+  * External clients (your browser or Postman) use the new Ingress URLs.
+
+| Service                   | Old URL (NodePort)                                           | New URL via Ingress                                    |
+| ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
+| ui-app                    | `http://localhost:30880/`                                    | `http://fhs.local/ui/`                                 |
+| data-api                  | `http://localhost:30885/api/v1/requests/<requestID>/tracker` | `http://fhs.local/api/v1/requests/<requestID>/tracker` |
+| flexibility-hub-simulator | `http://localhost:30881/api/messages`                        | `http://fhs.local/simulator/api/messages`              |
+
 ## Uninstall Helm release
 ```
 helm uninstall ocs-dev -n dev
