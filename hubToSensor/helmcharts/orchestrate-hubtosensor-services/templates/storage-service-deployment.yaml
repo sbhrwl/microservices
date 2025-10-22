@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "storageService.name" . }}-deployment
+  name: {{ .Values.storageService.name }}-deployment
   labels:
     app: {{ .Values.storageService.name }}
 spec:
