@@ -26,7 +26,7 @@
   * TLS termination at the gateway.
   * Can integrate with **Keycloak** for auth.
 ## Observability and debugging
-* Istio adds:
+* [Istio](istio/README.md) adds
   * Metrics per service / per path.
   * Distributed tracing: track **Flexibility request through broker → services → back**.
   * Logs automatically include source/destination service info.
