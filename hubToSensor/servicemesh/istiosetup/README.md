@@ -9,19 +9,23 @@
 | 3. External Access (Ingress) | Istio Gateway | Define the mesh's public entry point using an Istio resource instead of a standard Ingress. | Folder/File: Create a separate manifest for the Gateway resource, pointing to the default istio-ingressgateway Service. |
 | 4. Traffic Routing | Istio VirtualService | Route external traffic from the Gateway to your application service. | Folder/File: Create a VirtualService to link the new Gateway to your existing Kubernetes Service. |
 | 5. Observability | Istio Add-ons / istioctl | Access the Service Mesh visualizer (Kiali). | Use kubectl apply -f to deploy the add-ons and istioctl dashboard kiali to launch the UI. |
-Implementation Details: Step 2 (The Next Change)
-We will start with the Istio installation (Step 1) and then move to application onboarding (Step 2).
-Step 1 & 2: Istio Installation and Onboarding
- * Terminal/WSL Command: Install Istio using Helm.
-   helm repo add istio https://istio-release.storage.googleapis.com/charts
+
+## Istio installation
+* Terminal/WSL Command: Install Istio using Helm.
+```
+helm repo add istio https://istio-release.storage.googleapis.com/charts
 helm repo update
 kubectl create namespace istio-system
-
-# Install the Istio CRDs/Base components
+```
+* Install the Istio CRDs/Base components
+```
 helm install istio-base istio/base -n istio-system --set defaultRevision=default
+```
 
-# Install the Istio Control Plane (Istiod)
+* Install the Istio Control Plane (Istiod)
+```
 helm install istiod istio/istiod -n istio-system --wait
+```
 
  * Onboarding Change (Application Namespace): Label the namespace where your services are deployed.
    * Terminal/WSL Command:
