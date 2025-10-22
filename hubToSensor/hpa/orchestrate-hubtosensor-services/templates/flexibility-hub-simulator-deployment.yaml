@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "flexibilityHubSimulator.name" . }}-deployment
+  name: {{ .Values.flexibilityHubSimulator.name }}-deployment
   labels:
     app: {{ .Values.flexibilityHubSimulator.name }}
 spec:
