@@ -124,3 +124,6 @@ helm uninstall ocs-staging -n staging
 helm uninstall ocs-prod -n prod
 ```
 ## Upgrade Helm release
+```
+helm upgrade ocs-staging . -f values-staging.yaml -n staging --set ingress.enabled=true --set ingress.host=fhs.local
+```

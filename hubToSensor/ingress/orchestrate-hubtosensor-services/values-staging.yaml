@@ -1,7 +1,7 @@
 global:
   # The IP address of your host machine where external services (DB, RabbitMQ) are running.
   # This is crucial for services running in Kubernetes to reach external resources.
-  hostIp: "10.49.148.121"
+  hostIp: "10.49.149.16"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
   
@@ -25,7 +25,7 @@ storageService:
   grpcPort: 9090
 
 dataApi:
-  name: data-api
+  name: data-api-service
   image: sbhrwldocker/data-api
   tag: staging
   serverPort: 8085
@@ -37,7 +37,7 @@ dataApi:
     memoryTarget: 60
 
 uiApp:
-  name: ui-app
+  name: ui-app-service
   image: sbhrwldocker/ui-app
   tag: staging
   port: 8080
@@ -49,7 +49,7 @@ hesSimulator:
   tag: staging
 
 flexibilityHubSimulator:
-  name: flexibility-hub-simulator
+  name: flexibility-hub-simulator-service
   image: sbhrwldocker/flexibility-hub-simulator
   tag: staging
   port: 8081

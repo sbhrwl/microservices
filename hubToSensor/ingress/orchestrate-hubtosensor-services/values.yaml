@@ -25,7 +25,7 @@ storageService:
   grpcPort: 9090
 
 dataApi:
-  name: data-api
+  name: data-api-service
   image: sbhrwldocker/data-api
   tag: latest
   serverPort: 8085
@@ -37,14 +37,14 @@ dataApi:
     memoryTarget: 60
 
 uiApp:
-  name: ui-app
+  name: ui-app-service
   image: sbhrwldocker/ui-app
   tag: latest
   port: 8080
   backendUrl: "http://fhs.local/api"
 
 hesSimulator:
-  name: hes-simulator
+  name: hes-simulator-service
   image: sbhrwldocker/hes-simulator
   tag: latest
 

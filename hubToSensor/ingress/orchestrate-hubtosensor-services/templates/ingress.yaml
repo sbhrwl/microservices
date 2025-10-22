@@ -21,21 +21,21 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "uiApp.name" . }}
+                name: {{ .Values.uiApp.name }}
                 port:
                   number: {{ .Values.uiApp.port }}
           - path: {{ .Values.ingress.paths.dataApi }}
             pathType: Prefix
             backend:
               service:
-                name: {{ include "dataApi.name" . }}
+                name: {{ .Values.dataApi.name }}
                 port:
                   number: {{ .Values.dataApi.serverPort }}
           - path: {{ .Values.ingress.paths.flexibilityHubSimulator }}
             pathType: Prefix
             backend:
               service:
-                name: {{ include "flexibilityHubSimulator.name" . }}
+                name: {{ .Values.flexibilityHubSimulator.name }}
                 port:
                   number: {{ .Values.flexibilityHubSimulator.port }}
 {{- end }}
