@@ -1,10 +1,8 @@
 global:
-  # The IP address of your host machine where external services (DB, RabbitMQ) are running.
-  # This is crucial for services running in Kubernetes to reach external resources.
-  hostIp: "10.49.149.16"
+  hostIp: "10.49.148.80"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
-  
+
 db:
   host: "{{ .Values.global.hostIp }}"
   port: "5432"
@@ -60,7 +58,6 @@ flexibilityHubSimulator:
     cpuTarget: 50
     memoryTarget: 60
 
-
 protocolAdapter:
   name: protocol-adapter
   image: sbhrwldocker/protocol-adapter
@@ -75,10 +72,9 @@ ingress:
   enabled: true
   host: fhs.local
   paths:
-    uiApp: /ui(/|$)(.*)
-    dataApi: /api(/|$)(.*)
-    flexibilityHubSimulator: /simulator(/|$)(.*)
+    uiApp: /ui
+    dataApi: /api
+    flexibilityHubSimulator: /simulator
   tls: false
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
