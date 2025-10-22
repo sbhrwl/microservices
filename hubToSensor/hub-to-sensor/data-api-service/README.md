@@ -1,4 +1,5 @@
 # Data API service
+- [Properties](#properties)
 - [APIs](#apis)
 - [Implementation order](#implementation-order)
 - [Test control request](#test-control-request)
@@ -6,6 +7,9 @@
 - [Test request change log](#test-request-change-log)
 - [Test request tracker](#test-request-tracker)
 - [Swagger API documentation](#swagger-api-documentation)
+## Properties
+- [application.yml](src/main/resources/application.yml)
+## How to run
 ## APIs
 | API Name	| Endpoint	| Return Type (DTO)	| Implementation Focus (Java/Spring Boot)|
 | --------- | --------- | ----------------- | -------------------------------------- | 
