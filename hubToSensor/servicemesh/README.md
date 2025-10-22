@@ -54,22 +54,22 @@ skinparam rectangle {
 
 ' Packages for visual grouping
 package "Kubernetes Cluster - External Services" #ADD8E6 {
-    RECTANGLE "UI_App"
-    RECTANGLE "Data_API"
-    RECTANGLE "Flex_Hub_Simulator"
+    RECTANGLE "UI App"
+    RECTANGLE "Data API"
+    RECTANGLE "Flex Hub Simulator"
 }
 
 package "Kubernetes Cluster - Internal Services" #90EE90 {
-    RECTANGLE "Flexibility_Bridge"
-    RECTANGLE "Protocol_Adapter"
-    RECTANGLE "HES_Simulator"
-    RECTANGLE "Storage_Service"
+    RECTANGLE "Flexibility Bridge"
+    RECTANGLE "Protocol Adapter"
+    RECTANGLE "HES Simulator"
+    RECTANGLE "Storage Service"
 
     ' Sidecars as separate color
-    note right of "Flexibility_Bridge" #D3D3D3 : Envoy sidecar
-    note right of "Protocol_Adapter" #D3D3D3 : Envoy sidecar
-    note right of "HES_Simulator" #D3D3D3 : Envoy sidecar
-    note right of "Storage_Service" #D3D3D3 : Envoy sidecar
+    note right of "Flexibility Bridge" #D3D3D3 : Envoy sidecar
+    note right of "Protocol Adapter" #D3D3D3 : Envoy sidecar
+    note right of "HES Simulator" #D3D3D3 : Envoy sidecar
+    note right of "Storage Service" #D3D3D3 : Envoy sidecar
 }
 
 package "Exposed Infrastructure (Outside Cluster)" #FFA07A {
@@ -77,37 +77,37 @@ package "Exposed Infrastructure (Outside Cluster)" #FFA07A {
 }
 
 package "External Systems" #F0E68C {
-    RECTANGLE "Message_Broker"
+    RECTANGLE "Message Broker"
     RECTANGLE "Database"
 }
 
 ' External access
-"UI_App" --> "IngressGateway" : HTTPS
-"Data_API" --> "IngressGateway" : HTTPS
-"Flex_Hub_Simulator" --> "IngressGateway" : HTTPS
+"UI App" --> "IngressGateway" : HTTPS
+"Data API" --> "IngressGateway" : HTTPS
+"Flex Hub Simulator" --> "IngressGateway" : HTTPS
 
 ' Routing
-"IngressGateway" --> "Data_API" : /api
-"IngressGateway" --> "UI_App" : /ui
-"IngressGateway" --> "Flex_Hub_Simulator" : /simulator
+"IngressGateway" --> "Data API" : /api
+"IngressGateway" --> "UI App" : /ui
+"IngressGateway" --> "Flex Hub Simulator" : /simulator
 
 ' Broker flow
-"Flex_Hub_Simulator" --> "Message_Broker" : publish requests/events (TLS)
-"Message_Broker" --> "Flexibility_Bridge" : consume & store via Storage_Service
-"Message_Broker" --> "Protocol_Adapter" : consume & convert protocol
-"Message_Broker" --> "HES_Simulator" : consume converted requests
-"HES_Simulator" --> "Message_Broker" : publish responses (TLS)
-"Message_Broker" --> "Protocol_Adapter" : consume responses & parse
-"Message_Broker" --> "Flexibility_Bridge" : consume parsed responses & update Storage_Service
-"Flex_Hub_Simulator" --> "Message_Broker" : consume final responses
+"Flex Hub Simulator" --> "Message Broker" : publish requests/events (TLS)
+"Message Broker" --> "Flexibility Bridge" : consume & store via Storage Service
+"Message Broker" --> "Protocol Adapter" : consume & convert protocol
+"Message Broker" --> "HES Simulator" : consume converted requests
+"HES Simulator" --> "Message Broker" : publish responses (TLS)
+"Message Broker" --> "Protocol Adapter" : consume responses & parse
+"Message Broker" --> "Flexibility Bridge" : consume parsed responses & update Storage Service
+"Flex Hub Simulator" --> "Message Broker" : consume final responses
 
 ' Storage service to Database
-"Flexibility_Bridge" --> "Storage_Service" : gRPC write/update
-"Protocol_Adapter" --> "Storage_Service" : gRPC read/write
-"Storage_Service" --> "Database" : persist / read data
+"Flexibility Bridge" --> "Storage Service" : gRPC write/update
+"Protocol Adapter" --> "Storage Service" : gRPC read/write
+"Storage Service" --> "Database" : persist / read data
 
-' Data_API direct connection to Database
-"Data_API" --> "Database" : direct read/write
+' Data API direct connection to Database
+"Data API" --> "Database" : direct read/write
 
 @enduml
 ```
