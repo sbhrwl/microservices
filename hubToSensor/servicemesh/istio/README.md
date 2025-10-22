@@ -24,14 +24,6 @@
 * **Pilot**
   * Distributes **configuration to sidecars**.
   * Handles **service discovery** inside the mesh.
-* **What Istio does NOT do**
-  * It does **not manage databases** (sharding, replication).
-  * It does **not replace application logic**; it manages communication.
-* **Industrial best practice**
-  * Deploy **sidecars automatically or manually** for internal services.
-  * Route all external traffic via **Istio Ingress Gateway**.
-  * Use **VirtualService and DestinationRule** for traffic policies.
-  * Observability via **Prometheus, Grafana, tracing**.
 * **Canary Deployments**
   * Deploy new service version alongside old version.
   * Use VirtualService to split traffic by weight (e.g., 10% new, 90% old).
@@ -52,3 +44,11 @@
   * Automatically adds Envoy proxies to pods in a namespace.
   * Ensures consistent security, observability, and traffic control across all services.
   * Reduces manual errors and simplifies mesh management
+* **What Istio does NOT do**
+  * It does **not manage databases** (sharding, replication).
+  * It does **not replace application logic**; it manages communication.
+* **Industrial best practice**
+  * Deploy **sidecars automatically or manually** for internal services.
+  * Route all external traffic via **Istio Ingress Gateway**.
+  * Use **VirtualService and DestinationRule** for traffic policies.
+  * Observability via **Prometheus, Grafana, tracing**.
