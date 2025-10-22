@@ -4,7 +4,7 @@
 - [External access](#external-access)
 - [Observability and debugging](#observability-and-debugging)
 - [Optional improvements](#optional-improvements)
-- [Istio setup](#istiosetup/README.md)
+- [Istio setup](istiosetup/README.md)
 - [UML](#uml)
 ## Internal services and TLS traffic
 * **Message Broker ↔ Flexibility hub simulator/ Flexibility Bridge / Protocol Adapter / HES Simulator**
