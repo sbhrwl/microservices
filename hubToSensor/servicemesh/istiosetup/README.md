@@ -27,7 +27,8 @@ helm install istio-base istio/base -n istio-system --set defaultRevision=default
 helm install istiod istio/istiod -n istio-system --wait
 ```
 
-## Application onboarding 
+## Application onboarding
+### Automatic envoy sidecar injection
 * Label the namespace where your services are deployed.
 ```
 kubectl label namespace <YOUR_APP_NAMESPACE> istio-injection=enabled
