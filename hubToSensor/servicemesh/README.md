@@ -1,32 +1,35 @@
 # [Service mesh](istio/README.md)
-- [Internal services and TLS traffic](#internal-services-and-tls-traffic)
-  - [Storage service](#storage-service)
-- [External access](#external-access)
-- [Observability and debugging](#observability-and-debugging)
-- [Optional improvements](#optional-improvements)
+- [Introduction](#introduction)
+  - [Internal services and TLS traffic](#internal-services-and-tls-traffic)
+    - [Storage service](#storage-service)
+  - [External access](#external-access)
+  - [Observability and debugging](#observability-and-debugging)
+  - [Optional improvements](#optional-improvements)
 - [Istio setup](istiosetup/README.md)
+- [Application onboarding](applicationonboarding/README.md)
 - [UML](#uml)
-## Internal services and TLS traffic
+## Introduction 
+### Internal services and TLS traffic
 * **Message Broker ↔ Flexibility hub simulator/ Flexibility Bridge / Protocol Adapter / HES Simulator**
   * Istio can **automatically inject Envoy sidecars** into all services.
   * **mTLS**: all TLS traffic between services can be managed by Istio. 
     * **`No need`** to handle custom TLS in your services.
   * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) 
     * **`No hardcoded endpoints`**.
-### Storage service
+#### Storage service
 * Accessed by Flexibility Bridge and Protocol Adapter.
 * With Istio:
   * gRPC traffic can be routed via sidecars.
   * Only healthy pods receive traffic (readiness checks).
   * **Retries / circuit breaking** can protect Storage Service from overload.
-## External access
+### External access
 * External access for UI, Data API and Flexibility hub simulator)
 * Istio **IngressGateway** replaces your Ingress controller:
   * Expose **single public endpoint**.
   * Routing paths `/api`, `/ui`, `/simulator` → **VirtualService rules**.
   * TLS termination at the gateway.
   * Can integrate with **Keycloak** for auth.
-## Observability and debugging
+### Observability and debugging
 * [Istio](istio/README.md) adds
   * Metrics per service / per path.
   * Distributed tracing: track **Flexibility request through broker → services → back**.
