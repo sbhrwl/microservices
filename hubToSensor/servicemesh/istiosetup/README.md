@@ -17,12 +17,12 @@ helm repo add istio https://istio-release.storage.googleapis.com/charts
 helm repo update
 kubectl create namespace istio-system
 ```
-* Install the Istio CRDs/Base components
+* Install the `Istio CRDs/Base components`
 ```
 helm install istio-base istio/base -n istio-system --set defaultRevision=default
 ```
 
-* Install the Istio Control Plane (Istiod)
+* Install the `Istio Control Plane (Istiod)`
 ```
 helm install istiod istio/istiod -n istio-system --wait
 ```
@@ -32,11 +32,12 @@ helm install istiod istio/istiod -n istio-system --wait
 * Label the namespace where your services are deployed.
 ```
 kubectl label namespace <YOUR_APP_NAMESPACE> istio-injection=enabled
+kubectl label namespace staging istio-injection=enabled
 ```
-  * Note: Replace <YOUR_APP_NAMESPACE> with the actual namespace your Helm charts target (e.g., default, dev, etc.).
 * Redeploy Services: Upgrade your existing service Helm charts to trigger the injection.
 ```
 helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
+helm upgrade ocs-staging . -f values-staging.yaml -n staging
 ```
 * Wait for the new pods to be ready. 
   * They should now show `2/2 containers` (your app + Envoy sidecar).
