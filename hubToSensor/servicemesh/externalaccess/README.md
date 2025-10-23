@@ -1,48 +1,60 @@
-Index
- * Problem: monolithic ingress challenge
- * Motivation: unified and flexible external access
- * Evolution: from nodeport to istio ingress
- * Solution: istio gateway and virtualservice
- * Implementation: configuration and deployment
- * Takeaway: verifying access changes
-Problem: monolithic ingress challenge
- * Initial state: Services are exposed individually using distinct NodePorts for external access.
- * Service exposure:
-   * ui-app-service: Exposed on Port 30880 (targets 8080).
-   * data-api-service: Exposed on Port 30885 (targets 8085).
-   * flexibility-hub-simulator-service: Exposed on Port 30881 (targets 8081).
- * Inefficiency: Requires managing multiple external ports and IP/port combinations for client access.
-Motivation: unified and flexible external access
- * Centralization: Establish a single, controlled entry point for all external traffic into the service mesh.
- * Routing control: Enable sophisticated path-based routing to direct traffic to different services based on the URL.
- * Decoupling: Eliminate direct client dependency on individual service NodePorts.
-Evolution: from nodeport to istio ingress
- * Before Istio: Direct access via http://<HOST>:<NODEPORT>/<PATH>.
- * After Istio: Unified access via http://<INGRESS_IP>:<INGRESS_PORT>/<PREFIX>/<PATH>.
- * Goal: Shift the responsibility of external exposure from individual services (NodePort) to the Istio Ingress Gateway.
-Solution: istio gateway and virtualservice
- * Istio Gateway (staging-ingress-gateway):
-   * Configures the default Istio Ingress Controller (istio: ingressgateway).
-   * Listens on Port 80 (HTTP).
-   * Accepts traffic for all hostnames (hosts: "*").
-   * Acts as the new front door for the service mesh in the staging namespace.
- * Istio VirtualService (staging-external-routes):
-   * Binds routing rules to the staging-ingress-gateway.
-   * Implements path-based routing to internal services:
-     * /ui-app/ prefix routes to ui-app-service:8080.
-     * /data-api/ prefix routes to data-api-service:8085.
-     * /flex-sim/ prefix routes to flexibility-hub-simulator-service:8081.
-Implementation: configuration and deployment
- * File and location: The configuration is defined in a single YAML file: istio-config/ui-app-ingress.yaml.
- * Deployment command:
-   * kubectl apply -f istio-config/ui-app-ingress.yaml
- * Access verification (Next Step):
-   * Determine the external access port of the Ingress Gateway:
-     * kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
-   * The output of this command replaces <INGRESS_PORT>.
-Takeaway: verifying access changes
- * New access pattern: All three services are now accessed via a single external IP and port (the Istio Ingress Gateway's NodePort) followed by a path prefix.
- * Example (Flexibility Hub Simulator):
-   * Old URL: http://localhost:30881/api/messages
-   * New URL: http://localhost:<INGRESS_PORT>/flex-sim/api/messages
- * The setup centralizes ingress, enforces consistent routing rules, and is a prerequisite for more advanced traffic management features.
+# Istio gateway configuration
+* [Problem](#problem)
+* [Motivation](#motivation)
+* [Evolution](#evolution)
+* [Solution](#solution)
+* [Implementation](#implementation)
+* [Takeaway](#takeaway)
+## Problem
+* Multiple Kubernetes services were exposed externally via distinct NodePorts.
+* Each service had its own external port, creating fragmented ingress management.
+* Example:
+  * `ui-app-service` → NodePort 30880
+  * `data-api-service` → NodePort 30885
+  * `flexibility-hub-simulator-service` → NodePort 30881
+## Motivation
+* Simplify ingress configuration by consolidating access to all externally exposed services.
+* Replace multiple NodePort entries with a unified Istio ingress point.
+* Enable path-based routing through the Istio Gateway for better scalability and control.
+## Evolution
+* Transition from direct NodePort access to a service mesh-managed ingress.
+* Introduced Istio Gateway and VirtualService resources in the `staging` namespace.
+* Enabled centralized control of HTTP traffic with a single external IP and port.
+## Solution
+* **Istio Gateway (`staging-ingress-gateway`)**
+  * Configures Istio ingress controller to listen on port 80.
+  * Accepts HTTP traffic from any hostname (`*`).
+  * Acts as the unified entry point for external requests.
+* **Istio VirtualService (`staging-external-routes`)**
+  * Binds routing rules to the above Gateway.
+  * Implements URI path–based routing:
+    * `/ui-app/` → `ui-app-service:8080`
+    * `/data-api/` → `data-api-service:8085`
+    * `/flex-sim/` → `flexibility-hub-simulator-service:8081`
+## Implementation
+* **YAML configuration:** [`istio-config/app-ingress.yaml`](app-ingress.yaml)
+* **Apply command:**
+  ```bash
+  kubectl apply -f istio-config/app-ingress.yaml
+  ```
+* **Validate ingress port:**
+  ```bash
+  kubectl get svc istio-ingressgateway -n istio-system \
+  -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
+  ```
+* **Access after Istio configuration:**
+
+  | Service                   | Before Istio                                          | After Istio                                                             |
+  | ------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------- |
+  | flexibility-hub-simulator | `http://localhost:30881/api/messages`                 | `http://localhost:<INGRESS_PORT>/flex-sim/api/messages`                 |
+  | data-api-service          | `http://localhost:30885/api/v1/requests/<ID>/tracker` | `http://localhost:<INGRESS_PORT>/data-api/api/v1/requests/<ID>/tracker` |
+  | ui-app                    | `http://localhost:30880/`                             | `http://localhost:<INGRESS_PORT>/ui-app/`                               |
+
+* **Key change:** single ingress IP/port replaces all NodePorts.
+* Requests are distinguished using the URI prefix.
+
+## Takeaway
+* Consolidates external traffic routing under one Gateway.
+* Reduces port management complexity and improves observability.
+* Enables future scalability with Istio traffic policies and security features.
+* All external access now flows through Istio’s managed ingress path structure.

@@ -1,0 +1,55 @@
+# istio-config/app-ingress.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: staging-ingress-gateway
+  namespace: staging
+spec:
+  selector:
+    istio: ingressgateway # Selects the default Istio Ingress Gateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*" # Accept traffic for any hostname
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: staging-external-routes
+  namespace: staging
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - staging-ingress-gateway
+  http:
+  # Route 1: UI App (on path /ui-app/)
+  - match:
+    - uri:
+        prefix: /ui-app/
+    route:
+    - destination:
+        host: ui-app-service
+        port:
+          number: 8080
+  # Route 2: Data API (on path /data-api/)
+  - match:
+    - uri:
+        prefix: /data-api/
+    route:
+    - destination:
+        host: data-api-service
+        port:
+          number: 8085
+  # Route 3: Flexibility Hub Simulator (on path /flex-sim/)
+  - match:
+    - uri:
+        prefix: /flex-sim/
+    route:
+    - destination:
+        host: flexibility-hub-simulator-service
+        port:
+          number: 8081
