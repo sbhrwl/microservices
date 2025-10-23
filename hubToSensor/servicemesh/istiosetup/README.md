@@ -1,5 +1,10 @@
 # Istio setup
-
+- [Plan](#plan)
+- [Istio installation](#istio-installation)
+- [Application onboarding](#application-onboarding)
+  - [Automatic envoy sidecar injection](#automatic-envoy-sidecar-injection)
+  - [Verify release](#verify-release)
+  - [Access services](#access-services)
 ## Plan
 
 | Step | Focus/Tool | Goal | Implementation Change |
@@ -39,6 +44,22 @@ kubectl label namespace staging istio-injection=enabled
 helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
 helm upgrade ocs-staging . -f values-staging.yaml -n staging
 ```
+### Verify release
 * Wait for the new pods to be ready. 
   * They should now show `2/2 containers` (your app + Envoy sidecar).
+```
+helm list -n staging
+kubectl get pod -n staging
+kubectl get svc -n staging
+kubectl get all -n staging
+```
+* Console logs
+```
+
+```
+### Access services
+* List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
+  * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
+  * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
+  * `ui-app` → `http://localhost:30880/`
 ## Istio gateway
