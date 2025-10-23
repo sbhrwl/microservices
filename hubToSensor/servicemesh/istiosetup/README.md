@@ -49,7 +49,8 @@ helm upgrade ocs-staging . -f values-staging.yaml -n staging
 ```
 kubectl rollout restart deployment -n staging --all
 ```
-  * restart each deployment
+
+  * If `-all` does not work, restart each deployment
 ```
 kubectl rollout restart deployment data-api -n staging
 kubectl rollout restart deployment ui-app -n staging
