@@ -16,12 +16,6 @@ rabbitmq:
   password: admin
   exchange: flexibility-bridge.exchange
 
-storageService:
-  name: storage-service
-  image: sbhrwldocker/storage-service
-  tag: staging
-  grpcPort: 9090
-
 dataApi:
   name: data-api
   image: sbhrwldocker/data-api
@@ -41,11 +35,6 @@ uiApp:
   port: 8080
   backendUrl: "http://fhs.local/api"
 
-hesSimulator:
-  name: hes-simulator
-  image: sbhrwldocker/hes-simulator
-  tag: staging
-
 flexibilityHubSimulator:
   name: flexibility-hub-simulator
   image: sbhrwldocker/flexibility-hub-simulator
@@ -58,14 +47,25 @@ flexibilityHubSimulator:
     cpuTarget: 50
     memoryTarget: 60
 
+flexibilityBridge:
+  name: flexibility-bridge
+  image: sbhrwldocker/flexibility-bridge
+  tag: staging
+
 protocolAdapter:
   name: protocol-adapter
   image: sbhrwldocker/protocol-adapter
   tag: staging
 
-flexibilityBridge:
-  name: flexibility-bridge
-  image: sbhrwldocker/flexibility-bridge
+storageService:
+  name: storage-service
+  image: sbhrwldocker/storage-service
+  tag: staging
+  grpcPort: 9090
+
+hesSimulator:
+  name: hes-simulator
+  image: sbhrwldocker/hes-simulator
   tag: staging
 
 ingress:
