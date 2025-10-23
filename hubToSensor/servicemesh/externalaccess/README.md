@@ -40,8 +40,7 @@
   ```
 * **Validate ingress port:**
   ```bash
-  kubectl get svc istio-ingressgateway -n istio-system \
-  -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
+  kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
   ```
 * **Access after Istio configuration:**
 
