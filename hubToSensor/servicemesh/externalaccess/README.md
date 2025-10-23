@@ -38,6 +38,13 @@
     ```bash
     kubectl get svc -n istio-system
     ```
+  * Logs
+    ```
+    PS C:\Git\microservices\hubToSensor\servicemesh\externalaccess> kubectl get svc -n istio-system
+    NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                      AGE
+    istio-ingressgateway   LoadBalancer   10.105.222.190   localhost     15021:32054/TCP,80:31989/TCP,443:32607/TCP   38s
+    istiod                 ClusterIP      10.109.186.128   <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP        6h32m  
+    ```
 ### Istio VirtualService setup
 * **Istio VirtualService (`staging-external-routes`)**
   * Binds routing rules to the above Gateway.
@@ -56,6 +63,20 @@
   ```bash
   kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
   ```
+* Logs
+```
+PS C:\Git\microservices\hubToSensor\servicemesh\externalaccess> kubectl get svc -n istio-system
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                      AGE
+istio-ingressgateway   LoadBalancer   10.105.222.190   localhost     15021:32054/TCP,80:31989/TCP,443:32607/TCP   38s
+istiod                 ClusterIP      10.109.186.128   <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP        6h32m
+PS C:\Git\microservices\hubToSensor\servicemesh\externalaccess> kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
+error: error executing jsonpath "{.spec.ports[?(@.name==http2)].nodePort}": Error executing template: unrecognized identifier http2. Printing more information for debugging the template:
+        template was:
+                {.spec.ports[?(@.name==http2)].nodePort}
+        object given to jsonpath engine was:
+                map[string]interface {}{"apiVersion":"v1", "kind":"Service", "metadata":map[string]interface {}{"annotations":map[string]interface {}{"meta.helm.sh/release-name":"istio-ingressgateway", "meta.helm.sh/release-namespace":"istio-system"}, "creationTimestamp":"2025-10-23T18:30:00Z", "labels":map[string]interface {}{"app":"istio-ingressgateway", "app.kubernetes.io/instance":"istio-ingressgateway", "app.kubernetes.io/managed-by":"Helm", "app.kubernetes.io/name":"istio-ingressgateway", "app.kubernetes.io/part-of":"istio", "app.kubernetes.io/version":"1.27.3", "helm.sh/chart":"gateway-1.27.3", "istio":"ingressgateway", "istio.io/dataplane-mode":"none"}, "managedFields":[]interface {}{map[string]interface {}{"apiVersion":"v1", "fieldsType":"FieldsV1", "fieldsV1":map[string]interface {}{"f:metadata":map[string]interface {}{"f:annotations":map[string]interface {}{".":map[string]interface {}{}, "f:meta.helm.sh/release-name":map[string]interface {}{}, "f:meta.helm.sh/release-namespace":map[string]interface {}{}}, "f:labels":map[string]interface {}{".":map[string]interface {}{}, "f:app":map[string]interface {}{}, "f:app.kubernetes.io/instance":map[string]interface {}{}, "f:app.kubernetes.io/managed-by":map[string]interface {}{}, "f:app.kubernetes.io/name":map[string]interface {}{}, "f:app.kubernetes.io/part-of":map[string]interface {}{}, "f:app.kubernetes.io/version":map[string]interface {}{}, "f:helm.sh/chart":map[string]interface {}{}, "f:istio":map[string]interface {}{}, "f:istio.io/dataplane-mode":map[string]interface {}{}}}, "f:spec":map[string]interface {}{"f:allocateLoadBalancerNodePorts":map[string]interface {}{}, "f:externalTrafficPolicy":map[string]interface {}{}, "f:internalTrafficPolicy":map[string]interface {}{}, "f:ports":map[string]interface {}{".":map[string]interface {}{}, "k:{\"port\":15021,\"protocol\":\"TCP\"}":map[string]interface {}{".":map[string]interface {}{}, "f:name":map[string]interface {}{}, "f:port":map[string]interface {}{}, "f:protocol":map[string]interface {}{}, "f:targetPort":map[string]interface {}{}}, "k:{\"port\":443,\"protocol\":\"TCP\"}":map[string]interface {}{".":map[string]interface {}{}, "f:name":map[string]interface {}{}, "f:port":map[string]interface {}{}, "f:protocol":map[string]interface {}{}, "f:targetPort":map[string]interface {}{}}, "k:{\"port\":80,\"protocol\":\"TCP\"}":map[string]interface {}{".":map[string]interface {}{}, "f:name":map[string]interface {}{}, "f:port":map[string]interface {}{}, "f:protocol":map[string]interface {}{}, "f:targetPort":map[string]interface {}{}}}, "f:selector":map[string]interface {}{}, "f:sessionAffinity":map[string]interface {}{}, "f:type":map[string]interface {}{}}}, "manager":"helm", "operation":"Update", "time":"2025-10-23T18:30:00Z"}, map[string]interface {}{"apiVersion":"v1", "fieldsType":"FieldsV1", "fieldsV1":map[string]interface {}{"f:status":map[string]interface {}{"f:loadBalancer":map[string]interface {}{"f:ingress":map[string]interface {}{}}}}, "manager":"kube-vpnkit-forwarder", "operation":"Update", "subresource":"status", "time":"2025-10-23T18:30:00Z"}}, "name":"istio-ingressgateway", "namespace":"istio-system", "resourceVersion":"2392777", "uid":"4ca26836-8565-4a3c-976a-cac3c751c442"}, "spec":map[string]interface {}{"allocateLoadBalancerNodePorts":true, "clusterIP":"10.105.222.190", "clusterIPs":[]interface {}{"10.105.222.190"}, "externalTrafficPolicy":"Cluster", "internalTrafficPolicy":"Cluster", "ipFamilies":[]interface {}{"IPv4"}, "ipFamilyPolicy":"SingleStack", "ports":[]interface {}{map[string]interface {}{"name":"status-port", "nodePort":32054, "port":15021, "protocol":"TCP", "targetPort":15021}, map[string]interface {}{"name":"http2", "nodePort":31989, "port":80, "protocol":"TCP", "targetPort":80}, map[string]interface {}{"name":"https", "nodePort":32607, "port":443, "protocol":"TCP", "targetPort":443}}, "selector":map[string]interface {}{"app":"istio-ingressgateway", "istio":"ingressgateway"}, "sessionAffinity":"None", "type":"LoadBalancer"}, "status":map[string]interface {}{"loadBalancer":map[string]interface {}{"ingress":[]interface {}{map[string]interface {}{"hostname":"localhost"}}}}}
+```
+* The HTTP NodePort is definitively **31989**
 * **Access after Istio configuration:**
 
   | Service                   | Before Istio                                          | After Istio                                                             |
