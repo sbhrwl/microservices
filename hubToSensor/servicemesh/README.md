@@ -1,10 +1,9 @@
 # [Service mesh](istio/README.md)
 - [Introduction](#introduction)
   - [Internal services and TLS traffic](#internal-services-and-tls-traffic)
-    - [Storage service](#storage-service)
   - [External access](#external-access)
   - [Observability and debugging](#observability-and-debugging)
-  - [Optional improvements](#optional-improvements)
+  - [Additional capabilities](#additional-capabilities)
 - [Istio setup](istiosetup/README.md)
 - [Application onboarding](applicationonboarding/README.md)
 - [UML](#uml)
@@ -16,12 +15,12 @@
     * **`No need`** to handle custom TLS in your services.
   * **Service discovery**: broker and clients locate each other via **service names** (K8s DNS) 
     * **`No hardcoded endpoints`**.
-#### Storage service
-* Accessed by Flexibility Bridge and Protocol Adapter.
-* With Istio:
-  * gRPC traffic can be routed via sidecars.
-  * Only healthy pods receive traffic (readiness checks).
-  * **Retries / circuit breaking** can protect Storage Service from overload.
+* **Storage service**
+  * Accessed by Flexibility Bridge and Protocol Adapter.
+  * With Istio:
+    * gRPC traffic can be routed via sidecars.
+    * Only healthy pods receive traffic (readiness checks).
+    * **Retries / circuit breaking** can protect Storage Service from overload.
 ### External access
 * External access for UI, Data API and Flexibility hub simulator)
 * Istio **IngressGateway** replaces your Ingress controller:
@@ -30,11 +29,11 @@
   * TLS termination at the gateway.
   * Can integrate with **Keycloak** for auth.
 ### Observability and debugging
-* [Istio](istio/README.md) adds
-  * Metrics per service / per path.
-  * Distributed tracing: track **Flexibility request through broker → services → back**.
+* Istio adds
+  * Metrics `per service` / `per path`.
+  * Distributed tracing: `track **Flexibility request through broker → services → back**`.
   * Logs automatically include source/destination service info.
-## Optional improvements
+## Additional capabilities 
 * **Traffic splitting**: test new versions of Protocol Adapter or Flexibility Bridge.
 * **Rate limiting**: protect Message Broker from sudden spikes.
 * **Fault injection**: simulate failures in HES Simulator or adapters.
