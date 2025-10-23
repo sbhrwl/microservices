@@ -10,7 +10,7 @@
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Upgrade Helm release](#upgrades-helm-release)
 - [Migration plan for production](prod/README.md)
-- [UML](#uml)
+- [Design](#design)
 ## External services
 * **UI App** → Web frontend
 * **Data API** → REST API for external clients
@@ -130,7 +130,7 @@ helm uninstall ocs-prod -n prod
 helm upgrade ocs-staging . -f values-staging.yaml -n staging --set ingress.enabled=true --set ingress.host=fhs.local
 ```
 
-## UML
+## Design
 <img src="images/ingress.jpg">
 
 <details>
