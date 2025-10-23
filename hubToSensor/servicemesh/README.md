@@ -6,7 +6,7 @@
   - [Additional capabilities](#additional-capabilities)
 - [Istio setup](istiosetup/README.md)
 - [Application onboarding](applicationonboarding/README.md)
-- [UML](#uml)
+- [Design](#design)
 ## Introduction 
 ### Internal services and TLS traffic
 * **Message Broker ↔ Flexibility hub simulator/ Flexibility Bridge / Protocol Adapter / HES Simulator**
@@ -37,7 +37,7 @@
 * **Traffic splitting**: test new versions of Protocol Adapter or Flexibility Bridge.
 * **Rate limiting**: protect Message Broker from sudden spikes.
 * **Fault injection**: simulate failures in HES Simulator or adapters.
-## UML
+## Design 
 <img src="images/istio.jpg">
 
 <details>
