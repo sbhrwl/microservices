@@ -32,7 +32,8 @@
     * `/data-api/` → `data-api-service:8085`
     * `/flex-sim/` → `flexibility-hub-simulator-service:8081`
 ## Implementation
-* **YAML configuration:** [`istio-config/app-ingress.yaml`](app-ingress.yaml)
+* **YAML configuration:** [`istio-config/app-ingress.yaml`](istio-config/app-ingress.yaml)
+* Go to `\servicemesh\externalaccess`
 * **Apply command:**
   ```bash
   kubectl apply -f istio-config/app-ingress.yaml
