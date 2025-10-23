@@ -25,6 +25,20 @@
   * Configures Istio ingress controller to listen on port 80.
   * Accepts HTTP traffic from any hostname (`*`).
   * Acts as the unified entry point for external requests.
+### Istio ingress gateway setup
+* **Terminal/WSL Command (Install the Gateway Helm Chart):** 
+  * We will install the official Istio Gateway chart into the `istio-system` namespace.
+  ```bash
+  helm install istio-ingressgateway istio/gateway -n istio-system --wait
+  ```
+* *Note: We are naming the release `istio-ingressgateway` to match the selector `istio: ingressgateway` used in your `Gateway` YAML.*
+* Verify the Gateway Service
+  * **Terminal/WSL Command (Check for the new Service):** 
+  * Run this command to confirm the `istio-ingressgateway` service is now running and check its exposure type and ports.
+    ```bash
+    kubectl get svc -n istio-system
+    ```
+### Istio VirtualService setup
 * **Istio VirtualService (`staging-external-routes`)**
   * Binds routing rules to the above Gateway.
   * Implements URI path–based routing:
