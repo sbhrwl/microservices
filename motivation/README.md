@@ -5,9 +5,9 @@
 * [Best practices](#best-practices)
 * [Microservice example: `Generate message`](generatemessage/README.md)
 * [Spring framework](springframework/README.md)
-* [Protobuf usage](#protobuf-usage)
-* [gRPC setup](gRPC/README.md)
-* [Kafka consumer groups](#kafka-consumer-groups)
+* [Protobuf](protobuf/README.md)
+  * [gRPC setup](gRPC/README.md)
+* [Kafka consumer groups](kafka/README.md)
 ## Introduction
 * Motivation for shift to microservices
   * Better scalability?
@@ -46,41 +46,3 @@
 * Use **domain boundaries** (bounded contexts in DDD) to guide decomposition.
 * Observe runtime behavior before splitting (e.g., if `Command Generator` spikes under load, consider isolating XML creation).
 * Services that interact with **infrastructure or protocols** (e.g., Protocol Gateway) are often better as independent functions.
-
-## Protobuf usage
-* **Internal microservices** often use Protobuf, especially when built with **gRPC** or communicating via **message brokers**.
-* Protobuf helps ensure **performance, compactness, and schema evolution** in internal systems.
-* [Protobuf setup guide for Java projects](protobuf/README.md)
-
-| Use Case                      | Protobuf Usage | Notes                                                              |
-| ----------------------------- | -------------- | ------------------------------------------------------------------ |
-| Internal microservices        | ✅ Yes          | Common with gRPC or REST+Protobuf in performance-critical systems  |
-| Public REST APIs              | ❌ No           | JSON preferred due to readability and broad client compatibility   |
-| Message brokers (Kafka, etc.) | ✅ Yes          | Widely used with schema registries for efficient, compact messages |
-| Event-driven architecture     | ✅ Yes          | Used for structured, fast, and evolvable event formats             |
-
-## Kafka consumer groups
-- A **Kafka consumer group** is a set of consumers that share the work of consuming messages from topics.
-- Each partition of a topic is consumed by only one consumer in the group at a time, enabling **parallel processing** without duplication.
-### Analogy
-- Think of a consumer group as a team of workers on an assembly line:
-  - The topic partitions are conveyor belts carrying tasks (messages).
-  - Each worker (consumer) handles tasks from one or more belts.
-  - No two workers do the same task, ensuring efficiency and no duplicates.
-### Examples
-- **Single consumer group:**  
-  - One group with multiple consumers balances load across partitions.  
-  - Good for horizontal scaling and simplicity.
-- **Multiple consumer groups:**  
-  - Different groups independently consume the same topic data.  
-  - Useful if you have different applications or analytics that need all the data separately.
-### Decision Points
-
-| Scenario                        | Recommendation                 |
-|--------------------------------|-------------------------------|
-| Single ingestion service only   | Single consumer group          |
-| Multiple independent consumers  | Multiple consumer groups       |
-| Need scalability & load balance | Single group with multiple consumers |
-
-- Choose a **single consumer group** if your ingestion service is the sole consumer and you want easy scaling.
-- Choose **multiple consumer groups** if different services need the same data independently.
