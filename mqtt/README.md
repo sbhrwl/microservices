@@ -3,7 +3,6 @@
 * [Goal](#goal)
 * [Next steps](#next-steps)
 ## Architecture
-* Architecture for POC with Spring Boot + MQTT
 * Components:
   * **Spring Boot App:** REST controller, Publisher, Subscriber services
   * **Mosquitto Broker:** Docker container
