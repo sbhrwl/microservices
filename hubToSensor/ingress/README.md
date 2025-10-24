@@ -39,6 +39,7 @@ ingress:
 - Create [ingress.yaml](orchestrate-hubtosensor-services/templates/ingress.yaml)
 - Update [values.yaml](orchestrate-hubtosensor-services/values.yaml) ports to ClusterIP and remove nodePort for these services so **`Ingress` can route them `internally`**.
   - Remove rows with `  nodePort: ` for `dataApi`, `uiApp` and `flexibilityHubSimulator`
+- Another test was also done by keeping the Nodeport servies itact in values.yaml. Refer [values.yaml](orchestrate-hubtosensor-services/values-staging-WithNodeport.yaml) and [ingress.yaml](orchestrate-hubtosensor-services/ingress-WithNodeport.yaml)
 ## Install Helm release
 - [values-staging.yaml](orchestrate-hubtosensor-services/values-staging.yaml)
 - Go to Helm chart folder (e.g., [orchestrate-hubtosensor-services](orchestrate-hubtosensor-services), run this command:
