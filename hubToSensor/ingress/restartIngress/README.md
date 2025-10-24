@@ -1,4 +1,7 @@
-# Restarting Ingress controller 
+# Restarting Ingress controller
+- [Identify your ingress controller pod](#identify-your-ingress-controller-pod)
+- [Bring down the ingress pod](#bring-down-the-ingress-pod)
+- [Restart](#restart)
 ## Identify your ingress controller pod
 - To find the pod name, run one of these commands:
 ```bash
@@ -8,7 +11,7 @@ kubectl get pods -n ingress-nginx
 ```
 kubectl get pods -A | grep ingress
 ```
-## Bring down (stop) the ingress pod
+## Bring down the ingress pod
 - To simulate stopping it (a soft restart), delete the pod 
 - Kubernetes will recreate it automatically if it’s managed by a Deployment (which it usually is):
 ```
@@ -19,7 +22,7 @@ kubectl delete pod <pod-name> -n ingress-nginx
 kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=0
 ```
 - That stops it completely — no ingress routing will work now.
-## Restart (bring it back up)
+## Restart
 - When you’re ready to restart, scale the Deployment back to 1:
 ```
 kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=1

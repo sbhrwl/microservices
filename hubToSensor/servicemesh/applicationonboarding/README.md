@@ -10,6 +10,7 @@
 kubectl label namespace <YOUR_APP_NAMESPACE> istio-injection=enabled
 kubectl label namespace staging istio-injection=enabled
 ```
+  * Verify: `kubectl get namespace staging --show-labels`
 * Redeploy Services: Upgrade your existing service Helm charts to trigger the injection.
 ```
 helm upgrade <YOUR_RELEASE_NAME> <YOUR_CHART_PATH> -n <YOUR_APP_NAMESPACE>
@@ -115,6 +116,11 @@ terminationDrainDuration: 5s
     ```bash
     kubectl label namespace staging istio-injection-
     ```
+    - The trailing hyphen (-) after istio-injection tells Kubernetes to remove that label key from the namespace.
+      - You should no longer see `istio-injection=enabled` in the label list
+      ```
+      kubectl get namespace staging --show-labels
+      ```  
     - **Why:** This is the most crucial step for the *future*. 
       - It ensures that if you decide to immediately redeploy the application (or if the Helm uninstall fails and you need to restart/redeploy manually), any new pods created will **not** get the sidecar.
   - **Uninstall the Helm Release**

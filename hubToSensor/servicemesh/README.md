@@ -46,6 +46,16 @@
 | 4. Traffic Routing | Istio VirtualService | Route external traffic from the Gateway to your application service. | Folder/File: Create a VirtualService to link the new Gateway to your existing Kubernetes Service. |
 | 5. Observability | Istio Add-ons / istioctl | Access the Service Mesh visualizer (Kiali). | Use kubectl apply -f to deploy the add-ons and istioctl dashboard kiali to launch the UI. |
 
+- Pods still running after [application `off`bording](applicationonboarding/README.md)
+```
+PS C:\Git\microservices\hubToSensor\servicemesh\externalaccess> kubectl get pods -n istio-system
+NAME                                   READY   STATUS    RESTARTS   AGE
+istio-ingressgateway-797bbf485-pvbd2   1/1     Running   0          12h
+istiod-6cdb654854-hs2q2                1/1     Running   0          18h
+PS C:\Git\microservices\hubToSensor\servicemesh\externalaccess> kubectl get pods -n ingress-nginx
+NAME                                        READY   STATUS    RESTARTS        AGE
+ingress-nginx-controller-7d8cffd99c-rqz6d   1/1     Running   1 (2d11h ago)   2d13h
+```
 ## Design 
 <img src="images/istio.jpg">
 
