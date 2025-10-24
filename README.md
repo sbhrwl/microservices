@@ -6,6 +6,7 @@
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
+- [MQTT](mqtt/README.md)
 <details>
   <summary>prompt</summary>
 
