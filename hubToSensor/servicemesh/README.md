@@ -6,6 +6,7 @@
   - [Additional capabilities](#additional-capabilities)
 - [Plan](#plan)
 - [Design](#design)
+- [Clean up Istio](#clean-up-istio)
 ## Introduction 
 ### Internal services and TLS traffic
 * **Message Broker ↔ Flexibility hub simulator/ Flexibility Bridge / Protocol Adapter / HES Simulator**
@@ -136,3 +137,18 @@ package "External Systems" #F0E68C {
 ```
 
 </details>
+
+## Clean up Istio
+- **(Scale Down/Up):**
+  * If you want to stop them completely and bring them back later, you should scale their controlling **Deployments** down to 0 replicas, and then back up to 1 (or the desired count). This is the proper way to pause a service.
+  * **Scale Down:**
+    ```bash
+    kubectl scale deployment istio-ingressgateway -n istio-system --replicas=0
+    kubectl scale deployment istiod -n istio-system --replicas=0
+    ```
+
+  * **Scale Up (to restart later):**
+    ```bash
+    kubectl scale deployment istio-ingressgateway -n istio-system --replicas=1
+    kubectl scale deployment istiod -n istio-system --replicas=1
+    ```
