@@ -105,6 +105,16 @@ horizontalpodautoscaler.autoscaling/data-api-hpa                    Deployment/d
 horizontalpodautoscaler.autoscaling/flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         1          73s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
+## Verify services at ingress
+- Get ingress pod name: `kubectl get pods -n ingress-nginx -l app.kubernetes.io/component=controller`
+- Replace ingress pod name: `kubectl logs ingress-nginx-controller-7d8cffd99c-rqz6d -n ingress-nginx --tail 50`
+```
+PS C:\Git\microservices\hubToSensor\ingress\trial\orchestrate-hubtosensor-services> kubectl get pods -n ingress-nginx -l app.kubernetes.io/component=controller
+NAME                                        READY   STATUS    RESTARTS        AGE
+ingress-nginx-controller-7d8cffd99c-rqz6d   1/1     Running   1 (2d13h ago)   2d16h
+PS C:\Git\microservices\hubToSensor\ingress\trial\orchestrate-hubtosensor-services> kubectl logs ingress-nginx-controller-7d8cffd99c-rqz6d -n ingress-nginx --tail 50
+```
+- Check ingress conf: `kubectl exec ingress-nginx-controller-7d8cffd99c-8f64k -n ingress-nginx -- cat /etc/nginx/nginx.conf`
 ## Access services
 - After moving these services behind **Ingress**, the URLs change because the **NodePorts are no longer used externally**.
 - Instead, you use the `fhs.local` host + the paths defined in your Ingress.
