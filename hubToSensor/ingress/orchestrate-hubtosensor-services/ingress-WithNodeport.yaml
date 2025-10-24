@@ -1,0 +1,52 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: ingress
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
+    # 1. Enable Regex matching for paths
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # 2. REMOVED GLOBAL REWRITE ANNOTATION: The rewrite is now applied per-path below.
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          # 1. Data API (MOST SPECIFIC - TOP)
+          - path: {{ .Values.ingress.paths.dataApi.path }}(/|$)(.*) 
+            pathType: ImplementationSpecific 
+            backend:
+              service:
+                name: {{ .Values.dataApi.name }}-service
+                port:
+                  number: {{ .Values.ingress.paths.dataApi.servicePort }}
+            # 💡 ADD PATH-SPECIFIC REWRITE
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+          # 2. Flexibility Hub Simulator (SPECIFIC - MIDDLE)
+          - path: {{ .Values.ingress.paths.flexibilityHubSimulator.path }}(/|$)(.*) 
+            pathType: ImplementationSpecific 
+            backend:
+              service:
+                name: {{ .Values.flexibilityHubSimulator.name }}-service
+                port:
+                  number: {{ .Values.ingress.paths.flexibilityHubSimulator.servicePort }}
+            # 💡 ADD PATH-SPECIFIC REWRITE
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /$2
+                  
+          # 3. UI App (LEAST SPECIFIC - LAST)
+          # No rewrite annotation needed here.
+          - path: {{ .Values.ingress.paths.uiApp.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.uiApp.name }}-service
+                port:
+                  number: {{ .Values.ingress.paths.uiApp.servicePort }}
+{{- end }}

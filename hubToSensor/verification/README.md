@@ -5,6 +5,7 @@
 - [Response](#response)
   - [Success](#success)
   - [Failure](#failure)
+- [Verify from kubectl](#verify-from-kubectl)
 ## Payload
 ```json
 {
@@ -318,4 +319,11 @@ mydatabase=# select * from request_change_log;
  144 | Response sent to Bridge - Final Status: FAILED (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.) | 2025-10-03 10:29:17.517319+00 |        42
  145 | Parsed response recieved from Protocol adapter                                                                    | 2025-10-03 10:29:17.524501+00 |        42
  146 | Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)                          | 2025-10-03 10:29:17.553575+00 |        42
+```
+## Verify from kubectl
+- Data API
+```
+PS C:\Git\microservices\hubToSensor\ingress\trial\orchestrate-hubtosensor-services> kubectl exec -it data-api-546dbcd7c5-wbwfs -n staging -- /bin/sh -c "curl -s localhost:8085/api/v1/requests"
+[{"id":65,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":71,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":66,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":61,"duration":0,"operation":"DIRECT-OFF","relayNumber":1,"sensorId":"sensor-004","status":"Request staus: Completed"},{"id":67,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":62,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":68,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)"},{"id":63,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)"},{"id":69,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)"},{"id":64,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"},{"id":70,"duration":0,"operation":"DIRECT-ON","relayNumber":1,"sensorId":"sensor-001","status":"Request staus: Completed"}]
+PS C:\Git\microservices\hubToSensor\ingress\trial\orchestrate-hubtosensor-services> curl -I -k https://fhs.local/data-api/api/v1/requests
 ```
