@@ -7,6 +7,7 @@
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
 - [Security](security/README.md)
+- [API gateway](apigateway/README.md)
 <details>
   <summary>prompt</summary>
 
