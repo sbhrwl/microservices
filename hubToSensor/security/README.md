@@ -1,4 +1,4 @@
-# Keys & Certificates in IoT Security (45 min)**
+# Security
 - [Slides](Slides.md)
 - [Markdown](Markdown.md)
 ### **Slide 1 — Title Slide**
