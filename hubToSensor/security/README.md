@@ -1,5 +1,4 @@
 # Security
-- [Slides](Slides.md)
 - [Markdown](Markdown.md)
 ### **Slide 1 — Title Slide**
 **Title:** Keys, Certificates, and End-to-End Security in IoT & Smart Meters
