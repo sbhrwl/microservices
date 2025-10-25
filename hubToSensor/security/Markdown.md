@@ -26,7 +26,7 @@
 * `End-to-end security` ensures trust from device to user.
 * `Layered security` mitigates operational and cybersecurity risks.
 ## Security chain overview
-* End-to-end path: `Device → Server → (Microservices [Message Broker - Database]) → UI → User`.
+* End-to-end path: `Device → Server → (Microservices [Message Broker - Database - gRPC]) → UI → User`.
 * Each layer requires:
   * Encryption (TLS/mTLS)
   * Authentication and authorization
