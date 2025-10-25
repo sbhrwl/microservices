@@ -23,8 +23,8 @@
   * How to ensure data integrity?
   * How to secure message brokers and databases?
 ## Motivation
-* End-to-end security ensures trust from device to user.
-* Layered security mitigates operational and cybersecurity risks.
+* `End-to-end security` ensures trust from device to user.
+* `Layered security` mitigates operational and cybersecurity risks.
 ## Security chain overview
 * End-to-end path: `Device → Server → (Microservices [Message Broker - Database]) → UI → User.
 * Each layer requires:
