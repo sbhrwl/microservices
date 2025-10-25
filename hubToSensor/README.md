@@ -21,4 +21,6 @@
 - [Ingress](ingress/README.md)
 - [Service mesh](servicemesh/README.md)
 - [DAPR](dapr/README.md)
+- [Security](security/README.md)
+- [API gateway](apigateway/README.md)
 - [Verification](verification/README.md)
