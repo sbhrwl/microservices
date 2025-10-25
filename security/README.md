@@ -1,5 +1,5 @@
 # Keys & Certificates in IoT Security (45 min)**
-- [Slides](Slide.md)
+- [Slides](Slides.md)
 - [Markdown](Markdown.md)
 ### **Slide 1 — Title Slide**
 **Title:** Keys and Certificates in IoT and Smart Meter Security
