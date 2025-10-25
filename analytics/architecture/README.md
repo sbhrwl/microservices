@@ -29,6 +29,7 @@
 - Pushes received messages to internal processing pipeline or buffer.
 - Question:
   - Should it acknowledge messages immediately on receive or after successful insert?
+- [MQTT for IoT devices](mqtt/README.md)
 ### Message Processor
 - Parses JSON message.
 - Validates required fields (meter_id, timestamp, all voltage/current fields).
