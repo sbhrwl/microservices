@@ -8,6 +8,7 @@
 - [Hub to Sensor](hubToSensor/README.md)
 - [MQTT](mqtt/README.md)
 - [Security](security/README.md)
+- [API gateway](apigateway/README.md)
 <details>
   <summary>prompt</summary>
 
