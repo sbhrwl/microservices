@@ -18,6 +18,7 @@
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across environments](deploymentacrossenv/README.md)
 - [Service discovery](servicediscovery/README.md)
+---
 - [Ingress](ingress/README.md)
 - [Service mesh](servicemesh/README.md)
 - [DAPR](dapr/README.md)
