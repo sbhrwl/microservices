@@ -1,5 +1,5 @@
 # Security
-- [Slides](Slides.md)
+* [Slides](Slides.md)
 * [Problem statement](#problem-statement)
 * [Motivation](#motivation)
 * [Security chain overview](#security-chain-overview)
