@@ -4,7 +4,8 @@
 - [Service design](#service-design)
 - [Brain storming](#brain-storming)
 ## Service design
-- **Subscribes to**: ActiveMQ queue with hourly meter data (all OBIS codes in one message).  
+- **Subscribes to**: ActiveMQ queue with hourly meter data (all OBIS codes in one message).
+  - For data directly pushed from IoT devices use [MQTT](mqtt/README.md) 
 - **InfluxDB schema**:  
   - Measurement: `power_quality`  
   - Tags: `meter_id`  
@@ -29,7 +30,6 @@
 - Pushes received messages to internal processing pipeline or buffer.
 - Question:
   - Should it acknowledge messages immediately on receive or after successful insert?
-- [MQTT for IoT devices](mqtt/README.md)
 ### Message Processor
 - Parses JSON message.
 - Validates required fields (meter_id, timestamp, all voltage/current fields).
