@@ -27,6 +27,3 @@
 > 8. Once done, output only the final Markdown, no explanations or commentary.
 
 </details>
-
-
-
