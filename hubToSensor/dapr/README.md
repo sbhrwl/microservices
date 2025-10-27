@@ -48,7 +48,9 @@ postgres-statestore   108s
 rabbitmq-pubsub       2m18s
 ```
 - [rabbitmq-pubsub.yaml](config-files/rabbitmq-pubsub.yaml)
+  - `Undo`: `kubectl delete -f rabbitmq-pubsub.yaml`
 - [postgres-statestore.yaml](config-files/postgres-statestore.yaml)
+  - `Undo`: `kubectl delete -f postgres-statestore.yaml`
 
 * [Problem](#problem)
 * [Original architecture](#original-architecture)
