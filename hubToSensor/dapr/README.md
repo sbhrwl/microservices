@@ -41,6 +41,11 @@ component.dapr.io/rabbitmq-pubsub created
 
 C:\Git\microservices\hubToSensor\dapr\config-files>kubectl apply -f postgres-statestore.yaml
 component.dapr.io/postgres-statestore created
+
+C:\Git\microservices\hubToSensor\dapr\config-files>kubectl get components
+NAME                  AGE
+postgres-statestore   108s
+rabbitmq-pubsub       2m18s
 ```
 - [rabbitmq-pubsub.yaml](config-files/rabbitmq-pubsub.yaml)
 - [postgres-statestore.yaml](config-files/postgres-statestore.yaml)
