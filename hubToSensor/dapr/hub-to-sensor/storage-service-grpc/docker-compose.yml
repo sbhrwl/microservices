@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  # Storage Service
+  storage-service:
+    build:
+      context: .
+    image: sbhrwldocker/storage-service:latest
+    container_name: storage-service
+    ports:
+      - "9090:9090"
+    environment:
+      # Database connection
+      - DB_HOST=host.docker.internal
+      - DB_PORT=5432
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASS=mypassword
+      # gRPC server port
+      - GRPC_SERVER_PORT=9090

@@ -1,0 +1,18 @@
+services:
+  # HES Simulator Service
+  hes-simulator:
+    build: 
+      context: .
+    image: sbhrwldocker/hes-simulator:latest
+    container_name: hes-simulator
+    environment:
+      # RabbitMQ connection details
+      - SPRING_RABBITMQ_HOST=host.docker.internal 
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
+      # Messaging Config (Queues, Exchanges, Keys)
+      - FLEX_BRIDGE_EXCHANGE=flexibility-bridge.exchange
+      - HES_REQUEST_INBOUND_QUEUE=hes.request
+      - HES_REQUEST_OUTBOUND_KEY=hes.request
+      - HES_RESPONSE_INBOUND_QUEUE=hes.response
+      - HES_RESPONSE_OUTBOUND_KEY=hes.response
