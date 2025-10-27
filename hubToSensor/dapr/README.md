@@ -35,8 +35,15 @@ dapr-scheduler-server-1                 1/1     Running   0             2m33s
 dapr-scheduler-server-2                 1/1     Running   0             2m33s
 dapr-sentry-79d87f5fc7-xcvgg            1/1     Running   0             2m33s
 dapr-sidecar-injector-f5b58c7c7-p6rgz   1/1     Running   0             2m33s
-```
 
+C:\Git\microservices\hubToSensor\dapr\config-files>kubectl apply -f rabbitmq-pubsub.yaml
+component.dapr.io/rabbitmq-pubsub created
+
+C:\Git\microservices\hubToSensor\dapr\config-files>kubectl apply -f postgres-statestore.yaml
+component.dapr.io/postgres-statestore created
+```
+- [rabbitmq-pubsub.yaml](config-files/rabbitmq-pubsub.yaml)
+- [postgres-statestore.yaml](config-files/postgres-statestore.yaml)
 
 * [Problem](#problem)
 * [Original architecture](#original-architecture)
