@@ -4,12 +4,10 @@
 - [Registering sensors](sensorregistration/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Analytics on sensor data](analytics/README.md)
-- [Saving sensor data via gRPC](gRPC/README.md)
+- [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
-
 <details>
   <summary>prompt</summary>
-
 
 **Prompt:**
 > I’ll provide you with a text, your task is to convert it into a **concise Markdown summary** suitable for documentation or technical reference.
@@ -29,5 +27,6 @@
 > 8. Once done, output only the final Markdown, no explanations or commentary.
 
 </details>
+
 
 
