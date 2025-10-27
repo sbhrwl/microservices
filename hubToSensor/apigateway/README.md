@@ -118,7 +118,7 @@ ILB --> [Service C]
 </details>
 
 * This translates to
-  - Ingress Controller is shown inside the cluster (correctly).
+  - `Ingress Controller` shown inside the cluster (correctly).
   - `ILB is outside` but connected — it’s **provisioned by the Ingress Controller through the cloud API**.
   - Added `Ingress Resource` to show how routing happens within Kubernetes after the `ILB forwards traffic`.
   - `Client → ELB → API Gateway → Ingress Controller → ILB → Ingress Resource → Services`
