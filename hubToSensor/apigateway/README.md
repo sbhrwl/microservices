@@ -1,4 +1,4 @@
-# Designing Microservices
+# Layered responsibilities
 - [Introduction](#introduction)
 - [When API gateway helps](#when-api-gateway-helps)
 - [Who handles what](#who-handles-what)
@@ -46,6 +46,31 @@
 * **Cons**: Limited auth, rate limiting, transformations, logging
 <img src="images/dev-setup.jpg">
 
+<details>
+  <summary>uml</summary>
+
+**UML:**
+```
+@startuml
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor Black
+}
+    
+package "Cluster Layer" {
+    [Ingress Controller \n(NGINX)] as INGRESS #LightYellow
+    package "Microservices" {
+        [Service A] #LightPink
+        [Service B] #LightPink
+        [Service C] #LightPink
+    }
+}
+INGRESS --> [Service A]
+INGRESS --> [Service B]
+INGRESS --> [Service C]
+@enduml
+```
+</details>
 ## Setup for production
 * Use **API Gateway for public APIs** requiring auth, rate limiting, transformations.
 * Use **Ingress for internal routing** inside Kubernetes.
@@ -54,6 +79,89 @@
 * Avoid over-engineering; introduce API Gateway **only when necessary**.
 <img src="images/prod-setup-1.jpg">
 
+<details>
+  <summary>uml</summary>
+
+**UML:**
+```
+@startuml
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor Black
+}
+actor Client
+package "External Layer (Public)" {
+    [External LB] as ELB #LightBlue
+}
+
+package "External Layer (Private)" {
+    [API Gateway] as APIGW #LightGreen
+}
+
+package "Cluster Layer" {
+    [Cloud-managed \nIngress Controller \nprovisions \n**Internal load balancer**] as ILB #LightYellow
+    package "Microservices" {
+        [Service A] #LightPink
+        [Service B] #LightPink
+        [Service C] #LightPink
+    }
+}
+Client --> ELB : "Global traffic distribution"
+ELB --> APIGW : "Application-level control"
+APIGW --> ILB : "Internal HA routing"
+ILB --> [Service A]
+ILB --> [Service B]
+ILB --> [Service C]
+@enduml
+```
+</details>
 * This translates to
 <img src="images/prod-setup-2.jpg">
 
+<details>
+  <summary>uml</summary>
+
+**UML:**
+```
+@startuml
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor Black
+}
+
+actor Client
+
+package "External Layer (Public)" {
+    [External Load Balancer (ELB)] as ELB #LightBlue
+}
+
+package "External Layer (Private)" {
+    [API Gateway] as APIGW #LightGreen
+}
+
+package "Cluster Layer" {
+    [Cloud-managed Ingress Controller] as IngressCtrl #LightYellow
+    [Ingress Resource (routes traffic)] as IngressRes #White
+
+    package "Microservices" {
+        [Service A] #LightPink
+        [Service B] #LightPink
+        [Service C] #LightPink
+    }
+}
+
+' Outside the cluster, but created by the ingress controller
+[Internal Load Balancer (ILB)] as ILB #LightGray
+
+' Connections
+Client --> ELB : "Global traffic distribution"
+ELB --> APIGW : "Application-level routing"
+APIGW --> IngressCtrl : "Private traffic (internal endpoint)"
+IngressCtrl --> ILB : "Provisions via cloud API"
+ILB --> IngressRes
+IngressRes --> [Service A]
+IngressRes --> [Service B]
+IngressRes --> [Service C]
+@enduml
+```
+</details>
