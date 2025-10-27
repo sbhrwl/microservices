@@ -71,6 +71,7 @@ INGRESS --> [Service C]
 @enduml
 ```
 </details>
+
 ## Setup for production
 * Use **API Gateway for public APIs** requiring auth, rate limiting, transformations.
 * Use **Ingress for internal routing** inside Kubernetes.
@@ -115,6 +116,7 @@ ILB --> [Service C]
 @enduml
 ```
 </details>
+
 * This translates to
 <img src="images/prod-setup-2.jpg">
 
