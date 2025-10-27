@@ -33,3 +33,13 @@
 1. How to represent this hierarchy in Keycloak (roles, groups, or custom claims)
 2. How to propagate HES tenant access through your app securely
 3. How to enforce multi-level isolation in your queries and APIs
+
+##
+```
+smoc app => multiple realms, no organisation => backend => FE (SSO link with realm)
+
+smoc app => one realm, multiple organisation => backend => FE (we are using SMOC like this, difficult to do SSO here)
+SSO with organisation
+```
+- IF you have SSO with organisation and then go the SMOC route, go with one realm
+- if you cannot do SSO with organisation, then go with multiple realms
