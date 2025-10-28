@@ -1,9 +1,7 @@
 # Services
 - [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
-  - [Production version](flexibility-hub-simulator-prod/README.md)
 - [Flexibility bridge service](flexibility-bridge-service/README.md)
 - [Storage service gRPC](storage-service-grpc/README.md)
-  - [Storage service restful](storage-service/README.md)
 - [Protocol adapter service](protocol-adapter-service/README.md)
 - [HES simulator](hes-simulator/README.md)
 - [Data API service](data-api-service/README.md)
