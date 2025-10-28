@@ -8,6 +8,30 @@
 - [HES simulator](hes-simulator/README.md)
 - [Data API service](data-api-service/README.md)
 - [UI app](ui-app/README.md)
+- [Local testing](#local-testing)
+## Local testing
+* Runing local builds or JAR creation.
+* 🧱 **Build phase (Maven/Gradle)** —
+  * Dapr has **no effect**. You’re just packaging your Java code.
+  → `mvn clean package` or `gradle build` works exactly the same.
+* 💻 **Local testing** —
+  * You have two options:
+  1. **Run without Dapr:**
+     * Your code should gracefully handle the absence of Dapr (e.g., disable Dapr beans or mock pub/sub/state).
+     * Perfect for quick local dev.
+  2. **Run with Dapr locally:**
+     * Start RabbitMQ + Postgres in Docker.
+     * Use Dapr CLI to run sidecars locally with your app:
+       ```bash
+       dapr run --app-id flexibility-hub-simulator --app-port 8081 --dapr-http-port 3500 -- mvn spring-boot:run
+       ```
+     * This emulates Kubernetes behavior.
+* 🧩 **Jar creation and pipelines** —
+  * Dapr is **runtime**, not a compile-time dependency. You just include the SDK (like any library).
+* ✅ Bottom line:
+  * You’ll **still build, test, and run JARs** normally. Dapr only comes into play when your service actually runs and interacts with other components.
+  * Would you like me to show how to make your Spring Boot service **detect Dapr presence dynamically** (so it can run with or without it)?
+
 <details>
   <summary>Parent pom.xml</summary>
 
