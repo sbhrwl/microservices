@@ -2,6 +2,7 @@
 - [Installation](#installation)
 - [Control plane components](#control-plane-components)
 - [Pub Sub and State store components](#pub-sub-and-state-store-components)
+- [Stop or remove Dapr system pods](#stop-or-remove-dapr-system-pods)
 ## Installation
 * Version
 ```
@@ -91,3 +92,21 @@ telnet host.docker.internal 5432
   - ❌ If not, Postgres isn’t reachable from the cluster (we can fix that with a `NodePort` or by moving it into K8s later).
 - Exit
   - Type `exit` to close the pod.
+
+## Stop or remove Dapr system pods
+* Unistall
+  * This deletes all pods in `dapr-system` and the Dapr CRDs.
+```bash
+dapr uninstall -k
+```
+* **Start them again later**
+  * Reinstalls the control plane.
+```bash
+dapr init -k
+```
+* **Check status anytime**
+```bash
+kubectl get pods -n dapr-system
+```
+* Safe to uninstall — it doesn’t affect your app YAMLs or Dapr components (`rabbitmq-pubsub`, `postgres-statestore`).
+  * They’ll still exist and reconnect when you reinstall.
