@@ -3,6 +3,7 @@
 - [Control plane components](#control-plane-components)
 - [Pub Sub and State store components](#pub-sub-and-state-store-components)
 - [Stop or remove Dapr system pods](#stop-or-remove-dapr-system-pods)
+- [DAPR behaviour with queues](#dapr-behaviour-with-queues)
 ## Installation
 * Version
 ```
@@ -110,3 +111,9 @@ kubectl get pods -n dapr-system
 ```
 * Safe to uninstall — it doesn’t affect your app YAMLs or Dapr components (`rabbitmq-pubsub`, `postgres-statestore`).
   * They’ll still exist and reconnect when you reinstall.
+## DAPR behaviour with queues
+- As our setup is asymmetric
+  - Request queue (`flexibility-hub.request`) → your service publishes messages here to downstream systems. 
+    - Our app is not a subscriber, so **Dapr won’t log any queue declaration**.
+  - Response queue (`flexibility-hub.response`) → your service subscribes to this topic to receive replies. 
+    - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`
