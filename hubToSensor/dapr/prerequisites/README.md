@@ -113,7 +113,7 @@ kubectl get pods -n dapr-system
   * They’ll still exist and reconnect when you reinstall.
 ## DAPR behaviour with queues
 - As our setup is asymmetric
-  - Request queue (`flexibility-hub.request`) → your service publishes messages here to downstream systems. 
+  - Request queue (`flexibility-hub.request`) → the service publishes messages here to downstream systems. 
     - Our app is not a subscriber, so **Dapr won’t log any queue declaration**.
-  - Response queue (`flexibility-hub.response`) → your service subscribes to this topic to receive replies. 
-    - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`
+  - Response queue (`flexibility-hub.response`) → the service subscribes to this topic to receive replies. 
+    - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`**
