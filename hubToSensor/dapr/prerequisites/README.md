@@ -15,7 +15,7 @@ Runtime version: 1.12.2
  * `dapr-sentry` handles mTLS (can be disabled, but still part of setup).
  * `dapr-placement` is needed for actor placement, but gets installed anyway.
 ```
-dapr init -k`
+dapr init -k
 
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>dapr init -k
 Making the jump to hyperspace...
@@ -25,7 +25,8 @@ Deploying the Dapr control plane with latest version to your cluster...
 Deploying the Dapr dashboard with latest version to your cluster...
 Success! Dapr has been installed to namespace dapr-system. To verify, run `dapr status -k' in your terminal. To get started, go here: https://aka.ms/dapr-getting-started
 ```
-* Verfiy
+
+* Verify
 ```
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>dapr status -k
   NAME                   NAMESPACE    HEALTHY  STATUS   REPLICAS  VERSION  AGE  CREATED
@@ -45,6 +46,7 @@ dapr-scheduler-server-1                 1/1     Running   0             2m33s
 dapr-scheduler-server-2                 1/1     Running   0             2m33s
 dapr-sentry-79d87f5fc7-xcvgg            1/1     Running   0             2m33s
 dapr-sidecar-injector-f5b58c7c7-p6rgz   1/1     Running   0             2m33s
+```
 <img src="images/setup.jpg">
 
 ## Pub Sub and State store components
