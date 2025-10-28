@@ -1,12 +1,15 @@
 # Pre-requisites
-- [Setup](#setup)
-## Setup
+- [Installation](#installation)
+- [Control plane components](#control-plane-components)
+- [Pub Sub and State store components](#pub-sub-and-state-store-components)
+## Installation
 * Version
 ```
 C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>dapr --version
 CLI version: 1.12.0
 Runtime version: 1.12.2
 ```
+## Control plane components
 * Setup **Control plane components**
  * `dapr-operator` manages sidecar injection and component configs.
  * `dapr-sentry` handles mTLS (can be disabled, but still part of setup).
@@ -42,6 +45,9 @@ dapr-scheduler-server-1                 1/1     Running   0             2m33s
 dapr-scheduler-server-2                 1/1     Running   0             2m33s
 dapr-sentry-79d87f5fc7-xcvgg            1/1     Running   0             2m33s
 dapr-sidecar-injector-f5b58c7c7-p6rgz   1/1     Running   0             2m33s
+<img src="images/setup.jpg">
+
+## Pub Sub and State store components
 * Setup **Pub Sub and State store components**
 - [rabbitmq-pubsub.yaml](config-files/rabbitmq-pubsub.yaml)
   - `Undo`: `kubectl delete -f rabbitmq-pubsub.yaml`
