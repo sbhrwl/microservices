@@ -8,10 +8,9 @@ import org.springframework.boot.WebApplicationType;
 public class ProtocolAdapterApplication {
 
     public static void main(String[] args) {
-        // Explicitly set the application type to NONE (non-web) to prevent starting an embedded web server (e.g., on port 8080).
-        // This application only needs to listen to RabbitMQ and communicate via gRPC.
+        // Start as a web application to expose Dapr subscription endpoints
         SpringApplication application = new SpringApplication(ProtocolAdapterApplication.class);
-        application.setWebApplicationType(WebApplicationType.NONE);
+        application.setWebApplicationType(WebApplicationType.SERVLET);
         application.run(args);
     }
 }

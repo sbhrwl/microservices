@@ -2,7 +2,8 @@ package com.apexsphere.protocol_adapter_service.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import io.dapr.client.DaprClient;
+import io.dapr.client.DaprClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,19 @@ public class RequestProducerForHESService {
 
     private static final Logger log = LoggerFactory.getLogger(RequestProducerForHESService.class);
 
-    private final RabbitTemplate rabbitTemplate;
+    private final DaprClient daprClient;
 
     // The shared exchange used for all routing
-    @Value("${messaging.rabbitmq.exchange}")
-    private String exchangeName;
+    @Value("${messaging.dapr.pubsub-name}")
+    private String pubsubName;
 
     // The routing key specific for HES requests (e.g., "hes.request")
     // NOTE: Changed property name to the request outbound key.
-    @Value("${messaging.rabbitmq.request-outbound-routing-key}")
-    private String hesRequestRoutingKey;
+    @Value("${messaging.dapr.hes-request-topic}")
+    private String hesRequestTopic;
 
-    public RequestProducerForHESService(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
+    public RequestProducerForHESService() {
+        this.daprClient = new DaprClientBuilder().build();
     }
 
     /**
@@ -40,17 +41,13 @@ public class RequestProducerForHESService {
         // as the ProtocolConverter is now confirmed to generate the correct XML structure.
         
         try {
-            // Use the original xmlPayload for publishing
-            log.debug("Publishing XML request for Record ID {} to Exchange: {} with Routing Key: {}\nXML Payload:\n{}", 
-                      recordId, exchangeName, hesRequestRoutingKey, xmlPayload);
-            
-            // Sends the XML string payload
-            rabbitTemplate.convertAndSend(exchangeName, hesRequestRoutingKey, xmlPayload);
-
+            log.debug("Publishing XML request for Record ID {} via Dapr topic '{}'\nXML Payload:\n{}", 
+                      recordId, hesRequestTopic, xmlPayload);
+            daprClient.publishEvent(pubsubName, hesRequestTopic, xmlPayload).block();
             log.info("📢 Successfully published HES request for Record ID: {}", recordId);
         } catch (Exception e) {
             log.error("❌ Failed to publish HES request for Record ID {}: {}", recordId, e.getMessage(), e);
-            throw new RuntimeException("Failed to send message to HES queue.", e);
+            throw new RuntimeException("Failed to send message via Dapr.", e);
         }
     }
 }

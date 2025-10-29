@@ -1,10 +1,13 @@
 package com.apexsphere.flexibility_bridge_service.service;
 
-import com.apexsphere.flexibility_bridge_service.model.FlexibilityResponse; 
-import com.apexsphere.storage_service.service.RecordRequest; 
+import com.apexsphere.flexibility_bridge_service.model.FlexibilityResponse;
+import com.apexsphere.storage_service.service.RecordRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
+import io.dapr.Topic;
+import io.dapr.client.domain.CloudEvent;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,100 +16,127 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Consumer service in the Flexibility Bridge responsible for receiving the JSON response 
  * from the Protocol Adapter, updating the record status, and forwarding the response 
  * back to the final Hub queue.
- * * This version consumes the raw JSON string payload and parses it manually 
+ *
+ * This version consumes the raw JSON string payload and parses it manually 
  * to correctly handle the message type sent by the upstream service.
  */
-@Component
+@RestController
 public class ResponseConsumer {
-    
+
     private static final Logger log = LoggerFactory.getLogger(ResponseConsumer.class);
-    
-    // Dependencies
-    private final RecordGrpcClient grpcClient; 
+
+    private final RecordGrpcClient grpcClient;
     private final ResponseProducerToHub producerToHub;
-    private final ObjectMapper objectMapper; // Injected from RabbitMQConfig or another @Configuration
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public ResponseConsumer(RecordGrpcClient grpcClient, ResponseProducerToHub producerToHub, ObjectMapper objectMapper) {
+    public ResponseConsumer(RecordGrpcClient grpcClient,
+                            ResponseProducerToHub producerToHub,
+                            ObjectMapper objectMapper) {
         this.grpcClient = grpcClient;
         this.producerToHub = producerToHub;
         this.objectMapper = objectMapper;
     }
-    
-    // Listener now expects the raw JSON string payload to avoid conversion errors.
-    @RabbitListener(
-        queues = "${messaging.rabbitmq.response-inbound-queue}"
-    ) 
-    public void handleResponse(String jsonResponsePayload) {
-        
-        FlexibilityResponse response = null;
+
+    /**
+     * Subscribes to the connector's response topic via Dapr and handles CloudEvent payloads.
+     */
+    @Topic(name = "${messaging.dapr.connector-response-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
+    @PostMapping(path = "/connector.response")
+    public void handleResponse(@RequestBody(required = false) CloudEvent<FlexibilityResponse> cloudEvent) {
         String recordId = "UNKNOWN_ID";
 
         try {
-            // Manual Step: Parse the JSON string into the FlexibilityResponse object
-            response = objectMapper.readValue(jsonResponsePayload, FlexibilityResponse.class);
-            recordId = response.getRequestId();
-            
-            log.info("✅ Received and successfully parsed JSON response for RequestID: {}", recordId);
-            log.debug("Full Response Object: {}", response.toString());
-            
-            // 1. Update status: "Parsed response recieved from Protocol adapter"
-            RecordRequest parsedUpdate = convertToGrpcRequest(recordId, "Parsed response recieved from Protocol adapter");
-            grpcClient.updateRecordStatus(parsedUpdate);
-            log.info("➡️ Updated status to 'Parsed response recieved from Protocol adapter' for ID: {}", recordId);
-
-            // 2. Publish the object back to the Hub (will be converted to JSON by the producer)
-            log.info("Attempting to publish final response (JSON object) for RequestID {} back to Hub...", recordId);
-            producerToHub.sendResponseToHub(response);
-            
-            // 3. Determine Final Status and Update
-            String finalStatus;
-            if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                finalStatus = "Request staus: Completed";
-                log.info("Request {} completed successfully.", recordId);
-            } else {
-                 finalStatus = String.format("Request staus: Failed (Code: %s, Msg: %s)", 
-                    response.getErrorCode(), response.getMessage());
-                log.error("Request {} failed. Final status: {}", recordId, finalStatus);
+            if (cloudEvent == null || cloudEvent.getData() == null) {
+                log.warn("⚠️ Received empty CloudEvent data — ignoring message.");
+                return;
             }
-            
-            RecordRequest finalUpdate = convertToGrpcRequest(recordId, finalStatus);
-            String updateResponse = grpcClient.updateRecordStatus(finalUpdate);
-            
-            log.info("📢 Final status updated for RequestID {} to {}. Server response: {}", 
-                     recordId, finalStatus, updateResponse);
+
+            FlexibilityResponse response = cloudEvent.getData();
+            recordId = response.getRequestId();
+
+            log.info("✅ Received and parsed response for RequestID: {}", recordId);
+            log.debug("Full parsed response: {}", response);
+
+            // 1. Update intermediate status via gRPC
+            updateRecordStatus(recordId, "Parsed response received from Protocol Adapter");
+
+            // 2. Forward response to Hub via Dapr
+            log.info("📤 Forwarding response for RequestID {} to Hub...", recordId);
+            producerToHub.sendResponseToHub(response);
+
+            // 3. Determine and update final status
+            String finalStatus = resolveFinalStatus(response);
+            updateRecordStatus(recordId, finalStatus);
+
+            log.info("📢 Final status updated for RequestID {} → {}", recordId, finalStatus);
 
         } catch (Exception e) {
-            log.error("❌ Fatal error in Bridge ResponseConsumer for Record ID {}: Failed to parse JSON or process message. Raw Payload: {}. Error: {}", 
-                recordId, jsonResponsePayload, e.getMessage(), e);
-            
-            // Attempt to update status to indicate failure in bridge/adapter if ID is known
-            try {
-                String errorStatus = "BRIDGE_JSON_PARSE_FAILED: " + e.getMessage();
-                RecordRequest failureUpdate = convertToGrpcRequest(recordId, errorStatus);
-                grpcClient.updateRecordStatus(failureUpdate);
-            } catch (Exception grpcE) {
-                log.error("Failed to report fatal error via gRPC for ID {}: {}", recordId, grpcE.getMessage());
-            }
-            // Re-throw the exception to trigger RabbitMQ's error handling strategy (rejection/DLQ)
+            log.error("❌ Error processing message for RecordID {}. Cause: {}",
+                    recordId, e.getMessage(), e);
+
+            // Attempt to update gRPC record with error info
+            safelyReportErrorToGrpc(recordId, e);
+
             throw new RuntimeException("Failed to process incoming response message.", e);
         }
     }
-    
+
     /**
-     * Converts the response data into the gRPC RecordRequest message for updates.
+     * Resolves final status string based on FlexibilityResponse content.
+     */
+    private String resolveFinalStatus(FlexibilityResponse response) {
+        if (response == null) {
+            return "Request status: UNKNOWN - Null response object";
+        }
+
+        if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
+            return "Request status: Completed successfully";
+        }
+
+        return String.format(
+                "Request status: Failed (Code: %s, Message: %s)",
+                safe(response.getErrorCode()), safe(response.getMessage()));
+    }
+
+    /**
+     * Updates the record status via gRPC.
+     */
+    private void updateRecordStatus(String recordId, String status) {
+        try {
+            RecordRequest request = convertToGrpcRequest(recordId, status);
+            String grpcResponse = grpcClient.updateRecordStatus(request);
+            log.debug("gRPC status update response: {}", grpcResponse);
+        } catch (Exception e) {
+            log.error("⚠️ Failed to update record status for ID {}: {}", recordId, e.getMessage());
+        }
+    }
+
+    /**
+     * Reports error back to storage-service via gRPC safely.
+     */
+    private void safelyReportErrorToGrpc(String recordId, Exception e) {
+        try {
+            String errorStatus = "BRIDGE_JSON_PARSE_FAILED: " + e.getMessage();
+            RecordRequest failureRequest = convertToGrpcRequest(recordId, errorStatus);
+            grpcClient.updateRecordStatus(failureRequest);
+        } catch (Exception inner) {
+            log.error("Failed to report processing failure for RecordID {}: {}", recordId, inner.getMessage());
+        }
+    }
+
+    /**
+     * Converts internal data into a RecordRequest proto message for gRPC.
      */
     private RecordRequest convertToGrpcRequest(String requestId, String status) {
-        // Ensure we don't try to build a request without a valid ID in case of parsing failure
-        if (requestId == null || "UNKNOWN_ID".equals(requestId)) {
-            log.warn("Attempted to create gRPC request without a valid record ID. Status: {}", status);
-            return RecordRequest.newBuilder().setRecordId("NO_ID_AVAILABLE").setStatus(status).build();
-        }
-        
-        RecordRequest.Builder builder = RecordRequest.newBuilder()
-                .setRecordId(requestId) 
-                .setStatus(status);
-        
-        return builder.build();
+        String safeId = (requestId == null || requestId.isBlank()) ? "NO_ID_AVAILABLE" : requestId;
+        return RecordRequest.newBuilder()
+                .setRecordId(safeId)
+                .setStatus(status)
+                .build();
+    }
+
+    private String safe(String value) {
+        return value == null ? "N/A" : value;
     }
 }

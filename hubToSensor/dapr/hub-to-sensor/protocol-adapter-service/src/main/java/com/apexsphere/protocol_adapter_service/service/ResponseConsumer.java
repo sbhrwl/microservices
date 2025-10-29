@@ -2,8 +2,11 @@ package com.apexsphere.protocol_adapter_service.service;
 
 import com.apexsphere.protocol_adapter_service.model.FlexibilityResponse;
 import com.apexsphere.storage_service.service.RecordRequest; 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
+import io.dapr.Topic;
+import io.dapr.client.domain.CloudEvent;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * XML into a FlexibilityResponse object directly, then converts it to JSON 
  * for publishing to the Bridge/Hub.
  */
-@Component
+@RestController
 public class ResponseConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(ResponseConsumer.class);
@@ -34,14 +37,16 @@ public class ResponseConsumer {
         this.protocolConverter = protocolConverter;
     }
 
-    // IMPORTANT: Using 'xmlListenerContainerFactory' from RabbitMQConfig.java.
-    // This factory uses MarshallingMessageConverter to convert XML directly to FlexibilityResponse object.
-    @RabbitListener(
-        queues = "${messaging.rabbitmq.response-inbound-queue}",
-        containerFactory = "xmlListenerContainerFactory" 
-    )
-    // The method now receives the fully unmarshalled Java object, resolving the conversion failure.
-    public void handleResponse(FlexibilityResponse response) {
+    @Topic(name = "${messaging.dapr.hes-response-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
+    @PostMapping(path = "/hes.response")
+    public void handleResponse(@RequestBody(required = false) CloudEvent<String> cloudEvent) {
+        if (cloudEvent == null || cloudEvent.getData() == null) {
+            log.warn("⚠️ Received empty CloudEvent data — ignoring message.");
+            return;
+        }
+
+        String xmlPayload = cloudEvent.getData();
+        FlexibilityResponse response = protocolConverter.parseXmlToFlexibilityResponse(xmlPayload);
 
         String recordId = response.getRequestId();
         log.info("✅ Received object response for RequestID: {}", recordId);

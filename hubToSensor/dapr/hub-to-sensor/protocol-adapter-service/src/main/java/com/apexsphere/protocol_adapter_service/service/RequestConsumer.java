@@ -1,14 +1,17 @@
 package com.apexsphere.protocol_adapter_service.service;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import io.dapr.Topic;
+import io.dapr.client.domain.CloudEvent;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.apexsphere.protocol_adapter_service.model.RequestPayload;
 import com.apexsphere.storage_service.service.RecordRequest;
 
-@Service
+@RestController
 public class RequestConsumer {
     
     private static final Logger log = LoggerFactory.getLogger(RequestConsumer.class); 
@@ -26,8 +29,15 @@ public class RequestConsumer {
         this.protocolConverter = protocolConverter;
     }
 
-    @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}") 
-    public void receiveResponse(RequestPayload payload) {
+    @Topic(name = "${messaging.dapr.connector-request-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
+    @PostMapping(path = "/connector.request")
+    public void receiveResponse(@RequestBody(required = false) CloudEvent<RequestPayload> cloudEvent) {
+        if (cloudEvent == null || cloudEvent.getData() == null) {
+            log.warn("⚠️ Received empty CloudEvent data — ignoring message.");
+            return;
+        }
+
+        RequestPayload payload = cloudEvent.getData();
         // --- NEW: Retrieve the existing recordId from the incoming payload ---
         String recordId = payload.getRecordId(); 
         

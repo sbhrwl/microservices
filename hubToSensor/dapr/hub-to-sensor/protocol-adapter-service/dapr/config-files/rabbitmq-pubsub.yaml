@@ -29,4 +29,4 @@ spec:
     - name: exclusive
       value: "false"
 scopes:
-  - flexibility-hub-simulator
+  - protocol-adapter-service

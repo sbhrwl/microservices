@@ -4,6 +4,7 @@
 - [Pub Sub and State store components](#pub-sub-and-state-store-components)
 - [Stop or remove Dapr system pods](#stop-or-remove-dapr-system-pods)
 - [DAPR behaviour with queues](#dapr-behaviour-with-queues)
+  - [Pub sub component config](#pub-sub-component-config)
 ## Installation
 * Version
 ```
@@ -117,3 +118,51 @@ kubectl get pods -n dapr-system
     - Our app is not a subscriber, so **Dapr won’t log any queue declaration**.
   - Response queue (`flexibility-hub.response`) → the service subscribes to this topic to receive replies. 
     - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`**
+### Pub sub component config
+```yaml
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: rabbitmq-pubsub
+  namespace: default
+spec:
+  type: pubsub.rabbitmq
+  version: v1
+  metadata:
+    # Standard RabbitMQ connection URI: amqp://user:password@host:port/vhost
+    - name: connectionString
+      value: "amqp://admin:admin@localhost:5672"
+
+    # Ensure message persistence across restarts
+    - name: durable
+      value: "true"
+
+    # Avoid deleting queues when unused
+    - name: deletedWhenUnused
+      value: "false"
+
+    # Explicit message acknowledgements handled by Dapr
+    - name: autoAck
+      value: "false"
+
+    # Ensure the Dapr pubsub creates non-temporary queues (required for most bridge-like flows)
+    - name: requeueInFailure
+      value: "true"
+
+    # Optional: set prefetch count to tune performance for your workload
+    - name: prefetchCount
+      value: "10"
+
+    # Optional: fine-tune reliability — disables transient queues for Dapr topics
+    - name: exclusive
+      value: "false"
+
+scopes:
+  - flexibility-bridge-service
+```
+### ✅ Explanation of improvements
+* **`requeueInFailure: true`** — makes sure failed messages are requeued for retry rather than lost.
+* **`prefetchCount: 10`** — ensures better throughput without overloading one consumer.
+* **`exclusive: false`** — ensures multiple services can bind to the same exchange if needed.
+* **`durable` + `deletedWhenUnused`** keep queues persistent across restarts.
+* **`scopes`** restricts this component to only `flexibility-bridge-service` (good multicomponent hygiene).

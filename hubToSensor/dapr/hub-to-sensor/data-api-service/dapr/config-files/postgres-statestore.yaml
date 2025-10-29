@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: postgres-statestore
+  namespace: default
+spec:
+  type: state.postgresql
+  version: v1
+  metadata:
+    - name: connectionString
+      value: "host=host.docker.internal;port=5432;user=myuser;password=mypassword;database=mydatabase;sslmode=disable"
+    - name: maxOpenConns
+      value: "20"
+    - name: maxIdleConns
+      value: "5"
+    - name: idleTimeout
+      value: "30s"

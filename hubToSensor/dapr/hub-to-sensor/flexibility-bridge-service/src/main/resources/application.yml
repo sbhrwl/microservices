@@ -1,27 +1,19 @@
 application:
   name: flexibility-bridge
 
-spring:
-  rabbitmq:
-    host: ${SPRING_RABBITMQ_HOST:localhost}
-    port: ${SPRING_RABBITMQ_PORT:5672}
-    username: ${SPRING_RABBITMQ_USERNAME:admin}
-    password: ${SPRING_RABBITMQ_PASSWORD:admin}
-
 messaging:
-  rabbitmq:
-    exchange: ${FLEX_BRIDGE_EXCHANGE:flexibility-bridge.exchange}
-    request-inbound-queue: ${HUB_REQUEST_INBOUND_QUEUE:flexibility-hub.request}
-    request-outbound-routing-key: ${CONNECTOR_REQUEST_OUTBOUND_KEY:connector.request}
-    response-inbound-queue: ${CONNECTOR_RESPONSE_INBOUND_QUEUE:connector.response}
-    response-outbound-routing-key: ${HUB_RESPONSE_OUTBOUND_KEY:flexibility-hub.response}
+  dapr:
+    pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}
+    request-topic: ${DAPR_REQUEST_TOPIC:flexibility-hub.request}
+    connector-request-topic: ${DAPR_CONNECTOR_REQUEST_TOPIC:connector.request}
+    connector-response-topic: ${DAPR_CONNECTOR_RESPONSE_TOPIC:connector.response}
+    hub-response-topic: ${DAPR_HUB_RESPONSE_TOPIC:flexibility-hub.response}
 
 logging:
   level:
-    org.springframework.amqp: INFO
     com.apexsphere.flexibility_bridge: DEBUG
     io.grpc: DEBUG
-    
+
 grpc:
   client:
     storage-service:

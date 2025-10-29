@@ -61,4 +61,38 @@ public class ProtocolConverter {
             throw new RuntimeException("Protocol conversion (FlexibilityResponse to JSON) failed: " + e.getMessage(), e);
         }
     }
+
+    /**
+     * Parses a minimal XML response string from HES into a FlexibilityResponse object.
+     * Assumes a simple structure containing RequestID, status, message, and optional errorCode.
+     */
+    public FlexibilityResponse parseXmlToFlexibilityResponse(String xml) {
+        if (xml == null || xml.isBlank()) {
+            throw new IllegalArgumentException("XML payload is empty");
+        }
+
+        String requestId = extract(xml, "RequestID");
+        String status = extract(xml, "status");
+        String message = extract(xml, "message");
+        String errorCode = extract(xml, "errorCode");
+
+        FlexibilityResponse response = new FlexibilityResponse();
+        response.setRequestId(requestId);
+        response.setStatus(status);
+        response.setMessage(message);
+        response.setErrorCode(errorCode != null && !errorCode.isBlank() ? errorCode : null);
+        return response;
+    }
+
+    private String extract(String xml, String tag) {
+        String open = "<" + tag + ">";
+        String close = "</" + tag + ">";
+        int start = xml.indexOf(open);
+        int end = xml.indexOf(close);
+        if (start == -1 || end == -1 || end <= start) {
+            return null;
+        }
+        start += open.length();
+        return xml.substring(start, end).trim();
+    }
 }
