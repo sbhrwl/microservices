@@ -16,7 +16,7 @@ mvn clean install -DskipTests
 - Run
 ```bash
 mvn spring-boot:run
-dapr run --app-id flexibility-hub-simulator --app-port 8081 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+dapr run --app-id flexibility-hub-simulator --app-port 8081 --resources-path .\dapr\config-files -- mvn spring-boot:run
 ```
 
 ## Test
