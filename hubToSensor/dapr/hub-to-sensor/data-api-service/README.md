@@ -10,6 +10,9 @@
 ## Properties
 - [application.yml](src/main/resources/application.yml)
 ## How to run
+```
+dapr run --app-id data-api-service --app-port 8085 --resources-path .\dapr\config-files -- mvn spring-boot:run
+```
 ## APIs
 | API Name	| Endpoint	| Return Type (DTO)	| Implementation Focus (Java/Spring Boot)|
 | --------- | --------- | ----------------- | -------------------------------------- | 

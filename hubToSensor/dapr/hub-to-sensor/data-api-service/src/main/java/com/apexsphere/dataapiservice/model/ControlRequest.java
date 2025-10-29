@@ -1,32 +1,20 @@
 package com.apexsphere.dataapiservice.model;
 
-import jakarta.persistence.*;
 import java.util.List;
 
-// This import is necessary to resolve the 'cannot find symbol' error for List<RequestChangeLog>
-import com.apexsphere.dataapiservice.model.RequestChangeLog; 
-
-@Entity
-@Table(name = "control_requests")
 public class ControlRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Maps to 'id'
+    private Long id;
 
-    private Integer duration; // Maps to 'duration'
-    private String operation; // Maps to 'operation'
+    private Integer duration;
+    private String operation;
 
-    @Column(name = "relay_number")
-    private Integer relayNumber; // Maps to 'relay_number'
+    private Integer relayNumber;
 
-    @Column(name = "sensor_id")
-    private String sensorId; // Maps to 'sensor_id'
+    private String sensorId;
 
-    private String status; // Maps to 'status'
+    private String status;
 
-    // API 3 (Request Tracker): One ControlRequest has Many RequestChangeLogs
-    @OneToMany(mappedBy = "controlRequest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RequestChangeLog> changeLogs; 
 
     // --- Constructors ---

@@ -1,29 +1,17 @@
 package com.apexsphere.dataapiservice.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "request_change_log")
 public class RequestChangeLog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Maps to 'id'
+    private Long id;
 
-    @Column(name = "change_description")
-    private String changeDescription; // Maps to 'change_description'
+    private String changeDescription;
 
-    @Column(name = "change_timestamp")
-    private LocalDateTime changeTimestamp; // Maps to 'change_timestamp'
+    private LocalDateTime changeTimestamp;
 
-    @Column(name = "record_id")
-    private Long recordId; // Maps to 'record_id' (The Foreign Key value)
+    private Long recordId;
 
-    // JPA Mapping: Many RequestChangeLogs belong to One ControlRequest
-    // This field establishes the actual link using the 'record_id' column.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ControlRequest controlRequest;
 
     // --- Constructors ---

@@ -27,6 +27,7 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <dapr.spring.version>0.15.0</dapr.spring.version>
     </properties>
     <dependencies>
         <dependency>
@@ -39,15 +40,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Use Dapr state store instead of direct Postgres/JPA -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <groupId>io.dapr.spring</groupId>
+            <artifactId>dapr-spring-boot-starter</artifactId>
+            <version>${dapr.spring.version}</version>
         </dependency>
         
         <dependency>
