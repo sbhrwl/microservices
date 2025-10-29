@@ -1,24 +1,12 @@
 application:
   name: hes-simulator
 
-spring:
-  main:
-    web-application-type: none
-  rabbitmq:
-    host: ${SPRING_RABBITMQ_HOST:localhost}
-    port: ${SPRING_RABBITMQ_PORT:5672}
-    username: ${SPRING_RABBITMQ_USERNAME:admin}
-    password: ${SPRING_RABBITMQ_PASSWORD:admin}
-
 messaging:
-  rabbitmq:
-    exchange: ${FLEX_BRIDGE_EXCHANGE:flexibility-bridge.exchange}
-    request-inbound-queue: ${HES_REQUEST_INBOUND_QUEUE:hes.request}
-    request-outbound-routing-key: ${HES_REQUEST_OUTBOUND_KEY:hes.request}
-    response-inbound-queue: ${HES_RESPONSE_INBOUND_QUEUE:hes.response}
-    response-outbound-routing-key: ${HES_RESPONSE_OUTBOUND_KEY:hes.response}
+  dapr:
+    pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}
+    hes-request-topic: ${DAPR_HES_REQUEST_TOPIC:hes.request}
+    hes-response-topic: ${DAPR_HES_RESPONSE_TOPIC:hes.response}
 
 logging:
   level:
-    org.springframework.amqp: INFO
     com.apexsphere.hes_simulator: DEBUG

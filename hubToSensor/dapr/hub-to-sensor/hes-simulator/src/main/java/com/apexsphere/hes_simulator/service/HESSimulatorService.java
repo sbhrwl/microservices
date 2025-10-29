@@ -2,10 +2,14 @@ package com.apexsphere.hes_simulator.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import io.dapr.Topic;
+import io.dapr.client.DaprClient;
+import io.dapr.client.DaprClientBuilder;
+import io.dapr.client.domain.CloudEvent;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +22,7 @@ import java.util.regex.Pattern;
  * It consumes XML requests, delays processing for 60 seconds, and sends a random
  * SUCCESS or ERROR XML response back to the protocol adapter.
  */
-@Service
+@RestController
 public class HESSimulatorService {
 
     private static final Logger log = LoggerFactory.getLogger(HESSimulatorService.class);
@@ -28,26 +32,30 @@ public class HESSimulatorService {
     private static final Random RANDOM = new Random();
     private static final long DELAY_MS = 10; // 60 seconds delay as requested : 60000
 
-    private final RabbitTemplate rabbitTemplate;
+    private final DaprClient daprClient;
 
-    @Value("${messaging.rabbitmq.exchange}")
-    private String exchangeName;
+    @Value("${messaging.dapr.pubsub-name}")
+    private String pubsubName;
 
     // The routing key to send the response back to the Protocol Adapter
-    @Value("${messaging.rabbitmq.response-outbound-routing-key}")
-    private String responseRoutingKey;
+    @Value("${messaging.dapr.hes-response-topic}")
+    private String responseTopic;
 
-    public HESSimulatorService(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
+    public HESSimulatorService() {
+        this.daprClient = new DaprClientBuilder().build();
     }
 
     /**
-     * Consumes XML request messages from the HES request queue.
-     * @param requestXml The raw XML request payload.
+     * Consumes XML request messages via Dapr topic subscription.
      */
-    // Using the correct property: messaging.rabbitmq.request-inbound-queue from application.yml
-    @RabbitListener(queues = "${messaging.rabbitmq.request-inbound-queue}")
-    public void receiveHesRequest(String requestXml) {
+    @Topic(name = "${messaging.dapr.hes-request-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
+    @PostMapping(path = "/hes.request")
+    public void receiveHesRequest(@RequestBody(required = false) CloudEvent<String> cloudEvent) {
+        if (cloudEvent == null || cloudEvent.getData() == null) {
+            log.warn("⚠️ Received empty CloudEvent data — ignoring message.");
+            return;
+        }
+        String requestXml = cloudEvent.getData();
         // Log the full received request XML payload at DEBUG level
         log.debug("Full received HES Request XML:\n{}", requestXml); 
         
@@ -61,8 +69,8 @@ public class HESSimulatorService {
             // 2. Generate random SUCCESS or ERROR response, embedding the original Request ID
             String responseXml = generateRandomResponse(requestId);
 
-            // 3. Send the response back to the protocol adapter
-            rabbitTemplate.convertAndSend(exchangeName, responseRoutingKey, responseXml);
+            // 3. Send the response back to the protocol adapter via Dapr pub/sub
+            daprClient.publishEvent(pubsubName, responseTopic, responseXml).block();
 
             log.info("✅ HES Response sent for ID: {}. Status: {}", requestId, 
                      responseXml.contains("<Status>SUCCESS</Status>") ? "SUCCESS" : "ERROR");
