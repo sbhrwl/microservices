@@ -16,7 +16,7 @@ mvn clean install -DskipTests
 ```bash
 mvn spring-boot:run
 
-dapr run --app-id flexibility-bridge-service --resources-path .\dapr\config-files -- mvn spring-boot:run
+dapr run --app-id flexibility-bridge-service --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run
 ```
 
 ## Test

@@ -16,7 +16,7 @@ mvn clean install -DskipTests
 ```bash
 mvn spring-boot:run
 
-dapr run --app-id protocol-adapter-service --resources-path .\dapr\config-files -- mvn spring-boot:run
+dapr run --app-id protocol-adapter-service --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run
 ```
 
 ## Test
