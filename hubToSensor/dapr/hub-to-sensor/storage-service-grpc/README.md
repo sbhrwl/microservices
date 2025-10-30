@@ -15,6 +15,8 @@ mvn clean install -DskipTests
 - Run
 ```bash
 mvn spring-boot:run
+
+dapr run --app-id storage-service --resources-path .\dapr\config-files -- mvn spring-boot:run
 ```
 
 ## Test 

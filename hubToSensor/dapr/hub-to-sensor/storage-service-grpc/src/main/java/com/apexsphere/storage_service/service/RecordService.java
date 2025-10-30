@@ -1,69 +1,68 @@
 package com.apexsphere.storage_service.service;
 
 import com.apexsphere.storage_service.model.Record;
-import com.apexsphere.storage_service.model.RequestChangeLog; // New Import
-import com.apexsphere.storage_service.repository.RecordRepository;
-import com.apexsphere.storage_service.repository.RequestChangeLogRepository; // New Import
+import com.apexsphere.storage_service.model.RequestChangeLog;
+import io.dapr.client.DaprClient;
+import io.dapr.client.DaprClientBuilder;
+import io.dapr.client.domain.State;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Added for transactional safety
 
-import java.util.Optional;
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class RecordService {
 
-    private final RecordRepository recordRepository;
-    private final RequestChangeLogRepository changeLogRepository; // New Dependency
+    private static final String STATE_STORE_NAME = "statestore";
+    private static final String RECORD_KEY_PREFIX = "record:";
+    private static final String CHANGE_LOG_KEY_PREFIX = "requestchangelog:";
 
-    // Constructor updated to include the new repository
-    public RecordService(RecordRepository recordRepository, RequestChangeLogRepository changeLogRepository) {
-        this.recordRepository = recordRepository;
-        this.changeLogRepository = changeLogRepository;
+    private final DaprClient daprClient;
+
+    public RecordService() {
+        this.daprClient = new DaprClientBuilder().build();
     }
 
-    @Transactional // Ensures both save and log entry succeed or fail together
     public Record saveRecord(Record record) {
-        // Add business logic, validation, etc. before saving
-        Record savedRecord = recordRepository.save(record);
+        String recordId = UUID.randomUUID().toString();
+        record.setId(recordId);
 
-        // 1. Log the creation
+        daprClient.saveState(STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId, record).block();
+
         RequestChangeLog log = new RequestChangeLog(
-            savedRecord.getId(),
-            "Control Requested"
+                recordId,
+                "Control Requested"
         );
-        changeLogRepository.save(log);
+        log.setChangeTimestamp(Instant.now());
+        daprClient.saveState(STATE_STORE_NAME, CHANGE_LOG_KEY_PREFIX + UUID.randomUUID(), log).block();
 
-        return savedRecord;
+        return record;
     }
-    
-    // Updates the status of an existing record
-    @Transactional // Ensures both update and log entry succeed or fail together
-    public Record updateRecordStatus(Record record) {
-        
-        // 1. Find the existing record (Example: find by ID if the Record object contains it)
-        Optional<Record> existingRecordOpt = recordRepository.findById(record.getId());
-        
-        if (existingRecordOpt.isEmpty()) {
-            // Handle error: Record not found
-            throw new RuntimeException("Record not found for update.");
+
+    public Record updateRecordStatus(Record updatedRecord) {
+        String recordId = updatedRecord.getId();
+        if (recordId == null || recordId.isEmpty()) {
+            throw new RuntimeException("Record ID cannot be null or empty for update.");
         }
-        
-        Record existingRecord = existingRecordOpt.get();
-        // String oldStatus = existingRecord.getStatus();
 
-        // 2. Update only the status field
-        existingRecord.setStatus(record.getStatus());
-        
-        // 3. Save the updated record
-        Record updatedRecord = recordRepository.save(existingRecord);
+        // Corrected: get State<Record> and extract value
+        State<Record> state = daprClient.getState(STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId, Record.class)
+                .blockOptional()
+                .orElseThrow(() -> new RuntimeException("Record not found for update."));
 
-        // 4. Log the update
+        Record existingRecord = state.getValue();
+
+        existingRecord.setStatus(updatedRecord.getStatus());
+
+        daprClient.saveState(STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId, existingRecord).block();
+
         RequestChangeLog log = new RequestChangeLog(
-            updatedRecord.getId(),
-            updatedRecord.getStatus()
+                recordId,
+                "Status updated to " + updatedRecord.getStatus()
         );
-        changeLogRepository.save(log);
+        log.setChangeTimestamp(Instant.now());
+        daprClient.saveState(STATE_STORE_NAME, CHANGE_LOG_KEY_PREFIX + UUID.randomUUID(), log).block();
 
-        return updatedRecord;
+        return existingRecord;
     }
 }
