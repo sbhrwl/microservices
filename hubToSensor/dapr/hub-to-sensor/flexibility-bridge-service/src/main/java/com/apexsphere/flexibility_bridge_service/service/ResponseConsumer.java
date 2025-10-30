@@ -39,7 +39,8 @@ public class ResponseConsumer {
     }
 
     /**
-     * Subscribes to the connector's response topic via Dapr and handles CloudEvent payloads.
+     * ✅ Subscribes to the connector's response topic via Dapr.
+     *    Consumes messages published by the Protocol Adapter service.
      */
     @Topic(name = "${messaging.dapr.connector-response-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
     @PostMapping(path = "/connector.response")
@@ -58,14 +59,14 @@ public class ResponseConsumer {
             log.info("✅ Received and parsed response for RequestID: {}", recordId);
             log.debug("Full parsed response: {}", response);
 
-            // 1. Update intermediate status via gRPC
+            // 1️⃣ Update intermediate status via gRPC
             updateRecordStatus(recordId, "Parsed response received from Protocol Adapter");
 
-            // 2. Forward response to Hub via Dapr
+            // 2️⃣ Forward response to Hub via Dapr
             log.info("📤 Forwarding response for RequestID {} to Hub...", recordId);
             producerToHub.sendResponseToHub(response);
 
-            // 3. Determine and update final status
+            // 3️⃣ Determine and update final status
             String finalStatus = resolveFinalStatus(response);
             updateRecordStatus(recordId, finalStatus);
 
@@ -75,16 +76,12 @@ public class ResponseConsumer {
             log.error("❌ Error processing message for RecordID {}. Cause: {}",
                     recordId, e.getMessage(), e);
 
-            // Attempt to update gRPC record with error info
             safelyReportErrorToGrpc(recordId, e);
 
             throw new RuntimeException("Failed to process incoming response message.", e);
         }
     }
 
-    /**
-     * Resolves final status string based on FlexibilityResponse content.
-     */
     private String resolveFinalStatus(FlexibilityResponse response) {
         if (response == null) {
             return "Request status: UNKNOWN - Null response object";
@@ -99,9 +96,6 @@ public class ResponseConsumer {
                 safe(response.getErrorCode()), safe(response.getMessage()));
     }
 
-    /**
-     * Updates the record status via gRPC.
-     */
     private void updateRecordStatus(String recordId, String status) {
         try {
             RecordRequest request = convertToGrpcRequest(recordId, status);
@@ -112,9 +106,6 @@ public class ResponseConsumer {
         }
     }
 
-    /**
-     * Reports error back to storage-service via gRPC safely.
-     */
     private void safelyReportErrorToGrpc(String recordId, Exception e) {
         try {
             String errorStatus = "BRIDGE_JSON_PARSE_FAILED: " + e.getMessage();
@@ -125,9 +116,6 @@ public class ResponseConsumer {
         }
     }
 
-    /**
-     * Converts internal data into a RecordRequest proto message for gRPC.
-     */
     private RecordRequest convertToGrpcRequest(String requestId, String status) {
         String safeId = (requestId == null || requestId.isBlank()) ? "NO_ID_AVAILABLE" : requestId;
         return RecordRequest.newBuilder()

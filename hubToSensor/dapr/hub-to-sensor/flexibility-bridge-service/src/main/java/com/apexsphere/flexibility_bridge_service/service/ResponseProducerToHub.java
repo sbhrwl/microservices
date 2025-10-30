@@ -9,10 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Service responsible for publishing the final response (JSON format) back to the Hub
- * using the configured response outbound routing key.
- *
- * This completes the full request-response loop for the Bridge service.
+ * Publishes final FlexibilityResponse messages to the Hub.
+ * This completes the Bridge → Hub response flow.
  */
 @Service
 public class ResponseProducerToHub {
@@ -25,16 +23,16 @@ public class ResponseProducerToHub {
 
     public ResponseProducerToHub(
             @Value("${messaging.dapr.pubsub-name}") String pubsubName,
-            @Value("${messaging.dapr.hub-response-topic}") String hubResponseTopic) {
+            @Value("${DAPR_HUB_RESPONSE_TOPIC:flexibility-hub.response}") String hubResponseTopic) {
         this.daprClient = new DaprClientBuilder().build();
         this.pubsubName = pubsubName;
         this.hubResponseTopic = hubResponseTopic;
     }
 
     /**
-     * Publishes the final FlexibilityResponse object (as JSON) back to the Hub via Dapr pub/sub.
+     * Publishes the final FlexibilityResponse back to the Hub via Dapr pub/sub.
      *
-     * @param response The final response object containing requestId, status, and result info.
+     * @param response FlexibilityResponse containing requestId, status, and result details.
      */
     public void sendResponseToHub(FlexibilityResponse response) {
         if (response == null) {
@@ -45,15 +43,14 @@ public class ResponseProducerToHub {
         String requestId = safe(response.getRequestId());
         String status = safe(response.getStatus());
 
-        log.info("📤 Preparing to publish final JSON response for Request ID: {} | Status: {} | PubSub: '{}' | Topic: '{}'",
+        log.info("📤 Publishing final response | RequestID: {} | Status: {} | PubSub: '{}' | Topic: '{}'",
                 requestId, status, pubsubName, hubResponseTopic);
 
         try {
             daprClient.publishEvent(pubsubName, hubResponseTopic, response).block();
-
-            log.info("✅ Successfully published final response for Request ID {} (Status: {}).", requestId, status);
+            log.info("✅ Successfully published response for RequestID {} (Status: {}).", requestId, status);
         } catch (Exception e) {
-            log.error("❌ Failed to publish response for Request ID {}. Error: {}", requestId, e.getMessage(), e);
+            log.error("❌ Failed to publish response for RequestID {}. Error: {}", requestId, e.getMessage(), e);
             throw new RuntimeException("Failed to send message via Dapr for Request ID " + requestId, e);
         }
     }

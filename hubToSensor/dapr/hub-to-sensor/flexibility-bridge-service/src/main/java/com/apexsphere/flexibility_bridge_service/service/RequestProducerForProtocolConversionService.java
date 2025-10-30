@@ -18,8 +18,9 @@ public class RequestProducerForProtocolConversionService {
     @Value("${messaging.dapr.pubsub-name}")
     private String pubsubName;
 
-    @Value("${messaging.dapr.request-topic}")
-    private String requestTopic;
+    // ✅ Updated to use connector-request-topic instead of request-topic
+    @Value("${messaging.dapr.connector-request-topic}")
+    private String connectorRequestTopic;
 
     public RequestProducerForProtocolConversionService() {
         // Dapr client can also be injected as a bean if you prefer
@@ -39,12 +40,14 @@ public class RequestProducerForProtocolConversionService {
         log.info("📄 Sending payload to connector via Dapr pub/sub: {}", payload);
 
         try {
-            // Publish the message to the configured topic via Dapr
-            daprClient.publishEvent(pubsubName, requestTopic, payload).block();
+            // ✅ Publish to the connector.request topic
+            daprClient.publishEvent(pubsubName, connectorRequestTopic, payload).block();
+
             log.info("➡️ Published request ID {} for Sensor ID {} via Dapr topic '{}'", 
-                     recordId, payload.getSensorId(), requestTopic);
+                     recordId, payload.getSensorId(), connectorRequestTopic);
         } catch (Exception e) {
-            log.error("❌ Failed to publish request ID {} to Dapr topic {}: {}", recordId, requestTopic, e.getMessage(), e);
+            log.error("❌ Failed to publish request ID {} to Dapr topic {}: {}", 
+                      recordId, connectorRequestTopic, e.getMessage(), e);
             throw new RuntimeException("Failed to send message via Dapr.", e);
         }
     }

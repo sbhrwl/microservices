@@ -22,7 +22,8 @@ public class RequestConsumer {
         this.producerService = producerService;
     }
 
-    @Topic(name = "${messaging.dapr.request-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
+    // ✅ Consume from flexibility-hub.request (hub-request-topic)
+    @Topic(name = "${messaging.dapr.hub-request-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
     @PostMapping(path = "/flexibility-hub.request")
     public void receiveRequest(@RequestBody(required = false) CloudEvent<RequestPayload> cloudEvent) {
         if (cloudEvent == null || cloudEvent.getData() == null) {
@@ -36,16 +37,17 @@ public class RequestConsumer {
         String recordId = null;
 
         try {
+            // 1️⃣ Save initial record
             RecordRequest saveRequest = convertToGrpcRequest(payload, "Control Requested", null);
             recordId = grpcClient.saveRecord(saveRequest);
-
             log.info("➡️ Saved record to DB. Status: Control Requested. Record ID: {}", recordId);
 
+            // 2️⃣ Publish to connector.request (handled inside producerService)
             producerService.sendRequestToConnector(payload, recordId);
 
+            // 3️⃣ Update record after publishing
             RecordRequest updateRequest = convertToGrpcRequest(payload, "Sent for protocol conversion", recordId);
             grpcClient.updateRecordStatus(updateRequest);
-
             log.info("📢 Updated record status to 'Sent for protocol conversion'. Record ID: {}", recordId);
 
         } catch (Exception e) {
