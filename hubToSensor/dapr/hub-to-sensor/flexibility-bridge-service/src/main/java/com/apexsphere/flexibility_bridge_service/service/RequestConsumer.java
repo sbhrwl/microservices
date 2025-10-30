@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.apexsphere.flexibility_bridge_service.model.RequestPayload;
 import com.apexsphere.storage_service.service.RecordRequest;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 @RestController
 public class RequestConsumer {
 
@@ -19,14 +17,12 @@ public class RequestConsumer {
     private final RecordGrpcClient grpcClient;
     private final RequestProducerForProtocolConversionService producerService;
 
-    // Atomic counter for numeric record IDs
-    private static final AtomicLong recordCounter = new AtomicLong(1000); // starting from 1000
-
     public RequestConsumer(RecordGrpcClient grpcClient, RequestProducerForProtocolConversionService producerService) {
         this.grpcClient = grpcClient;
         this.producerService = producerService;
     }
 
+    // ✅ Consume from flexibility-hub.request (hub-request-topic)
     @Topic(name = "${messaging.dapr.hub-request-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
     @PostMapping(path = "/flexibility-hub.request")
     public void receiveRequest(@RequestBody(required = false) CloudEvent<RequestPayload> cloudEvent) {
@@ -38,28 +34,36 @@ public class RequestConsumer {
         RequestPayload payload = cloudEvent.getData();
         log.info("✅ Received request for Sensor ID: {}", payload.getSensorId());
 
-        // 1️⃣ Generate numeric record ID in the Bridge
-        String recordId = String.valueOf(recordCounter.getAndIncrement());
-        // String recordId = java.util.UUID.randomUUID().toString();
-        payload.setRecordId(recordId);
+        String recordId = null;
 
         try {
-            // 2️⃣ Save initial record via gRPC
-            RecordRequest saveRequest = convertToGrpcRequest(payload, "Control Requested", recordId);
-            grpcClient.saveRecord(saveRequest);
-            log.info("➡️ Saved record to DB. Status: Control Requested. Record ID: {}", recordId);
+            // 1️⃣ Save to control_request table
+            RecordRequest controlRequest = convertToGrpcRequest(payload, "Control Requested", null);
+            recordId = grpcClient.saveRecord(controlRequest);
+            log.info("➡️ Saved Control Request. Status: 'Control Requested'. Record ID: {}", recordId);
 
-            // 3️⃣ Send request to connector via Dapr
+            // 2️⃣ Save initial audit entry in change_request_log
+            RecordRequest logEntry = convertToGrpcRequest(payload, "Initial Log Entry", recordId);
+            grpcClient.saveRecord(logEntry);
+            log.info("🪵 Created initial Change Request Log for Record ID: {}", recordId);
+
+            // 3️⃣ Publish to connector.request
             producerService.sendRequestToConnector(payload, recordId);
+            log.info("📢 Published request to connector. Record ID: {}", recordId);
 
-            // 4️⃣ Update record status after sending to connector
+            // 4️⃣ Update control_request status
             RecordRequest updateRequest = convertToGrpcRequest(payload, "Sent for protocol conversion", recordId);
             grpcClient.updateRecordStatus(updateRequest);
-            log.info("📢 Updated record status to 'Sent for protocol conversion'. Record ID: {}", recordId);
+            log.info("🔁 Updated Control Request status to 'Sent for protocol conversion'. Record ID: {}", recordId);
+
+            // 5️⃣ Add final audit log
+            RecordRequest auditLog = convertToGrpcRequest(payload, "Status updated to Sent for protocol conversion", recordId);
+            grpcClient.saveRecord(auditLog);
+            log.info("🧾 Added Change Request Log entry for Record ID: {}", recordId);
 
         } catch (Exception e) {
             log.error("❌ Error processing request for Sensor ID {} (Record ID {}): {}",
-                    payload.getSensorId(), recordId, e.getMessage(), e);
+                    payload.getSensorId(), recordId != null ? recordId : "N/A", e.getMessage(), e);
         }
     }
 
@@ -69,8 +73,11 @@ public class RequestConsumer {
                 .setOperation(payload.getOperation())
                 .setRelayNumber(payload.getRelayNumber())
                 .setDuration(payload.getDuration())
-                .setStatus(status)
-                .setRecordId(recordId);
+                .setStatus(status);
+
+        if (recordId != null && !recordId.isEmpty()) {
+            builder.setRecordId(recordId);
+        }
 
         return builder.build();
     }
