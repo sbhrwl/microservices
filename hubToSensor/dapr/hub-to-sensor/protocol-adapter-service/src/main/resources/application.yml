@@ -12,7 +12,7 @@ messaging:
 logging:
   level:
     com.apexsphere.protocol-adapter-service: DEBUG
-    io.grpc: DEBUG
+    io.grpc: ERROR
     
 grpc:
   client:

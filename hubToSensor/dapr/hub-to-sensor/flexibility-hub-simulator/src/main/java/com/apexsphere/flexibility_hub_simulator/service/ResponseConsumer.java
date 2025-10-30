@@ -22,7 +22,7 @@ public class ResponseConsumer {
     @Value("${messaging.dapr.pubsub-name}")
     private String pubsubName;
 
-    @Value("${messaging.dapr.response-topic}")
+    @Value("${messaging.dapr.hub-response-topic}")
     private String responseTopic;
 
     /**

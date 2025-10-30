@@ -18,10 +18,10 @@ public class MessagePublisher {
     @Value("${messaging.dapr.pubsub-name}")
     private String pubsubName;
 
-    @Value("${messaging.dapr.request-topic}")
+    @Value("${messaging.dapr.hub-request-topic}")
     private String requestTopic;
 
-    @Value("${messaging.dapr.response-topic}")
+    @Value("${messaging.dapr.hub-response-topic}")
     private String responseTopic;
 
     public MessagePublisher(DaprClient daprClient, ObjectMapper objectMapper) {

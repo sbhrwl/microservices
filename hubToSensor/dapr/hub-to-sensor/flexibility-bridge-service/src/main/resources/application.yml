@@ -4,7 +4,7 @@ application:
 messaging:
   dapr:
     pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}
-    request-topic: ${DAPR_REQUEST_TOPIC:flexibility-hub.request}
+    hub-request-topic: ${DAPR_REQUEST_TOPIC:flexibility-hub.request}
     connector-request-topic: ${DAPR_CONNECTOR_REQUEST_TOPIC:connector.request}
     connector-response-topic: ${DAPR_CONNECTOR_RESPONSE_TOPIC:connector.response}
     hub-response-topic: ${DAPR_HUB_RESPONSE_TOPIC:flexibility-hub.response}
@@ -12,7 +12,7 @@ messaging:
 logging:
   level:
     com.apexsphere.flexibility_bridge: DEBUG
-    io.grpc: DEBUG
+    io.grpc: ERROR
 
 grpc:
   client:

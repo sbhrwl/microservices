@@ -7,8 +7,8 @@ server:
 messaging:
   dapr:
     pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}
-    request-topic: ${DAPR_REQUEST_TOPIC:flexibility-hub.request}
-    response-topic: ${DAPR_RESPONSE_TOPIC:flexibility-hub.response}
+    hub-request-topic: ${DAPR_REQUEST_TOPIC:flexibility-hub.request}
+    hub-response-topic: ${DAPR_RESPONSE_TOPIC:flexibility-hub.response}
 
 logging:
   level:
