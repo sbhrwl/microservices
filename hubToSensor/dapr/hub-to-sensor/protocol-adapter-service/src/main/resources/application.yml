@@ -1,6 +1,9 @@
 application:
   name: protocol-adapter
 
+server:
+  port: ${SERVER_PORT:8083}
+
 messaging:
   dapr:
     pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}

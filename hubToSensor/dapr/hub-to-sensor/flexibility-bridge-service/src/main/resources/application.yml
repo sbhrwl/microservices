@@ -1,6 +1,9 @@
 application:
   name: flexibility-bridge
 
+server:
+  port: ${SERVER_PORT:8082}
+
 messaging:
   dapr:
     pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}

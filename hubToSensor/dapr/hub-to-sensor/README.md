@@ -8,9 +8,10 @@
 - [UI app](ui-app/README.md)
 - [Local testing](#local-testing)
 ## Local testing
-- `dapr run --app-id storage-service --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run`
-- `dapr run --app-id flexibility-bridge-service --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run`
-- `dapr run --app-id protocol-adapter-service --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+- As with Dapr local builds error out with `8080 not available`, Explicitly add port in `application.yaml` for each service
 - `dapr run --app-id flexibility-hub-simulator --app-port 8081 --resources-path .\dapr\config-files -- mvn spring-boot:run`
-- `dapr run --app-id hes-simulator --app-port 0 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+- `dapr run --app-id storage-service --app-port 8086 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+- `dapr run --app-id flexibility-bridge-service --app-port 8082 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+- `dapr run --app-id protocol-adapter-service --app-port 8083 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+- `dapr run --app-id hes-simulator --app-port 8084 --resources-path .\dapr\config-files -- mvn spring-boot:run`
 - `dapr run --app-id data-api-service --app-port 8085 --resources-path .\dapr\config-files -- mvn spring-boot:run`

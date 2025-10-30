@@ -1,6 +1,9 @@
 application:
   name: hes-simulator
 
+server:
+  port: ${SERVER_PORT:8084}
+
 messaging:
   dapr:
     pubsub-name: ${DAPR_PUBSUB_NAME:rabbitmq-pubsub}
