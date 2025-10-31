@@ -146,7 +146,7 @@ helm upgrade --install ocs-h2s-release .
 helm uninstall ocs-h2s-release
 ``` 
 ## Troubleshooting
-**Problem:**
+### Problem
 - After deploying via Helm, the `flexibility-hub-simulator-service` (NodePort 30881) was unreachable from the host, even though it worked before manual deployment.
 **Approach to diagnose:**
 1. **Check pods and services** — confirm all running in the `default` namespace:
@@ -194,6 +194,6 @@ helm uninstall ocs-h2s-release
 
    → Responded `404` → NodePort exposed correctly to host.
 
-** Conclusion:**
+### Conclusion
 - Kubernetes and Helm setup were correct; the service was reachable.
- The `404` response simply shows that `/` is not a valid endpoint — network connectivity is working as expected.
+- The `404` response simply shows that `/` is not a valid endpoint — network connectivity is working as expected.
