@@ -17,8 +17,6 @@
 - `dapr run --app-id hes-simulator --app-port 8084 --resources-path .\dapr\config-files -- mvn spring-boot:run`
 - `dapr run --app-id data-api-service --app-port 8085 --resources-path .\dapr\config-files -- mvn spring-boot:run`
 
-## Summary
-
 | Service                        | Subscribed Topics                               | Queue Names                                                                                           | 
 | ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- | 
 | **Flexibility Hub Simulator**  | `flexibility-hub.response`                      | `flexibility-hub-simulator-flexibility-hub.response`                                                  | 
