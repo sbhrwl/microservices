@@ -1,6 +1,7 @@
 package com.apexsphere.flexibility_hub_simulator.service;
 
 import com.apexsphere.flexibility_hub_simulator.model.MessageResponse;
+import io.dapr.client.domain.CloudEvent; // <-- NEW IMPORT
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,21 +42,30 @@ public class ResponseConsumer {
 
     /**
      * Handles the final response message sent by Dapr pub/sub.
+     * Receives the full CloudEvent and extracts the MessageResponse object from the 'data' field.
      */
     @PostMapping(path = "/handle-final-response")
     @ResponseBody
-    public void handleFinalResponse(@RequestBody MessageResponse response) {
+    public void handleFinalResponse(@RequestBody CloudEvent<MessageResponse> cloudEvent) {
+
+        if (cloudEvent == null || cloudEvent.getData() == null) {
+            log.warn("⚠️ Received empty CloudEvent or empty data payload — ignoring message.");
+            return;
+        }
+        
+        // Extract the actual payload object
+        MessageResponse response = cloudEvent.getData(); 
 
         log.info("=========================================================================================");
         log.info("✅ FINAL RESPONSE RECEIVED from Bridge for Request ID: {}", response.getRequestId());
-        log.info("   Status: {}", response.getStatus());
-        log.info("   Message: {}", response.getMessage());
+        log.info("   Status: {}", response.getStatus());
+        log.info("   Message: {}", response.getMessage());
 
         if (response.getErrorCode() != null) {
-            log.error("   Error Code: {}", response.getErrorCode());
+            log.error("   Error Code: {}", response.getErrorCode());
         }
 
-        log.info("   RAW RESPONSE JSON: {}", response.toString());
+        log.info("   RAW RESPONSE JSON: {}", response.toString());
         log.info("=========================================================================================");
 
         // Optional: update DB, notify user, etc.
