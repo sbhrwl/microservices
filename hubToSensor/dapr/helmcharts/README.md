@@ -1,4 +1,5 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Setting up containers](#setting-up-containers)
 - [Setup](setup/README.md)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
@@ -11,6 +12,14 @@
 - [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Troubleshooting](#troubleshooting)
+## Setting up containers
+
+| Steps | Flexibility hub simulator | Flexibility bridge | Storage service | Protocol adapter | HES simulator |
+|---|---|---|---|---|---|
+| application.yml | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-hub-simulator/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-bridge-service/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorstorage-service-grpc/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorprotocol-adapter-service/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorhes-simulator/src/main/resources/application.yml) |
+| Build jar | `mvn clean package` | `mvn clean package` | `mvn clean package` | `mvn clean package` | `mvn clean package` |
+| Dockerfile | [Dockerfile](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-hub-simulator/Dockerfile) | [Dockerfile](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-bridge-service/Dockerfile) | [Dockerfile](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-hub-simulator/Dockerfile) | [Dockerfile](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-bridge-service/Dockerfile) | [Dockerfile](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensorflexibility-hub-simulator/Dockerfile) |
+
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
 - Run this in your terminal:
@@ -62,10 +71,6 @@ orchestrate-hubtosensor-services/
 │   ├── flexibility-bridge-deployment.yaml
 │   ├── protocol-adapter-deployment.yaml
 │   ├── hes-simulator-deployment.yaml
-│   ├── data-api-deployment.yaml
-│   ├── data-api-service.yaml
-│   ├── ui-app-deployment.yaml
-│   ├── ui-app-service.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
