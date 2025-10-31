@@ -16,6 +16,17 @@
 - `dapr run --app-id protocol-adapter-service --app-port 8083 --resources-path .\dapr\config-files -- mvn spring-boot:run`
 - `dapr run --app-id hes-simulator --app-port 8084 --resources-path .\dapr\config-files -- mvn spring-boot:run`
 - `dapr run --app-id data-api-service --app-port 8085 --resources-path .\dapr\config-files -- mvn spring-boot:run`
+
+## Summary
+
+| Service                        | Subscribed Topics                               | Queue Names                                                                                           | 
+| ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- | 
+| **Flexibility Hub Simulator**  | `flexibility-hub.response`                      | `flexibility-hub-simulator-flexibility-hub.response`                                                  | 
+| **Flexibility Bridge Service** | `flexibility-hub.request`, `connector.response` | `flexibility-bridge-service-flexibility-hub.request`, `flexibility-bridge-service-connector.response` | 
+| **Protocol Adapter Service**   | `connector.request`, `hes.response`             | `protocol-adapter-service-connector.request`, `protocol-adapter-service-hes.response`                 | 
+| **HES Simulator**              | `hes.request`                                   | `hes-simulator-hes.request`                                                                           | 
+
+## State
 - Verify PostgreSQL
 ```sql
 PS C:\Users\sabharwalr> psql -h localhost -U myuser -d mydatabase
@@ -27,32 +38,8 @@ WARNING: Console code page (850) differs from Windows code page (1252)
          page "Notes for Windows users" for details.
 Type "help" for help.
 
-mydatabase=# select * from control_requests;
- id | duration | operation | relay_number | sensor_id  |   status
-----+----------+-----------+--------------+------------+-------------
- 42 |        0 | DIRECT-ON |            1 | sensor-001 | Sent to HES
-(1 row)
-
-mydatabase=# select * from request_change_log;
- id  |            change_description            |       change_timestamp        | record_id
------+------------------------------------------+-------------------------------+-----------
- 132 | Control Requested                        | 2025-10-03 10:16:41.105162+00 |        42
- 133 | Sent for protocol conversion             | 2025-10-03 10:16:41.170938+00 |        42
- 134 | message recieved for protocol conversion | 2025-10-03 10:16:41.179569+00 |        42
- 135 | protocol conversion done                 | 2025-10-03 10:16:41.212662+00 |        42
- 136 | Sent to HES                              | 2025-10-03 10:16:41.262414+00 |        42
+mydatabase=# SELECT * FROM state;
 ```
-## Summary
-
-| Service                        | Subscribed Topics                               | Queue Names                                                                                           | 
-| ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- | 
-| **Flexibility Hub Simulator**  | `flexibility-hub.response`                      | `flexibility-hub-simulator-flexibility-hub.response`                                                  | 
-| **Flexibility Bridge Service** | `flexibility-hub.request`, `connector.response` | `flexibility-bridge-service-flexibility-hub.request`, `flexibility-bridge-service-connector.response` | 
-| **Protocol Adapter Service**   | `connector.request`, `hes.response`             | `protocol-adapter-service-connector.request`, `protocol-adapter-service-hes.response`                 | 
-| **HES Simulator**              | `hes.request`                                   | `hes-simulator-hes.request`                                                                           | 
-
-## State
-- `mydatabase=# SELECT * FROM state;`
 
 | Key                                                               | Value                                                                                                                                                                                                                  | IsBinary | InsertDate                    | UpdateDate                    | ExpireDate |
 | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------- | ----------------------------- | ---------- |
