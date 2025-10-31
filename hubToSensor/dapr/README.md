@@ -8,6 +8,3 @@
   - [Storage service gRPC](hub-to-sensor/storage-service-grpc/README.md)
   - [Protocol adapter service](hub-to-sensor/protocol-adapter-service/README.md)
   - [HES simulator](hub-to-sensor/hes-simulator/README.md)
-  - [Data API service](hub-to-sensor/data-api-service/README.md)
-  - [UI app](hub-to-sensor/ui-app/README.md)
-- [Containers](containers/README.md)
