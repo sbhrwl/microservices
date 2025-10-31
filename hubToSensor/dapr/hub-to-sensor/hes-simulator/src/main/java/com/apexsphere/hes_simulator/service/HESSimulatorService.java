@@ -69,11 +69,14 @@ public class HESSimulatorService {
             // 2. Generate random SUCCESS or ERROR response, embedding the original Request ID
             String responseXml = generateRandomResponse(requestId);
 
+            // Log the full response XML payload at DEBUG level before publishing
+            log.debug("Full HES Response XML to be published for ID {}:\n{}", requestId, responseXml);
+
             // 3. Send the response back to the protocol adapter via Dapr pub/sub
             daprClient.publishEvent(pubsubName, responseTopic, responseXml).block();
 
             log.info("✅ HES Response sent for ID: {}. Status: {}", requestId, 
-                     responseXml.contains("<Status>SUCCESS</Status>") ? "SUCCESS" : "ERROR");
+                      responseXml.contains("<Status>SUCCESS</Status>") ? "SUCCESS" : "ERROR");
 
         } catch (InterruptedException e) {
             // Re-interrupt the thread after catching InterruptedException

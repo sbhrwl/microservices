@@ -27,7 +27,7 @@ public class ResponseConsumer {
 
     private final RecordGrpcClient grpcClient;
     private final ResponseProducerToHub producerToHub;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper; // Added to manually parse the String payload
 
     @Autowired
     public ResponseConsumer(RecordGrpcClient grpcClient,
@@ -40,11 +40,12 @@ public class ResponseConsumer {
 
     /**
      * ✅ Subscribes to the connector's response topic via Dapr.
-     *    Consumes messages published by the Protocol Adapter service.
+     * Consumes messages published by the Protocol Adapter service.
+     * Note: We receive CloudEvent<String> and manually parse the data field to avoid Jackson errors.
      */
     @Topic(name = "${messaging.dapr.connector-response-topic}", pubsubName = "${messaging.dapr.pubsub-name}")
     @PostMapping(path = "/connector.response")
-    public void handleResponse(@RequestBody(required = false) CloudEvent<FlexibilityResponse> cloudEvent) {
+    public void handleResponse(@RequestBody(required = false) CloudEvent<String> cloudEvent) {
         String recordId = "UNKNOWN_ID";
 
         try {
@@ -53,7 +54,14 @@ public class ResponseConsumer {
                 return;
             }
 
-            FlexibilityResponse response = cloudEvent.getData();
+            // --- THE FIX IS HERE ---
+            // 1. Get the data as a raw JSON string
+            String jsonPayload = cloudEvent.getData(); 
+            
+            // 2. Manually deserialize the string into the target POJO
+            FlexibilityResponse response = objectMapper.readValue(jsonPayload, FlexibilityResponse.class);
+            // ------------------------
+
             recordId = response.getRequestId();
 
             log.info("✅ Received and parsed response for RequestID: {}", recordId);
@@ -81,6 +89,8 @@ public class ResponseConsumer {
             throw new RuntimeException("Failed to process incoming response message.", e);
         }
     }
+
+    // ... (private helper methods remain unchanged)
 
     private String resolveFinalStatus(FlexibilityResponse response) {
         if (response == null) {
