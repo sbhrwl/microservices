@@ -22,41 +22,39 @@ public class RecordService {
     private static final String CHANGE_LOG_KEY_PREFIX = "requestchangelog:";
 
     private final DaprClient daprClient;
-    private final AtomicLong idGenerator = new AtomicLong(System.currentTimeMillis()); // pseudo auto-increment
+    private final AtomicLong idGenerator = new AtomicLong(System.currentTimeMillis());
 
     public RecordService() {
         this.daprClient = new DaprClientBuilder().build();
-        log.info("RecordService initialized. Starting ID generator at {}", idGenerator.get());
+        log.info("RecordService initialized. ID generator starting at {}", idGenerator.get());
     }
 
     /**
      * Save a new record and create initial change log entry.
      */
     public Record saveRecord(Record record) {
-        log.info("=== saveRecord called ===");
-        log.info("Incoming record payload: {}", record);
+        log.info("[saveRecord] Start processing new record: {}", record);
 
         // Generate numeric ID and assign
         long numericId = idGenerator.incrementAndGet();
         record.setId(String.valueOf(numericId));
-        log.info("Generated numeric ID for new record: {}", record.getId());
+        log.info("[saveRecord] Assigned numeric ID: {}", record.getId());
 
-        // Save the record to Postgres via Dapr
-        log.info("Saving record to Dapr state store '{}' with key '{}'", STATE_STORE_NAME, RECORD_KEY_PREFIX + numericId);
-        daprClient.saveState(STATE_STORE_NAME, RECORD_KEY_PREFIX + numericId, record).block();
-        log.info("Record saved successfully.");
+        // Save the record
+        String recordKey = RECORD_KEY_PREFIX + numericId;
+        log.debug("[saveRecord] Saving record to Dapr state store '{}' with key '{}'", STATE_STORE_NAME, recordKey);
+        daprClient.saveState(STATE_STORE_NAME, recordKey, record).block();
+        log.info("[saveRecord] Record saved successfully with key '{}'", recordKey);
 
-        // Add initial change log
-        RequestChangeLog logEntry = new RequestChangeLog(
-                record.getId(),
-                "Control Requested"
-        );
+        // Create initial change log
+        RequestChangeLog logEntry = new RequestChangeLog(record.getId(), "Control Requested");
         logEntry.setChangeTimestamp(Instant.now());
-        log.info("Saving initial change log entry for record {}: {}", record.getId(), logEntry);
-        daprClient.saveState(STATE_STORE_NAME, CHANGE_LOG_KEY_PREFIX + numericId, logEntry).block();
-        log.info("Initial change log saved successfully.");
+        String changeLogKey = CHANGE_LOG_KEY_PREFIX + numericId;
+        log.debug("[saveRecord] Saving initial change log entry with key '{}': {}", changeLogKey, logEntry);
+        daprClient.saveState(STATE_STORE_NAME, changeLogKey, logEntry).block();
+        log.info("[saveRecord] Initial change log saved successfully for key '{}'", changeLogKey);
 
-        log.info("=== saveRecord completed. Returning record with ID: {} ===", record.getId());
+        log.info("[saveRecord] Completed processing new record with ID '{}'", record.getId());
         return record;
     }
 
@@ -64,45 +62,42 @@ public class RecordService {
      * Update record status and append to change log.
      */
     public Record updateRecordStatus(Record updatedRecord) {
-        log.info("=== updateRecordStatus called ===");
-        log.info("Incoming update payload: {}", updatedRecord);
+        log.info("[updateRecordStatus] Start updating record: {}", updatedRecord);
 
         String recordId = updatedRecord.getId();
         if (recordId == null || recordId.isEmpty()) {
-            log.error("Record ID cannot be null or empty for update.");
+            log.error("[updateRecordStatus] Record ID is null or empty!");
             throw new RuntimeException("Record ID cannot be null or empty for update.");
         }
 
         // Retrieve existing record
-        log.info("Retrieving existing record from Dapr state store '{}' with key '{}'", STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId);
-        State<Record> state = daprClient.getState(STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId, Record.class)
+        String recordKey = RECORD_KEY_PREFIX + recordId;
+        log.debug("[updateRecordStatus] Retrieving existing record with key '{}'", recordKey);
+        State<Record> state = daprClient.getState(STATE_STORE_NAME, recordKey, Record.class)
                 .blockOptional()
                 .orElseThrow(() -> {
-                    log.error("Record not found for update. Record ID: {}", recordId);
+                    log.error("[updateRecordStatus] Record not found for ID '{}'", recordId);
                     return new RuntimeException("Record not found for update.");
                 });
 
         Record existingRecord = state.getValue();
-        log.info("Existing record retrieved: {}", existingRecord);
+        log.info("[updateRecordStatus] Existing record retrieved: {}", existingRecord);
 
         // Update status
         existingRecord.setStatus(updatedRecord.getStatus());
-        log.info("Updating record status to '{}'", updatedRecord.getStatus());
-        daprClient.saveState(STATE_STORE_NAME, RECORD_KEY_PREFIX + recordId, existingRecord).block();
-        log.info("Record updated successfully in state store.");
+        log.debug("[updateRecordStatus] Updating record status to '{}'", updatedRecord.getStatus());
+        daprClient.saveState(STATE_STORE_NAME, recordKey, existingRecord).block();
+        log.info("[updateRecordStatus] Record status updated successfully for key '{}'", recordKey);
 
-        // Add to change log
-        RequestChangeLog logEntry = new RequestChangeLog(
-                recordId,
-                "Status updated to " + updatedRecord.getStatus()
-        );
+        // Add change log entry
+        RequestChangeLog logEntry = new RequestChangeLog(recordId, "Status updated to " + updatedRecord.getStatus());
         logEntry.setChangeTimestamp(Instant.now());
         String logKey = CHANGE_LOG_KEY_PREFIX + recordId + "_log_" + System.currentTimeMillis();
-        log.info("Saving change log entry with key '{}': {}", logKey, logEntry);
+        log.debug("[updateRecordStatus] Saving change log entry with key '{}': {}", logKey, logEntry);
         daprClient.saveState(STATE_STORE_NAME, logKey, logEntry).block();
-        log.info("Change log entry saved successfully.");
+        log.info("[updateRecordStatus] Change log entry saved successfully for key '{}'", logKey);
 
-        log.info("=== updateRecordStatus completed for record ID: {} ===", recordId);
+        log.info("[updateRecordStatus] Completed updating record ID '{}'", recordId);
         return existingRecord;
     }
 }
