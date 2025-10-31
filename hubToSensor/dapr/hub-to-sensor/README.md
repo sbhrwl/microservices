@@ -7,6 +7,7 @@
 - [Data API service](data-api-service/README.md)
 - [UI app](ui-app/README.md)
 - [Local testing](#local-testing)
+- [State](#state)
 ## Local testing
 - As with Dapr local builds error out with `8080 not available`, Explicitly add port in `application.yaml` for each service
 - `dapr run --app-id flexibility-hub-simulator --app-port 8081 --resources-path .\dapr\config-files -- mvn spring-boot:run`
@@ -63,7 +64,7 @@ mydatabase=# select * from request_change_log;
 | storage-service||record:1761910463784                             | `eyJpZCI6IjE3NjE5MTA0NjM3ODQiLCJzZW5zb3JJZCI6InNlbnNvci0wMDQiLCJvcGVyYXRpb24iOiJESVJFQ1QtT0ZGIiwicmVsYXlOdW1iZXIiOjEsImR1cmF0aW9uIjowLCJzdGF0dXMiOiJTdGF0dXMgdXBkYXRlZCB0byBTZW50IGZvciBwcm90b2NvbCBjb252ZXJzaW9uIn0=` | t        | 2025-10-31 11:38:01.293423+00 |                               |            |
 | storage-service||requestchangelog:1761910463784                   | `eyJyZWNvcmRJZCI6IjE3NjE5MTA0NjM3ODQiLCJjaGFuZ2VEZXNjcmlwdGlvbiI6IkNvbnRyb2wgUmVxdWVzdGVkIiwiY2hhbmdlVGltZXN0YW1wIjoxNzYxOTEwNjgxMjk5fQ==`                                                                             | t        | 2025-10-31 11:38:01.305079+00 |                               |            |
 
-- Decodes `Base64` values
+- Decoded `Base64` values
 
 | Key                                                               | Value (decoded JSON)                                                                                                                                                  | IsBinary | InsertDate                    | UpdateDate                    | ExpireDate |
 | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------- | ----------------------------- | ---------- |
