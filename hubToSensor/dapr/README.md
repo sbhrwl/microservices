@@ -8,3 +8,4 @@
   - [Storage service gRPC](hub-to-sensor/storage-service-grpc/README.md)
   - [Protocol adapter service](hub-to-sensor/protocol-adapter-service/README.md)
   - [HES simulator](hub-to-sensor/hes-simulator/README.md)
+- [Helm charts](helmcharts/README.md)
