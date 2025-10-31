@@ -1,30 +1,28 @@
 package com.apexsphere.storage_service.model;
 
-import java.time.Instant;
+// REMOVE java.time.Instant import
+// import java.time.Instant; 
+import java.io.Serializable; // Added for completeness, though often not strictly required for Dapr POJOs
 
-public class RequestChangeLog {
+public class RequestChangeLog implements Serializable {
 
-    private String id;              // Dapr will store this as the state key
-    private String recordId;        // Links to the related record
+    private String id;
+    private String recordId;
     private String changeDescription;
-    private Instant changeTimestamp;
+    // CHANGE: Use long for epoch timestamp instead of Instant
+    private long changeTimestamp; 
 
     public RequestChangeLog() {
-        this.changeTimestamp = Instant.now();
+        this.changeTimestamp = System.currentTimeMillis();
     }
 
     public RequestChangeLog(String recordId, String changeDescription) {
         this.recordId = recordId;
         this.changeDescription = changeDescription;
-        this.changeTimestamp = Instant.now();
+        this.changeTimestamp = System.currentTimeMillis();
     }
-
-    public RequestChangeLog(String id, String recordId, String changeDescription) {
-        this.id = id;
-        this.recordId = recordId;
-        this.changeDescription = changeDescription;
-        this.changeTimestamp = Instant.now();
-    }
+    
+    // Omitted the 3-arg constructor for brevity, assuming you won't use it or will update it similarly.
 
     // Getters and Setters
     public String getId() {
@@ -51,11 +49,13 @@ public class RequestChangeLog {
         this.changeDescription = changeDescription;
     }
 
-    public Instant getChangeTimestamp() {
+    // UPDATED Getter and Setter signature
+    public long getChangeTimestamp() {
         return changeTimestamp;
     }
 
-    public void setChangeTimestamp(Instant changeTimestamp) {
+    // UPDATED Setter signature
+    public void setChangeTimestamp(long changeTimestamp) {
         this.changeTimestamp = changeTimestamp;
     }
 }

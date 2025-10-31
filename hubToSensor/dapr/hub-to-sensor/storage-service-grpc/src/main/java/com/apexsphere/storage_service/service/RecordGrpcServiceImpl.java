@@ -1,6 +1,7 @@
 package com.apexsphere.storage_service.service;
 
 import com.apexsphere.storage_service.model.Record;
+import io.grpc.Status; // Added for gRPC error handling
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.slf4j.Logger;
@@ -72,9 +73,21 @@ public class RecordGrpcServiceImpl extends RecordServiceGrpc.RecordServiceImplBa
     public void updateRecord(RecordRequest request, StreamObserver<RecordResponse> responseObserver) {
         log.info("[updateRecord gRPC] Incoming request: {}", request);
 
+        // MANDATORY CHECK: Ensure record ID is provided for updates.
+        String recordId = request.getRecordId();
+        if (recordId == null || recordId.isEmpty()) {
+            log.warn("[updateRecord gRPC] Update request rejected: Missing mandatory record_id.");
+            responseObserver.onError(Status.INVALID_ARGUMENT
+                .withDescription("Mandatory field 'record_id' is missing for update operation.")
+                .asRuntimeException());
+            return; // Terminate RPC call
+        }
+
         try {
+            // Note: Only the ID and Status are truly needed for the updateRecordStatus service method,
+            // but we pass the full POJO for completeness/future logic.
             Record record = new Record(
-                request.getRecordId(),
+                recordId,
                 request.getSensorId(),
                 request.getOperation(),
                 request.getRelayNumber(),
@@ -98,7 +111,7 @@ public class RecordGrpcServiceImpl extends RecordServiceGrpc.RecordServiceImplBa
             log.info("[updateRecord gRPC] Response sent to client for record ID: {}", updatedRecord.getId());
 
         } catch (Exception e) {
-            log.error("[updateRecord gRPC] Error while updating record: {}", e.getMessage(), e);
+            log.error("[updateRecord gRPC] Error while updating record for ID {}: {}", recordId, e.getMessage(), e);
             RecordResponse response = RecordResponse.newBuilder()
                 .setSuccess(false)
                 .setMessage("Failed to update record: " + e.getMessage())

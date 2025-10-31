@@ -3,13 +3,13 @@ package com.apexsphere.storage_service.service;
 import com.apexsphere.storage_service.model.Record;
 import com.apexsphere.storage_service.model.RequestChangeLog;
 import io.dapr.client.DaprClient;
-import io.dapr.client.DaprClientBuilder;
+import io.dapr.client.DaprClientBuilder; // NEW IMPORT
 import io.dapr.client.domain.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+// REMOVED: import org.springframework.beans.factory.annotation.Autowired; // Not needed
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -21,11 +21,12 @@ public class RecordService {
     private static final String RECORD_KEY_PREFIX = "record:";
     private static final String CHANGE_LOG_KEY_PREFIX = "requestchangelog:";
 
-    private final DaprClient daprClient;
+    // FIX: DaprClient is instantiated directly here to avoid the need for a Spring @Bean.
+    private final DaprClient daprClient = new DaprClientBuilder().build(); 
     private final AtomicLong idGenerator = new AtomicLong(System.currentTimeMillis());
 
+    // Using a simple default constructor now that DaprClient is initialized above.
     public RecordService() {
-        this.daprClient = new DaprClientBuilder().build();
         log.info("RecordService initialized. ID generator starting at {}", idGenerator.get());
     }
 
@@ -48,7 +49,7 @@ public class RecordService {
 
         // Create initial change log
         RequestChangeLog logEntry = new RequestChangeLog(record.getId(), "Control Requested");
-        logEntry.setChangeTimestamp(Instant.now());
+        
         String changeLogKey = CHANGE_LOG_KEY_PREFIX + numericId;
         log.debug("[saveRecord] Saving initial change log entry with key '{}': {}", changeLogKey, logEntry);
         daprClient.saveState(STATE_STORE_NAME, changeLogKey, logEntry).block();
@@ -91,8 +92,9 @@ public class RecordService {
 
         // Add change log entry
         RequestChangeLog logEntry = new RequestChangeLog(recordId, "Status updated to " + updatedRecord.getStatus());
-        logEntry.setChangeTimestamp(Instant.now());
-        String logKey = CHANGE_LOG_KEY_PREFIX + recordId + "_log_" + System.currentTimeMillis();
+
+        // Using System.currentTimeMillis() in the key is fine for unique logs
+        String logKey = CHANGE_LOG_KEY_PREFIX + recordId + "_log_" + System.currentTimeMillis(); 
         log.debug("[updateRecordStatus] Saving change log entry with key '{}': {}", logKey, logEntry);
         daprClient.saveState(STATE_STORE_NAME, logKey, logEntry).block();
         log.info("[updateRecordStatus] Change log entry saved successfully for key '{}'", logKey);
