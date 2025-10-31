@@ -148,7 +148,7 @@ helm uninstall ocs-h2s-release
 ## Troubleshooting
 ### Problem
 - After deploying via Helm, the `flexibility-hub-simulator-service` (NodePort 30881) was unreachable from the host, even though it worked before manual deployment.
-**Approach to diagnose:**
+- **Approach to diagnose:**
 1. **Check pods and services** — confirm all running in the `default` namespace:
    ```bash
    kubectl get pods
