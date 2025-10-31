@@ -28,5 +28,3 @@ spec:
     # Optional: fine-tune reliability — disables transient queues for Dapr topics
     - name: exclusive
       value: "false"
-scopes:
-  - protocol-adapter-service
