@@ -71,10 +71,10 @@ public class ProtocolConverter {
             throw new IllegalArgumentException("XML payload is empty");
         }
 
-        String requestId = extract(xml, "RequestID");
-        String status = extract(xml, "status");
-        String message = extract(xml, "message");
-        String errorCode = extract(xml, "errorCode");
+        String requestId = extract(xml, "RequestID"); // Tag: <RequestID>
+        String status = extract(xml, "Status");      // FIX: Changed from "status" to "Status"
+        String message = extract(xml, "Message");    // FIX: Changed from "message" to "Message"
+        String errorCode = extract(xml, "ErrorCode"); // FIX: Changed from "errorCode" to "ErrorCode"
 
         FlexibilityResponse response = new FlexibilityResponse();
         response.setRequestId(requestId);
