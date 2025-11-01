@@ -88,6 +88,16 @@ Flex Hub Simulator
       "duration": 30
     }
     ```
+  - Response 
+    ```
+{
+  "requestId": "42",
+  "status": "ERROR",
+  "message": "Target sensor 'sensor-001' not found or offline.",
+  "errorCode": "404",
+  "timestamp": "2025-10-03T13:29:17.549+03:00"
+}
+    ```
 - Verify **`Flexibility hub simulator`** logs
 ```
 2025-10-03T13:13:43.897+03:00  INFO 16244 --- [           main] c.a.f.FlexibilityHubSimulatorApplication : Started FlexibilityHubSimulatorApplication in 7.778 seconds (process running for 9.098)
