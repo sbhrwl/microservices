@@ -15,6 +15,16 @@
   "duration": 30
 }
 ```
+- Response 
+```
+{
+  "requestId": "42",
+  "status": "ERROR",
+  "message": "Target sensor 'sensor-001' not found or offline.",
+  "errorCode": "404",
+  "timestamp": "2025-10-03T13:29:17.549+03:00"
+}
+```
 ## Flow
 ```
 Flex Hub Simulator
@@ -87,16 +97,6 @@ Flex Hub Simulator
       "relayNumber": 2,
       "duration": 30
     }
-    ```
-  - Response 
-    ```
-{
-  "requestId": "42",
-  "status": "ERROR",
-  "message": "Target sensor 'sensor-001' not found or offline.",
-  "errorCode": "404",
-  "timestamp": "2025-10-03T13:29:17.549+03:00"
-}
     ```
 - Verify **`Flexibility hub simulator`** logs
 ```
