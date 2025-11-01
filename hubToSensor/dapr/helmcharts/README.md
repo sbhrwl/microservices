@@ -2,7 +2,7 @@
 - [Setting up containers](#setting-up-containers)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
-- [Convert application YAMLs into a Helm template](#convert-application-yamls-into-a-helm-template)
+- [Create Helm templates from application YAMLs](#create-helm-templates-from-application-yamls)
 - [Chart structure](#chart-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
@@ -50,7 +50,7 @@
   ```
   _helpers.tpl
   ```
-## Convert application YAMLs into a Helm template
+## Create Helm templates from application YAMLs
 - [**flexibility-hub-simulator-deployment**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-deployment.yaml)
 - [**flexibility-hub-simulator-service**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-service.yaml)
 - [**storage-service-deployment**](orchestrate-hubtosensor-services/templates/storage-service-deployment.yaml)
