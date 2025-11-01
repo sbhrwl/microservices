@@ -19,6 +19,15 @@
 ```json
 {
   "requestId": "42",
+  "status": "SUCCESS",
+  "message": "Operation DIRECT-ON for sensor-001 completed successfully.",
+  "errorCode": "",
+  "timestamp": "2025-10-03T13:23:03.283+03:00"
+}
+```
+```json
+{
+  "requestId": "42",
   "status": "ERROR",
   "message": "Target sensor 'sensor-001' not found or offline.",
   "errorCode": "404",
