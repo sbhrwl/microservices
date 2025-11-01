@@ -16,7 +16,7 @@
 }
 ```
 - Response 
-```
+```json
 {
   "requestId": "42",
   "status": "ERROR",
