@@ -1,6 +1,5 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
 - [Setting up containers](#setting-up-containers)
-- [Setup](setup/README.md)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
 - [Convert application YAMLs into a Helm template](#convert-application-yamls-into-a-helm-template)
@@ -24,6 +23,7 @@
 | Push image | `docker push sbhrwldocker/flexibility-hub-simulator:dapr-latest` | `docker push sbhrwldocker/flexibility-bridge-service:dapr-latest` | `docker push sbhrwldocker/storage-service:dapr-latest` | `docker push sbhrwldocker/protocol-adapter-service:dapr-latest` | `docker push sbhrwldocker/hes-simulator:dapr-latest` |
 
 ## Create Helm chart structure
+- [Helm setup](setup/README.md)
 - Generate the basic `Helm chart directory`. 
 - Run this in your terminal:
   ```
