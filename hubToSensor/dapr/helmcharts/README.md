@@ -58,10 +58,6 @@
 - [**flexibility-bridge-deployment**](orchestrate-hubtosensor-services/templates/flexibility-bridge-deployment.yaml)
 - [**protocol-adapter-deployment**](orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml)
 - [**hes-simulator-deployment**](orchestrate-hubtosensor-services/templates/hes-simulator-deployment.yaml)
-- [**data-api-deployment**](orchestrate-hubtosensor-services/templates/data-api-deployment.yaml)
-- [**data-api-service**](orchestrate-hubtosensor-services/templates/data-api-service.yaml)
-- [**ui-app-deployment**](orchestrate-hubtosensor-services/templates/ui-app-deployment.yaml)
-- [**ui-app-service**](orchestrate-hubtosensor-services/templates/ui-app-service.yaml)
 - [**`values.yaml`**](orchestrate-hubtosensor-services/values.yaml)
 ### Chart structure
 ```pgsql
