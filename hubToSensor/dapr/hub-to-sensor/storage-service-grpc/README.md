@@ -4,6 +4,7 @@
 - [Test](#test)
 ## Properties
 - [application.yml](src/main/resources/application.yml)
+- [postgres-statestore.yaml](dapr/config-files/postgres-statestore.yaml)
 ## How to run
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
 - Build 
