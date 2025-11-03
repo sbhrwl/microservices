@@ -3,10 +3,10 @@
 | **Security Pillar**                      | **Role of Certificates**                                                                                                                                                      |
 | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [🧱 **1. Foundations of Security**](foundations/README.md)        | Provide the **cryptographic basis** — public/private keys, digital signatures, and encryption principles that enable certificate-based trust.                                 |
-| [🔐 **2. Identity & Trust Management**](iam/README.md)    | Define and manage **certificate-based identity and PKI**. Establish trust between entities (devices, services, users) through certificate issuance, validation, and rotation. |
-| [🌐 **3. Communication Security**](communication/README.md)         | **Apply certificates** to secure channels (TLS/mTLS). Enable encrypted and authenticated communication between clients, services, and APIs.                                   |
-| [📡 **4. Infrastructure & Data Security**](infra_data/README.md) | Use certificates to **secure infrastructure components** such as message brokers, databases, and Kubernetes clusters via encrypted connections.                               |
-| [⚙️ **5. Governance & Compliance**](compliance/README.md)        | Oversee **certificate lifecycle policies**, monitor expiry/renewal, enforce cryptographic standards, and ensure compliance with frameworks (ISO 27001, NERC CIP, OWASP).      |
+| [🔐 **2. Identity and Trust Management**](iam/README.md)    | Define and manage **certificate-based identity and PKI**. Establish trust between entities (devices, services, users) through certificate issuance, validation, and rotation. |
+| [🌐 **3. Communication Security**](communication_security/README.md)         | **Apply certificates** to secure channels (TLS/mTLS). Enable encrypted and authenticated communication between clients, services, and APIs.                                   |
+| [📡 **4. Infrastructure and Data Security**](infra_data_security/README.md) | Use certificates to **secure infrastructure components** such as message brokers, databases, and Kubernetes clusters via encrypted connections.                               |
+| [⚙️ **5. Governance and Compliance**](compliance/README.md)        | Oversee **certificate lifecycle policies**, monitor expiry/renewal, enforce cryptographic standards, and ensure compliance with frameworks (ISO 27001, NERC CIP, OWASP).      |
 
 * [Problem statement](#problem-statement)
 * [Motivation](#motivation)
