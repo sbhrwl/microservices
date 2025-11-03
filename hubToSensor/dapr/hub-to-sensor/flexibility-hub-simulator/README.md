@@ -5,6 +5,7 @@
 - [kubectl apply vs dapr run](#kubectl-apply-vs-dapr-run)
 ## Properties
 - [application.yml](src/main/resources/application.yml)
+- [rabbitmq-pubsub.yaml](dapr/config-files/rabbitmq-pubsub.yaml)
 ## How to run
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
 - Build 
