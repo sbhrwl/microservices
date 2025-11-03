@@ -4,8 +4,6 @@
 - [Storage service gRPC](storage-service-grpc/README.md)
 - [Protocol adapter service](protocol-adapter-service/README.md)
 - [HES simulator](hes-simulator/README.md)
-- [Data API service](data-api-service/README.md)
-- [UI app](ui-app/README.md)
 - [Local testing](#local-testing)
 - [State](#state)
 ## Local testing
