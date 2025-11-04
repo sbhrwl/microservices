@@ -117,7 +117,7 @@ kubectl get pods -n dapr-system
   - Request queue (`flexibility-hub.request`) → the service publishes messages here to downstream systems. 
     - Our app is not a subscriber, so **Dapr won’t log any queue declaration**.
   - Response queue (`flexibility-hub.response`) → the service subscribes to this topic to receive replies. 
-    - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`**
+    - That’s why we shall see the queue **`flexibility-hub-simulator-flexibility-hub.response`** [`appName`.`queueName`]
 ### Pub sub component config
 ```yaml
 apiVersion: dapr.io/v1alpha1
