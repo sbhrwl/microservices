@@ -21,10 +21,10 @@
 * Ensure backend services can validate and restrict access by tenant.
 
 ## Evolution
-- Three main patterns emerged for handling multi-tenancy in Keycloak:
-1. **Custom attributes** to tag users with tenant information.
-2. **Organizations** to group users logically within a realm.
-3. **Multiple realms** for full isolation where required.
+* Three main patterns emerged for handling multi-tenancy in Keycloak:
+  * **Custom attributes** to tag users with tenant information.
+  * **Organizations** to group users logically within a realm.
+  * **Multiple realms** for full isolation where required.
 
 ## Option 1 Tenant-based multi-tenancy using custom attributes
 * **Concept**
