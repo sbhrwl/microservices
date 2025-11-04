@@ -26,3 +26,4 @@
 - [DAPR](dapr/README.md)
 - [Security](security/README.md)
 - [Authentication](authentication/README.md)
+- [Multitenancy](multitenancy/README.md)
