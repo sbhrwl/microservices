@@ -1,7 +1,11 @@
 # One-way and mutual TLS in ActiveMQ
+- [Introduction](#introduction)
+- [One way TLS](#one-way-tls)
+- [mTLS](#mtls)
+## Introduction
 - When securing communication between an **ActiveMQ broker** and a **client**, TLS ensures data is encrypted and that identities can be verified.
 - Depending on your security needs, you can configure either **one-way TLS** or **mutual TLS (mTLS)**.
-## One-way TLS
+## One way TLS
 - **`Server authentication only)`**
 - In one-way TLS, only the **server (ActiveMQ broker)** presents a certificate.
 - The client verifies this certificate against its **truststore** to ensure it’s talking to the legitimate broker.
@@ -12,9 +16,8 @@
   - Needs a **keystore** with its certificate and private key to prove its identity.
 - **Usage example:**
   - Ideal for standard producer/consumer clients that just need secure communication but don’t need to authenticate themselves individually.
-
-### Mutual TLS (mTLS)
-- Mutual TLS adds `**client authentication**` on top of encryption.
+## mTLS
+- Mutual TLS adds **`Client authentication`** on top of encryption.
 - Both sides — the broker and the client — present and validate certificates.
 - **Client requirements:**
   - A **keystore** containing:
@@ -24,6 +27,7 @@
 - **Server (broker) requirements:**
   - A **keystore** with its certificate and private key.
   - A **truststore** containing the CA or certificates of trusted clients.
+- This `.p12` file can then be loaded by your client for TLS authentication.
 - **Example key and certificate setup:**
 ```bash
 # Convert JKS to PKCS12 (includes both cert and private key)
@@ -33,7 +37,6 @@ keytool -importkeystore \
   -destkeystore client_xx.p12 \
   -deststoretype PKCS12
 ```
-- This `.p12` file can then be loaded by your client for TLS authentication.
 
 ## Key takeaway
 
