@@ -14,7 +14,7 @@
   - Ideal for standard producer/consumer clients that just need secure communication but don’t need to authenticate themselves individually.
 
 ### Mutual TLS (mTLS)
-- Mutual TLS adds **client authentication** on top of encryption.
+- Mutual TLS adds `**client authentication**` on top of encryption.
 - Both sides — the broker and the client — present and validate certificates.
 - **Client requirements:**
   - A **keystore** containing:
