@@ -6,7 +6,7 @@
 - When securing communication between an **ActiveMQ broker** and a **client**, TLS ensures data is encrypted and that identities can be verified.
 - Depending on your security needs, you can configure either **one-way TLS** or **mutual TLS (mTLS)**.
 ## One way TLS
-- **`Server authentication only)`**
+- **`Server authentication only`**
 - In one-way TLS, only the **server (ActiveMQ broker)** presents a certificate.
 - The client verifies this certificate against its **truststore** to ensure it’s talking to the legitimate broker.
 - **Client requirements:**
