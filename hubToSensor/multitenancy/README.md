@@ -9,7 +9,7 @@
 * [Common implementation checklist](#common-implementation-checklist)
 * [Takeaway](#takeaway)
 ## Overview
-- SaaS platforms often need to serve multiple customers (tenants) through a shared infrastructure while ensuring strict data isolation.
+- SaaS platforms needs to serve multiple customers (tenants) through a shared infrastructure while ensuring strict data isolation.
 - Keycloak provides several ways to model multi-tenancy depending on the desired level of isolation and scalability.
 ## Problem
 - A single-tenant design limits scalability as each customer requires a dedicated environment.
