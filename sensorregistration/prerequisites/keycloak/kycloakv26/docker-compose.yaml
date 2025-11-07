@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Keycloak service
+  keycloak:
+    # Use the official image from Quay.io, specifying a version like 26.0.0 or later
+    image: quay.io/keycloak/keycloak:26.0.0 
+    container_name: keycloak
+    # You must run in production mode for a persistent database connection
+    command: start --optimized
+    restart: always
+    environment:
+      # Keycloak Admin Credentials (for initial setup)
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: your_strong_admin_password
+
+      # Database Configuration (using PostgreSQL service name 'postgres')
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: your_db_password
+
+      # Hostname and Proxy Configuration (IMPORTANT for production)
+      # Replace 'keycloak.local' with your actual domain/IP
+      KC_HOSTNAME: keycloak.local
+      KC_HOSTNAME_STRICT: 'false'
+      # KC_PROXY: edge # Uncomment if behind a reverse proxy/load balancer
+    
+    # Map container ports to host ports
+    ports:
+      - "8080:8080" # Default HTTP port
+      - "8443:8443" # Default HTTPS port
+    
+    # Ensure it waits for the database to be up
+    depends_on:
+      - postgres
+    
+    # Persist Keycloak data/configuration (optional but recommended for custom builds/themes)
+    # volumes:
+      # - keycloak_data:/opt/keycloak/data
+
+  # PostgreSQL Database service
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: your_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Optional: Map database port to host
+    # ports:
+    #   - "5432:5432"
+
+# Define Docker volumes for persistence
+volumes:
+  postgres_data:
+  keycloak_data:
