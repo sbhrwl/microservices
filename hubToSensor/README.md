@@ -24,5 +24,4 @@
 - [Service mesh](servicemesh/README.md)
 - [API gateway](apigateway/README.md)
 - [DAPR](dapr/README.md)
-- [Multitenancy](multitenancy/README.md)
 - [Kubernetes service account](k8s_serviceaccount/README.md)
