@@ -14,6 +14,7 @@
 
 ## Kafka setup
 - Create a [`docker-compose.yml`](kafka/localdevelopment/docker-compose.yml)
+  - [V26 with Organisations support](https://www.youtube.com/watch?v=tY06l4KRHKk): [`docker-compose.yml`](kafka/localdevelopment/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Verify: `docker-compose logs kafka`
 - Kafka user interface: `http://localhost:8081/`
