@@ -4,6 +4,7 @@
 - [MongoDB setup](#mongodb-setup)
 ## Keycloak setup
 - Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
+  - [V26: Organizations support](https://www.youtube.com/watch?v=tY06l4KRHKk) [`docker-compose.yaml`](keycloak/keycloakv26/docker-compose.yaml)
 - Run docker compose: `docker-compose up -d`
 - Access Keycloak
   * URL: [http://localhost:8080](http://localhost:8080)
@@ -39,3 +40,4 @@
   ```bash
   Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
   ```
+
