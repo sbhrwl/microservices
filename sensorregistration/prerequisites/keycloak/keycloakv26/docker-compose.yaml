@@ -5,7 +5,7 @@ services:
   keycloak:
     # Use the official image from Quay.io, specifying a version like 26.0.0 or later
     image: quay.io/keycloak/keycloak:26.0.0 
-    container_name: keycloak
+    container_name: keycloakv26
     # You must run in production mode for a persistent database connection
     command: start --optimized
     restart: always
