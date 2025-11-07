@@ -3,11 +3,11 @@ version: '3.8'
 services:
   # Keycloak service
   keycloak:
-    # Use the official image from Quay.io, specifying a version like 26.0.0 or later
     image: quay.io/keycloak/keycloak:26.0.0 
     container_name: keycloakv26
-    # You must run in production mode for a persistent database connection
-    command: start --optimized
+    # FIX: Use 'start --http-enabled=true' to allow unencrypted HTTP access
+    # and bypass the required SSL configuration for production mode.
+    command: start --http-enabled=true
     restart: always
     environment:
       # Keycloak Admin Credentials (for initial setup)
@@ -21,24 +21,22 @@ services:
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: your_db_password
 
-      # Hostname and Proxy Configuration (IMPORTANT for production)
-      # Replace 'keycloak.local' with your actual domain/IP
+      # Hostname and Proxy Configuration
       KC_HOSTNAME: keycloak.local
       KC_HOSTNAME_STRICT: 'false'
-      # KC_PROXY: edge # Uncomment if behind a reverse proxy/load balancer
-    
+      
     # Map container ports to host ports
     ports:
       - "8080:8080" # Default HTTP port
-      - "8443:8443" # Default HTTPS port
-    
+      # - "8443:8443" # HTTPS port (not needed with --http-enabled=true)
+      
     # Ensure it waits for the database to be up
     depends_on:
       - postgres
-    
-    # Persist Keycloak data/configuration (optional but recommended for custom builds/themes)
-    # volumes:
-      # - keycloak_data:/opt/keycloak/data
+      
+    # Volume for Keycloak configuration and build files persistence
+    volumes:
+      - keycloak_data:/opt/keycloak/data
 
   # PostgreSQL Database service
   postgres:
