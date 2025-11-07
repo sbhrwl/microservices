@@ -5,32 +5,29 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.0 
     container_name: keycloakv26
-    # FIX: Use 'start --http-enabled=true' to allow unencrypted HTTP access
-    # and bypass the required SSL configuration for production mode.
+    # Use 'start --http-enabled=true' to allow unencrypted HTTP access
     command: start --http-enabled=true
     restart: always
     environment:
-      # Keycloak Admin Credentials (for initial setup)
+      # Keycloak Admin Credentials
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: your_strong_admin_password
 
-      # Database Configuration (using PostgreSQL service name 'postgres')
+      # Database Configuration
       KC_DB: postgres
       KC_DB_URL_HOST: postgres
       KC_DB_URL_DATABASE: keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: your_db_password
 
-      # Hostname and Proxy Configuration
-      KC_HOSTNAME: keycloak.local
-      KC_HOSTNAME_STRICT: 'false'
-      
+      # --- REMOVED KC_HOSTNAME: keycloak.local ---
+      # This allows access via localhost.
+      # Setting KC_HOSTNAME_STRICT: 'false' is no longer required either.
+
     # Map container ports to host ports
     ports:
       - "8080:8080" # Default HTTP port
-      # - "8443:8443" # HTTPS port (not needed with --http-enabled=true)
       
-    # Ensure it waits for the database to be up
     depends_on:
       - postgres
       
@@ -49,9 +46,6 @@ services:
       POSTGRES_PASSWORD: your_db_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # Optional: Map database port to host
-    # ports:
-    #   - "5432:5432"
 
 # Define Docker volumes for persistence
 volumes:
