@@ -9,7 +9,7 @@
 - Access Keycloak
   * URL: [http://localhost:8080](http://localhost:8080)
   * Username: `admin`
-  * Password: `admin`
+  * Password: `admin`/`your_strong_admin_password` for **V26**
 - Stop Services: `docker-compose down`
 - [User, role and client creation](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/README.md)
 
