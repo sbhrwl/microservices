@@ -3,9 +3,9 @@
 * [Network and connectivity](#network-and-connectivity)
 * [Service projects and workload hosting](#service-projects-and-workload-hosting)
 * [Cloud service access and dependencies](#cloud-service-access-and-dependencies)
+* [Security and compliance](#security-and-compliance)
 * [Automation and CICD enablement](#automation-and-cicd-enablement)
 * [Observability and operations](#observability-and-operations)
-* [Security and compliance](#security-and-compliance)
 * [Environment request and onboarding workflow](#environment-request-and-onboarding-workflow)
 ## [Governance and foundation](governanceandfoundation/README.md)
 * Core principles (security, scalability, automation, least privilege)
@@ -42,6 +42,13 @@
   * Backups and recovery options
   * Regional redundancy and failover
   * DR testing and validation
+## [Security and compliance](securityandcompliance/README.md)
+* Identity and access security
+* Network security controls
+* Data protection and encryption
+* Secrets governance
+* Vulnerability and threat management
+* Compliance and regulatory frameworks
 ## [Automation and CICD enablement](automationandcicd/README.md)
 * Infrastructure as Code and environment provisioning
 * CI/CD pipelines for app deployment
@@ -54,13 +61,6 @@
 * Tracing and performance profiling
 * Operational runbooks and incident management
 * Cost visibility and resource optimization
-## [Security and compliance](securityandcompliance/README.md)
-* Identity and access security
-* Network security controls
-* Data protection and encryption
-* Secrets governance
-* Vulnerability and threat management
-* Compliance and regulatory frameworks
 ## [Environment request and onboarding workflow](environmentrequest/README.md)
 * Prerequisites for app readiness
 * Environment request process and workflow
