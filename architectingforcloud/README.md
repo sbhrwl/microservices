@@ -10,9 +10,6 @@
 * [Deployment workflow](#deployment-workflow)
 * [Cloud readiness checklist](#cloud-readiness-checklist)
 * [Environment request process](#environment-request-process)
-* [Pnboarding process design](#onboarding-process-design)
-* [Discussion and alignment](#discussion--alignment)
-* [appendix](#appendix)
 ## Goal
 * **Pre-deployment readiness criteria** for apps.
 * **Operational best practices** for post-deployment.
