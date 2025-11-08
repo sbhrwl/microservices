@@ -8,8 +8,6 @@
 * [Observability and operations](#observability-and-operations)
 * [Security and compliance](#security-and-compliance)
 * [Environment request and onboarding workflow](#environment-request-and-onboarding-workflow)
-* [Reference assets](#reference-assets)
-* [Appendices](#appendices)
 ## Introduction
 * Purpose and scope
 * Target audience (platform, network, security, dev, ops)
@@ -76,13 +74,3 @@
 * Automated provisioning and validation
 * Post-deployment checklist
 * Ownership and lifecycle management
-## Reference assets
-* Templates and reusable modules (infrastructure, CI/CD, secrets)
-* Observability and monitoring blueprints
-* Network and environment layout examples
-* Example environment blueprints
-## Appendices
-* Glossary of terms
-* Diagram index (Mermaid / UML references)
-* Versioning and change history
-* Contact points and ownership matrix
