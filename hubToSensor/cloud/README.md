@@ -13,8 +13,6 @@
 ## Goal
 * **Pre-deployment readiness criteria** for apps.
 * **Operational best practices** for post-deployment.
-* **Ownership clarity** between app teams and platform team.
-* **Checklists and self-assessment tools** to streamline environment requests.
 ## Guiding principles
 * **Cloud-native mindset:** scalability, resilience, and automation.
 * **Security first:** zero trust, least privilege, mTLS for service-to-service communication.
