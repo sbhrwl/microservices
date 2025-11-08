@@ -44,9 +44,9 @@
 flowchart LR
     A[Core principles] --> B[Landing zone / foundational environment]
     B --> C[Environment taxonomy]
-    C --> D[Resource naming & tagging]
-    B --> E[Identity & access management]
-    B --> F[Policy controls & audit]
+    C --> D[Resource naming and tagging]
+    B --> E[Identity and access management]
+    B --> F[Policy controls and audit]
     E --> G[Service projects / workloads]
     F --> G
 ```
