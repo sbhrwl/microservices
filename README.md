@@ -6,7 +6,6 @@
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
-- [Architecture for Cloud](architectureforcloud/README.md)
 <details>
   <summary>prompt</summary>
 
