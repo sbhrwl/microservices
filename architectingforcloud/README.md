@@ -1,7 +1,7 @@
 # Architecting for Cloud
 * [Goal](#goal)
 * [Guiding principles](#guiding-principles)
-* [Reference architecture overview](#reference-architecture-overview)
+* [Overview](#overview)
 * [Host project](#host-project)
 * [Networking and shared VPC](#networking--shared-vpc)
 * [Service project lifecycle](#service-project-lifecycle)
@@ -21,7 +21,7 @@
 * **Separation of concerns:** isolate management, networking, and workloads.
 * **Automation:** infrastructure as code (Terraform), repeatable deployments.
 * **Observability:** logging, monitoring, tracing from day one.
-## Reference architecture overview
+## Overview
 * Control and policy management centralized in host project.
 * Shared VPC managed by networking project.
 * Service projects consume shared subnets and host workloads.
