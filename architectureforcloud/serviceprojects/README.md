@@ -50,7 +50,7 @@
 * Control inbound traffic via reverse proxies and ingress controllers
 * Apply guardrails and document service dependencies for cloud services
 ```mermaid
-flowchart LR
+flowchart TD
     A[Service projects] --> B[Compute workloads]
     B --> C[Workload isolation]
     B --> D[Artifact / container registry]
