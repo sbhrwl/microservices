@@ -50,4 +50,3 @@ flowchart LR
     E --> G[Service projects / workloads]
     F --> G
 ```
-If you like, I can now **create the next standalone page for network and connectivity** with the same structure, index, bullets, and a Mermaid diagram. Do you want me to proceed?
