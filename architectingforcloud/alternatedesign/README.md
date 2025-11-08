@@ -1,4 +1,4 @@
-# [Flex solution](Readme.md)
+# Flex solution
 - [Subnet allocation per node](#subnet-allocation-per-node)
   - [When to move to one subnet](#when-to-move-to-one-subnet)
   - [When to keep separate subnets](#when-to-keep-separate-subnets)
