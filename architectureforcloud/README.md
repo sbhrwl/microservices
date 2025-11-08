@@ -1,5 +1,4 @@
 # [Architecture for cloud](FormatLater/README.md)
-* [Introduction](#introduction)
 * [Governance and foundation](#governance-and-foundation)
 * [Network and connectivity](#network-and-connectivity)
 * [Service projects and workload hosting](#service-projects-and-workload-hosting)
@@ -8,11 +7,6 @@
 * [Observability and operations](#observability-and-operations)
 * [Security and compliance](#security-and-compliance)
 * [Environment request and onboarding workflow](#environment-request-and-onboarding-workflow)
-## Introduction
-* Purpose and scope
-* Target audience (platform, network, security, dev, ops)
-* How to use this guide
-* Document lifecycle and ownership
 ## [Governance and foundation](governanceandfoundation/README.md)
 * Core principles (security, scalability, automation, least privilege)
 * Organizational structure (projects/environments, team boundaries, resource hierarchy)
