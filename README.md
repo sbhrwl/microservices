@@ -6,7 +6,7 @@
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
-- [Service account](sa.md)
+- [Service accounts](sa.md)
 <details>
   <summary>prompt</summary>
 
@@ -52,6 +52,7 @@
       * Ensure arrows and node labels match the textual explanation.
       * Place diagrams **after** the relevant descriptive section.
 </details>
+
 
 
 
