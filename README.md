@@ -1,16 +1,3 @@
-| Email                                                                                                                                               | Status  | Name                                   | Description                                                                                  | OAuth 2 Client ID     |
-| --------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------- |
-| [gke-wi-secrets-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-secrets-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com) | Enabled | gke-wi-secrets-01                      | Service account for accessing and managing secrets via Workload Identity                     | 107299971315134328771 |
-| [gke-wi-c02@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-c02@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)               | Enabled | gke-wi-c02                             | Service account for GKE workloads in cluster C02                                             | 104306191782293523933 |
-| [gke-wi-c01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-c01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)               | Enabled | gke-wi-c01                             | Service account for GKE workloads in cluster C01                                             | 118421224762473195244 |
-| [gke-wi-c00@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-c00@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)               | Enabled | gke-wi-c00                             | Service account for GKE workloads in cluster C00                                             | 111279704760092950176 |
-| [gke-wi-acs-sa-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-acs-sa-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)   | Enabled | gke-wi-acs-sa-01                       | Service account for Anthos Config Sync to manage cluster configuration via Workload Identity | 105799287988728200537 |
-| [gke-wi-acs-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-wi-acs-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)         | Enabled | gke-wi-acs-01                          | Service account for Anthos Config Sync in GKE                                                | 107617799084051669738 |
-| [gke-node-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com](mailto:gke-node-01@cpet-d-smoc-c01-srv-aah-01.iam.gserviceaccount.com)             | Enabled | gke-node-01                            | Node service account used by GKE nodes for cluster operations                                | 103101227181124887005 |
-| [828752755010-compute@developer.gserviceaccount.com](mailto:828752755010-compute@developer.gserviceaccount.com)                                     | Enabled | Compute Engine default service account | Default Compute Engine service account for GKE and other Google Cloud services               | 116872117692202629477 |
-
-
----
 # Microservices
 - [Motivation](motivation/README.md)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
@@ -19,6 +6,7 @@
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
+- [Service account](sa.md)
 <details>
   <summary>prompt</summary>
 
@@ -64,6 +52,7 @@
       * Ensure arrows and node labels match the textual explanation.
       * Place diagrams **after** the relevant descriptive section.
 </details>
+
 
 
 
