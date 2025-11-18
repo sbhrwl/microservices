@@ -56,6 +56,8 @@ classDiagram
     ServiceProject --> VPC : uses
     ServiceProject --> Vault : accesses
 ```
+<img src="images/psa-psc.jpg">
+
 ### Example
 * [Creating service project](serviceproject/README.md)
   * [Configure Hashicorp vault to persist secrets in Cloud SQL](secrets/README.md)
