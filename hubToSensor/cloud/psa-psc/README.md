@@ -133,6 +133,7 @@ flowchart LR
     Subnet_PSA -->|"IP range allocated for PSA"| PSA_Bridge
     Subnet_PSC -->|"IP range allocated for PSC endpoints"| PSC_Endpoint
 ```
+<img src="images/psa-psc.jpg">
 
 ## Takeaways
 * Stateful, regional services like Cloud SQL require **PSA and private IP**.
