@@ -69,9 +69,14 @@
 
 ```mermaid
 flowchart LR
-    %% Service Project / Host VPC
-    subgraph Host Project VPC
+
+    %% ---------------------------
+    %% Host Project VPC (light yellow)
+    %% ---------------------------
+    subgraph HostProjectVPC[Host Project VPC]
         direction TB
+        style HostProjectVPC fill:#fff9c4,stroke:#b3aa00,stroke-width:1px
+
         Subnet_Nodes[Subnet: GKE Cluster Nodes]
         Subnet_PSA[Reserved CIDR: Private Service Access]
         PSA_Bridge[PSA Bridge for Stateful Services]
@@ -80,9 +85,13 @@ flowchart LR
         Cluster[GKE Cluster]
     end
 
-    %% Stateful services (Private IP via PSA)
-    subgraph Google-managed VPCs
+    %% ---------------------------
+    %% Google-managed VPCs (light blue)
+    %% ---------------------------
+    subgraph GoogleManagedVPCs[Google-managed VPCs – Stateful Services]
         direction TB
+        style GoogleManagedVPCs fill:#e3f2fd,stroke:#0d47a1,stroke-width:1px
+
         CloudSQL[Cloud SQL Instance]
         Memorystore[Memorystore / Redis]
         Bigtable[Bigtable]
@@ -90,9 +99,13 @@ flowchart LR
         Filestore[Filestore]
     end
 
-    %% Global API services (PSC)
-    subgraph Google Global APIs
+    %% ---------------------------
+    %% Google Global APIs (light green)
+    %% ---------------------------
+    subgraph GoogleGlobalAPIs[Google Global APIs – PSC Services]
         direction TB
+        style GoogleGlobalAPIs fill:#e8f5e9,stroke:#1b5e20,stroke-width:1px
+
         PubSub[Pub/Sub]
         GCS[GCS]
         SecretManager[Secret Manager]
@@ -100,7 +113,9 @@ flowchart LR
         ArtifactRegistry[Artifact Registry]
     end
 
-    %% Connections with annotations
+    %% ---------------------------
+    %% Connections
+    %% ---------------------------
     Cluster -->|"Private IP via PSA"| PSA_Bridge
     PSA_Bridge -->|"Private IP via PSA"| CloudSQL
     PSA_Bridge -->|"Private IP via PSA"| Memorystore
@@ -108,12 +123,12 @@ flowchart LR
     PSA_Bridge -->|"Private IP via PSA"| Spanner
     PSA_Bridge -->|"Private IP via PSA"| Filestore
 
-    Cluster -->|"Private Service Connect - PSC"| PSC_Endpoint
-    PSC_Endpoint -->|"Private Service Connect - PSC"| PubSub
-    PSC_Endpoint -->|"Private Service Connect - PSC"| GCS
-    PSC_Endpoint -->|"Private Service Connect - PSC"| SecretManager
-    PSC_Endpoint -->|"Private Service Connect - PSC"| KMS
-    PSC_Endpoint -->|"Private Service Connect - PSC"| ArtifactRegistry
+    Cluster -->|"Private Service Connect (PSC)"| PSC_Endpoint
+    PSC_Endpoint -->|"Private Service Connect (PSC)"| PubSub
+    PSC_Endpoint -->|"Private Service Connect (PSC)"| GCS
+    PSC_Endpoint -->|"Private Service Connect (PSC)"| SecretManager
+    PSC_Endpoint -->|"Private Service Connect (PSC)"| KMS
+    PSC_Endpoint -->|"Private Service Connect (PSC)"| ArtifactRegistry
 
     Subnet_PSA -->|"IP range allocated for PSA"| PSA_Bridge
     Subnet_PSC -->|"IP range allocated for PSC endpoints"| PSC_Endpoint
