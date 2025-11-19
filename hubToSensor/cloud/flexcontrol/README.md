@@ -14,6 +14,7 @@
   - [Cloud SQL](#cloud-sql)
   - [MongoDB Atlas cluster](#mongodb-atlas-cluster)
 - [Multitenancy](#multitenancy)
+- [Resource configuration](#resource-configuration)
 ## Application overview
 - The Grid Flex Control application will be developed using Angular, GraphQL and Java.
 - The application will be containerized to run as private GKE cluster in Google Cloud Platform.
@@ -171,3 +172,12 @@
   - `One shared MongoDB Atlas database used by all tenants`.
   - Collections include `group` and `subgroup` fields to logically isolate each tenant’s data.
 <img src="images/multitenancy.jpg">
+
+## Resource configuration
+- Resource creation and configuration will be completed via IaC - using a combination of the IDP tool, straight Terraform and GitLab pipelines.
+- The GCP console will not be used for any resource creation or configuration.
+- While cpet/OT provisions the environment, the Grid Flex Control team will provide base application configuration in Helm charts.
+- These configurations will be used with overwritten values and secrets for deployment.
+- The base Helm configuration will be provided in the Gitlab.
+- It is expected that service accounts will be created as part of the provisioning infrastructure and resources.
+<img src="images/serviceaccounts.jpg">
