@@ -180,4 +180,17 @@
 - These configurations will be used with overwritten values and secrets for deployment.
 - The base Helm configuration will be provided in the Gitlab.
 - It is expected that service accounts will be created as part of the provisioning infrastructure and resources.
+
+| Resource                                       |
+| ---------------------------------------------- |
+| GCP projects, VPCs, VPNs, subnets, firewalls   |
+| GKE cluster, namespaces                        |
+| GKE application objects (services, pods, etc.) |
+| Cloud SQL instances                            |
+| Cloud Storage buckets                          |
+| MongoDB setup                                  |
+| IAM accounts, roles, groups                    |
+| Cloud Monitoring infrastructure alerts         |
+| Cloud Monitoring uptime checks                 |
+
 <img src="images/serviceaccounts.jpg">
