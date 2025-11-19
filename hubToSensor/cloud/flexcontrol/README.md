@@ -1,6 +1,6 @@
 # Flexibility control
 - [Application overview](#application-overview)
-- [Software frameworks](#software-frameworks)
+- [Development tools](#development-tools)
 - [Logical architecture](#logical-architecture)
 - [Project structure](#project-structure)
 - [Networking](#networking)
@@ -22,9 +22,8 @@
 
  * **User interface**
    * Frontend for user interaction
-   * Communicates with GraphQL API
-* **GraphQL**
-  * Acts as API layer
+   * Communicates with API layer
+* **API layer**
   * Orchestrates data between UI and GFC service
 * **GFC service**
   * Core backend logic handler
@@ -34,16 +33,16 @@
   * Business logic for flex control operations
   * Communicates with both GFC service and IEC Adapter
   * Persists data to SQL database
-* **IEC adapter**
+* **Protocol adapter**
   * Protocol adapter (IEC-61968-9) for external communication
   * Connects Flex Control Service with external Head End System
 * **Databases**
   * **SQL:** stores structured operational data
   * **NoSQL:** stores unstructured data for GFC service
-## Software frameworks
+## Development tools
 - The Grid Flex Control application will be developed using these frameworks and tools:
   -	Frontend - AngularJS, HTML5, Nginx gateway
-  -	Backend - Java, Restful APIs
+  -	Backend - Java, Restful APIs, Dapr
   -	Storage – PostgreSQL, MongoDB
   -	CI/CD – GitLab, Docker, Helm Charts
 ## Logical architecture
