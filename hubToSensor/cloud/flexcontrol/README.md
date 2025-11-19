@@ -107,16 +107,16 @@
 <img src="images/authentication-authorization.jpg">
 
 ## Private APIs
-- **SCADA**
-  - An IEC 60870-5-104 interface will be used to establish connections to customers’ SCADA-systems (often critical OT infrastructure, communication via private IP and site-to-site VPN is mandatory).
-  - Grid Flex Control’s SCADA-connector will be configured alternatively as IEC104-client or IEC104-server, separately for each connection.
-  - Customers (e.g. DNO/TSO) can optionally be provided with one private endpoint each, to establish an IEC 60870-5-104 connection to/from the customer’s SCADA environment (Customer OT).
-  - Careful setting up of this connection is required (e.g. site-to-site VPN, access management of the customers’ (OT/SCADA) networks), as IEC 60870-5-104 doesn’t allow encryption and authentication by design.
--	**Flexibility data provider**
-  -	Grid Flex Control can receive flexibility master data pushed from authenticated & authorized clients (i.e. customer’s middleware or ESB) to GFC, via REST-API (REST/CSV) with TLS. REST/JSON available on request.
-  -	Customers (e.g. DSO/TSO) can optionally be provided with 2 private endpoints to realize automated transfers of flexibility master data to GFC.
-  -	The first accesses Keycloak to request client tokens, which can then be used for authenticated & authorized access to the second API endpoint for importing flexibility-master data into GFC.
-  -	Alternatively, authenticated & authorized customers can use their browser session to manually upload master data-files using GFC’s Web-UI
+* **Scada**
+  * An IEC 60870-5-104 interface is used to establish connections to customers’ SCADA systems (critical OT infrastructure; communication via private IP and site-to-site VPN is mandatory).
+  * Grid Flex Control’s SCADA connector can be configured as either an IEC104 client or IEC104 server, per connection.
+  * Customers (e.g., DNO/TSO) can optionally be provided with one private endpoint each to establish an IEC 60870-5-104 connection to or from the customer’s SCADA environment (customer OT).
+  * Careful setup is required (e.g., site-to-site VPN, access management of customers’ OT/SCADA networks), since IEC 60870-5-104 does not support encryption or authentication by design.
+* **Flexibility data provider**
+  * Grid Flex Control can receive flexibility master data pushed from authenticated and authorized clients (customer middleware or ESB) via REST API (REST/CSV) with TLS. REST/JSON available on request.
+  * Customers (e.g., DSO/TSO) can optionally be provided with two private endpoints to automate transfers of flexibility master data to GFC.
+  * The first endpoint accesses Keycloak to request client tokens; these tokens are used for authenticated and authorized access to the second API endpoint that imports flexibility-master data into GFC.
+  * Alternatively, authenticated and authorized customers can manually upload master-data files using GFC's web UI.
 ## Communication to HES
 - GFC communicates with the HES-systems via L+G’s IEC4HES-interface (IEC 61968-9).
 - Messaging is realized using MQTT with TLS.
