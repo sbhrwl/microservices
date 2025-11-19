@@ -21,8 +21,8 @@
 <img src="images/app-overview.jpg">
 
  * **User interface**
-  * Frontend for user interaction
-  * Communicates with GraphQL API
+   * Frontend for user interaction
+   * Communicates with GraphQL API
 * **GraphQL**
   * Acts as API layer
   * Orchestrates data between UI and GFC service
