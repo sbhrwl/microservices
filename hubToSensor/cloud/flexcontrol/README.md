@@ -1,7 +1,6 @@
 # Flexibility control
 - [Application overview](#application-overview)
 - [Development tools](#development-tools)
-- [Logical architecture](#logical-architecture)
 - [Project structure](#project-structure)
 - [Networking](#networking)
 - [SSL certificates](#ssl-certificates)
@@ -16,18 +15,8 @@
 - [Multitenancy](#multitenancy)
 - [Resource configuration](#resource-configuration)
 ## Application overview
-- The Grid Flex Control application will be developed using Angular, GraphQL and Java.
-- The application will be containerized to run as private GKE cluster in Google Cloud Platform.
-<img src="images/app-overview.jpg">
-
-## Development tools
-- The Grid Flex Control application will be developed using these frameworks and tools:
-  -	Frontend - AngularJS, HTML5, Nginx gateway
-  -	Backend - Java, Restful APIs, Dapr
-  -	Storage – PostgreSQL, MongoDB
-  -	CI/CD – GitLab, Docker, Helm Charts
-## Logical architecture
-- To support the requirements for Grid Flex Control, the diagram demonstrates the logical architecture.
+- Below diagram illustrates architecture of Grid Flex Control application.
+- The application will be containerized to run as private GKE cluster in Google Cloud Platform
 <img src="images/app-architecture.jpg">
 
 - Customer securely connected through their **VPN**, opens URL of app and gets a **security token** from **Keycloak**
@@ -39,7 +28,12 @@
 - Control orchestrator forwards the request to the **Protocol adapter**.
   - **Protocol adapter** translates the request to IEC-61968-9 protocol and forwards it to **Head End System**
 - These services run inside **GKE cluster**
-
+## Development tools
+- The Grid Flex Control application will be developed using these frameworks and tools:
+  -	Frontend - AngularJS, HTML5, Nginx gateway
+  -	Backend - Java, Restful APIs, Dapr
+  -	Storage – PostgreSQL, MongoDB
+  -	CI/CD – GitLab, Docker, Helm Charts
 ## Project structure
 - Each deployment consists of two projects.
 
@@ -85,11 +79,10 @@
 - The application uses a **publicly trusted certificate**
   - Even though the DNS is internal, a public CA certificate prevents browser or client warnings
   - Clients automatically trust the certificate without needing to install private CA roots
-
----
-- Private/internal DNS restricts access to VPN-connected clients only.
-- SSL/TLS ensures secure communication, also on an internal network.
--	Using a publicly trusted certificate balances security and `ease-of-use` for internal clients.
+- **Summary**
+  - `Private/internal DNS` restricts access to VPN-connected clients only.
+  - `SSL/TLS` ensures secure communication, also on an internal network.
+  -	Using a `publicly trusted certificate` balances security and `ease-of-use` for internal clients.
 ### Content
 <img src="images/certificates-content.jpg">
 
