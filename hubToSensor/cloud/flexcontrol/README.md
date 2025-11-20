@@ -147,7 +147,6 @@
 
 ## Multitenancy
 - The Grid Flex Control (GFC) solution uses a multi-tenant architecture with **logical data separation** in the application layer.
-- This allows authorized users to securely access and manage data across tenants.
 - Keycloak manages all user access and roles.
 - **How access control works**
   - Each customer has their own `Keycloak Realm`, which issues JWT tokens containing the user’s roles and permissions.
@@ -155,15 +154,14 @@
 - **Platform architecture**
   - `One shared Kubernetes namespace for all customers`, with tenant isolation handled in the backend.
   - `One shared MongoDB Atlas database used by all tenants`.
-  - Collections include `group` fields to logically isolate each tenant’s data.
+    - Collections include `group` fields to logically isolate each tenant’s data.
 <img src="images/multitenancy.jpg">
 
 ## Resource configuration
 - Resource creation and configuration will be completed via IaC - using a combination of the IDP tool, straight Terraform and GitLab pipelines.
 - The GCP console will not be used for any resource creation or configuration.
-- While cpet/OT provisions the environment, the Grid Flex Control team will provide base application configuration in Helm charts.
+- While CPET/OT provisions the environment, the Grid Flex Control team will provide base application configuration in Helm charts in Gitlab.
 - These configurations will be used with overwritten values and secrets for deployment.
-- The base Helm configuration will be provided in the Gitlab.
 - It is expected that service accounts will be created as part of the provisioning infrastructure and resources.
 
 | Resource                                       |
@@ -179,3 +177,7 @@
 | Cloud Monitoring uptime checks                 |
 
 <img src="images/serviceaccounts.jpg">
+
+## 
+- `Island + External user account + Single sign on + Application roles mapped to security groups`
+<img src="images/island-authentication-authorization.jpg">
