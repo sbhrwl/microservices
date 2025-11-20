@@ -14,6 +14,8 @@
   - [MongoDB Atlas cluster](#mongodb-atlas-cluster)
 - [Multitenancy](#multitenancy)
 - [Resource configuration](#resource-configuration)
+- [Kubernetes service account](k8s_serviceaccount/README.md)
+- [PSA and PSC](psa-psc/README.md)
 ## Application overview
 - Below diagram illustrates architecture of Grid Flex Control application.
 - The application will be containerized to run as private GKE cluster in Google Cloud Platform

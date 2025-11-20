@@ -25,4 +25,3 @@
 - [API gateway](apigateway/README.md)
 - [DAPR](dapr/README.md)
 - [Cloud](cloud/README.md)
-- [Kubernetes service account](k8s_serviceaccount/README.md)

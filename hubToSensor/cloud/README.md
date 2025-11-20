@@ -10,7 +10,6 @@
 * [Deployment workflow](#deployment-workflow)
 * [Cloud readiness checklist](#cloud-readiness-checklist)
 * [Environment request process](#environment-request-process)
-* [PSA and PSC](psa-psc/README.md)
 ## Goal
 * **Pre-deployment readiness criteria** for apps.
 * **Operational best practices** for post-deployment.
