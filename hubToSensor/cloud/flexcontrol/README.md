@@ -20,24 +20,6 @@
 - The application will be containerized to run as private GKE cluster in Google Cloud Platform.
 <img src="images/app-overview.jpg">
 
- * **User interface**
-   * Frontend for user interaction
-   * Communicates with API layer
-* **API layer**
-  * Orchestrates data between UI and GFC service
-* **GFC service**
-  * Core backend logic handler
-  * Interacts with NoSQL database
-  * Exchanges data with Flex control service
-* **Flex control service**
-  * Business logic for flex control operations
-  * Communicates with both GFC service and Protocol adapter
-  * Persists data to SQL database
-* **Protocol adapter**
-  * Protocol adapter (IEC-61968-9) for external communication
-* **Databases**
-  * **SQL:** stores structured operational data
-  * **NoSQL:** stores unstructured data for GFC service
 ## Development tools
 - The Grid Flex Control application will be developed using these frameworks and tools:
   -	Frontend - AngularJS, HTML5, Nginx gateway
