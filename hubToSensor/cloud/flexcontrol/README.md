@@ -48,6 +48,17 @@
 - To support the requirements for Grid Flex Control, the diagram demonstrates the logical architecture.
 <img src="images/app-architecture.jpg">
 
+- Customer securely connected through their **VPN**, opens URL of app and gets a **security token** from **Keycloak**
+- This secure traffic hits our **Cloud Load Balancer** and enters our system, where the **Ingress** directs it right to the **User Interface**.
+- The customer's request on the **UI** is translated by the **API Layer** for our core backend services.
+- **GFC Service** service handles all the heavy lifting.
+  - It reads and writes operational data to our distributed, scalable database, **MongoDB Atlas**.
+- **Flex control service** acts as an `Orchestrator`
+  - Flex control service maintains all structured, persistent records and **`state information`** in **Cloud SQL**.
+- Flex control service forwards the request to the **Protocol adapter**.
+  - **Protocol adapter** translates the request to IEC-61968-9 protocol and forwards it to **Head End System**
+- These services run inside **GKE cluster**
+
 ## Project structure
 - Each deployment consists of two projects.
 
