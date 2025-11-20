@@ -28,14 +28,13 @@
 * **GFC service**
   * Core backend logic handler
   * Interacts with NoSQL database
-  * Exchanges data with Flex Control Service and IEC Adapter
+  * Exchanges data with Flex control service
 * **Flex control service**
   * Business logic for flex control operations
-  * Communicates with both GFC service and IEC Adapter
+  * Communicates with both GFC service and Protocol adapter
   * Persists data to SQL database
 * **Protocol adapter**
   * Protocol adapter (IEC-61968-9) for external communication
-  * Connects Flex Control Service with external Head End System
 * **Databases**
   * **SQL:** stores structured operational data
   * **NoSQL:** stores unstructured data for GFC service
@@ -50,9 +49,7 @@
 <img src="images/app-architecture.jpg">
 
 ## Project structure
-- Each deployment (either staging, hosted for a specific tenant, or a multi-tenant solution) consists of two projects, as shown in logical architecture.
-- The projects are designed with considerations for IAM, cost management and operations.
-- Specific considerations include security boundaries, exposure to the internet, costs relating to specific types of GCP resources, CI/CD pipelines and related manual security and operation processes.
+- Each deployment consists of two projects.
 
 | Project logical index in iac       | Project root name | Note                                                        |
 | ---------------------------------- | ----------------- | ----------------------------------------------------------- |
@@ -60,6 +57,7 @@
 | Grid Flex Control Security project | scr               | Secret Manager, Artifact Registry and KMS                   |
 
 - **Required GCP APIs**
+  - The following GCP APIs will need to be enabled in the service projects initially based on product design and IaC dependencies.
 
 | API                                | srv | scr |
 | ---------------------------------- | :-: | :-: |
@@ -86,18 +84,20 @@
 <img src="images/certificates.jpg">
 
 ### Process
--	The application will be exposed through internal DNS name (~ DNS that is internal to the VPN or VPC)
-  -	This means external users or networks cannot resolve or access the DNS name.
-  -	Only clients connected through the VPN tunnel or internal network can reach it.
--	All communication to the application is encrypted using SSL/TLS:
-  -	This ensures that data in transit is secure, protecting it from eavesdropping or tampering.
-  -	The application uses a publicly trusted certificate:
-    -	Even though the DNS is internal, using a publicly trusted certificate avoids issues with certificate warnings.
-    -	It also simplifies management because clients automatically trust the certificate without needing to install private CA certificates.
+- The application is exposed through an **internal DNS name** (only resolvable inside the VPN or VPC)
+  - External networks cannot resolve or access this DNS name
+  - Only clients connected through the VPN tunnel or internal network can reach the application
+- **Encrypted communication** to the application using SSL/TLS
+  - Ensures data in transit is encrypted
+  - Protects traffic from eavesdropping, tampering, or MITM attacks
+- The application uses a **publicly trusted certificate**
+  - Even though the DNS is internal, a public CA certificate prevents browser or client warnings
+  - Clients automatically trust the certificate without needing to install private CA roots
+
 ---
 - Private/internal DNS restricts access to VPN-connected clients only.
 - SSL/TLS ensures secure communication, also on an internal network.
--	Using a publicly trusted certificate balances security and ease-of-use for internal clients.
+-	Using a publicly trusted certificate balances security and `ease-of-use` for internal clients.
 ### Content
 <img src="images/certificates-content.jpg">
 
@@ -108,16 +108,17 @@
 
 ## Private APIs
 * **Scada**
-  * An IEC 60870-5-104 interface is used to establish connections to customers’ SCADA systems (critical OT infrastructure; communication via private IP and site-to-site VPN is mandatory).
-  * Grid Flex Control’s SCADA connector can be configured as either an IEC104 client or IEC104 server, per connection.
+  * An IEC 60870-5-104 interface is used to establish connections to customers’ SCADA systems (`critical OT infrastructure`, `communication via private IP` and **`site-to-site VPN is mandatory`**).
+  * Grid Flex Control’s SCADA connector can be configured as either an **`IEC104 client`** or **`IEC104 server`**, per connection.
   * Customers (e.g., DNO/TSO) can optionally be provided with one private endpoint each to establish an IEC 60870-5-104 connection to or from the customer’s SCADA environment (customer OT).
-  * Careful setup is required (e.g., site-to-site VPN, access management of customers’ OT/SCADA networks), since IEC 60870-5-104 does not support encryption or authentication by design.
+  * Careful setup is required (e.g., site-to-site VPN, access management of customers’ OT/SCADA networks), since **IEC 60870-5-104 `does not support` encryption or authentication by design**.
 <img src="images/scada.jpg">
 
 * **Flexibility data provider**
-  * Grid Flex Control can receive flexibility master data pushed from authenticated and authorized clients (customer middleware or ESB) via REST API (REST/CSV) with TLS. REST/JSON available on request.
+  * Grid Flex Control can receive flexibility master data pushed from authenticated and authorized clients (customer middleware or ESB) via REST API (REST/CSV) with TLS (or REST/JSON if required).
   * Customers (e.g., DSO/TSO) can optionally be provided with two private endpoints to automate transfers of flexibility master data to GFC.
-  * The first endpoint accesses Keycloak to request client tokens; these tokens are used for authenticated and authorized access to the second API endpoint that imports flexibility-master data into GFC.
+    * The first endpoint accesses Keycloak to **request client tokens**
+    * These tokens are used for **authenticated and authorized** access to the second API endpoint that `imports flexibility-master` data into GFC.
   * Alternatively, authenticated and authorized customers can manually upload master-data files using GFC's web UI.
 ## Communication to HES
 - GFC communicates with the HES-systems via L+G’s IEC4HES-interface (IEC 61968-9).
@@ -165,11 +166,11 @@
 - Keycloak manages all user access and roles.
 - **How access control works**
   - Each customer has their own `Keycloak Realm`, which issues JWT tokens containing the user’s roles and permissions.
-  - GraphQL and gRPC services check the JWT and allow actions based on the user’s roles and permissions.
+  - gRPC services `check the JWT` and allow actions based on the user’s roles and permissions.
 - **Platform architecture**
   - `One shared Kubernetes namespace for all customers`, with tenant isolation handled in the backend.
   - `One shared MongoDB Atlas database used by all tenants`.
-  - Collections include `group` and `subgroup` fields to logically isolate each tenant’s data.
+  - Collections include `group` fields to logically isolate each tenant’s data.
 <img src="images/multitenancy.jpg">
 
 ## Resource configuration
