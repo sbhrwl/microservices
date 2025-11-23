@@ -5,7 +5,7 @@
 - [Protocol adapter service](protocol-adapter-service/README.md)
 - [HES simulator](hes-simulator/README.md)
 - [Local testing](#local-testing)
-- [State](#state)
+- [State store](#state-store)
 ## Local testing
 - As with Dapr local builds error out with `8080 not available`, Explicitly add port in `application.yaml` for each service
 - `dapr run --app-id flexibility-hub-simulator --app-port 8081 --resources-path .\dapr\config-files -- mvn spring-boot:run`
@@ -21,7 +21,7 @@
 | **Protocol Adapter Service**   | `connector.request`, `hes.response`             | `protocol-adapter-service-connector.request`, `protocol-adapter-service-hes.response`                 | 
 | **HES Simulator**              | `hes.request`                                   | `hes-simulator-hes.request`                                                                           | 
 
-## State
+## State store
 - Verify PostgreSQL
 ```sql
 PS C:\Users\sabharwalr> psql -h localhost -U myuser -d mydatabase
