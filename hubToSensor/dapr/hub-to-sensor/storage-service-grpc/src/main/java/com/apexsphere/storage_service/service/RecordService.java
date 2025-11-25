@@ -1,105 +1,84 @@
 package com.apexsphere.storage_service.service;
 
-import com.apexsphere.storage_service.model.Record;
-import com.apexsphere.storage_service.model.RequestChangeLog;
-import io.dapr.client.DaprClient;
-import io.dapr.client.DaprClientBuilder; // NEW IMPORT
-import io.dapr.client.domain.State;
+import com.apexsphere.storage_service.service.postgres.PostgresRecordService;
+import com.apexsphere.storage_service.service.dapr.DaprRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// REMOVED: import org.springframework.beans.factory.annotation.Autowired; // Not needed
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+/**
+ * Orchestrates Postgres + optional Dapr persistence.
+ */
 @Service
 public class RecordService {
 
     private static final Logger log = LoggerFactory.getLogger(RecordService.class);
 
-    private static final String STATE_STORE_NAME = "postgres-statestore";
-    private static final String RECORD_KEY_PREFIX = "record:";
-    private static final String CHANGE_LOG_KEY_PREFIX = "requestchangelog:";
+    private final PostgresRecordService postgresRecordService;
+    private final DaprRecordService daprRecordService;
 
-    // FIX: DaprClient is instantiated directly here to avoid the need for a Spring @Bean.
-    private final DaprClient daprClient = new DaprClientBuilder().build(); 
-    private final AtomicLong idGenerator = new AtomicLong(System.currentTimeMillis());
+    @Value("${storage.enableStateStore:false}")
+    private boolean enableStateStore;
 
-    // Using a simple default constructor now that DaprClient is initialized above.
-    public RecordService() {
-        log.info("RecordService initialized. ID generator starting at {}", idGenerator.get());
+    public RecordService(PostgresRecordService postgresRecordService,
+                         DaprRecordService daprRecordService) {
+        this.postgresRecordService = postgresRecordService;
+        this.daprRecordService = daprRecordService;
     }
 
     /**
-     * Save a new record and create initial change log entry.
+     * Handles save logic for both Postgres and (optional) Dapr.
      */
-    public Record saveRecord(Record record) {
-        log.info("[saveRecord] Start processing new record: {}", record);
+    public RecordResponse handleSave(RecordRequest request) {
 
-        // Generate numeric ID and assign
-        long numericId = idGenerator.incrementAndGet();
-        record.setId(String.valueOf(numericId));
-        log.info("[saveRecord] Assigned numeric ID: {}", record.getId());
+        log.info("[RecordService] Saving record. enableStateStore={}", enableStateStore);
 
-        // Save the record
-        String recordKey = RECORD_KEY_PREFIX + numericId;
-        log.debug("[saveRecord] Saving record to Dapr state store '{}' with key '{}'", STATE_STORE_NAME, recordKey);
-        daprClient.saveState(STATE_STORE_NAME, recordKey, record).block();
-        log.info("[saveRecord] Record saved successfully with key '{}'", recordKey);
+        // --- 1. Always save in Postgres (source of truth) ---
+        var postgresResult = postgresRecordService.save(request);
 
-        // Create initial change log
-        RequestChangeLog logEntry = new RequestChangeLog(record.getId(), "Control Requested");
-        
-        String changeLogKey = CHANGE_LOG_KEY_PREFIX + numericId;
-        log.debug("[saveRecord] Saving initial change log entry with key '{}': {}", changeLogKey, logEntry);
-        daprClient.saveState(STATE_STORE_NAME, changeLogKey, logEntry).block();
-        log.info("[saveRecord] Initial change log saved successfully for key '{}'", changeLogKey);
-
-        log.info("[saveRecord] Completed processing new record with ID '{}'", record.getId());
-        return record;
-    }
-
-    /**
-     * Update record status and append to change log.
-     */
-    public Record updateRecordStatus(Record updatedRecord) {
-        log.info("[updateRecordStatus] Start updating record: {}", updatedRecord);
-
-        String recordId = updatedRecord.getId();
-        if (recordId == null || recordId.isEmpty()) {
-            log.error("[updateRecordStatus] Record ID is null or empty!");
-            throw new RuntimeException("Record ID cannot be null or empty for update.");
+        // --- 2. Optionally save in Dapr ---
+        if (enableStateStore) {
+            try {
+                daprRecordService.save(request, postgresResult.getId());
+            } catch (Exception e) {
+                log.error("[RecordService] Dapr save failed but Postgres succeeded: {}", e.getMessage());
+            }
         }
 
-        // Retrieve existing record
-        String recordKey = RECORD_KEY_PREFIX + recordId;
-        log.debug("[updateRecordStatus] Retrieving existing record with key '{}'", recordKey);
-        State<Record> state = daprClient.getState(STATE_STORE_NAME, recordKey, Record.class)
-                .blockOptional()
-                .orElseThrow(() -> {
-                    log.error("[updateRecordStatus] Record not found for ID '{}'", recordId);
-                    return new RuntimeException("Record not found for update.");
-                });
+        // --- 3. Generate gRPC response (ONLY from Postgres result) ---
+        return RecordResponse.newBuilder()
+                .setSuccess(true)
+                .setMessage("Record saved successfully with ID: " + postgresResult.getId())
+                .setRecordId(String.valueOf(postgresResult.getId()))
+                .build();
+    }
 
-        Record existingRecord = state.getValue();
-        log.info("[updateRecordStatus] Existing record retrieved: {}", existingRecord);
+    /**
+     * Handles update logic for both Postgres and optional Dapr.
+     */
+    public RecordResponse handleUpdate(RecordRequest request) {
 
-        // Update status
-        existingRecord.setStatus(updatedRecord.getStatus());
-        log.debug("[updateRecordStatus] Updating record status to '{}'", updatedRecord.getStatus());
-        daprClient.saveState(STATE_STORE_NAME, recordKey, existingRecord).block();
-        log.info("[updateRecordStatus] Record status updated successfully for key '{}'", recordKey);
+        log.info("[RecordService] Updating record {}. enableStateStore={}",
+                request.getRecordId(), enableStateStore);
 
-        // Add change log entry
-        RequestChangeLog logEntry = new RequestChangeLog(recordId, "Status updated to " + updatedRecord.getStatus());
+        // --- 1. Always update Postgres ---
+        var postgresResult = postgresRecordService.update(request);
 
-        // Using System.currentTimeMillis() in the key is fine for unique logs
-        String logKey = CHANGE_LOG_KEY_PREFIX + recordId + "_log_" + System.currentTimeMillis(); 
-        log.debug("[updateRecordStatus] Saving change log entry with key '{}': {}", logKey, logEntry);
-        daprClient.saveState(STATE_STORE_NAME, logKey, logEntry).block();
-        log.info("[updateRecordStatus] Change log entry saved successfully for key '{}'", logKey);
+        // --- 2. Optionally update Dapr ---
+        if (enableStateStore) {
+            try {
+                daprRecordService.update(request);
+            } catch (Exception e) {
+                log.error("[RecordService] Dapr update failed but Postgres succeeded: {}", e.getMessage());
+            }
+        }
 
-        log.info("[updateRecordStatus] Completed updating record ID '{}'", recordId);
-        return existingRecord;
+        // --- 3. Return Postgres-only response ---
+        return RecordResponse.newBuilder()
+                .setSuccess(true)
+                .setMessage("Record updated successfully: " + postgresResult.getStatus())
+                .setRecordId(String.valueOf(postgresResult.getId()))
+                .build();
     }
 }

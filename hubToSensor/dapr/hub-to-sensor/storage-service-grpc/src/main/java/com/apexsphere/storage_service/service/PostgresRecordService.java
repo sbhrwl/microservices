@@ -1,0 +1,82 @@
+package com.apexsphere.storage_service.service.postgres;
+
+import com.apexsphere.storage_service.postgres.model.ControlRequestEntity;
+import com.apexsphere.storage_service.postgres.model.RequestChangeLogEntity;
+import com.apexsphere.storage_service.postgres.repository.ControlRequestRepository;
+import com.apexsphere.storage_service.postgres.repository.RequestChangeLogJPARepository;
+import com.apexsphere.storage_service.service.RecordRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Handles Postgres persistence only.
+ */
+@Service
+public class PostgresRecordService {
+
+    private static final Logger log = LoggerFactory.getLogger(PostgresRecordService.class);
+
+    private final ControlRequestRepository controlRequestRepository;
+    private final RequestChangeLogJPARepository changeLogJPARepository;
+
+    public PostgresRecordService(ControlRequestRepository controlRequestRepository,
+                                 RequestChangeLogJPARepository changeLogJPARepository) {
+        this.controlRequestRepository = controlRequestRepository;
+        this.changeLogJPARepository = changeLogJPARepository;
+    }
+
+    /**
+     * Save record in Postgres and create initial change log.
+     */
+    @Transactional
+    public ControlRequestEntity save(RecordRequest request) {
+        log.info("[PostgresRecordService] Saving new record");
+
+        // Convert RecordRequest → ControlRequestEntity
+        ControlRequestEntity entity = new ControlRequestEntity(
+                request.getSensorId(),
+                request.getOperation(),
+                request.getRelayNumber(),
+                request.getDuration(),
+                request.getStatus()
+        );
+
+        // Save to Postgres
+        ControlRequestEntity saved = controlRequestRepository.save(entity);
+        log.info("[PostgresRecordService] Saved ControlRequest with ID {}", saved.getId());
+
+        // Create initial change log
+        RequestChangeLogEntity logEntity = new RequestChangeLogEntity("Control Requested");
+        logEntity.setControlRequest(saved);
+        changeLogJPARepository.save(logEntity);
+
+        return saved;
+    }
+
+    /**
+     * Update record status and create a change log.
+     */
+    @Transactional
+    public ControlRequestEntity update(RecordRequest request) {
+        log.info("[PostgresRecordService] Updating record {}", request.getRecordId());
+
+        Long id = Long.parseLong(request.getRecordId());
+        ControlRequestEntity entity = controlRequestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Record not found in Postgres for ID " + id));
+
+        // Update entity fields (status only or others as needed)
+        entity.updateFromRequest(request.getOperation(), request.getRelayNumber(),
+                request.getDuration(), request.getStatus());
+
+        ControlRequestEntity saved = controlRequestRepository.save(entity);
+
+        // Add change log
+        RequestChangeLogEntity logEntity = new RequestChangeLogEntity("Status updated to " + request.getStatus());
+        logEntity.setControlRequest(saved);
+        changeLogJPARepository.save(logEntity);
+
+        return saved;
+    }
+}
