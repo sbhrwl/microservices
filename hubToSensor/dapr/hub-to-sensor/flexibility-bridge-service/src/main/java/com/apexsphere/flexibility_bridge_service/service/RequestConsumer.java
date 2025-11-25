@@ -42,23 +42,18 @@ public class RequestConsumer {
             recordId = grpcClient.saveRecord(controlRequest);
             log.info("➡️ Saved Control Request. Status: 'Control Requested'. Record ID: {}", recordId);
 
-            // 2️⃣ Save initial audit entry in change_request_log
-            RecordRequest logEntry = convertToGrpcRequest(payload, "Initial Log Entry", recordId);
-            grpcClient.saveRecord(logEntry);
-            log.info("🪵 Created initial Change Request Log for Record ID: {}", recordId);
-
-            // 3️⃣ Publish to connector.request
+            // 2️⃣ Publish to connector.request
             producerService.sendRequestToConnector(payload, recordId);
             log.info("📢 Published request to connector. Record ID: {}", recordId);
 
-            // 4️⃣ Update control_request status
+            // 3️⃣ Update control_request status
             RecordRequest updateRequest = convertToGrpcRequest(payload, "Sent for protocol conversion", recordId);
             grpcClient.updateRecordStatus(updateRequest);
             log.info("🔁 Updated Control Request status to 'Sent for protocol conversion'. Record ID: {}", recordId);
 
-            // 5️⃣ Add final audit log
+            // 4️⃣ Add final audit log
             RecordRequest auditLog = convertToGrpcRequest(payload, "Status updated to Sent for protocol conversion", recordId);
-            grpcClient.saveRecord(auditLog);
+            grpcClient.updateRecordStatus(auditLog);
             log.info("🧾 Added Change Request Log entry for Record ID: {}", recordId);
 
         } catch (Exception e) {
