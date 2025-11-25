@@ -66,9 +66,8 @@ public class PostgresRecordService {
         ControlRequestEntity entity = controlRequestRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Record not found in Postgres for ID " + id));
 
-        // Update entity fields (status only or others as needed)
-        entity.updateFromRequest(request.getOperation(), request.getRelayNumber(),
-                request.getDuration(), request.getStatus());
+        // Only update status — keep original operation, relayNumber, duration, sensorId intact
+        entity.setStatus(request.getStatus());
 
         ControlRequestEntity saved = controlRequestRepository.save(entity);
 

@@ -41,7 +41,7 @@ public class ControlRequestEntity {
         this.updatedAt = Instant.now();
     }
 
-    // Update entity from request (optional)
+    // Update entity from request (all fields)
     public void updateFromRequest(String operation, Integer relayNumber, Integer duration, String status) {
         this.operation = operation;
         this.relayNumber = relayNumber;
@@ -61,22 +61,43 @@ public class ControlRequestEntity {
 
     public void setSensorId(String sensorId) {
         this.sensorId = sensorId;
+        this.updatedAt = Instant.now();
     }
 
     public String getOperation() {
         return operation;
     }
 
+    public void setOperation(String operation) {
+        this.operation = operation;
+        this.updatedAt = Instant.now();
+    }
+
     public Integer getRelayNumber() {
         return relayNumber;
+    }
+
+    public void setRelayNumber(Integer relayNumber) {
+        this.relayNumber = relayNumber;
+        this.updatedAt = Instant.now();
     }
 
     public Integer getDuration() {
         return duration;
     }
 
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+        this.updatedAt = Instant.now();
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        this.updatedAt = Instant.now();
     }
 
     public Instant getCreatedAt() {
