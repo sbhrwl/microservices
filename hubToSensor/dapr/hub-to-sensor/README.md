@@ -33,6 +33,8 @@ WARNING: Console code page (850) differs from Windows code page (1252)
          page "Notes for Windows users" for details.
 Type "help" for help.
 
+mydatabase=# SELECT * FROM control_requests;
+mydatabase=# SELECT * FROM request_change_log;
 mydatabase=# SELECT * FROM state;
 ```
 
