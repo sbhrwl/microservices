@@ -72,7 +72,7 @@ public class PostgresRecordService {
         ControlRequestEntity saved = controlRequestRepository.save(entity);
 
         // Add change log
-        RequestChangeLogEntity logEntity = new RequestChangeLogEntity("Status updated to " + request.getStatus());
+        RequestChangeLogEntity logEntity = new RequestChangeLogEntity(request.getStatus());
         logEntity.setControlRequest(saved);
         changeLogJPARepository.save(logEntity);
 
