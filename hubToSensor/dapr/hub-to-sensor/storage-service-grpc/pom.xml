@@ -35,19 +35,19 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- ⭐ REQUIRED FOR JPA ENTITIES, JPA REPOSITORIES, TRANSACTIONAL -->
+        <!-- JPA entities, JPA repositories, transactional -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- ⭐ REQUIRED FOR SPRING DATA SOURCE / JDBC -->
+        <!-- Spring data source / JDBC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
-        <!-- ⭐ PostgreSQL driver -->
+        <!-- PostgreSQL driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -88,11 +88,6 @@
         <dependency>
             <groupId>io.dapr</groupId>
             <artifactId>dapr-sdk</artifactId>
-            <version>${dapr.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dapr</groupId>
-            <artifactId>dapr-sdk-springboot</artifactId>
             <version>${dapr.version}</version>
         </dependency>
 
