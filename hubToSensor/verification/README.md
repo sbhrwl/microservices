@@ -313,31 +313,38 @@ Hibernate: update control_requests set duration=?,operation=?,relay_number=?,sen
 ```
 - Database
 ```sql
-mydatabase=# select * from control_requests;
- id | duration | operation | relay_number | sensor_id  |                                          status
-----+----------+-----------+--------------+------------+------------------------------------------------------------------------------------------
- 42 |        0 | DIRECT-ON |            1 | sensor-001 | Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)
-(1 row)
+mydatabase=# SELECT * FROM control_requests;
+ id  | duration | operation  | relay_number | sensor_id  |                                            status                                             |          created_at           |          updated_at
+-----+----------+------------+--------------+------------+-----------------------------------------------------------------------------------------------+-------------------------------+-------------------------------
+ 106 |        0 | DIRECT-OFF |            1 | sensor-001 | Request status: Completed successfully                                                        | 2025-11-26 08:26:40.497086+00 | 2025-11-26 08:26:43.250357+00
+ 107 |        0 | DIRECT-OFF |            1 | sensor-001 | Request status: Failed (Code: 404, Message: Target sensor 'sensor-001' not found or offline.) | 2025-11-26 08:26:55.903852+00 | 2025-11-26 08:26:56.892537+00
+ (2 rows)
 
 
-mydatabase=# select * from request_change_log;
- id  |                                                change_description                                                 |       change_timestamp        | record_id
------+-------------------------------------------------------------------------------------------------------------------+-------------------------------+-----------
- 132 | Control Requested                                                                                                 | 2025-10-03 10:16:41.105162+00 |        42
- 133 | Sent for protocol conversion                                                                                      | 2025-10-03 10:16:41.170938+00 |        42
- 134 | message recieved for protocol conversion                                                                          | 2025-10-03 10:16:41.179569+00 |        42
- 135 | protocol conversion done                                                                                          | 2025-10-03 10:16:41.212662+00 |        42
- 136 | Sent to HES                                                                                                       | 2025-10-03 10:16:41.262414+00 |        42
- 137 | Response recieved from HES                                                                                        | 2025-10-03 10:23:03.118948+00 |        42
- 138 | Protocol conversion done for response                                                                             | 2025-10-03 10:23:03.149661+00 |        42
- 139 | Response sent to Bridge - Final Status: COMPLETED                                                                 | 2025-10-03 10:23:03.18456+00  |        42
- 140 | Parsed response recieved from Protocol adapter                                                                    | 2025-10-03 10:23:03.222596+00 |        42
- 141 | Request staus: Completed                                                                                          | 2025-10-03 10:23:03.257418+00 |        42
- 142 | Response recieved from HES                                                                                        | 2025-10-03 10:29:17.447798+00 |        42
- 143 | Protocol conversion done for response                                                                             | 2025-10-03 10:29:17.482692+00 |        42
- 144 | Response sent to Bridge - Final Status: FAILED (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.) | 2025-10-03 10:29:17.517319+00 |        42
- 145 | Parsed response recieved from Protocol adapter                                                                    | 2025-10-03 10:29:17.524501+00 |        42
- 146 | Request staus: Failed (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.)                          | 2025-10-03 10:29:17.553575+00 |        42
+mydatabase=# SELECT * FROM request_change_log;
+ id  | change_description |       change_timestamp        | record_id |                                                    description                                                    | control_request_id
+-----+--------------------+-------------------------------+-----------+-------------------------------------------------------------------------------------------------------------------+--------------------
+ 637 |                    | 2025-11-26 08:26:40.504853+00 |           | Control Requested                                                                                                 |                106
+ 638 |                    | 2025-11-26 08:26:40.700396+00 |           | Sent for protocol conversion                                                                                      |                106
+ 639 |                    | 2025-11-26 08:26:41.13888+00  |           | Message recieved for protocol conversion                                                                          |                106
+ 640 |                    | 2025-11-26 08:26:41.435429+00 |           | Protocol conversion done for request                                                                              |                106
+ 641 |                    | 2025-11-26 08:26:42.185103+00 |           | Response recieved from HES                                                                                        |                106
+ 642 |                    | 2025-11-26 08:26:42.197844+00 |           | Request sent to HES                                                                                               |                106
+ 643 |                    | 2025-11-26 08:26:42.60408+00  |           | Protocol conversion done for response                                                                             |                106
+ 644 |                    | 2025-11-26 08:26:42.814892+00 |           | Response sent to Bridge - Final Status: COMPLETED                                                                 |                106
+ 645 |                    | 2025-11-26 08:26:42.85053+00  |           | Parsed response received from Protocol Adapter                                                                    |                106
+ 646 |                    | 2025-11-26 08:26:43.251384+00 |           | Request status: Completed successfully                                                                            |                106
+ 647 |                    | 2025-11-26 08:26:55.922212+00 |           | Control Requested                                                                                                 |                107
+ 648 |                    | 2025-11-26 08:26:56.068477+00 |           | Sent for protocol conversion                                                                                      |                107
+ 649 |                    | 2025-11-26 08:26:56.146972+00 |           | Message recieved for protocol conversion                                                                          |                107
+ 650 |                    | 2025-11-26 08:26:56.248412+00 |           | Protocol conversion done for request                                                                              |                107
+ 651 |                    | 2025-11-26 08:26:56.37169+00  |           | Request sent to HES                                                                                               |                107
+ 652 |                    | 2025-11-26 08:26:56.597152+00 |           | Response recieved from HES                                                                                        |                107
+ 653 |                    | 2025-11-26 08:26:56.67161+00  |           | Protocol conversion done for response                                                                             |                107
+ 654 |                    | 2025-11-26 08:26:56.774657+00 |           | Response sent to Bridge - Final Status: FAILED (Code: 404, Msg: Target sensor 'sensor-001' not found or offline.) |                107
+ 655 |                    | 2025-11-26 08:26:56.787026+00 |           | Parsed response received from Protocol Adapter                                                                    |                107
+ 656 |                    | 2025-11-26 08:26:56.893128+00 |           | Request status: Failed (Code: 404, Message: Target sensor 'sensor-001' not found or offline.)                     |                107
+(20 rows)
 ```
 ## Verify from kubectl
 - Data API
