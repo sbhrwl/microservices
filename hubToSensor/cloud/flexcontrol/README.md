@@ -13,10 +13,9 @@
   - [Cloud SQL](#cloud-sql)
   - [MongoDB Atlas cluster](#mongodb-atlas-cluster)
 - [Multitenancy](#multitenancy)
-- [Resource configuration](#resource-configuration)
 - [Kubernetes service account](k8s_serviceaccount/README.md)
 - [PSA and PSC](psa-psc/README.md)
-- [Grid flex control components in the smoc env](#grid-flex-control-components-in-the-smoc-env)
+- [Resource configuration](#resource-configuration)
   - [Atlas mongodb](#atlas-mongodb)
   - [Artifact registry repositories](#artifact-registry-repositories)
   - [Service account authenticated for sapro](#service-account-authenticated-for-sapro)
@@ -185,36 +184,31 @@
 
 <img src="images/serviceaccounts.jpg">
 
-## 
-- `Island + External user account + Single sign on + Application roles mapped to security groups`
-<img src="images/island-authentication-authorization.jpg">
-
-## Grid flex control components in the smoc env
-## Atlas mongodb
-### gfc-dev users
+### Atlas mongodb
+* `gfc-dev users`
 
 | user                           | cluster                                          | notes                  |
 | ------------------------------ | ------------------------------------------------ | ---------------------- |
 | smoc-cluster-02-gfc-db-user-01 | atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-02 | password sent by email |
 | smoc-cluster-02-gfc-db-user-02 | atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-02 | password sent by email |
 
-### gfc-tst users
+* `gfc-tst users`
 
 | user                               | cluster                                              | notes                  |
 | ---------------------------------- | ---------------------------------------------------- | ---------------------- |
 | smoc-cluster-tst-01-gfc-db-user-01 | atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-tst-01 | password sent by email |
 | smoc-cluster-tst-01-gfc-db-user-02 | atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-tst-01 | password sent by email |
 
-## Artifact registry repositories
+### Artifact registry repositories
 
 | environment | repository url                                                                                                                                             |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | dev         | `https://console.cloud.google.com/artifacts/docker/cpet-d-smoc-c01-sec-aab-01/europe-west4/d-euw4-gfc-c01-repository-a?project=cpet-d-smoc-c01-sec-aab-01` |
 | tst         | `https://console.cloud.google.com/artifacts/docker/cpet-t-smoc-c01-sec-aam-01/europe-west4/t-euw4-gfc-c01-repository-a?project=cpet-t-smoc-c01-sec-aam-01` |
 
-## Service account authenticated for sapro
-* **gitlab project:** `landisgyr/rnd/emea/grid-flex-control/`
-### service account configuration table
+### Service account authenticated for sapro
+* **Gitlab project:** `landisgyr/rnd/emea/grid-flex-control/`
+* Service account configuration table
 
 | field            | value                                                      |
 | ---------------- | ---------------------------------------------------------- |
@@ -222,25 +216,30 @@
 | service accounts | `tf-747301344582@p-global-cicd-01.iam.gserviceaccount.com` |
 | allowed scopes   | `https://www.googleapis.com/auth/cloud-platform`           |
 
-## Cloud sql
-### dev environment
+### Cloud sql
+* `Dev environment`
 
 | database  | id                                     | instance               | notes                  |
 | --------- | -------------------------------------- | ---------------------- | ---------------------- |
 | gfc_db_01 | gfc_db_01_user//smoc-dev-c01b-c62b86f5 | smoc-dev-c01b-c62b86f5 | password sent by email |
 | gfc_db_02 | gfc_db_02_user//smoc-dev-c01b-c62b86f5 | smoc-dev-c01b-c62b86f5 | password sent by email |
 
-### tst environment
+* `tst environment`
 
 | database | id                                     | instance               | notes                  |
 | -------- | -------------------------------------- | ---------------------- | ---------------------- |
 | gfc      | gfc_db_01_user//smoc-tst-c01b-3ddbcb17 | smoc-tst-c01b-3ddbcb17 | password sent by email |
 
-## Development environment updates
-### service account
-* **new:** `gke-wi-c03`
-### compute changes
+### Development environment updates
+* Service account
+  * **new:** `gke-wi-c03`
+* Compute changes
 
 | node pool                       | path                                                                       | change              |
 | ------------------------------- | -------------------------------------------------------------------------- | ------------------- |
 | node-pool-1-dev-smoc-cluster-01 | d-euw4-smoc-c01-gke-sub/smoc-net-dev-h-vpc/dev-smoc-cluster-01/node-pool-1 | max nodes **3 → 4** |
+
+## 
+- `Island + External user account + Single sign on + Application roles mapped to security groups`
+<img src="images/island-authentication-authorization.jpg">
+
