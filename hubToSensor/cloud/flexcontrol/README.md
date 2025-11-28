@@ -243,3 +243,60 @@
 - `Island + External user account + Single sign on + Application roles mapped to security groups`
 <img src="images/island-authentication-authorization.jpg">
 
+```yaml
+Atlas MongoDB:
+
+database: gfc-dev
+  "atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-02:smoc-cluster-02-gfc-db-user-01", "password": "sent-by-email",
+  "atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-02:smoc-cluster-02-gfc-db-user-02", "password": "sent-by-email",
+database: gfc-tst
+  "atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-tst-01:smoc-cluster-tst-01-gfc-db-user-01", "password": "sent-by-email",
+  "atlas-cpet-d-smoc-c01-srv-aah-01:smoc-cluster-tst-01:smoc-cluster-tst-01-gfc-db-user-02", "password": "sent-by-email",
+
+
+Artifact Registry Repositories:
+Dev repository: 
+https://console.cloud.google.com/artifacts/docker/cpet-d-smoc-c01-sec-aab-01/europe-west4/d-euw4-gfc-c01-repository-a?project=cpet-d-smoc-c01-sec-aab-01
+Tst repository:
+https://console.cloud.google.com/artifacts/docker/cpet-t-smoc-c01-sec-aam-01/europe-west4/t-euw4-gfc-c01-repository-a?project=cpet-t-smoc-c01-sec-aam-01
+
+Service Account authenticated for SAPRO:
+New Gitab project: landisgyr/rnd/emea/grid-flex-control/
+
+- name: "landisgyr/rnd/emea/grid-flex-control/" # group
+    branches:
+      - ref: "*"
+        service_accounts: 
+          - "tf-747301344582@p-global-cicd-01.iam.gserviceaccount.com"
+        allowed_scopes:
+          - "https://www.googleapis.com/auth/cloud-platform"
+
+Cloud SQL
+Dev
+    "database": "gfc_db_01"
+    "id": "gfc_db_01_user//smoc-dev-c01b-c62b86f5",
+    "instance": "smoc-dev-c01b-c62b86f5",
+    "name": "gfc_db_01_user",
+    "password": "sent-by-email",
+
+    "database": "gfc_db_02"
+    "id": "gfc_db_02_user//smoc-dev-c01b-c62b86f5",
+    "instance": "smoc-dev-c01b-c62b86f5",
+    "name": "gfc_db_02_user",
+    "password": "sent-by-email",
+
+TST
+    "database": "gfc"
+    "id": "gfc_db_01_user//smoc-tst-c01b-3ddbcb17",
+    "instance": "smoc-tst-c01b-3ddbcb17",
+    "name": "gfc_db_01_user",
+    "password": "sent-by-email",
+
+
+New service account in development env: gke-wi-c03
+
+More processing power for development env
+  "d-euw4-smoc-c01-gke-sub/smoc-net-dev-h-vpc/dev-smoc-cluster-01/node-pool-1" = {
+      name                     = "node-pool-1-dev-smoc-cluster-01"
+      node_max_count           = 3 -> 4
+  }
