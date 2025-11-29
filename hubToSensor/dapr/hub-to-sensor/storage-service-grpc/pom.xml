@@ -91,6 +91,32 @@
             <version>${dapr.version}</version>
         </dependency>
 
+        <!-- Dapr Actors SDK -->
+        <dependency>
+            <groupId>io.dapr</groupId>
+            <artifactId>dapr-sdk-actors</artifactId>
+            <version>${dapr.version}</version>
+        </dependency>
+
+        <!-- JSON serialization -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+
+        <!-- Optional but recommended: Lombok (if you want cleaner state classes) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

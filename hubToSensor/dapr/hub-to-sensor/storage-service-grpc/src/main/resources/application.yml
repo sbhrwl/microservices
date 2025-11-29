@@ -31,6 +31,8 @@ dapr:
   grpc:
     port: ${DAPR_GRPC_PORT:50001}
   state-store: postgres-statestore
+  actors:
+    enabled: true
 
 logging:
   level:
