@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Handles Postgres persistence only.
- */
 @Service
 public class PostgresRecordService {
 
@@ -27,14 +24,10 @@ public class PostgresRecordService {
         this.changeLogJPARepository = changeLogJPARepository;
     }
 
-    /**
-     * Save record in Postgres and create initial change log.
-     */
     @Transactional
-    public ControlRequestEntity save(RecordRequest request) {
+    public RecordRequest save(RecordRequest request) {
         log.info("[PostgresRecordService] Saving new record");
 
-        // Convert RecordRequest → ControlRequestEntity
         ControlRequestEntity entity = new ControlRequestEntity(
                 request.getSensorId(),
                 request.getOperation(),
@@ -43,39 +36,45 @@ public class PostgresRecordService {
                 request.getStatus()
         );
 
-        // Save to Postgres
         ControlRequestEntity saved = controlRequestRepository.save(entity);
         log.info("[PostgresRecordService] Saved ControlRequest with ID {}", saved.getId());
 
-        // Create initial change log
         RequestChangeLogEntity logEntity = new RequestChangeLogEntity("Control Requested");
         logEntity.setControlRequest(saved);
         changeLogJPARepository.save(logEntity);
 
-        return saved;
+        return RecordRequest.newBuilder()
+                .setRecordId(String.valueOf(saved.getId()))
+                .setSensorId(saved.getSensorId())
+                .setOperation(saved.getOperation())
+                .setRelayNumber(saved.getRelayNumber())
+                .setDuration(saved.getDuration())
+                .setStatus(saved.getStatus())
+                .build();
     }
 
-    /**
-     * Update record status and create a change log.
-     */
     @Transactional
-    public ControlRequestEntity update(RecordRequest request) {
+    public RecordRequest update(RecordRequest request) {
         log.info("[PostgresRecordService] Updating record {}", request.getRecordId());
 
         Long id = Long.parseLong(request.getRecordId());
         ControlRequestEntity entity = controlRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Record not found in Postgres for ID " + id));
+                .orElseThrow(() -> new RuntimeException("Record not found for ID " + id));
 
-        // Only update status — keep original operation, relayNumber, duration, sensorId intact
         entity.setStatus(request.getStatus());
-
         ControlRequestEntity saved = controlRequestRepository.save(entity);
 
-        // Add change log
         RequestChangeLogEntity logEntity = new RequestChangeLogEntity(request.getStatus());
         logEntity.setControlRequest(saved);
         changeLogJPARepository.save(logEntity);
 
-        return saved;
+        return RecordRequest.newBuilder()
+                .setRecordId(String.valueOf(saved.getId()))
+                .setSensorId(saved.getSensorId())  // important!
+                .setOperation(saved.getOperation())
+                .setRelayNumber(saved.getRelayNumber())
+                .setDuration(saved.getDuration())
+                .setStatus(saved.getStatus())
+                .build();
     }
 }

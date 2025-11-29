@@ -11,9 +11,6 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Orchestrates Postgres + optional Dapr persistence with safe reactive handling.
- */
 @Service
 public class RecordService {
 
@@ -25,7 +22,6 @@ public class RecordService {
     @Value("${storage.enableStateStore:false}")
     private boolean enableStateStore;
 
-    // Queue per sensor to serialize Dapr updates
     private final Map<String, Mono<Void>> sensorUpdateQueue = new ConcurrentHashMap<>();
 
     public RecordService(PostgresRecordService postgresRecordService,
@@ -34,73 +30,64 @@ public class RecordService {
         this.daprRecordService = daprRecordService;
     }
 
-    /**
-     * Handles save logic for both Postgres and optional Dapr.
-     */
     public RecordResponse handleSave(RecordRequest request) {
         log.info("[RecordService] Saving record. enableStateStore={}", enableStateStore);
 
-        // 1. Save in Postgres (source of truth)
-        var postgresResult = postgresRecordService.save(request);
+        // Save in Postgres (source of truth)
+        var savedRequest = postgresRecordService.save(request);
 
-        // 2. Optionally save in Dapr, serialized per sensor
+        // Optionally save in Dapr
         if (enableStateStore) {
             Mono<Void> daprSaveTask = Mono.fromRunnable(() -> {
-                log.info("[DaprRecordService] Sending save to Dapr for sensorId {}", request.getSensorId());
-                daprRecordService.save(request)
-                        .doOnNext(r -> log.info("[RecordService] Dapr save completed for sensorId {}", request.getSensorId()))
-                        .doOnError(e -> log.error("[RecordService] Dapr save failed for sensorId {}: {}", request.getSensorId(), e.getMessage()))
+                log.info("[DaprRecordService] Sending save to Dapr for sensorId {}", savedRequest.getSensorId());
+                daprRecordService.save(savedRequest)
+                        .doOnNext(r -> log.info("[RecordService] Dapr save completed for sensorId {}", savedRequest.getSensorId()))
+                        .doOnError(e -> log.error("[RecordService] Dapr save failed for sensorId {}: {}", savedRequest.getSensorId(), e.getMessage()))
                         .onErrorResume(e -> Mono.empty())
                         .block();
             });
 
-            sensorUpdateQueue.compute(request.getSensorId(), (sensorId, ongoing) -> {
+            sensorUpdateQueue.compute(savedRequest.getSensorId(), (sensorId, ongoing) -> {
                 if (ongoing == null) return daprSaveTask;
                 return ongoing.then(daprSaveTask);
-            }).doFinally(signal -> sensorUpdateQueue.remove(request.getSensorId()))
+            }).doFinally(signal -> sensorUpdateQueue.remove(savedRequest.getSensorId()))
               .subscribe();
         }
 
-        // 3. Return Postgres-only response
         return RecordResponse.newBuilder()
                 .setSuccess(true)
-                .setMessage("Record saved successfully with ID: " + postgresResult.getId())
-                .setRecordId(String.valueOf(postgresResult.getId()))
+                .setMessage("Record saved successfully with ID: " + savedRequest.getRecordId())
+                .setRecordId(savedRequest.getRecordId())
                 .build();
     }
 
-    /**
-     * Handles update logic for both Postgres and optional Dapr.
-     */
     public RecordResponse handleUpdate(RecordRequest request) {
         log.info("[RecordService] Updating record {}. enableStateStore={}", request.getRecordId(), enableStateStore);
 
-        // 1. Update Postgres (source of truth)
-        var postgresResult = postgresRecordService.update(request);
+        // Update Postgres and get a RecordRequest with sensorId populated
+        var updatedRequest = postgresRecordService.update(request);
 
-        // 2. Optionally update Dapr, serialized per sensor
         if (enableStateStore) {
             Mono<Void> daprUpdateTask = Mono.fromRunnable(() -> {
-                log.info("[DaprRecordService] Sending update to Dapr for sensorId {}", request.getSensorId());
-                daprRecordService.update(request)
-                        .doOnNext(r -> log.info("[RecordService] Dapr update completed for sensorId {}", request.getSensorId()))
-                        .doOnError(e -> log.error("[RecordService] Dapr update failed for sensorId {}: {}", request.getSensorId(), e.getMessage()))
+                log.info("[DaprRecordService] Sending update to Dapr for sensorId {}", updatedRequest.getSensorId());
+                daprRecordService.update(updatedRequest)
+                        .doOnNext(r -> log.info("[RecordService] Dapr update completed for sensorId {}", updatedRequest.getSensorId()))
+                        .doOnError(e -> log.error("[RecordService] Dapr update failed for sensorId {}: {}", updatedRequest.getSensorId(), e.getMessage()))
                         .onErrorResume(e -> Mono.empty())
                         .block();
             });
 
-            sensorUpdateQueue.compute(request.getSensorId(), (sensorId, ongoing) -> {
+            sensorUpdateQueue.compute(updatedRequest.getSensorId(), (sensorId, ongoing) -> {
                 if (ongoing == null) return daprUpdateTask;
                 return ongoing.then(daprUpdateTask);
-            }).doFinally(signal -> sensorUpdateQueue.remove(request.getSensorId()))
+            }).doFinally(signal -> sensorUpdateQueue.remove(updatedRequest.getSensorId()))
               .subscribe();
         }
 
-        // 3. Return Postgres-only response
         return RecordResponse.newBuilder()
                 .setSuccess(true)
-                .setMessage("Record updated successfully: " + postgresResult.getStatus())
-                .setRecordId(String.valueOf(postgresResult.getId()))
+                .setMessage("Record updated successfully: " + updatedRequest.getStatus())
+                .setRecordId(updatedRequest.getRecordId())
                 .build();
     }
 }

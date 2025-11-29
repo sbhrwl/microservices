@@ -3,6 +3,7 @@ package com.apexsphere.storage_service.service.dapr;
 import com.apexsphere.storage_service.service.RecordRequest;
 import io.dapr.client.DaprClient;
 import io.dapr.client.DaprClientBuilder;
+import io.dapr.client.domain.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ public class DaprRecordService {
     private final DaprClient daprClient;
 
     public DaprRecordService() {
-        // Using default ObjectMapper internally
         this.daprClient = new DaprClientBuilder().build();
     }
 
@@ -27,79 +27,95 @@ public class DaprRecordService {
      * Save a new sensor state only if it does not exist.
      */
     public Mono<Void> save(RecordRequest request) {
-        String sensorId = request.getSensorId();
-        if (sensorId == null || sensorId.isBlank()) {
-            log.warn("[save] SensorId is missing. Skipping Dapr save.");
+        if (request == null || request.getSensorId() == null || request.getSensorId().isBlank()) {
+            log.warn("[save] SensorId missing — skipping save.");
             return Mono.empty();
         }
 
+        final String sensorId = request.getSensorId().trim();
         final String key = "sensor:" + sensorId;
 
         return daprClient.getState(STATE_STORE_NAME, key, SensorState.class)
                 .flatMap(stateObj -> {
-                    SensorState existing = stateObj.getValue();
-                    if (existing != null) {
-                        log.info("[save] State already exists for sensorId {}. Skipping save.", sensorId);
+                    if (stateObj.getValue() != null) {
+                        log.info("[save] Sensor {} already exists — skipping save.", sensorId);
                         return Mono.empty();
                     }
 
-                    SensorState state = new SensorState(
+                    SensorState newState = new SensorState(
                             sensorId,
                             request.getOperation(),
-                            sensorId, // placeholder for lastRequestId
+                            request.getRecordId(),
                             Instant.now().toString()
                     );
-                    log.info("[save] Creating new state for sensorId {} with status {}", state.sensorId, state.status);
-                    return daprClient.saveState(STATE_STORE_NAME, key, state);
+
+                    log.info("[save] Creating initial state for sensor {} with operation {}", sensorId, newState.status);
+                    return daprClient.saveState(STATE_STORE_NAME, key, newState);
                 });
     }
 
     /**
-     * Update the existing sensor state only if request completed successfully.
+     * Update existing state ONLY using sensorId (never recordId lookup in Dapr).
+     * Logs all RecordRequest properties for full visibility.
      */
     public Mono<Void> update(RecordRequest request) {
-        String rawSensorId = request.getSensorId();
-        final String sensorId = (rawSensorId == null || rawSensorId.isBlank())
-                ? resolveSensorId(request.getRecordId()) // implement this method if needed
-                : rawSensorId;
+        if (request == null) {
+            log.warn("[update] Request is null — skipping update.");
+            return Mono.empty();
+        }
 
+        // Log all properties of RecordRequest
+        log.info("[update] RecordRequest details: recordId={}, sensorId={}, operation={}, relayNumber={}, duration={}, status={}",
+                request.getRecordId(),
+                request.getSensorId(),
+                request.getOperation(),
+                request.getRelayNumber(),
+                request.getDuration(),
+                request.getStatus()
+        );
+
+        final String sensorId = request.getSensorId();
         if (sensorId == null || sensorId.isBlank()) {
-            log.warn("[update] Cannot find sensorId for recordId {}. Skipping Dapr update.", request.getRecordId());
+            log.warn("[update] DB did not provide sensorId for recordId {} — skipping update.", request.getRecordId());
             return Mono.empty();
         }
 
-        if (!"Request status: Completed successfully".equalsIgnoreCase(request.getStatus())) {
-            log.info("[update] Request not completed successfully for sensorId {}. Skipping update.", sensorId);
+        // Only update if status indicates success
+        if (request.getStatus() == null || !request.getStatus().toLowerCase().contains("completed successfully")) {
+            log.info("[update] Skipping update — request for sensor {} did not complete successfully: {}", sensorId, request.getStatus());
             return Mono.empty();
         }
 
-        final String key = "sensor:" + sensorId;
+        final String key = "sensor:" + sensorId.trim();
 
         return daprClient.getState(STATE_STORE_NAME, key, SensorState.class)
-                .flatMap(stateObj -> {
+                .flatMap((State<SensorState> stateObj) -> {
                     SensorState existing = stateObj.getValue();
                     if (existing == null) {
-                        log.info("[update] No existing state for sensorId {}. Skipping update.", sensorId);
+                        log.info("[update] No existing Dapr state for sensor {} — skipping update.", sensorId);
                         return Mono.empty();
                     }
+
                     existing.status = request.getOperation();
-                    existing.lastRequestId = sensorId; // placeholder
+                    existing.lastRequestId = request.getRecordId();
                     existing.lastUpdated = Instant.now().toString();
-                    log.info("[update] Updating state for sensorId {} to status {}", existing.sensorId, existing.status);
+
+                    log.info("[update] Updating Dapr state for sensor {} to status {}", sensorId, existing.status);
+
                     return daprClient.saveState(STATE_STORE_NAME, key, existing);
                 });
     }
 
     /**
-     * Strongly typed sensor state for Dapr.
+     * Dapr state object
      */
     public static class SensorState {
         public String sensorId;
         public String status;
         public String lastRequestId;
-        public String lastUpdated; // changed to String for Dapr serialization
+        public String lastUpdated;
 
-        public SensorState() {} // required for deserialization
+        public SensorState() {}
 
         public SensorState(String sensorId, String status, String lastRequestId, String lastUpdated) {
             this.sensorId = sensorId;
@@ -107,14 +123,5 @@ public class DaprRecordService {
             this.lastRequestId = lastRequestId;
             this.lastUpdated = lastUpdated;
         }
-    }
-
-    /**
-     * Dummy method to resolve sensorId from recordId.
-     * Replace with your actual logic if needed.
-     */
-    private String resolveSensorId(String recordId) {
-        // Example: lookup from DB or cache
-        return "resolved-sensor-" + recordId;
     }
 }
