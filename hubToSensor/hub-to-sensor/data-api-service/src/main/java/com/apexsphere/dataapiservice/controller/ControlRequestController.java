@@ -5,6 +5,8 @@ import com.apexsphere.dataapiservice.dto.ControlRequestDTO;
 import com.apexsphere.dataapiservice.dto.RequestTrackerDTO;
 import com.apexsphere.dataapiservice.service.ControlRequestService;
 import com.apexsphere.dataapiservice.service.RequestChangeLogService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +19,15 @@ import java.util.List;
 @RequestMapping("/api/v1/requests")
 public class ControlRequestController {
 
+    private static final Logger log = LoggerFactory.getLogger(ControlRequestController.class);
+
     private final ControlRequestService controlRequestService;
     private final RequestChangeLogService changeLogService;
 
-    public ControlRequestController(ControlRequestService controlRequestService, RequestChangeLogService changeLogService) {
+    public ControlRequestController(
+            ControlRequestService controlRequestService,
+            RequestChangeLogService changeLogService) {
+
         this.controlRequestService = controlRequestService;
         this.changeLogService = changeLogService;
     }
@@ -28,7 +35,6 @@ public class ControlRequestController {
     /**
      * API 1: Request Details
      * Endpoint: GET /api/v1/requests/{id}
-     * Returns HTTP 200 OK or 404 Not Found (handled by GlobalExceptionHandler).
      */
     @GetMapping("/{id}")
     public ResponseEntity<ControlRequestDTO> getRequestDetails(@PathVariable Long id) {
@@ -39,22 +45,22 @@ public class ControlRequestController {
     /**
      * API 2: Request Status Details
      * Endpoint: GET /api/v1/requests/{id}/logs
-     * Returns all change logs for a given request.
      */
     @GetMapping("/{id}/logs")
     public ResponseEntity<List<ChangeLogDTO>> getRequestStatusDetails(@PathVariable Long id) {
-        // We use the separate service to retrieve logs by the request's record_id
+        log.info("➡️ [Controller] Received request for logs of request_id={}", id);
+
         List<ChangeLogDTO> logs = changeLogService.getChangeLogsByRequestId(id);
-        
-        // Note: For API 2, returning an empty list [] is generally preferred over 404 
-        // if the request (parent) exists but has no logs yet.
+
+        log.info("⬅️ [Controller] Returning {} log entries for request_id={}",
+                 logs != null ? logs.size() : null,
+                 id);
+
         return ResponseEntity.ok(logs);
     }
 
     /**
      * API 3: Request Tracker
-     * Endpoint: GET /api/v1/requests/{id}/tracker
-     * Returns the parent request and its children logs in a single DTO.
      */
     @GetMapping("/{id}/tracker")
     public ResponseEntity<RequestTrackerDTO> getRequestTracker(@PathVariable Long id) {
@@ -62,11 +68,8 @@ public class ControlRequestController {
         return ResponseEntity.ok(dto);
     }
 
-    // ... inside ControlRequestController.java
-
     /**
      * API 0: All Request Details (New)
-     * Endpoint: GET /api/v1/requests
      */
     @GetMapping
     public ResponseEntity<List<ControlRequestDTO>> getAllRequests() {

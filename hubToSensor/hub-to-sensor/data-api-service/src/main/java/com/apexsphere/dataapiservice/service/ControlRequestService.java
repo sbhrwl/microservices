@@ -9,7 +9,7 @@ import com.apexsphere.dataapiservice.repository.ControlRequestRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List; // <-- FIXED: Added missing List import
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +23,6 @@ public class ControlRequestService {
 
     /**
      * API 1: Request Details
-     * Retrieves a ControlRequest by ID and maps it to a ControlRequestDTO.
      */
     public ControlRequestDTO getRequestDetails(Long id) {
         ControlRequest request = controlRequestRepository.findById(id)
@@ -34,12 +33,9 @@ public class ControlRequestService {
 
     /**
      * API 3: Request Tracker
-     * Retrieves the ControlRequest and its associated ChangeLogs (using the JPA @OneToMany mapping)
-     * and maps them to a RequestTrackerDTO.
      */
     @Transactional(readOnly = true)
     public RequestTrackerDTO getRequestTracker(Long id) {
-        // FindById is sufficient; the @OneToMany relationship will load the logs (depending on FetchType).
         ControlRequest request = controlRequestRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Control Request not found with ID: " + id));
 
@@ -47,8 +43,7 @@ public class ControlRequestService {
     }
 
     /**
-     * Retrieves ALL Control Requests and maps them to a list of DTOs.
-     * Required for the initial list view.
+     * Get all requests
      */
     @Transactional(readOnly = true)
     public List<ControlRequestDTO> getAllRequestDetails() {
@@ -57,7 +52,7 @@ public class ControlRequestService {
             .collect(Collectors.toList());
     }
 
-    // --- Mapping Methods (private) ---
+    // --- Mapping Methods ---
 
     private ControlRequestDTO mapToControlRequestDTO(ControlRequest request) {
         return new ControlRequestDTO(
@@ -69,7 +64,7 @@ public class ControlRequestService {
             request.getStatus()
         );
     }
-    
+
     private RequestTrackerDTO mapToRequestTrackerDTO(ControlRequest request) {
         RequestTrackerDTO dto = new RequestTrackerDTO();
         dto.setId(request.getId());
@@ -79,7 +74,7 @@ public class ControlRequestService {
         dto.setSensorId(request.getSensorId());
         dto.setStatus(request.getStatus());
 
-        // Map the List of ChangeLog Entities to a List of ChangeLogDTOs
+        // Map ChangeLogs
         if (request.getChangeLogs() != null) {
             dto.setChangeLogs(request.getChangeLogs().stream()
                 .map(this::mapToChangeLogDTO)
@@ -92,7 +87,7 @@ public class ControlRequestService {
     private ChangeLogDTO mapToChangeLogDTO(com.apexsphere.dataapiservice.model.RequestChangeLog log) {
         return new ChangeLogDTO(
             log.getId(),
-            log.getChangeDescription(),
+            log.getDescription(),          // ✅ FIXED: use 'getDescription()'
             log.getChangeTimestamp()
         );
     }

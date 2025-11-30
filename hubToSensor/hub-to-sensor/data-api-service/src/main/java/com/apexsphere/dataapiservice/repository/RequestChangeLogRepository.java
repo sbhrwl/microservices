@@ -10,8 +10,7 @@ import java.util.List;
 public interface RequestChangeLogRepository extends JpaRepository<RequestChangeLog, Long> {
 
     /**
-     * Custom method for API 2: Request Status Details.
      * Finds all change logs associated with a specific Control Request ID.
      */
-    List<RequestChangeLog> findByRecordId(Long recordId);
+    List<RequestChangeLog> findByControlRequestId(Long controlRequestId);
 }

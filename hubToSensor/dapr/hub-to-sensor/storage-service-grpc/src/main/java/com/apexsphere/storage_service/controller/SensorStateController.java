@@ -5,7 +5,9 @@ import io.dapr.client.DaprClient;
 import io.dapr.client.DaprClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -24,11 +26,12 @@ public class SensorStateController {
     /**
      * GET /sensor/{sensorId}
      * Returns the SensorState stored in Dapr state store.
+     * Returns 404 if not found.
      */
     @GetMapping("/{sensorId}")
     public Mono<SensorState> getSensorState(@PathVariable String sensorId) {
         if (sensorId == null || sensorId.isBlank()) {
-            return Mono.empty();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "sensorId is missing");
         }
 
         final String key = "sensor:" + sensorId.trim();
@@ -36,6 +39,15 @@ public class SensorStateController {
         log.info("[controller:get] Fetching sensor state for {}", sensorId);
 
         return daprClient.getState(STATE_STORE_NAME, key, SensorState.class)
-                .map(state -> state.getValue());
+                .flatMap(state -> {
+                    SensorState val = state.getValue();
+                    if (val == null) {
+                        return Mono.error(new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Sensor state not found for sensorId: " + sensorId
+                        ));
+                    }
+                    return Mono.just(val);
+                });
     }
 }

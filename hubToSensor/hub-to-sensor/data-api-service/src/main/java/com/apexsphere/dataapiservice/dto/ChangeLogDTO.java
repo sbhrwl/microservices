@@ -5,19 +5,17 @@ import java.time.LocalDateTime;
 public class ChangeLogDTO {
 
     private Long id;
-    private String changeDescription;
+    private String description;       // maps to DB column 'description'
     private LocalDateTime changeTimestamp;
-
-    // We exclude the 'recordId' foreign key for API consumer cleanliness.
 
     // --- Constructors ---
 
     public ChangeLogDTO() {
     }
 
-    public ChangeLogDTO(Long id, String changeDescription, LocalDateTime changeTimestamp) {
+    public ChangeLogDTO(Long id, String description, LocalDateTime changeTimestamp) {
         this.id = id;
-        this.changeDescription = changeDescription;
+        this.description = description;
         this.changeTimestamp = changeTimestamp;
     }
 
@@ -31,12 +29,12 @@ public class ChangeLogDTO {
         this.id = id;
     }
 
-    public String getChangeDescription() {
-        return changeDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setChangeDescription(String changeDescription) {
-        this.changeDescription = changeDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getChangeTimestamp() {
