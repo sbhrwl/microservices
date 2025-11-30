@@ -26,8 +26,8 @@ public class ControlRequestService {
      */
     public ControlRequestDTO getRequestDetails(Long id) {
         ControlRequest request = controlRequestRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Control Request not found with ID: " + id));
-
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Control Request not found with ID: " + id));
         return mapToControlRequestDTO(request);
     }
 
@@ -37,8 +37,8 @@ public class ControlRequestService {
     @Transactional(readOnly = true)
     public RequestTrackerDTO getRequestTracker(Long id) {
         ControlRequest request = controlRequestRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Control Request not found with ID: " + id));
-
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Control Request not found with ID: " + id));
         return mapToRequestTrackerDTO(request);
     }
 
@@ -47,21 +47,22 @@ public class ControlRequestService {
      */
     @Transactional(readOnly = true)
     public List<ControlRequestDTO> getAllRequestDetails() {
-        return controlRequestRepository.findAll().stream()
-            .map(this::mapToControlRequestDTO)
-            .collect(Collectors.toList());
+        return controlRequestRepository.findAllByOrderByIdDesc()
+                .stream()
+                .map(this::mapToControlRequestDTO)
+                .collect(Collectors.toList());
     }
 
     // --- Mapping Methods ---
 
     private ControlRequestDTO mapToControlRequestDTO(ControlRequest request) {
         return new ControlRequestDTO(
-            request.getId(),
-            request.getDuration(),
-            request.getOperation(),
-            request.getRelayNumber(),
-            request.getSensorId(),
-            request.getStatus()
+                request.getId(),
+                request.getDuration(),
+                request.getOperation(),
+                request.getRelayNumber(),
+                request.getSensorId(),
+                request.getStatus()
         );
     }
 
@@ -76,19 +77,19 @@ public class ControlRequestService {
 
         // Map ChangeLogs
         if (request.getChangeLogs() != null) {
-            dto.setChangeLogs(request.getChangeLogs().stream()
-                .map(this::mapToChangeLogDTO)
-                .collect(Collectors.toList()));
+            dto.setChangeLogs(request.getChangeLogs()
+                    .stream()
+                    .map(this::mapToChangeLogDTO)
+                    .collect(Collectors.toList()));
         }
-
         return dto;
     }
 
     private ChangeLogDTO mapToChangeLogDTO(com.apexsphere.dataapiservice.model.RequestChangeLog log) {
         return new ChangeLogDTO(
-            log.getId(),
-            log.getDescription(),          // ✅ FIXED: use 'getDescription()'
-            log.getChangeTimestamp()
+                log.getId(),
+                log.getDescription(),
+                log.getChangeTimestamp()
         );
     }
 }

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RequestTrackerComponent } from './request-tracker';
+import { RequestTrackerComponent } from './request-tracker.component';
 
 describe('RequestTrackerComponent', () => {
   let component: RequestTrackerComponent;

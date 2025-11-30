@@ -18,24 +18,22 @@ public class RequestChangeLogService {
     }
 
     /**
-     * API 2: Request Status Details
-     * Retrieves all Change Logs for a given Control Request ID.
+     * Retrieves all Change Logs for a given Control Request ID, ordered by timestamp ascending.
      */
     public List<ChangeLogDTO> getChangeLogsByRequestId(Long requestId) {
-        List<RequestChangeLog> logs = changeLogRepository.findByControlRequestId(requestId);
+        List<RequestChangeLog> logs = changeLogRepository
+                .findByControlRequestIdOrderByChangeTimestampAsc(requestId); // <-- updated
 
-        // Map the list of entities to DTOs
         return logs.stream()
                 .map(this::mapToChangeLogDTO)
                 .collect(Collectors.toList());
     }
 
-    // --- Mapping Method (private) ---
     private ChangeLogDTO mapToChangeLogDTO(RequestChangeLog log) {
         return new ChangeLogDTO(
-            log.getId(),
-            log.getDescription(),        // use 'description' instead of 'changeDescription'
-            log.getChangeTimestamp()
+                log.getId(),
+                log.getDescription(), // make sure it matches DB column
+                log.getChangeTimestamp()
         );
     }
 }

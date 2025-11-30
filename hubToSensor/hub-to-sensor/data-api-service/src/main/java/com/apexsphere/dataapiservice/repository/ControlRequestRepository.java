@@ -4,8 +4,9 @@ import com.apexsphere.dataapiservice.model.ControlRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ControlRequestRepository extends JpaRepository<ControlRequest, Long> {
-    // Spring Data JPA automatically provides methods like save(), findById(), and findAll().
-    // No custom code is required here for API 1 (Request Details) or API 3 (Request Tracker).
+    List<ControlRequest> findAllByOrderByIdDesc();
 }

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RequestTrackerComponent } from './request-tracker/request-tracker';
+import { RequestTrackerComponent } from './request-tracker/request-tracker.component';
 
 @Component({
   selector: 'app-root',

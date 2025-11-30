@@ -1,0 +1,67 @@
+<div class="tracker-container">
+    <h1>Control Request Tracker</h1>
+  
+    <!-- Error -->
+    <p *ngIf="error()" class="error-message">{{ error() }}</p>
+  
+    <!-- Loading -->
+    <p *ngIf="isLoading()">Loading requests...</p>
+  
+    <div *ngIf="!isLoading() && !error()" class="tracker-content">
+      <!-- Request List -->
+      <div class="request-list">
+        <h2>All Requests ({{ allRequests().length }})</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Sensor ID</th>
+              <th>Operation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of allRequests(); trackBy: trackByRequestId"
+                [class.selected]="request.id === selectedRequest()?.id"
+                (click)="selectRequest(request)">
+              <td>{{ request.id }}</td>
+              <td>{{ request.sensorId }}</td>
+              <td>{{ request.operation }}</td>
+              <td>{{ request.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Change Logs -->
+      <div class="log-details">
+        <h2 *ngIf="selectedRequest()">Change Logs for Request ID: {{ selectedRequest()?.id }}</h2>
+  
+        <p *ngIf="selectedRequest() && changeLogs().length === 0" class="no-logs">
+          No change logs found for this request.
+        </p>
+  
+        <table *ngIf="selectedRequest() && changeLogs().length > 0">
+          <thead>
+            <tr>
+              <th>Change Log ID</th>
+              <th>Timestamp</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of changeLogs(); trackBy: trackByLogId">
+              <td>{{ log.id }}</td>
+              <td>{{ log.changeTimestamp | date: 'medium' }}</td>
+              <td>{{ log.changeDescription }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <p *ngIf="!selectedRequest()" class="selection-prompt">
+          Click a request on the left to view its history.
+        </p>
+      </div>
+    </div>
+  </div>
+  

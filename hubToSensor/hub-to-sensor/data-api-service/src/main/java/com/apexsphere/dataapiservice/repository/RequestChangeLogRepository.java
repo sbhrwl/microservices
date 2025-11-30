@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface RequestChangeLogRepository extends JpaRepository<RequestChangeLog, Long> {
 
-    /**
-     * Finds all change logs associated with a specific Control Request ID.
-     */
-    List<RequestChangeLog> findByControlRequestId(Long controlRequestId);
+    // Fetch logs by control_request_id ordered by change_timestamp ascending
+    List<RequestChangeLog> findByControlRequestIdOrderByChangeTimestampAsc(Long controlRequestId);
 }
