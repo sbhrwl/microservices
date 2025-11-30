@@ -20,7 +20,7 @@ logging:
   level:
     org.springframework.amqp: INFO
     com.apexsphere.flexibility_bridge: DEBUG
-    io.grpc: DEBUG
+    io.grpc: ERROR
     
 grpc:
   client:
