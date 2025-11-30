@@ -2,6 +2,7 @@
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
+  - [Get sensor state](#get-sensor-state)
 ## Properties
 - [application.yml](src/main/resources/application.yml)
 - [postgres-statestore.yaml](dapr/config-files/postgres-statestore.yaml)
@@ -75,4 +76,15 @@ Type "help" for help.
 mydatabase=# select * from control_requests;
 
 mydatabase=# select * from request_change_log;
+```
+### Get sensor state
+- `Get`: `http://localhost:8086/sensor/sensor-003`
+- Reponse
+```json
+{
+    "sensorId": "sensor-003",
+    "status": "DIRECT-ON",
+    "lastRequestId": "185",
+    "lastUpdated": "2025-11-30T13:59:19.140757Z"
+}
 ```
