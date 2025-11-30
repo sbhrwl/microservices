@@ -5,6 +5,7 @@
 - [Response](#response)
   - [Success](#success)
   - [Failure](#failure)
+- [Get sensor state](#get-sensor-state)
 - [Verify from kubectl](#verify-from-kubectl)
 ## Payload
 ```json
@@ -309,6 +310,18 @@ mydatabase=# SELECT * FROM request_change_log;
  20 |                111 | Request status: Failed (Code: 404, Message: Target sensor 'sensor-001' not found or offline.)                     | 2025-11-26 08:53:01.919252+00
 (10 rows)
 ```
+## Get sensor state
+- `Get`: `http://localhost:8086/sensor/sensor-003`
+- Reponse
+```json
+{
+    "sensorId": "sensor-003",
+    "status": "DIRECT-ON",
+    "lastRequestId": "185",
+    "lastUpdated": "2025-11-30T13:59:19.140757Z"
+}
+```
+
 ## Verify from kubectl
 - Data API
 ```
