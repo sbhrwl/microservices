@@ -14,7 +14,7 @@ export interface ControlRequestDTO {
 
 export interface ChangeLogDTO {
   id: number;
-  changeDescription: string;
+  description: string;       // ✅ match backend field
   changeTimestamp: string;
 }
 

@@ -1,6 +1,6 @@
 <div class="tracker-container">
-    <h1>Control Request Tracker</h1>
-  
+    <!-- Main title -->
+ 
     <!-- Error -->
     <p *ngIf="error()" class="error-message">{{ error() }}</p>
   
@@ -53,7 +53,7 @@
             <tr *ngFor="let log of changeLogs(); trackBy: trackByLogId">
               <td>{{ log.id }}</td>
               <td>{{ log.changeTimestamp | date: 'medium' }}</td>
-              <td>{{ log.changeDescription }}</td>
+              <td>{{ log.description }}</td>
             </tr>
           </tbody>
         </table>
