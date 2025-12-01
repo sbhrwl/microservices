@@ -1,69 +1,42 @@
 package com.apexsphere.storage_service.service;
 
-import com.apexsphere.storage_service.model.Record;
-import com.apexsphere.storage_service.model.RequestChangeLog; // New Import
-import com.apexsphere.storage_service.repository.RecordRepository;
-import com.apexsphere.storage_service.repository.RequestChangeLogRepository; // New Import
+import com.apexsphere.storage_service.service.postgres.PostgresRecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Added for transactional safety
 
-import java.util.Optional;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class RecordService {
 
-    private final RecordRepository recordRepository;
-    private final RequestChangeLogRepository changeLogRepository; // New Dependency
-
-    // Constructor updated to include the new repository
-    public RecordService(RecordRepository recordRepository, RequestChangeLogRepository changeLogRepository) {
-        this.recordRepository = recordRepository;
-        this.changeLogRepository = changeLogRepository;
+    private static final Logger log = LoggerFactory.getLogger(RecordService.class);
+    private final PostgresRecordService postgresRecordService;
+    public RecordService(PostgresRecordService postgresRecordService) {
+        this.postgresRecordService = postgresRecordService;
     }
 
-    @Transactional // Ensures both save and log entry succeed or fail together
-    public Record saveRecord(Record record) {
-        // Add business logic, validation, etc. before saving
-        Record savedRecord = recordRepository.save(record);
+    public RecordResponse handleSave(RecordRequest request) {
+        // Save in Postgres (source of truth)
+        var savedRequest = postgresRecordService.save(request);
 
-        // 1. Log the creation
-        RequestChangeLog log = new RequestChangeLog(
-            savedRecord.getId(),
-            "Control Requested"
-        );
-        changeLogRepository.save(log);
-
-        return savedRecord;
+        return RecordResponse.newBuilder()
+                .setSuccess(true)
+                .setMessage("Record saved successfully with ID: " + savedRequest.getRecordId())
+                .setRecordId(savedRequest.getRecordId())
+                .build();
     }
-    
-    // Updates the status of an existing record
-    @Transactional // Ensures both update and log entry succeed or fail together
-    public Record updateRecordStatus(Record record) {
-        
-        // 1. Find the existing record (Example: find by ID if the Record object contains it)
-        Optional<Record> existingRecordOpt = recordRepository.findById(record.getId());
-        
-        if (existingRecordOpt.isEmpty()) {
-            // Handle error: Record not found
-            throw new RuntimeException("Record not found for update.");
-        }
-        
-        Record existingRecord = existingRecordOpt.get();
-        // String oldStatus = existingRecord.getStatus();
 
-        // 2. Update only the status field
-        existingRecord.setStatus(record.getStatus());
-        
-        // 3. Save the updated record
-        Record updatedRecord = recordRepository.save(existingRecord);
+    public RecordResponse handleUpdate(RecordRequest request) {
+        // Update Postgres and get a RecordRequest with sensorId populated
+        var updatedRequest = postgresRecordService.update(request);
 
-        // 4. Log the update
-        RequestChangeLog log = new RequestChangeLog(
-            updatedRecord.getId(),
-            updatedRecord.getStatus()
-        );
-        changeLogRepository.save(log);
-
-        return updatedRecord;
+        return RecordResponse.newBuilder()
+                .setSuccess(true)
+                .setMessage("Record updated successfully: " + updatedRequest.getStatus())
+                .setRecordId(updatedRequest.getRecordId())
+                .build();
     }
 }
