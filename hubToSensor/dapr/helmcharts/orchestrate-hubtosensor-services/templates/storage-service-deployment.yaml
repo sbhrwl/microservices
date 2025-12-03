@@ -18,6 +18,7 @@ spec:
         dapr.io/app-id: "{{ .Values.services.storageService.daprAppId }}"
         dapr.io/http-port: "{{ .Values.services.storageService.httpPort }}"
         dapr.io/grpc-port: "{{ .Values.services.storageService.grpcPort }}"
+        dapr.io/config: "dapr-postgres-statestore"
     spec:
       containers:
         - name: {{ .Values.services.storageService.name }}

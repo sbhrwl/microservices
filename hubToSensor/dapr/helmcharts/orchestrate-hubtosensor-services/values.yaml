@@ -1,6 +1,6 @@
 global:
-  # Use host.docker.internal for Docker Desktop / Kubernetes access to host: 10.158.22.221
-  hostIp: "host.docker.internal"
+  # Use host.docker.internal for Docker Desktop / Kubernetes access to host: host.docker.internal
+  hostIp: "10.158.22.221"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
 
