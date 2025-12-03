@@ -129,6 +129,20 @@ ui-app-service                      NodePort    10.106.186.119   <none>        8
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
   * `ui-app` → `http://localhost:30880/`
+* Database verification
+```sql
+PS C:\Users\sabharwalr> psql -h localhost -U myuser -d mydatabase
+Password for user myuser:
+
+psql (17.6, server 16.9 (Debian 16.9-1.pgdg120+1))
+WARNING: Console code page (850) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+mydatabase=# select * from control_requests;
+mydatabase=# select * from request_change_log;
+```
 ## Update Helm release
 ```
 helm upgrade --install ocs-h2s-release .
