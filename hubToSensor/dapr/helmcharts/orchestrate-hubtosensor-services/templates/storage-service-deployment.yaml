@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.services.storageService.name }}
+  labels:
+    app: {{ .Values.services.storageService.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.services.storageService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.storageService.name }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "{{ .Values.services.storageService.daprAppId }}"
+        dapr.io/http-port: "{{ .Values.services.storageService.httpPort }}"
+        dapr.io/grpc-port: "{{ .Values.services.storageService.grpcPort }}"
+    spec:
+      containers:
+        - name: {{ .Values.services.storageService.name }}
+          image: "{{ .Values.services.storageService.image }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.storageService.httpPort }}
+            - containerPort: {{ .Values.services.storageService.grpcPort }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.services.storageService.httpPort }}"
+            - name: DAPR_APP_ID
+              value: "{{ .Values.services.storageService.daprAppId }}"
+            - name: ENABLE_STATE_STORE
+              value: "{{ .Values.services.storageService.enableStateStore }}"
+            - name: DAPR_STATE_STORE_NAME
+              value: "{{ .Values.services.storageService.daprStateStoreName }}"
+            - name: DB_HOST
+              value: "{{ .Values.postgres.host }}"
+            - name: DB_PORT
+              value: "{{ .Values.postgres.port }}"
+            - name: DB_NAME
+              value: "{{ .Values.postgres.database }}"
+            - name: DB_USER
+              value: "{{ .Values.postgres.username }}"
+            - name: DB_PASS
+              value: "{{ .Values.postgres.password }}"

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.services.hesSimulator.name }}
+  labels:
+    app: {{ .Values.services.hesSimulator.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.services.hesSimulator.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.hesSimulator.name }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "{{ .Values.services.hesSimulator.name }}"
+        dapr.io/app-port: "{{ .Values.services.hesSimulator.port }}"
+        dapr.io/pubsub: "{{ .Values.services.hesSimulator.daprPubsubName }}"
+    spec:
+      containers:
+        - name: {{ .Values.services.hesSimulator.name }}
+          image: "{{ .Values.services.hesSimulator.image }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.hesSimulator.port }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.services.hesSimulator.port }}"
+            - name: DAPR_PUBSUB_NAME
+              value: "{{ .Values.services.hesSimulator.daprPubsubName }}"
+            - name: DAPR_HES_REQUEST_TOPIC
+              value: "{{ .Values.services.hesSimulator.hesRequestTopic }}"
+            - name: DAPR_HES_RESPONSE_TOPIC
+              value: "{{ .Values.services.hesSimulator.hesResponseTopic }}"

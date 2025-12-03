@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.services.protocolAdapter.name }}
+  labels:
+    app: {{ .Values.services.protocolAdapter.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.services.protocolAdapter.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.protocolAdapter.name }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "{{ .Values.services.protocolAdapter.name }}"
+        dapr.io/app-port: "{{ .Values.services.protocolAdapter.port }}"
+        dapr.io/pubsub: "{{ .Values.services.protocolAdapter.daprPubsubName }}"
+    spec:
+      containers:
+        - name: {{ .Values.services.protocolAdapter.name }}
+          image: "{{ .Values.services.protocolAdapter.image }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.protocolAdapter.port }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.services.protocolAdapter.port }}"
+            - name: DAPR_PUBSUB_NAME
+              value: "{{ .Values.services.protocolAdapter.daprPubsubName }}"
+            - name: DAPR_CONNECTOR_REQUEST_TOPIC
+              value: "{{ .Values.services.protocolAdapter.connectorRequestTopic }}"
+            - name: DAPR_CONNECTOR_RESPONSE_TOPIC
+              value: "{{ .Values.services.protocolAdapter.connectorResponseTopic }}"
+            - name: DAPR_HES_REQUEST_TOPIC
+              value: "{{ .Values.services.protocolAdapter.hesRequestTopic }}"
+            - name: DAPR_HES_RESPONSE_TOPIC
+              value: "{{ .Values.services.protocolAdapter.hesResponseTopic }}"
+            - name: STORAGE_SERVICE_HOST
+              value: "{{ .Values.services.protocolAdapter.storageServiceHost }}"
+            - name: STORAGE_SERVICE_PORT
+              value: "{{ .Values.services.protocolAdapter.storageServicePort }}"

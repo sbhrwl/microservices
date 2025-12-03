@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.services.flexibilityHubSimulator.name }}
+  labels:
+    app: {{ .Values.services.flexibilityHubSimulator.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.services.flexibilityHubSimulator.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.flexibilityHubSimulator.name }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "{{ .Values.services.flexibilityHubSimulator.name }}"
+        dapr.io/app-port: "{{ .Values.services.flexibilityHubSimulator.port }}"
+        dapr.io/pubsub: "{{ .Values.services.flexibilityHubSimulator.daprPubsubName }}"
+    spec:
+      containers:
+        - name: {{ .Values.services.flexibilityHubSimulator.name }}
+          image: "{{ .Values.services.flexibilityHubSimulator.image }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.flexibilityHubSimulator.port }}
+          env:
+            - name: SERVER_PORT
+              value: "{{ .Values.services.flexibilityHubSimulator.port }}"
+            - name: DAPR_PUBSUB_NAME
+              value: "{{ .Values.services.flexibilityHubSimulator.daprPubsubName }}"
+            - name: DAPR_REQUEST_TOPIC
+              value: "{{ .Values.services.flexibilityHubSimulator.daprRequestTopic }}"
+            - name: DAPR_RESPONSE_TOPIC
+              value: "{{ .Values.services.flexibilityHubSimulator.daprResponseTopic }}"

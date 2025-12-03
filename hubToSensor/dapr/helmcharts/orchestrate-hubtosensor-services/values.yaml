@@ -1,0 +1,68 @@
+global:
+  # The IP address of your host machine where external services (DB, RabbitMQ) are running.
+  # This is crucial for services running in Kubernetes to reach external resources.
+  hostIp: "10.49.148.64"
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
+
+rabbitmq:
+  connectionString: "amqp://admin:admin@${global.hostIp}:5672"
+  pubsubName: "rabbitmq-pubsub"
+
+postgres:
+  host: "${global.hostIp}"
+  port: 5432
+  database: "mydatabase"
+  username: "myuser"
+  password: "mypassword"
+  stateStoreName: "postgres-statestore"
+
+services:
+  flexibilityHubSimulator:
+    name: "flexibility-hub-simulator"
+    image: "sbhrwldocker/flexibility-hub-simulator:dapr-latest"
+    port: 8081
+    daprPubsubName: "{{ .Values.rabbitmq.pubsubName }}"
+    daprRequestTopic: "flexibility-hub.request"
+    daprResponseTopic: "flexibility-hub.response"
+
+  flexibilityBridge:
+    name: "flexibility-bridge"
+    image: "sbhrwldocker/flexibility-bridge:dapr-latest"
+    port: 8082
+    daprPubsubName: "{{ .Values.rabbitmq.pubsubName }}"
+    hubRequestTopic: "flexibility-hub.request"
+    connectorRequestTopic: "connector.request"
+    connectorResponseTopic: "connector.response"
+    hubResponseTopic: "flexibility-hub.response"
+    storageServiceHost: "${global.hostIp}"
+    storageServicePort: 9090
+
+  protocolAdapter:
+    name: "protocol-adapter"
+    image: "sbhrwldocker/protocol-adapter:dapr-latest"
+    port: 8083
+    daprPubsubName: "{{ .Values.rabbitmq.pubsubName }}"
+    connectorRequestTopic: "connector.request"
+    connectorResponseTopic: "connector.response"
+    hesRequestTopic: "hes.request"
+    hesResponseTopic: "hes.response"
+    storageServiceHost: "${global.hostIp}"
+    storageServicePort: 9090
+
+  storageService:
+    name: "storage-service"
+    image: "sbhrwldocker/storage-service:dapr-latest"
+    httpPort: 8086
+    grpcPort: 9090
+    daprAppId: "storage-service"
+    daprStateStoreName: "{{ .Values.postgres.stateStoreName }}"
+    enableStateStore: true
+
+  hesSimulator:
+    name: "hes-simulator"
+    image: "sbhrwldocker/hes-simulator:dapr-latest"
+    port: 8084
+    daprPubsubName: "{{ .Values.rabbitmq.pubsubName }}"
+    hesRequestTopic: "hes.request"
+    hesResponseTopic: "hes.response"
