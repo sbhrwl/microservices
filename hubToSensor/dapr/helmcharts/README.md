@@ -80,6 +80,9 @@ orchestrate-hubtosensor-services/
 kubectl delete -f orchestrate-hubtosensor-services.yaml
 ```
 ## Install Helm release
+- Pre-requisites: to clean the dapr componenet which were used when running app locally
+  - `kubectl delete component rabbitmq-pubsub`
+  - `kubectl delete component postgres-statestore`
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 ```powershell
 helm install ocs-h2s-release .
