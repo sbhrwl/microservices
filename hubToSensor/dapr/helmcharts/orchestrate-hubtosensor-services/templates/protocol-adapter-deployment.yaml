@@ -18,6 +18,7 @@ spec:
         dapr.io/app-id: "{{ .Values.services.protocolAdapter.name }}"
         dapr.io/app-port: "{{ .Values.services.protocolAdapter.port }}"
         dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
+        dapr.io/config: "dapr-rabbitmq"
     spec:
       containers:
         - name: {{ .Values.services.protocolAdapter.name }}
