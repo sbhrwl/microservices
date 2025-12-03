@@ -22,6 +22,7 @@ services:
     name: "flexibility-hub-simulator"
     image: "sbhrwldocker/flexibility-hub-simulator:dapr-latest"
     port: 8081
+    nodePort: 30081
     daprPubsubName: "{{ .Values.rabbitmq.pubsubName }}"
     daprRequestTopic: "flexibility-hub.request"
     daprResponseTopic: "flexibility-hub.response"
@@ -55,6 +56,7 @@ services:
     image: "sbhrwldocker/storage-service:dapr-latest"
     httpPort: 8086
     grpcPort: 9090
+    nodePort: 30086
     daprAppId: "storage-service"
     daprStateStoreName: "{{ .Values.postgres.stateStoreName }}"
     enableStateStore: true
