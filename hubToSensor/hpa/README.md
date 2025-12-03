@@ -126,7 +126,7 @@ Events:
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
-  * `ui-app` → `http://localhost:30880/`
+  * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
 * Database verification
 ```sql
 PS C:\Users\sabharwalr> psql -h localhost -U myuser -d mydatabase
