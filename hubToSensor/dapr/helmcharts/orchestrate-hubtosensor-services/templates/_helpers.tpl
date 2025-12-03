@@ -80,17 +80,3 @@ Create the name of the service account to use
 {{- define "hesSimulator.name" -}}
 {{- .Values.services.hesSimulator.name -}}
 {{- end }}
-
-{{/*
-Service Name: dataApi
-*/}}
-{{- define "dataApi.name" -}}
-{{- .Values.dataApi.name -}}
-{{- end }}
-
-{{/*
-Service Name: uiApp
-*/}}
-{{- define "uiApp.name" -}}
-{{- .Values.uiApp.name -}}
-{{- end }}
