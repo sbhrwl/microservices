@@ -34,7 +34,7 @@ spec:
             - name: ENABLE_STATE_STORE
               value: "{{ .Values.services.storageService.enableStateStore }}"
             - name: DAPR_STATE_STORE_NAME
-              value: "{{ .Values.services.storageService.daprStateStoreName }}"
+              value: "{{ .Values.postgres.stateStoreName }}"
             - name: DB_HOST
               value: "{{ .Values.postgres.host }}"
             - name: DB_PORT

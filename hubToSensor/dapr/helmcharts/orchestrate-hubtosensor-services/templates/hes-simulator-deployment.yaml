@@ -17,7 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.hesSimulator.name }}"
         dapr.io/app-port: "{{ .Values.services.hesSimulator.port }}"
-        dapr.io/pubsub: "{{ .Values.services.hesSimulator.daprPubsubName }}"
+        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
     spec:
       containers:
         - name: {{ .Values.services.hesSimulator.name }}
@@ -29,7 +29,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.services.hesSimulator.port }}"
             - name: DAPR_PUBSUB_NAME
-              value: "{{ .Values.services.hesSimulator.daprPubsubName }}"
+              value: "{{ .Values.rabbitmq.pubsubName }}"
             - name: DAPR_HES_REQUEST_TOPIC
               value: "{{ .Values.services.hesSimulator.hesRequestTopic }}"
             - name: DAPR_HES_RESPONSE_TOPIC

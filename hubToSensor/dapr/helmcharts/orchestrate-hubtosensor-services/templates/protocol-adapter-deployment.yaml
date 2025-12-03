@@ -17,7 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.protocolAdapter.name }}"
         dapr.io/app-port: "{{ .Values.services.protocolAdapter.port }}"
-        dapr.io/pubsub: "{{ .Values.services.protocolAdapter.daprPubsubName }}"
+        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
     spec:
       containers:
         - name: {{ .Values.services.protocolAdapter.name }}
@@ -29,7 +29,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.services.protocolAdapter.port }}"
             - name: DAPR_PUBSUB_NAME
-              value: "{{ .Values.services.protocolAdapter.daprPubsubName }}"
+              value: "{{ .Values.rabbitmq.pubsubName }}"
             - name: DAPR_CONNECTOR_REQUEST_TOPIC
               value: "{{ .Values.services.protocolAdapter.connectorRequestTopic }}"
             - name: DAPR_CONNECTOR_RESPONSE_TOPIC
@@ -39,6 +39,6 @@ spec:
             - name: DAPR_HES_RESPONSE_TOPIC
               value: "{{ .Values.services.protocolAdapter.hesResponseTopic }}"
             - name: STORAGE_SERVICE_HOST
-              value: "{{ .Values.services.protocolAdapter.storageServiceHost }}"
+              value: "{{ .Values.global.hostIp }}"
             - name: STORAGE_SERVICE_PORT
               value: "{{ .Values.services.protocolAdapter.storageServicePort }}"

@@ -17,7 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.flexibilityHubSimulator.name }}"
         dapr.io/app-port: "{{ .Values.services.flexibilityHubSimulator.port }}"
-        dapr.io/pubsub: "{{ .Values.services.flexibilityHubSimulator.daprPubsubName }}"
+        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
     spec:
       containers:
         - name: {{ .Values.services.flexibilityHubSimulator.name }}
@@ -29,7 +29,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.services.flexibilityHubSimulator.port }}"
             - name: DAPR_PUBSUB_NAME
-              value: "{{ .Values.services.flexibilityHubSimulator.daprPubsubName }}"
+              value: "{{ .Values.rabbitmq.pubsubName }}"
             - name: DAPR_REQUEST_TOPIC
               value: "{{ .Values.services.flexibilityHubSimulator.daprRequestTopic }}"
             - name: DAPR_RESPONSE_TOPIC

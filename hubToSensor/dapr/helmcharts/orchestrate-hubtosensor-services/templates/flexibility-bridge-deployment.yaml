@@ -17,7 +17,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.flexibilityBridge.name }}"
         dapr.io/app-port: "{{ .Values.services.flexibilityBridge.port }}"
-        dapr.io/pubsub: "{{ .Values.services.flexibilityBridge.daprPubsubName }}"
+        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
     spec:
       containers:
         - name: {{ .Values.services.flexibilityBridge.name }}
@@ -29,7 +29,7 @@ spec:
             - name: SERVER_PORT
               value: "{{ .Values.services.flexibilityBridge.port }}"
             - name: DAPR_PUBSUB_NAME
-              value: "{{ .Values.services.flexibilityBridge.daprPubsubName }}"
+              value: "{{ .Values.rabbitmq.pubsubName }}"
             - name: DAPR_HUB_REQUEST_TOPIC
               value: "{{ .Values.services.flexibilityBridge.hubRequestTopic }}"
             - name: DAPR_CONNECTOR_REQUEST_TOPIC
@@ -39,6 +39,6 @@ spec:
             - name: DAPR_HUB_RESPONSE_TOPIC
               value: "{{ .Values.services.flexibilityBridge.hubResponseTopic }}"
             - name: STORAGE_SERVICE_HOST
-              value: "{{ .Values.services.flexibilityBridge.storageServiceHost }}"
+              value: "{{ .Values.global.hostIp }}"
             - name: STORAGE_SERVICE_PORT
               value: "{{ .Values.services.flexibilityBridge.storageServicePort }}"
