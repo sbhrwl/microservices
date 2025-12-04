@@ -40,6 +40,6 @@ spec:
             - name: DAPR_HUB_RESPONSE_TOPIC
               value: "{{ .Values.services.flexibilityBridge.hubResponseTopic }}"
             - name: STORAGE_SERVICE_HOST
-              value: "{{ .Values.global.hostIp }}"
+              value: "{{ .Values.services.storageService.name }}"
             - name: STORAGE_SERVICE_PORT
-              value: "{{ .Values.services.flexibilityBridge.storageServicePort }}"
+              value: "{{ .Values.services.storageService.grpcPort }}"

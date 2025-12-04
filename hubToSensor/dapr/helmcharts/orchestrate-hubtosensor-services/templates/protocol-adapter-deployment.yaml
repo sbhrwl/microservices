@@ -40,6 +40,6 @@ spec:
             - name: DAPR_HES_RESPONSE_TOPIC
               value: "{{ .Values.services.protocolAdapter.hesResponseTopic }}"
             - name: STORAGE_SERVICE_HOST
-              value: "{{ .Values.global.hostIp }}"
+              value: "{{ .Values.services.storageService.name }}"
             - name: STORAGE_SERVICE_PORT
-              value: "{{ .Values.services.protocolAdapter.storageServicePort }}"
+              value: "{{ .Values.services.storageService.grpcPort }}"

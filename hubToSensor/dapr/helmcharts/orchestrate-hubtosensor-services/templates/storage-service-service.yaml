@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.services.storageService.name }}-service
+  name: {{ .Values.services.storageService.name }}
   labels:
     app: {{ .Values.services.storageService.name }}
 spec:

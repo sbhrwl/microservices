@@ -1,6 +1,6 @@
 global:
   # Use host.docker.internal for Docker Desktop / Kubernetes access to host
-  hostIp: "10.49.149.116"
+  hostIp: "10.49.149.167"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
   daprComponentsPath: "/components"
@@ -10,7 +10,7 @@ rabbitmq:
   pubsubName: "rabbitmq-pubsub"
 
 postgres:
-  host: "10.49.149.116"
+  host: "10.49.149.167"
   port: "5432"
   database: "mydatabase"
   username: "myuser"
@@ -33,8 +33,6 @@ services:
     connectorRequestTopic: "connector.request"
     connectorResponseTopic: "connector.response"
     hubResponseTopic: "flexibility-hub.response"
-    storageServiceHost: "{{ .Values.global.hostIp }}"
-    storageServicePort: 9090
   protocolAdapter:
     name: "protocol-adapter"
     image: "sbhrwldocker/protocol-adapter-service:dapr-latest"
@@ -43,8 +41,6 @@ services:
     connectorResponseTopic: "connector.response"
     hesRequestTopic: "hes.request"
     hesResponseTopic: "hes.response"
-    storageServiceHost: "{{ .Values.global.hostIp }}"
-    storageServicePort: 9090
   hesSimulator:
     name: "hes-simulator"
     image: "sbhrwldocker/hes-simulator:dapr-latest"
