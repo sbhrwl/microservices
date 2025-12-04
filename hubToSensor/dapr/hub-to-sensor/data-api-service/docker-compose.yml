@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  # Data API service
+  data-api-service:
+    build:
+      context: .
+    image: sbhrwldocker/data-api:latest
+    container_name: data-api
+    ports:
+      - "8085:8085"
+    environment:
+      # Application port
+      - SERVER_PORT=8085
+      # Database connection
+      - DB_HOST=host.docker.internal
+      - DB_PORT=5432
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASS=mypassword
