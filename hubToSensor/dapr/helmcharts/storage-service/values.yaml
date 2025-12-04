@@ -1,0 +1,25 @@
+global:
+  hostIp: "10.49.149.116"
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
+  daprComponentsPath: "/components"
+
+postgres:
+  host: "10.49.149.116"
+  port: "5432"
+  database: "mydatabase"
+  username: "myuser"
+  password: "mypassword"
+  stateStoreName: "postgres-statestore"
+
+services:
+  storageService:
+    name: "storage-service"
+    image: "sbhrwldocker/storage-service:dapr-latest"
+    httpPort: 8086
+    grpcPort: 50003
+    nodePort: 30086
+    daprAppId: "storage-service"
+    enableStateStore: true
+    dapr:
+      httpPort: 3500

@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: {{ .Values.postgres.stateStoreName | quote }}
+  namespace: default
+spec:
+  type: state.postgresql
+  version: v1
+  metadata:
+    - name: connectionString
+      value: {{ printf "host=%s port=%s user=%s password=%s database=%s sslmode=disable" .Values.global.hostIp .Values.postgres.port .Values.postgres.username .Values.postgres.password .Values.postgres.database | quote }}
+    - name: maxOpenConns
+      value: "20"
+    - name: maxIdleConns
+      value: "5"
+    - name: idleTimeout
+      value: "30s"
