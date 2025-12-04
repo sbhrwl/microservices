@@ -1,8 +1,9 @@
 global:
-  # Use host.docker.internal for Docker Desktop / Kubernetes access to host: host.docker.internal
-  hostIp: "10.158.22.221"
+  # Use host.docker.internal for Docker Desktop / Kubernetes access to host
+  hostIp: "10.49.149.116"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
+  daprComponentsPath: "/components"
 
 rabbitmq:
   connectionString: "amqp://admin:admin@{{ .Values.global.hostIp }}:5672"
@@ -24,10 +25,9 @@ services:
     nodePort: 30081
     daprRequestTopic: "flexibility-hub.request"
     daprResponseTopic: "flexibility-hub.response"
-
   flexibilityBridge:
     name: "flexibility-bridge"
-    image: "sbhrwldocker/flexibility-bridge:dapr-latest"
+    image: "sbhrwldocker/flexibility-bridge-service:dapr-latest"
     port: 8082
     hubRequestTopic: "flexibility-hub.request"
     connectorRequestTopic: "connector.request"
@@ -35,10 +35,9 @@ services:
     hubResponseTopic: "flexibility-hub.response"
     storageServiceHost: "{{ .Values.global.hostIp }}"
     storageServicePort: 9090
-
   protocolAdapter:
     name: "protocol-adapter"
-    image: "sbhrwldocker/protocol-adapter:dapr-latest"
+    image: "sbhrwldocker/protocol-adapter-service:dapr-latest"
     port: 8083
     connectorRequestTopic: "connector.request"
     connectorResponseTopic: "connector.response"
@@ -46,16 +45,6 @@ services:
     hesResponseTopic: "hes.response"
     storageServiceHost: "{{ .Values.global.hostIp }}"
     storageServicePort: 9090
-
-  storageService:
-    name: "storage-service"
-    image: "sbhrwldocker/storage-service:dapr-latest"
-    httpPort: 8086
-    grpcPort: 9090
-    nodePort: 30086
-    daprAppId: "storage-service"
-    enableStateStore: true
-
   hesSimulator:
     name: "hes-simulator"
     image: "sbhrwldocker/hes-simulator:dapr-latest"

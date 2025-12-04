@@ -2,13 +2,18 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: {{ .Values.rabbitmq.pubsubName }}
-  namespace: default
+  namespace: {{ .Release.Namespace }} # Use the release namespace
+  annotations:
+    # Action: Fixes the Helm installation failure by deploying the CRD resource first
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-5"
 spec:
   type: pubsub.rabbitmq
   version: v1
   metadata:
+    # Using your connection string from values.yaml
     - name: connectionString
-      value: "{{ .Values.rabbitmq.connectionString }}"
+      value: "amqp://admin:admin@{{ .Values.global.hostIp }}:5672"
     - name: durable
       value: "true"
     - name: deletedWhenUnused

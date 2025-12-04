@@ -17,8 +17,8 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.flexibilityBridge.name }}"
         dapr.io/app-port: "{{ .Values.services.flexibilityBridge.port }}"
-        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
-        dapr.io/config: "dapr-rabbitmq"
+        dapr.io/pubsub-name: "{{ .Values.rabbitmq.pubsubName }}"
+        dapr.io/components-path: "{{ .Values.global.daprComponentsPath }}"
     spec:
       containers:
         - name: {{ .Values.services.flexibilityBridge.name }}

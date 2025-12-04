@@ -17,8 +17,8 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "{{ .Values.services.flexibilityHubSimulator.name }}"
         dapr.io/app-port: "{{ .Values.services.flexibilityHubSimulator.port }}"
-        dapr.io/pubsub: "{{ .Values.rabbitmq.pubsubName }}"
-        dapr.io/config: "dapr-rabbitmq"
+        dapr.io/pubsub-name: "{{ .Values.rabbitmq.pubsubName }}"
+        dapr.io/components-path: "{{ .Values.global.daprComponentsPath }}"
     spec:
       containers:
         - name: {{ .Values.services.flexibilityHubSimulator.name }}
@@ -35,3 +35,5 @@ spec:
               value: "{{ .Values.services.flexibilityHubSimulator.daprRequestTopic }}"
             - name: DAPR_RESPONSE_TOPIC
               value: "{{ .Values.services.flexibilityHubSimulator.daprResponseTopic }}"
+            - name: RABBITMQ_CONNECTION_STRING
+              value: "{{ .Values.rabbitmq.connectionString }}"
