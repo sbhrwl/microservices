@@ -1,7 +1,7 @@
 # Keycloak setup
 * [Keycloak Documentation](https://www.keycloak.org/documentation)
 * [`docker-compose.yaml`](docker-compose.yaml)
-  * Keycloak V26: [`docker-compose.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/prerequisites/keycloak/keycloakv26/docker-compose.yaml)
+  * [Keycloak V26](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/prerequisites/README.md): [`docker-compose.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/prerequisites/keycloak/keycloakv26/docker-compose.yaml)
 * Start Keycloak
 ```bash
 docker-compose up -d
