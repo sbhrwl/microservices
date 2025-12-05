@@ -1,7 +1,5 @@
 # Authentication with Keycloak
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
-  - Build: `mvn clean install`
-  - Run: `mvn spring-boot:run`
 - [Keycloak setup](keycloak/README.md)
 - Add [role-based access control](rbac/README.md)
   - Fine-grained authorization.
@@ -11,8 +9,8 @@
   - Important if you'll call this backend from a frontend (e.g., React, Angular).
   - Comes into play when you connect systems.
 - Run app
-  - `mvn clean install`
-  - `mvn spring-boot:run`
+  - Build: `mvn clean install`
+  - Run: `mvn spring-boot:run`
 - [Run app as a Docker container](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/ContainerisedService.md)
   - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
 - Call the secured endpoint with [Postman using an access token](postman/README.md)
