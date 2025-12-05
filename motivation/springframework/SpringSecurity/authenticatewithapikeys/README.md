@@ -26,9 +26,13 @@
   - Run: `mvn spring-boot:run`
 - **Endpoints**
   - **Public**: `GET` `http://localhost:8081/public`
-    - Expected result: `This is a public endpoint.`
-  - **Secure**: `GET` `http://localhost:8081/hello` 
-    - Expected result: `403 Forbidden`
+    - Expected result
+      - `This is a public endpoint`
+  - **Secure**: `GET` `http://localhost:8081/secure` 
+    - Expected result without adding `X-API-KEY` in **Header**
+      - `403 Forbidden`
+    - Expected result after adding `X-API-KEY`-`my-secret-api-key` in **Header**
+      - `Hello from secured API key endpoint`
 ```
 src
 └── main
