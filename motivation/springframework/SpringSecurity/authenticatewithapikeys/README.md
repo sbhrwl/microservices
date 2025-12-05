@@ -47,7 +47,7 @@ src
         └── application.yaml
 ```
 
-### [Custom API key filter](src\main\java\com\example\apikeyauth\security\ApiKeyAuthFilter.java)
+### [Custom API key filter](src/main/java/com/example/apikeyauth/security/ApiKeyAuthFilter.java)
 * Runs once for every incoming HTTP request (`OncePerRequestFilter`).
 * Checks if the request includes the `X-API-KEY` header.
 * Retrieves the expected API key from `application.yaml` via `ApiKeyProperties`.
