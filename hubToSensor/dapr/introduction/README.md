@@ -6,6 +6,7 @@
 * [Dapr advantages](#dapr-advantages)
 * [Dapr implementation changes](#dapr-implementation-changes)
 * [Service interaction](#service-interaction)
+* [Commands](commands/README.md)
 ## Problem
 * Microservices promise agility and scalability but face portability issues across GCP, AWS, and Azure.
 * Hardcoded dependencies on specific brokers and databases limit maintainability and cloud migration.
