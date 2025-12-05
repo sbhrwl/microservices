@@ -14,8 +14,11 @@
 - **Endpoints**
   - **Public**: `GET` `http://localhost:8081/public`
     - Expected result: `This is a public endpoint.`
-  - **Secure**: `GET` `http://localhost:8081/secure` 
-    - Expected result: `401 Unauthorized`
+  - **Secure**: `GET` `http://localhost:8081/secure`
+    - Without access token 
+      - Expected result: `401 Unauthorized`
+    - `With access token`
+      - Expected result: `Hello, secured world!`
 - [API documentation](https://github.com/sbhrwl/system_design/blob/main/docs/services/api_documentation/README.md)
   - [Swagger UI](swaggerui/README.md)
 - Add [CORS config](cors/README.md)
