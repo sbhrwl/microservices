@@ -5,9 +5,17 @@
 - [Keycloak setup](keycloak/README.md)
 - Add [role-based access control](rbac/README.md)
   - Fine-grained authorization.
+- Run the project
+  - `mvn clean install`
+  - `mvn spring-boot:run`
 - Call the secured endpoint with [Postman using an access token](postman/README.md)
   - Validates the setup and role-based logic.
   - Reinforces understanding of OAuth2 token flow.
+- **Endpoints**
+  - **Public**: `GET` `http://localhost:8081/public`
+    - Expected result: `This is a public endpoint.`
+  - **Secure**: `GET` `http://localhost:8081/hello` 
+    - Expected result: `401 Unauthorized`
 - [API documentation](https://github.com/sbhrwl/system_design/blob/main/docs/services/api_documentation/README.md)
   - [Swagger UI](swaggerui/README.md)
 - Add [CORS config](cors/README.md)
@@ -15,8 +23,3 @@
   - Comes into play when you connect systems.
 - [Run app as a Docker container](authenticatewithkeycloak/ContainerisedService.md)
   - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
-- **Endpoints**
-  - **Public**: `GET` `http://localhost:8081/public`
-    - Expected result: `This is a public endpoint.`
-  - **Secure**: `GET` `http://localhost:8081/hello` 
-    - Expected result: `401 Unauthorized`
