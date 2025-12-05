@@ -11,6 +11,7 @@
 - [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Troubleshooting](#troubleshooting)
+  - [Dapr Commands](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/introduction/commands/README.md)
 ## Setting up containers
 
 | Steps | Flexibility hub simulator | Flexibility bridge | Storage service | Protocol adapter | HES simulator |
