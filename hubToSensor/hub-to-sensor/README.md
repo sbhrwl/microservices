@@ -1,7 +1,7 @@
 # Services
 - [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
   - [Production version](flexibility-hub-simulator-prod/README.md)
-- GFC service](flexibility-bridge-service/README.md)
+- [GFC service](flexibility-bridge-service/README.md)
 - [Control orchestrator gRPC](storage-service-grpc/README.md)
   - [Control orchestrator restful](storage-service/README.md)
 - [Protocol adapter service](protocol-adapter-service/README.md)
