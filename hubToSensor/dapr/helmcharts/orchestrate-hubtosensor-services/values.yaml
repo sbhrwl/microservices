@@ -26,7 +26,7 @@ services:
     daprRequestTopic: "flexibility-hub.request"
     daprResponseTopic: "flexibility-hub.response"
   flexibilityBridge:
-    name: "flexibility-bridge"
+    name: "gfc-service"
     image: "sbhrwldocker/flexibility-bridge-service:dapr-latest"
     port: 8082
     hubRequestTopic: "flexibility-hub.request"
@@ -42,23 +42,22 @@ services:
     hesRequestTopic: "hes.request"
     hesResponseTopic: "hes.response"
   hesSimulator:
-    name: "hes-simulator"
+    name: "hes-aim"
     image: "sbhrwldocker/hes-simulator:dapr-latest"
     port: 8084
     hesRequestTopic: "hes.request"
     hesResponseTopic: "hes.response"
   storageService:
-    name: "storage-service"
+    name: "control-orchestrator"
     image: "sbhrwldocker/storage-service:dapr-latest"
     httpPort: 8086
     grpcPort: 50003
     nodePort: 30086
-    daprAppId: "storage-service"
     enableStateStore: true
     dapr:
       httpPort: 3500
   dataApi:
-    name: data-api
+    name: api-layer
     image: sbhrwldocker/data-api
     tag: latest
     serverPort: 8085

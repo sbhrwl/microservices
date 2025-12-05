@@ -98,35 +98,33 @@ helm install ocs-h2s-release .
 ```
 C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
 NAME: ocs-h2s-release
-LAST DEPLOYED: Fri Dec  5 09:53:32 2025
+LAST DEPLOYED: Fri Dec  5 12:59:03 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
-C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm list
+PS C:\Users\sabharwalr> helm list
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
-ocs-h2s-release default         1               2025-12-05 09:53:32.2039366 +0200 EET   deployed        flexibility-hub-simulator-0.1.0 1.0.0
-
-C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>kubectl get pods
+ocs-h2s-release default         1               2025-12-05 12:59:03.4566343 +0200 EET   deployed        flexibility-hub-simulator-0.1.0 1.0.0
+PS C:\Users\sabharwalr> kubectl get pods
 NAME                                         READY   STATUS    RESTARTS   AGE
-data-api-66c7b99b9-pk9x4                     1/1     Running   0          3m2s
-flexibility-bridge-66dd65c569-9xlfp          2/2     Running   0          3m1s
-flexibility-hub-simulator-654f7d97fc-mscvc   2/2     Running   0          3m1s
-hes-simulator-57c5d7f897-ntdpx               2/2     Running   0          3m1s
-protocol-adapter-9c659fc94-n9wxj             2/2     Running   0          3m1s
-storage-service-7bd7db66f9-pk67j             2/2     Running   0          3m1s
-
-C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
+flexibility-hub-simulator-654f7d97fc-gfhpp   2/2     Running   0          9m12s
+api-layer-77ddb6449c-mvmhk                   1/1     Running   0          9m12s
+gfc-service-7d485dfbdc-qhz5q                 2/2     Running   0          9m12s
+control-orchestrator-7d6855bd8f-vmg4x        2/2     Running   0          9m12s
+protocol-adapter-58cfd6df87-894h6            2/2     Running   0          9m12s
+hes-aim-59dbcfc476-4r29k                     2/2     Running   0          9m12s
+PS C:\Users\sabharwalr> kubectl get svc
 NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                               AGE
-data-api                         NodePort    10.106.194.207   <none>        8085:30885/TCP                        20m
-flexibility-hub-simulator        NodePort    10.96.65.113     <none>        8081:30081/TCP                        20m
-storage-service                  NodePort    10.99.3.150      <none>        8086:30086/TCP,50003:32070/TCP        20m
-flexibility-hub-simulator-dapr   ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
-flexibility-bridge-dapr          ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
-hes-simulator-dapr               ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
-protocol-adapter-dapr            ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
-storage-service-dapr             ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+flexibility-hub-simulator        NodePort    10.109.4.63      <none>        8081:30081/TCP                        9m17s
+api-layer                        NodePort    10.103.229.230   <none>        8085:30885/TCP                        9m17s
+control-orchestrator             NodePort    10.100.86.100    <none>        8086:30086/TCP,50003:31417/TCP        9m17s
+flexibility-hub-simulator-dapr   ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+gfc-service-dapr                 ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+control-orchestrator-dapr        ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+protocol-adapter-dapr            ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+hes-aim-dapr                     ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
 kubernetes                       ClusterIP   10.96.0.1        <none>        443/TCP                               214d
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
@@ -134,7 +132,7 @@ kubernetes                       ClusterIP   10.96.0.1        <none>        443/
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30081/api/messages`
   * `data-api` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
-    * `kubectl port-forward service/data-api 8085:8085`
+    * `kubectl port-forward service/api-layer 8085:8085`
   * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
   * `Get sensor state` → `http://localhost:30086/sensor/<sensor-nbr>`
 ## Update Helm release

@@ -15,7 +15,7 @@ spec:
         app: {{ .Values.services.storageService.name }}
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "{{ .Values.services.storageService.daprAppId }}"
+        dapr.io/app-id: "{{ .Values.services.storageService.name }}"
         dapr.io/app-port: "{{ .Values.services.storageService.httpPort }}"
         dapr.io/http-port: "{{ .Values.services.storageService.dapr.httpPort }}"
         dapr.io/components-path: "{{ .Values.global.daprComponentsPath }}"
@@ -33,7 +33,7 @@ spec:
             - name: GRPC_SERVER_PORT
               value: "{{ .Values.services.storageService.grpcPort }}"
             - name: DAPR_APP_ID
-              value: "{{ .Values.services.storageService.daprAppId }}"
+              value: "{{ .Values.services.storageService.name }}"
             - name: ENABLE_STATE_STORE
               value: "{{ .Values.services.storageService.enableStateStore }}"
             - name: DAPR_STATE_STORE_NAME
