@@ -58,6 +58,8 @@
 - [**flexibility-bridge-deployment**](orchestrate-hubtosensor-services/templates/flexibility-bridge-deployment.yaml)
 - [**protocol-adapter-deployment**](orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml)
 - [**hes-simulator-deployment**](orchestrate-hubtosensor-services/templates/hes-simulator-deployment.yaml)
+- [**data-api-deployment.yaml**](orchestrate-hubtosensor-services/templates/data-api-deployment.yaml)
+- [**data-api-service.yaml**](orchestrate-hubtosensor-services/templates/data-api-service.yaml)
 - [**`values.yaml`**](orchestrate-hubtosensor-services/values.yaml)
 ### Chart structure
 ```pgsql
@@ -70,6 +72,8 @@ orchestrate-hubtosensor-services/
 │   ├── flexibility-bridge-deployment.yaml
 │   ├── protocol-adapter-deployment.yaml
 │   ├── hes-simulator-deployment.yaml
+│   ├── data-api-deployment.yaml
+│   ├── data-api-service.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
@@ -91,45 +95,46 @@ helm install ocs-h2s-release .
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
 NAME: ocs-h2s-release
-LAST DEPLOYED: Sun Oct 12 11:31:07 2025
+LAST DEPLOYED: Fri Dec  5 09:53:32 2025
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
-ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
+ocs-h2s-release default         1               2025-12-05 09:53:32.2039366 +0200 EET   deployed        flexibility-hub-simulator-0.1.0 1.0.0
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
-ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
+C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>kubectl get pods
+NAME                                         READY   STATUS    RESTARTS   AGE
+data-api-66c7b99b9-pk9x4                     1/1     Running   0          3m2s
+flexibility-bridge-66dd65c569-9xlfp          2/2     Running   0          3m1s
+flexibility-hub-simulator-654f7d97fc-mscvc   2/2     Running   0          3m1s
+hes-simulator-57c5d7f897-ntdpx               2/2     Running   0          3m1s
+protocol-adapter-9c659fc94-n9wxj             2/2     Running   0          3m1s
+storage-service-7bd7db66f9-pk67j             2/2     Running   0          3m1s
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get pods
-NAME                                                    READY   STATUS    RESTARTS     AGE
-data-api-65c7b7b9d7-n5nnv                               1/1     Running   0            36s
-flexibility-bridge-deployment-54884f5cc4-qrpqg          1/1     Running   1 (9s ago)   36s
-flexibility-hub-simulator-deployment-6d4c545887-7rgkt   1/1     Running   0            36s
-hes-simulator-deployment-6f8f6b66-5vnhh                 1/1     Running   0            36s
-protocol-adapter-deployment-5b499cb96c-bkxnf            1/1     Running   1 (9s ago)   36s
-storage-service-deployment-6f99954b-8tdmn               1/1     Running   1 (4s ago)   36s
-ui-app-676567d78f-smk9m                                 1/1     Running   0            36s
-
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
-NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-flexibility-hub-simulator-service   NodePort    10.102.128.78    <none>        8081:30881/TCP   47s
-storage-service-service             ClusterIP   10.98.125.63     <none>        9090/TCP         47s
-data-api-service                    NodePort    10.109.147.145   <none>        8085:30885/TCP   47s
-ui-app-service                      NodePort    10.106.186.119   <none>        8080:30880/TCP   47s
+C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
+NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                               AGE
+data-api                         NodePort    10.106.194.207   <none>        8085:30885/TCP                        20m
+flexibility-hub-simulator        NodePort    10.96.65.113     <none>        8081:30081/TCP                        20m
+storage-service                  NodePort    10.99.3.150      <none>        8086:30086/TCP,50003:32070/TCP        20m
+flexibility-hub-simulator-dapr   ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+flexibility-bridge-dapr          ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+hes-simulator-dapr               ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+protocol-adapter-dapr            ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+storage-service-dapr             ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   20m
+kubernetes                       ClusterIP   10.96.0.1        <none>        443/TCP                               214d
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
+  * `flexibility-hub-simulator` → `http://localhost:30081/api/messages`
   * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
-  * `ui-app` → `http://localhost:30880/`
+  * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
+  * [Get sensor state](http://localhost:30086/sensor/<sensor-nbr>)
 ## Update Helm release
 ```
 helm upgrade --install ocs-h2s-release .
