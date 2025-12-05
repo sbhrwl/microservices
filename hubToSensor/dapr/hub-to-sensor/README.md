@@ -1,9 +1,9 @@
 # Services
 - [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
-- [Flexibility bridge service](flexibility-bridge-service/README.md)
-- [Storage service gRPC](storage-service-grpc/README.md)
+- [GFC service](flexibility-bridge-service/README.md)
+- [Control orchestrator gRPC](storage-service-grpc/README.md)
 - [Protocol adapter service](protocol-adapter-service/README.md)
-- [HES simulator](hes-simulator/README.md)
+- [HES-AIM simulator](hes-simulator/README.md)
 - [Local testing](#local-testing)
 - [State store](#state-store)
 ## Local testing
