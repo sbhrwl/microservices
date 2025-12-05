@@ -17,9 +17,9 @@
 | Service                        | Subscribed Topics                               | Queue Names                                                                                           | 
 | ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- | 
 | **Flexibility Hub Simulator**  | `flexibility-hub.response`                      | `flexibility-hub-simulator-flexibility-hub.response`                                                  | 
-| **Flexibility Bridge Service** | `flexibility-hub.request`, `connector.response` | `flexibility-bridge-service-flexibility-hub.request`, `flexibility-bridge-service-connector.response` | 
+| **GFC Service** | `flexibility-hub.request`, `connector.response` | `flexibility-bridge-service-flexibility-hub.request`, `flexibility-bridge-service-connector.response` | 
 | **Protocol Adapter Service**   | `connector.request`, `hes.response`             | `protocol-adapter-service-connector.request`, `protocol-adapter-service-hes.response`                 | 
-| **HES Simulator**              | `hes.request`                                   | `hes-simulator-hes.request`                                                                           | 
+| **HES-AIM Simulator**              | `hes.request`                                   | `hes-simulator-hes.request`                                                                           | 
 
 ## State store
 - Verify PostgreSQL
