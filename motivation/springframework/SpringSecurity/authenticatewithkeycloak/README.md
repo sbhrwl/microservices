@@ -32,5 +32,5 @@
 - Add [CORS config](cors/README.md)
   - Important if you'll call this backend from a frontend (e.g., React, Angular).
   - Comes into play when you connect systems.
-- [Run app as a Docker container](authenticatewithkeycloak/ContainerisedService.md)
+- [Run app as a Docker container](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/ContainerisedService.md)
   - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
