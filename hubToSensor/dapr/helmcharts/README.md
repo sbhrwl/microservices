@@ -131,7 +131,7 @@ kubernetes                       ClusterIP   10.96.0.1        <none>        443/
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `flexibility-hub-simulator` → `http://localhost:30081/api/messages`
-  * `data-api` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
+  * `api-layer` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
     * `kubectl port-forward service/api-layer 8085:8085`
   * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
   * `Get sensor state` → `http://localhost:30086/sensor/<sensor-nbr>`
