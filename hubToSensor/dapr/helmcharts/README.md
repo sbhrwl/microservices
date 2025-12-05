@@ -135,7 +135,7 @@ kubernetes                       ClusterIP   10.96.0.1        <none>        443/
   * `data-api` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
     * `kubectl port-forward service/data-api 8085:8085`
   * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
-  * [Get sensor state](http://localhost:30086/sensor/<sensor-nbr>)
+  * `Get sensor state` → `http://localhost:30086/sensor/<sensor-nbr>`
 ## Update Helm release
 ```
 helm upgrade --install ocs-h2s-release .
