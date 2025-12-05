@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dataApi.name" . }}
+  labels:
+    app: {{ .Values.services.dataApi.name }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.services.dataApi.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.dataApi.name }}
+    spec:
+      containers:
+      - name: {{ .Values.services.dataApi.name }}
+        image: "{{ .Values.services.dataApi.image }}:{{ .Values.services.dataApi.tag }}"
+        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.services.dataApi.serverPort }}
+        env:
+        - name: SERVER_PORT
+          value: "{{ .Values.services.dataApi.serverPort }}"
+        # External PostgreSQL Connection
+        - name: DB_HOST
+          value: "{{ .Values.postgres.host }}"
+        - name: DB_PORT
+          value: "{{ .Values.postgres.port }}"
+        - name: DB_NAME
+          value: {{ .Values.postgres.database }}
+        - name: DB_USER
+          value: {{ .Values.postgres.username }}
+        - name: DB_PASS
+          value: {{ .Values.postgres.password }}

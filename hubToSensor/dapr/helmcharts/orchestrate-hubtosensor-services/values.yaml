@@ -1,6 +1,6 @@
 global:
   # Use host.docker.internal for Docker Desktop / Kubernetes access to host
-  hostIp: "10.49.149.167"
+  hostIp: "10.158.22.221"
   replicaCount: 1
   imagePullPolicy: IfNotPresent
   daprComponentsPath: "/components"
@@ -10,7 +10,7 @@ rabbitmq:
   pubsubName: "rabbitmq-pubsub"
 
 postgres:
-  host: "10.49.149.167"
+  host: "10.158.22.221"
   port: "5432"
   database: "mydatabase"
   username: "myuser"
@@ -56,4 +56,10 @@ services:
     daprAppId: "storage-service"
     enableStateStore: true
     dapr:
-      httpPort: 3500    
+      httpPort: 3500
+  dataApi:
+    name: data-api
+    image: sbhrwldocker/data-api
+    tag: latest
+    serverPort: 8085
+    nodePort: 30885
