@@ -41,9 +41,9 @@
 
 ## Call your secured endpoint
 - Create a **new `GET` request** in Postman.
-- URL of secured endpoint `/hello`:
+- URL of secured endpoint `/secure`:
   ```
-  http://localhost:8081/hello
+  http://localhost:8081/secure
   ```
 - In the **Authorization tab**, select **Bearer Token**.
 - Paste the `access_token` you copied earlier.
