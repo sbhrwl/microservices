@@ -25,7 +25,7 @@
             - `client_id` : `ClientForSecuredEndpointApp`
             - `username` : `endpointaccessuser`
             - `password` : `password123`
-        - `GET` `http://localhost:8081/secure`
+      - Sen request: `GET` `http://localhost:8081/secure`
         - Expected result: `Hello, secured world!`
 - [API documentation](https://github.com/sbhrwl/system_design/blob/main/docs/services/api_documentation/README.md)
   - [Swagger UI](swaggerui/README.md)
