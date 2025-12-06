@@ -14,7 +14,7 @@
   - [Dapr Commands](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/introduction/commands/README.md)
 ## Setting up containers
 
-| Steps | Flexibility hub simulator | GFC service | Control orchestrator | Protocol adapter | HES-AIM simulator |
+| Steps | Flexibility hub simulator | Flexibility bridge | Command orchestrator | Protocol adapter | HES-AIM simulator |
 |---|---|---|---|---|---|
 | application.yml | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensor/flexibility-hub-simulator/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensor/flexibility-bridge-service/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensor/storage-service-grpc/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensor/protocol-adapter-service/src/main/resources/application.yml) | [application.yml](https://github.com/sbhrwl/microservices/tree/main/hubToSensor/dapr/hub-to-sensor/hes-simulator/src/main/resources/application.yml) |
 | Dapr configuration scope | [rabbitmq-pubsub.yaml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/hub-to-sensor/flexibility-hub-simulator/dapr/config-files/rabbitmq-pubsub.yaml) | [rabbitmq-pubsub.yaml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/hub-to-sensor/flexibility-bridge-service/dapr/config-files/rabbitmq-pubsub.yaml) | [postgres-statestore.yaml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/hub-to-sensor/storage-service-grpc/dapr/config-files/postgres-statestore.yaml) | [rabbitmq-pubsub.yaml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/hub-to-sensor/protocol-adapter-service/dapr/config-files/rabbitmq-pubsub.yaml) | [rabbitmq-pubsub.yaml](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/hub-to-sensor/hes-simulator/dapr/config-files/rabbitmq-pubsub.yaml) |
@@ -111,18 +111,18 @@ PS C:\Users\sabharwalr> kubectl get pods
 NAME                                         READY   STATUS    RESTARTS   AGE
 flexibility-hub-simulator-654f7d97fc-gfhpp   2/2     Running   0          9m12s
 api-layer-77ddb6449c-mvmhk                   1/1     Running   0          9m12s
-gfc-service-7d485dfbdc-qhz5q                 2/2     Running   0          9m12s
-control-orchestrator-7d6855bd8f-vmg4x        2/2     Running   0          9m12s
+flexibility-bridge-7d485dfbdc-qhz5q          2/2     Running   0          9m12s
+command-orchestrator-7d6855bd8f-vmg4x        2/2     Running   0          9m12s
 protocol-adapter-58cfd6df87-894h6            2/2     Running   0          9m12s
 hes-aim-59dbcfc476-4r29k                     2/2     Running   0          9m12s
 PS C:\Users\sabharwalr> kubectl get svc
 NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                               AGE
 flexibility-hub-simulator        NodePort    10.109.4.63      <none>        8081:30081/TCP                        9m17s
 api-layer                        NodePort    10.103.229.230   <none>        8085:30885/TCP                        9m17s
-control-orchestrator             NodePort    10.100.86.100    <none>        8086:30086/TCP,50003:31417/TCP        9m17s
+command-orchestrator             NodePort    10.100.86.100    <none>        8086:30086/TCP,50003:31417/TCP        9m17s
 flexibility-hub-simulator-dapr   ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
-gfc-service-dapr                 ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
-control-orchestrator-dapr        ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+flexibility-bridge-dapr          ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
+command-orchestrator-dapr        ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
 protocol-adapter-dapr            ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
 hes-aim-dapr                     ClusterIP   None             <none>        80/TCP,50001/TCP,50002/TCP,9090/TCP   9m17s
 kubernetes                       ClusterIP   10.96.0.1        <none>        443/TCP                               214d

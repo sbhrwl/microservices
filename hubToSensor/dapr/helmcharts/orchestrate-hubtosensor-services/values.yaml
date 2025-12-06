@@ -26,7 +26,7 @@ services:
     daprRequestTopic: "flexibility-hub.request"
     daprResponseTopic: "flexibility-hub.response"
   flexibilityBridge:
-    name: "gfc-service"
+    name: "flexibility-bridge"
     image: "sbhrwldocker/flexibility-bridge-service:dapr-latest"
     port: 8082
     hubRequestTopic: "flexibility-hub.request"
@@ -48,7 +48,7 @@ services:
     hesRequestTopic: "hes.request"
     hesResponseTopic: "hes.response"
   storageService:
-    name: "control-orchestrator"
+    name: "command-orchestrator"
     image: "sbhrwldocker/storage-service:dapr-latest"
     httpPort: 8086
     grpcPort: 50003
