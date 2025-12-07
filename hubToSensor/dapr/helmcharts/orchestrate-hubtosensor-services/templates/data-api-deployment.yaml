@@ -25,7 +25,7 @@ spec:
           value: "{{ .Values.services.dataApi.serverPort }}"
         # External PostgreSQL Connection
         - name: DB_HOST
-          value: "{{ .Values.postgres.host }}"
+          value: "{{ .Values.global.hostIp }}"
         - name: DB_PORT
           value: "{{ .Values.postgres.port }}"
         - name: DB_NAME
