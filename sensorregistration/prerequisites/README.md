@@ -14,7 +14,9 @@
 - [User, role and client creation](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/README.md)
 
 ## Kafka setup
-- Create a [`docker-compose.yml`](kafka/localdevelopment/docker-compose.yml)
+- Create a `docker-compose.yml`
+  - [Kafka setup for local development](kafka/kafka-setup-for-localdevelopment/docker-compose.yml)
+  - [Kafka setup for Docker containers](kafka/kafka-setup-for-containers/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
 - Verify: `docker-compose logs kafka`
 - Kafka user interface: `http://localhost:8081/`
@@ -30,7 +32,6 @@
   ```
   kafka-console-producer.sh --bootstrap-server localhost:9092 --topic sensor-registrations
   ```
-- [Kafka setup for Docker containers](kafka/containers/docker-compose.yml)
 ## MongoDB setup
 - Create a [`docker-compose.yml`](mongodb/docker-compose.yml)
 - Run docker compose: `docker-compose up -d`
@@ -39,4 +40,3 @@
   ```bash
   Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
   ```
-
