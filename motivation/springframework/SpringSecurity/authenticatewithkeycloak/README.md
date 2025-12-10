@@ -12,6 +12,8 @@
   - Build: `mvn clean install`
   - Run: `mvn spring-boot:run`
 - [Run app as a Docker container](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/ContainerisedService.md)
+  - `docker build -t sbhrwldocker/secured-endpoint:v1.0.0 .`
+  - `docker compose up -d`
   - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
 - Call the secured endpoint with [Postman using an access token](postman/README.md)
   - Validates the setup and role-based logic.

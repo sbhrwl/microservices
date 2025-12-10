@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  secured-endpoint:
+    image: sbhrwldocker/secured-endpoint:v1.0.0
+    container_name: secured-endpoint
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
