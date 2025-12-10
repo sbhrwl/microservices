@@ -3,7 +3,7 @@
   - Verify app: `GET` `http://localhost:8081/public`
   - Verify app: `GET` `http://localhost:8081/secure`
   - Modify `Headers`
-  ```
+    ```
 	X-API-KEY : my-secret-api-key
 	```
 - [Authentication and authorisation with Keycloak](authenticatewithkeycloak/README.md)
