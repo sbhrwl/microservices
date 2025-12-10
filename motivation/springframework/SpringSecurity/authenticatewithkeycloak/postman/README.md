@@ -1,10 +1,14 @@
 # Postman 
+- [Verify app by calling public endpoint](#verify-app-by-calling-public-endpoint)
 - [Get the access token from Keycloak](#get-the-access-token-from-keycloak)
   - [Token](#token)
 - [Call your secured endpoint](#call-your-secured-endpoint)
   - [Result](#result)
 - [Refresh token](#refresh-token)
 - [Decoded token](#decoded-token)
+## Verify app by calling public endpoint
+- `GET`: `http://localhost:8081/public`
+- Response: `This is a public endpoint.`
 ## Get the access token from Keycloak
 - Open Postman.
 - Create a **new `POST` request**.
