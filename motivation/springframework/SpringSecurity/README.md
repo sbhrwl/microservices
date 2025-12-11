@@ -16,7 +16,7 @@
 	username  : endpointaccessuser
 	password  : password123
 	```	    
-  - Verify Swagger UI: `http://localhost:8081/swagger-ui/index.html`
+  - Verify Swagger UI on **browser**: `http://localhost:8081/swagger-ui/index.html`
 - [Introduce a reverse proxy](reverseproxy/README.md)
   - Verify app: `GET` `http://localhost:8085/api/public`
   - Verify app: `GET` `http://localhost:8085/api/secure`
