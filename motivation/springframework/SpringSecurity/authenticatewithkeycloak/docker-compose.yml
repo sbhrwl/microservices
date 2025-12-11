@@ -2,10 +2,13 @@ version: "3.9"
 
 services:
   secured-endpoint:
-    image: sbhrwldocker/secured-endpoint:v1.0.0
+    build: .
+    image: secured-endpoint:local
     container_name: secured-endpoint
     ports:
       - "8081:8081"
     restart: unless-stopped
     environment:
-      KEYCLOAK_URL: http://192.168.0.103:8080/realms/master
+      KEYCLOAK_URL: http://10.158.22.221:8080/realms/master
+    extra_hosts:
+      - "localhost:10.158.22.221"
