@@ -83,6 +83,7 @@
     * Add two key-value pairs:
       * `paths[]` = `/public`
       * `name` = `public-route`
+      * `strip_path` = `false`
   - Click **Send**
     - You should get `201 Created`.
 	```json
@@ -128,6 +129,7 @@
     * Add two key-value pairs:
       * `paths[]` = `/secure`
       * `name` = `secure-route`
+      * `strip_path` = `false`
   - Click **Send**
     - You should get `201 Created`.
 	```json
