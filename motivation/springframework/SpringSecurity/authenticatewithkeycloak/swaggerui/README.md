@@ -67,6 +67,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
    Builds and returns the security filter chain with these settings.
 
 ## Access UI
-- Start your Spring Boot app and open this URL in your browser: `http://localhost:8081/swagger-ui.html` OR `http://localhost:8081/swagger-ui/index.html`
+- Start your Spring Boot app and open this URL in your **`browser`**:
+  - `http://localhost:8081/swagger-ui.html` OR
+  - `http://localhost:8081/swagger-ui/index.html`
 - Swagger UI page listing your REST API endpoints.
 <img src="images/swaggerui.jpg">
