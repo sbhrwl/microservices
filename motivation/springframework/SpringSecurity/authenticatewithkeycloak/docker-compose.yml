@@ -7,3 +7,5 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
+    environment:
+      KEYCLOAK_URL: http://192.168.0.103:8080/realms/master
