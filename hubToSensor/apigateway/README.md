@@ -29,6 +29,9 @@
   * LB = traffic cop
   * Ingress = traffic sign inside cluster
   * API Gateway = security checkpoint + concierge.
+* `Question to ask`
+  * Do i need advanced features like authentication, rate limiting, or request transformations at the edge? 
+  * This usually drives whether an API gateway is necessary.
 ## Who handles what
 
 | Feature                    | API Gateway  | Load Balancer | Ingress    |
