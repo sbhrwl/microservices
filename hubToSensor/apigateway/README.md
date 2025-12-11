@@ -73,8 +73,8 @@ INGRESS --> [Service C]
 </details>
 
 ## Setup for production
-* Use **API Gateway for public APIs** requiring auth, rate limiting, transformations.
-* Use **Ingress for internal routing** inside Kubernetes.
+* Use **API Gateway for `public APIs`** requiring auth, rate limiting, transformations.
+* Use **Ingress for `internal routing`** inside Kubernetes.
 * Always place **load balancers** for HA in front of key layers.
 * For UI outside cluster → **CDN + optional reverse proxy**.
 * Avoid over-engineering; introduce API Gateway **only when necessary**.
