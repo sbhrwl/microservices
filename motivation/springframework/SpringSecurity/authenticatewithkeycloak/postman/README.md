@@ -6,6 +6,7 @@
   - [Result](#result)
 - [Refresh token](#refresh-token)
 - [Decoded token](#decoded-token)
+- [Test when app is running as a container](#test-when-app-is-running-as-a-container)
 ## Verify app by calling public endpoint
 - `GET`: `http://localhost:8081/public`
 - Response: `This is a public endpoint.`
@@ -105,6 +106,16 @@
 ### Signature
 - The signature would verify the token's authenticity.
 ### Summary
-- This appears to be an access token issued by a Keycloak server for a user "endpointaccessuser" with various roles and permissions. 
+- This is an access token issued by a Keycloak server for a user "endpointaccessuser" with various roles and permissions. 
 - The token is valid until January 14, 2025.
 
+## Test when app is running as a container
+- `docker build -t sbhrwldocker/secured-endpoint:v1.0.0 .`
+- `docker compose up -d`
+- `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
+- When calling `secured endpoint`, make sure to replace `localhost` with IP: `http://10.158.22.221:8080/realms/master/protocol/openid-connect/token`
+- The URL for secured endpoitn remains same `http://localhost:8081/secure`
+  - We keep IP because when token is issues by `http://localhost:8080/realms/master/protocol/openid-connect/token`
+  - The app running on docker container cannot validate against `issuer URL`
+  - Idea is to get a token whose `iss` matches the URL you configure in `KEYCLOAK_URL`.
+  - If you switch to `10.158.22.221`, you must obtain a token whose iss is `http://10.158.22.221:8080/realms/master`.
