@@ -15,6 +15,7 @@
   - `docker build -t sbhrwldocker/secured-endpoint:v1.0.0 .`
   - `docker compose up -d`
   - `docker run -p 8081:8081 sbhrwldocker/secured-endpoint:v1.0.0`
+  - [Test when app is running as a container](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/postman/README.md#test-when-app-is-running-as-a-container)
 - Call the secured endpoint with [Postman using an access token](postman/README.md)
   - Validates the setup and role-based logic.
   - Reinforces understanding of OAuth2 token flow.
