@@ -8,9 +8,7 @@
   - [Protocol gateway](command-orchestration/protocol-gateway/README.md)
   - [Sensor simulator](command-orchestration/sensor-simulator/README.md)
 - [Containers](containers/README.md)
-- [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
-- [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
 ## Verification
 - Get Access token `http://localhost:8080/realms/master/protocol/openid-connect/token`
