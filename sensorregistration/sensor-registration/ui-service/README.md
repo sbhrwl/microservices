@@ -1,4 +1,4 @@
-# UI service for registring sensors
+# UI service for registering sensors
 - [Properties](#properties)
 - [How to run](#how-to-run)
 - [Test](#test)
