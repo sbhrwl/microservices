@@ -15,24 +15,24 @@
 
 ## Create environment wise values file
 - `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/hpa/orchestrate-sensor-services/values-prod.yaml)
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/orchestrate-sensor-services/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/orchestrate-sensor-services/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/orchestrate-sensor-services/values-prod.yaml)
 ```
 orchestrate-sensor-services/
 ├── templates/
-│   ├── notification-deployment.yaml
-│   ├── notification-service.yaml
-│   ├── notification-service-hpa.yaml
+│   ├── ui-deployment.yaml
+│   ├── ui-service.yaml
+│   ├── ui-service-hpa.yaml
 │   ├── registration-deployment.yaml
 │   ├── registration-service.yaml
 │   ├── registration-service-hpa.yaml
 │   ├── sensor-deployment.yaml
 │   ├── sensor-service.yaml
 │   ├── sensor-service-hpa.yaml
-│   ├── ui-deployment.yaml
-│   ├── ui-service.yaml
-│   ├── ui-service-hpa.yaml
+│   ├── notification-deployment.yaml
+│   ├── notification-service.yaml
+│   ├── notification-service-hpa.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
@@ -60,7 +60,7 @@ orchestrate-sensor-services/
     kubectl get all -n dev
     ``` 
 ## Helm release per environment
-- Go to Helm chart folder [orchestrate-sensor-services](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services)
+- Go to Helm chart folder [orchestrate-sensor-services](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/orchestrate-sensor-services)
 ```bash
 # For dev (default values.yaml)
 helm install orchestrate-sensor-services-dev . -n dev
@@ -120,7 +120,7 @@ helm uninstall orchestrate-sensor-services-staging -n staging
 helm uninstall orchestrate-sensor-services-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder [orchestrate-sensor-services](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/hpa/orchestrate-sensor-services)
+- Go to Helm chart folder [orchestrate-sensor-services](https://github.com/sbhrwl/microservices/tree/main/sensorregistration/helmcharts/orchestrate-sensor-services)
 ```bash
 helm upgrade orchestrate-sensor-services-staging . -f values-staging.yaml -n staging
 helm upgrade orchestrate-sensor-services-prod . -f values-prod.yaml -n prod
