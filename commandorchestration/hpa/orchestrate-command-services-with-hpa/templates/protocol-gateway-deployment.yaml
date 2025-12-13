@@ -24,3 +24,9 @@ spec:
               value: "{{ .Values.protocolGateway.env.PROTOCOL_TYPE }}"
             - name: SENSOR_SIMULATOR_URL
               value: "{{ .Values.protocolGateway.env.SENSOR_SIMULATOR_URL }}"
+            - name: KAFKA_HOST
+              value: "{{ .Values.global.hostIP }}"
+            - name: KAFKA_PORT
+              value: "{{ .Values.global.kafka.port }}"
+            - name: KAFKA_COMMAND_TOPIC
+              value: "{{ .Values.global.kafka.commandTopic }}"

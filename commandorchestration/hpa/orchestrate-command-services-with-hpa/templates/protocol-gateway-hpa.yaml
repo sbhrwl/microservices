@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: protocol-gateway-hpa
+  name: {{ include "microservices.fullname" . }}-protocol-gateway-hpa
   labels:
     app: protocol-gateway
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: protocol-gateway
+    name: {{ include "microservices.fullname" . }}-protocol-gateway
   minReplicas: {{ .Values.hpa.protocolGateway.minReplicas }}
   maxReplicas: {{ .Values.hpa.protocolGateway.maxReplicas }}
   metrics:

@@ -22,9 +22,9 @@ spec:
             - name: SERVER_PORT
               value: "9081"
             - name: KEYCLOAK_ISSUER_URI
-              value: "http://10.158.22.221:8080/realms/master"
+              value: "http://192.168.0.103:8080/realms/master"
             - name: KEYCLOAK_JWK_SET_URI
-              value: "http://10.158.22.221:8080/realms/master/protocol/openid-connect/certs"
+              value: "http://192.168.0.103:8080/realms/master/protocol/openid-connect/certs"
             - name: KEYCLOAK_CLIENT_ID
               value: "task-service"
             - name: KEYCLOAK_PROVIDER

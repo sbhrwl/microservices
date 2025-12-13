@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: command-orchestrator-hpa
+  name: {{ include "microservices.fullname" . }}-command-orchestrator-hpa
   labels:
     app: command-orchestrator
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: command-orchestrator
+    name: {{ include "microservices.fullname" . }}-command-orchestrator
   minReplicas: {{ .Values.hpa.commandOrchestrator.minReplicas }}
   maxReplicas: {{ .Values.hpa.commandOrchestrator.maxReplicas }}
   metrics:
