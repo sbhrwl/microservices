@@ -1,4 +1,5 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Kubernetes](kubernetes/README.md)
 - [Setup](setup/README.md)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
@@ -15,6 +16,7 @@
   - [Force a CPU load to test autoscaling](#force-a-cpu-load-to-test-autoscaling)
   - [Watch pod scaling in real time](#watch-pod-scaling-in-real-time)
 - [Uninstall Helm release](#uninstall-helm-release)
+- [Deployment across environments](deploymentacrossenv/README.md)
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
 - Run this in your terminal:
