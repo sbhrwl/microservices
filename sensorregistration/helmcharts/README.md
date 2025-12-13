@@ -2,12 +2,18 @@
 - [Setup](setup/README.md)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
+- [Horizontal Pod Autoscalar](#horizontal-pod-autoscalar)
 - [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
 - [Chart structure](#chart-structure)
 - [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
+- [Verify HPA](#verify-hpa)
+- [HPA simulations](#hpa-simulations)
+  - [Check if metrics server is running](#check-if-metrics-server-is-running)
+  - [Force a CPU load to test autoscaling](#force-a-cpu-load-to-test-autoscaling)
+  - [Watch pod scaling in real time](#watch-pod-scaling-in-real-time)
 - [Uninstall Helm release](#uninstall-helm-release)
 ## Create Helm chart structure
 - Generate the basic `Helm chart directory`. 
@@ -36,30 +42,39 @@
   ```
   _helpers.tpl
   ```
+## Horizontal Pod Autoscalar 
+- The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that **automatically scales** the number of pods in a deployment, replica set, or stateful set based on observed metrics like `CPU utilization`, `memory usage`, or `custom metrics`.
 ## Convert deployment YAMLs into a Helm template
-- [**notification-deployment**](orchestrate-sensor-services/templates/notification-deployment.yaml)
-- [**notification-service**](orchestrate-sensor-services/templates/notification-service.yaml)
-- [**notification-configmap**](orchestrate-sensor-services/templates/notification-configmap.yaml)
-- [**registration-deployment**](orchestrate-sensor-services/templates/registration-deployment.yaml)
-- [**registration-service**](orchestrate-sensor-services/templates/registration-service.yaml)
-- [**sensor-deployment**](orchestrate-sensor-services/templates/sensor-deployment.yaml)
-- [**sensor-service**](orchestrate-sensor-services/templates/sensor-service.yaml)
-- [**ui-deployment**](orchestrate-sensor-services/templates/ui-deployment.yaml)
-- [**ui-service**](orchestrate-sensor-services/templates/ui-service.yaml)
-- [**`values.yaml`**](orchestrate-sensor-services/values.yaml)
+- [ui-deployment](orchestrate-sensor-services/templates/ui-deployment.yaml)
+- [ui-service](orchestrate-sensor-services/templates/ui-service.yaml)
+- [ui-service-hpa.yaml](orchestrate-sensor-services/templates/ui-service-hpa.yaml)
+- [sensor-deployment](orchestrate-sensor-services/templates/sensor-deployment.yaml)
+- [sensor-service](orchestrate-sensor-services/templates/sensor-service.yaml)
+- [sensor-service-hpa.yaml](orchestrate-sensor-services/templates/sensor-service-hpa.yaml)
+- [registration-deployment](orchestrate-sensor-services/templates/registration-deployment.yaml)
+- [registration-service](orchestrate-sensor-services/templates/registration-service.yaml)
+- [registration-service-hpa.yaml](orchestrate-sensor-services/templates/registration-service-hpa.yaml)
+- [notification-deployment](orchestrate-sensor-services/templates/notification-deployment.yaml)
+- [notification-service](orchestrate-sensor-services/templates/notification-service.yaml)
+- [notification-configmap](orchestrate-sensor-services/templates/notification-configmap.yaml)
+- [notification-service-hpa.yaml](orchestrate-sensor-services/templates/notification-service-hpa.yaml)
+- [`values.yaml`](orchestrate-sensor-services/values.yaml)
 ### Chart structure
 ```pgsql
 orchestrate-sensor-services/
 ├── templates/
-│   ├── notification-deployment.yaml
-│   ├── notification-service.yaml
-│   ├── notification-configmap.yaml
-│   ├── registration-deployment.yaml
-│   ├── registration-service.yaml
-│   ├── sensor-deployment.yaml
-│   ├── sensor-service.yaml
 │   ├── ui-deployment.yaml
 │   ├── ui-service.yaml
+│   ├── ui-service-hpa.yaml
+│   ├── registration-deployment.yaml
+│   ├── registration-service.yaml
+│   ├── registration-service-hpa.yaml
+│   ├── sensor-deployment.yaml
+│   ├── sensor-service.yaml
+│   ├── sensor-service-hpa.yaml
+│   ├── notification-deployment.yaml
+│   ├── notification-service.yaml
+│   ├── notification-service-hpa.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
@@ -72,14 +87,14 @@ kubectl delete -f orchestrate-sensor-services.yaml
 ## Install Helm release
 - Go to Helm chart folder [**orchestrate-sensor-services**](orchestrate-sensor-services)
 ```powershell
-helm install orchestrate-sensor-services-release . 
+helm install ocs-release . 
 ```
-- **`orchestrate-sensor-services-release`** is the name you're assigning to this Helm release (you can change it if you like).
+- **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm install orchestrate-sensor-services-release .
-NAME: orchestrate-sensor-services-release
+PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm install ocs-release .
+NAME: ocs-release
 LAST DEPLOYED: Fri May 30 10:57:25 2025
 NAMESPACE: default
 STATUS: deployed
@@ -87,10 +102,10 @@ REVISION: 1
 TEST SUITE: None
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm list
 NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+ocs-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm list -A
 NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+ocs-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get pods
 NAME                                    READY   STATUS    RESTARTS   AGE
 notification-service-7f5845c77c-cd2qr   1/1     Running   0          2m10s
@@ -112,8 +127,76 @@ ui-service             NodePort    10.98.31.231    <none>        9081:30081/TCP 
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
-## Uninstall Helm release
-- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestrate-sensor-services-release`
+## Verify HPA
+- **`kubectl get hpa`**
 ```
-helm uninstall orchestrate-sensor-services-release
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get hpa
+NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
+registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
+sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
+ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
+```
+- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
+```
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get hpa
+NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
+registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
+sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
+ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl describe hpa registration-hpa
+Name:                                                  registration-hpa
+Namespace:                                             default
+Labels:                                                app=registration
+                                                       app.kubernetes.io/managed-by=Helm
+Annotations:                                           meta.helm.sh/release-name: ocs-hpa-release
+                                                       meta.helm.sh/release-namespace: default
+CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
+Reference:                                             Deployment/registration
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  <unknown> / 80%
+Min replicas:                                          1
+Max replicas:                                          5
+Deployment pods:                                       0 current / 0 desired
+Conditions:
+  Type         Status  Reason          Message
+  ----         ------  ------          -------
+  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "registration" not found
+Events:
+  Type     Reason          Age   From                       Message
+  ----     ------          ----  ----                       -------
+  Warning  FailedGetScale  11s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+```
+## HPA simulations
+### Check if metrics server is running
+- HPAs require the Kubernetes Metrics Server.
+- Ensure it's running:
+```sh
+kubectl get deployment metrics-server -n kube-system
+```
+- If not installed, [follow these instructions to install it](https://github.com/kubernetes-sigs/metrics-server#installation).
+### Force a CPU load to test autoscaling
+- You can create a load generator pod to increase CPU usage and trigger scaling:
+```sh
+kubectl run -i --tty load-generator --rm \
+  --image=busybox /bin/sh
+
+# Inside the shell, run:
+while true; do :; done
+```
+### Watch pod scaling in real time
+- This lets you observe autoscaling behavior:
+```sh
+watch kubectl get hpa
+```
+- Or for the pods directly:
+```sh
+watch kubectl get pods -l app=registration
+```
+- replace `registration` with other service names as needed
+## Uninstall Helm release
+- Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
+```
+helm uninstall ocs-release
 ``` 
