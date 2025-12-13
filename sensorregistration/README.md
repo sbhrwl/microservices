@@ -8,9 +8,7 @@
   - [Registration service](sensor-registration/registration-service/README.md)
   - [Notification service](sensor-registration/notification-service/README.md)
 - [Containers](containers/README.md)
-- [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
-- [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
 
 ## Verification
