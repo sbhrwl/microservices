@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ui-service
+  name: {{ include "microservices.fullname" . }}-ui-service
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-service
-          image: {{ .Values.uiService.image }}
+          image: "{{ .Values.uiService.image.repository }}:{{ .Values.uiService.image.tag }}"
           ports:
             - containerPort: {{ .Values.uiService.port }}
           env:
