@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sensor-service
+  name: {{ include "microservices.fullname" . }}-sensor-service
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sensor-service
-          image: {{ .Values.sensorService.image }}
+          image: "{{ .Values.sensorService.image.repository }}:{{ .Values.sensorService.image.tag }}"
           ports:
             - containerPort: {{ .Values.sensorService.port }}
           env:

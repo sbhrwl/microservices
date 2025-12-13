@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: notification-hpa
+  name: {{ include "microservices.fullname" . }}-notification-hpa
   labels:
-    app: notification
+    app: notification-service
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: notification
+    name: {{ include "microservices.fullname" . }}-notification-service
   minReplicas: {{ .Values.hpa.notification.minReplicas }}
   maxReplicas: {{ .Values.hpa.notification.maxReplicas }}
   metrics:

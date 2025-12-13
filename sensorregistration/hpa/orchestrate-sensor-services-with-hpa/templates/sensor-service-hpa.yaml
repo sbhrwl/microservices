@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: sensor-hpa
+  name: {{ include "microservices.fullname" . }}-sensor-hpa
   labels:
-    app: sensor
+    app: sensor-service
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: sensor
+    name: {{ include "microservices.fullname" . }}-sensor-service
   minReplicas: {{ .Values.hpa.sensor.minReplicas }}
   maxReplicas: {{ .Values.hpa.sensor.maxReplicas }}
   metrics:

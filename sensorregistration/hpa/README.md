@@ -46,13 +46,13 @@
 ## Install Helm release
 - Go to Helm chart folder (e.g., [orchestrate-sensor-services-with-hpa](orchestrate-sensor-services-with-hpa)), run this command:
   ```bash
-  helm install orchestrate-sensor-services-with-hpa-release .
+  helm install ocs-hpa-release .
   ```
 
 ## Verify release
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm install orchestrate-sensor-services-with-hpa-release .
-NAME: orchestrate-sensor-services-with-hpa-release
+PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm install ocs-hpa-release .
+NAME: ocs-hpa-release
 LAST DEPLOYED: Fri May 30 11:01:11 2025
 NAMESPACE: default
 STATUS: deployed
@@ -60,10 +60,10 @@ REVISION: 1
 TEST SUITE: None
 PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list
 NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+ocs-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
 PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> helm list -A
 NAME                                            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-orchestrate-sensor-services-with-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+ocs-hpa-release    default         1               2025-05-30 11:01:11.2868806 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
 PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get pods
 NAME                                    READY   STATUS    RESTARTS   AGE
 notification-service-7f5845c77c-nm2qt   1/1     Running   0          23s
@@ -103,7 +103,7 @@ Name:                                                  registration-hpa
 Namespace:                                             default
 Labels:                                                app=registration
                                                        app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: orchestrate-sensor-services-with-hpa-release
+Annotations:                                           meta.helm.sh/release-name: ocs-hpa-release
                                                        meta.helm.sh/release-namespace: default
 CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
 Reference:                                             Deployment/registration
@@ -129,7 +129,7 @@ Events:
   * ClusterIP service → `notification-service`
 ## Uninstall Helm release
 ```
-helm uninstall orchestrate-sensor-services-with-hpa-release
+helm uninstall ocs-hpa-release
 ```
 
 ## HPA simulations

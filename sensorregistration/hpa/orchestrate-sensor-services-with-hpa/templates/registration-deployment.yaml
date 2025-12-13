@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registration-service
+  name: {{ include "microservices.fullname" . }}-registration-service
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: registration-service
-          image: {{ .Values.registrationService.image }}
+          image: "{{ .Values.registrationService.image.repository }}:{{ .Values.registrationService.image.tag }}"
           ports:
             - containerPort: {{ .Values.registrationService.port }}
           env:
@@ -22,3 +22,6 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+            - name: NOTIFICATION_SERVICE_URL
+              value: "http://{{ include "microservices.fullname" . }}-notification-service:{{ .Values.notificationService.port }}"
+
