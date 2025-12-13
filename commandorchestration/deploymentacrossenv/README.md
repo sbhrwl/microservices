@@ -15,15 +15,15 @@
 
 ## Create environment wise values file
 - `values-<env>.yaml` files
-  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values.yaml)
-  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values-staging.yaml)
-  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/hpa/orchestrate-command-services-with-hpa/values-prod.yaml)
+  - Dev environment: [`values.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/helmcharts/orchestrate-command-services/values.yaml)
+  - Staging environment: [`values-staging.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/helmcharts/orchestrate-command-services/values-staging.yaml)
+  - Production environment: [`values-prod.yaml`](https://github.com/sbhrwl/microservices/blob/main/commandorchestration/helmcharts/orchestrate-command-services/values-prod.yaml)
 ```
-orchestrate-command-services-with-hpa/
+orchestrate-command-services
 ├── templates/
 │   ├── task-orchestrator-deployment.yaml
 │   ├── task-orchestrator-service.yaml
-│   ├── task-orchestrator--hpa.yaml
+│   ├── task-orchestrator-hpa.yaml
 │   ├── command-orchestrator-deployment.yaml
 │   ├── command-orchestrator-service.yaml
 │   ├── command-orchestrator-hpa.yaml
@@ -59,7 +59,7 @@ orchestrate-command-services-with-hpa/
     kubectl get all -n dev
     ``` 
 ## Helm release per environment
-- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa/orchestrate-command-services-with-hpa)
+- Go to Helm chart folder [orchestrate-command-services](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/helmcharts/orchestrate-command-services)
 ```bash
 # For dev (default values.yaml)
 helm install ocs-dev . -n dev
@@ -89,23 +89,23 @@ helm install ocs-prod . -f values-prod.yaml -n prod
 - `kubectl get pods -n dev`
 - `kubectl get svc -n dev`
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm install ocs-dev . -n dev
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm install ocs-dev . -n dev
 NAME: ocs-dev
 LAST DEPLOYED: Mon Jun  9 20:43:34 2025
 NAMESPACE: dev
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> helm list -n dev
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm list -n dev
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
 ocs-dev dev             1               2025-06-09 20:43:34.7918091 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get pods -n dev
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get pods -n dev
 NAME                                                          READY   STATUS    RESTARTS   AGE
 ocs-dev-microservices-command-orchestrator-789c6d7877-4h5hs   1/1     Running   0          26s
 ocs-dev-microservices-protocol-gateway-7f86cfb765-b59lb       1/1     Running   0          26s
 ocs-dev-microservices-sensor-simulator-5b7686d8c-8lthj        1/1     Running   0          26s
 ocs-dev-microservices-task-orchestrator-69555b676c-ms6ft      1/1     Running   0          26s
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get svc -n dev
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get svc -n dev
 NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 ocs-dev-microservices-command-orchestrator   ClusterIP   10.110.31.157   <none>        9082/TCP         32s
 ocs-dev-microservices-sensor-simulator       ClusterIP   10.107.86.93    <none>        9084/TCP         32s
@@ -125,7 +125,7 @@ helm uninstall ocs-staging -n staging
 helm uninstall ocs-prod -n prod
 ```
 ## Upgrades per environment
-- Go to Helm chart folder [orchestrate-command-services-with-hpa](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/hpa/orchestrate-command-services-with-hpa)
+- Go to Helm chart folder [orchestrate-command-services](https://github.com/sbhrwl/microservices/tree/main/commandorchestration/helmcharts/orchestrate-command-services)
 ```bash
 helm upgrade ocs-staging . -f values-staging.yaml -n staging
 helm upgrade ocs-prod . -f values-prod.yaml -n prod
