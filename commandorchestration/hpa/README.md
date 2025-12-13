@@ -74,7 +74,7 @@ NAME                                                 TYPE        CLUSTER-IP     
 kubernetes                                           ClusterIP   10.96.0.1       <none>        443/TCP          35d
 ocs-hpa-release-microservices-command-orchestrator   ClusterIP   10.108.97.239   <none>        9082/TCP         32s
 ocs-hpa-release-microservices-sensor-simulator       ClusterIP   10.97.46.170    <none>        9084/TCP         32s
-ocs-hpa-release-microservices-task-orchestrator      NodePort    10.96.175.72    <none>        9081:32147/TCP   32s
+ocs-hpa-release-microservices-task-orchestrator      NodePort    10.96.175.72    <none>        9081:30081/TCP   32s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Verify HPA
