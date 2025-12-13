@@ -22,3 +22,19 @@ spec:
               value: "{{ .Values.commandOrchestrator.env.SERVER_PORT }}"
             - name: COMMAND_PERSISTENCE_ENABLED
               value: "{{ .Values.commandOrchestrator.env.COMMAND_PERSISTENCE_ENABLED }}"
+            - name: KAFKA_HOST
+              value: "{{ .Values.global.hostIP }}"
+            - name: KAFKA_PORT
+              value: "{{ .Values.global.kafka.port }}"
+            - name: KAFKA_TASK_REG_TOPIC
+              value: "{{ .Values.global.kafka.taskTopic }}"
+            - name: KAFKA_COMMAND_TOPIC
+              value: "{{ .Values.global.kafka.commandTopic }}"
+            - name: MONGO_HOST
+              value: "{{ .Values.global.hostIP }}"
+            - name: MONGO_PORT
+              value: "{{ .Values.global.mongo.port }}"
+            - name: MONGO_USERNAME
+              value: "{{ .Values.global.mongo.username }}"
+            - name: MONGO_PASSWORD
+              value: "{{ .Values.global.mongo.password }}"

@@ -9,5 +9,8 @@ spec:
       targetPort: {{ .Values.taskOrchestrator.env.SERVER_PORT }}
       protocol: TCP
       name: http
+      {{- if eq .Values.taskOrchestrator.service.type "NodePort" }}
+      nodePort: {{ .Values.taskOrchestrator.service.nodePort }}
+      {{- end }}
   selector:
     app: task-orchestrator
