@@ -7,7 +7,6 @@
   - [Sensor service](sensor-registration/sensor-service/README.md)
   - [Registration service](sensor-registration/registration-service/README.md)
   - [Notification service](sensor-registration/notification-service/README.md)
-- [Containers](containers/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Verification](#verification)
 
