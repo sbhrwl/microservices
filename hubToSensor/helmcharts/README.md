@@ -1,44 +1,18 @@
-# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
-- [Setup](setup/README.md)
-- [Create Helm chart structure](#create-helm-chart-structure)
-- [Clean up the default templates](#clean-up-the-default-templates)
-- [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
+# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Settign up docker images](docs/containers/README.md)
+- [Kubernetes](docs/kubernetes/README.md)
+- [Chart setup](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/setup/README.md)
+- [Create templates YAMLs](#create-helm-templates-yamls)
 - [Chart structure](#chart-structure)
-- [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
+- [Verify HPA](#verify-hpa)
+- [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
 - [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
-- [Troubleshooting](#troubleshooting)
-## Create Helm chart structure
-- Generate the basic `Helm chart directory`. 
-- Run this in your terminal:
-  ```
-  helm create orchestrate-hubtosensor-services
-  ```
-- This creates a directory called [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services) with default templates and values.
-<img src="images/directorystructure.jpg">
-
-## Clean up the default templates
-- Helm’s `create` command generates a bunch of example templates we don’t need. Let’s simplify.
-- Go to the `templates` folder:
-  ```
-  cd orchestrate-hubtosensor-services/templates
-  ```
-- Delete all the default templates *except* `_helpers.tpl`.
-  - *(Use **`del`** if you’re in Command Prompt on Windows instead of Git Bash or PowerShell)*
-  ```bash
-  del deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests\test-connection.yaml
-  del tests\test-connection.yaml & rmdir tests & del NOTES.txt
-
-  rm deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests/test-connection.yaml
-  ```
-- You should only have this file left:
-  ```
-  _helpers.tpl
-  ```
-## Convert deployment YAMLs into a Helm template
+- [Deployment across environments](docs/deploymentacrossenv/README.md)
+## Create templates YAMLs
 - [**flexibility-hub-simulator-deployment**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-deployment.yaml)
 - [**flexibility-hub-simulator-service**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-service.yaml)
 - [**storage-service-deployment**](orchestrate-hubtosensor-services/templates/storage-service-deployment.yaml)
@@ -51,31 +25,37 @@
 - [**ui-app-deployment**](orchestrate-hubtosensor-services/templates/ui-app-deployment.yaml)
 - [**ui-app-service**](orchestrate-hubtosensor-services/templates/ui-app-service.yaml)
 - [**`values.yaml`**](orchestrate-hubtosensor-services/values.yaml)
-### Chart structure
-```pgsql
-orchestrate-hubtosensor-services/
-├── templates/
-│   ├── flexibility-hub-simulator-deployment.yaml
-│   ├── flexibility-hub-simulator-service.yaml
-│   ├── storage-service-deployment.yaml
-│   ├── storage-service-service.yaml
-│   ├── flexibility-bridge-deployment.yaml
-│   ├── protocol-adapter-deployment.yaml
-│   ├── hes-simulator-deployment.yaml
-│   ├── data-api-deployment.yaml
-│   ├── data-api-service.yaml
-│   ├── ui-app-deployment.yaml
-│   ├── ui-app-service.yaml
-│   └── _helpers.tpl
-├── Chart.yaml
-├── values.yaml
-├── .helmignore
-```
-## Cleanup existing Kubernetes deployment 
+## Chart structure
+- [orchestrate-hubtosensor-services](orchestrate-hubtosensor-services)
+- Each service has its own Deployment, Service, and Horizontal Pod Autoscaler (HPA) configuration.
+  ```
+  orchestrate-hubtosensor-services/
+  ├── templates/
+  │   ├── flexibility-hub-simulator-deployment.yaml
+  │   ├── flexibility-hub-simulator-service.yaml
+  │   ├── flexibility-hub-simulator-hpa.yaml
+  │   ├── storage-service-deployment.yaml
+  │   ├── storage-service-service.yaml
+  │   ├── flexibility-bridge-deployment.yaml
+  │   ├── protocol-adapter-deployment.yaml
+  │   ├── hes-simulator-deployment.yaml
+  │   ├── data-api-deployment.yaml
+  │   ├── data-api-service.yaml
+  │   ├── data-api-hpa.yaml
+  │   ├── ui-app-deployment.yaml
+  │   ├── ui-app-service.yaml
+  │   └── _helpers.tpl
+  ├── Chart.yaml
+  ├── values.yaml
+  ├── values-staging.yaml
+  ├── values-prod.yaml
+  ├── .helmignore
+  ```
+## Install Helm release
+- Cleanup existing Kubernetes deployment 
 ```
 kubectl delete -f orchestrate-hubtosensor-services.yaml
 ```
-## Install Helm release
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 ```powershell
 helm install ocs-h2s-release .
@@ -142,6 +122,42 @@ Type "help" for help.
 
 mydatabase=# select * from control_requests;
 mydatabase=# select * from request_change_log;
+```
+## Verify HPA
+- **`kubectl get hpa`**
+```
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get hpa
+NAME                            REFERENCE                                         TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
+data-api-hpa                    Deployment/data-api-deployment                    cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          77s
+flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         1          77s
+```
+- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
+```
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl describe hpa flexibility-hub-simulator-hpa
+Name:                                                     flexibility-hub-simulator-hpa
+Namespace:                                                default
+Labels:                                                   app.kubernetes.io/managed-by=Helm
+Annotations:                                              meta.helm.sh/release-name: ocs-h2shpa-release
+                                                          meta.helm.sh/release-namespace: default
+CreationTimestamp:                                        Mon, 13 Oct 2025 10:51:35 +0300
+Reference:                                                Deployment/flexibility-hub-simulator-deployment
+Metrics:                                                  ( current / target )
+  resource cpu on pods  (as a percentage of request):     <unknown> / 50%
+  resource memory on pods  (as a percentage of request):  <unknown> / 60%
+Min replicas:                                             1
+Max replicas:                                             2
+Deployment pods:                                          1 current / 0 desired
+Conditions:
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+Events:
+  Type     Reason                        Age               From                       Message
+  ----     ------                        ----              ----                       -------
+  Warning  FailedGetResourceMetric       4s (x2 over 64s)  horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedGetResourceMetric       4s (x2 over 64s)  horizontal-pod-autoscaler  failed to get memory utilization: unable to get metrics for resource memory: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  4s (x2 over 64s)  horizontal-pod-autoscaler  invalid metrics (2 invalid out of 2), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 ```
 ## Update Helm release
 ```
