@@ -7,7 +7,6 @@
   - [Command orchestrator](command-orchestration/command-orchestrator/README.md)
   - [Protocol gateway](command-orchestration/protocol-gateway/README.md)
   - [Sensor simulator](command-orchestration/sensor-simulator/README.md)
-- [Containers](containers/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Verification](#verification)
 ## Verification
