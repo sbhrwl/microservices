@@ -1,52 +1,17 @@
-# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
-- [Kubernetes](kubernetes/README.md)
-- [Setup](setup/README.md)
-- [Create Helm chart structure](#create-helm-chart-structure)
-- [Clean up the default templates](#clean-up-the-default-templates)
-- [Horizontal Pod Autoscalar](#horizontal-pod-autoscalar)
-- [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
+# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Settign up docker images](docs/containers/README.md)
+- [Kubernetes](docs/kubernetes/README.md)
+- [Chart setup](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/setup/README.md)
+- [Create templates YAMLs](#create-helm-templates-yamls)
 - [Chart structure](#chart-structure)
-- [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
 - [Verify HPA](#verify-hpa)
-- [HPA simulations](#hpa-simulations)
-  - [Check if metrics server is running](#check-if-metrics-server-is-running)
-  - [Force a CPU load to test autoscaling](#force-a-cpu-load-to-test-autoscaling)
-  - [Watch pod scaling in real time](#watch-pod-scaling-in-real-time)
+- [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
 - [Uninstall Helm release](#uninstall-helm-release)
-- [Deployment across environments](deploymentacrossenv/README.md)
-## Create Helm chart structure
-- Generate the basic `Helm chart directory`. 
-- Run this in your terminal:
-  ```
-  helm create orchestrate-sensor-services
-  ```
-- This creates a directory called [**orchestrate-command-services**](orchestrate-command-services) with default templates and values.
-<img src="images/directorystructure.jpg">
-
-## Clean up the default templates
-- Helm’s `create` command generates a bunch of example templates we don’t need. Let’s simplify.
-- Go to the `templates` folder:
-  ```
-  cd orchestrate-sensor-services/templates
-  ```
-- Delete all the default templates *except* `_helpers.tpl`.
-  - *(Use **`del`** if you’re in Command Prompt on Windows instead of Git Bash or PowerShell)*
-  ```bash
-  del deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests\test-connection.yaml
-  del tests\test-connection.yaml & rmdir tests & del NOTES.txt
-
-  rm deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests/test-connection.yaml
-  ```
-- You should only have this file left:
-  ```
-  _helpers.tpl
-  ```
-## Horizontal Pod Autoscalar 
-- The Horizontal Pod Autoscaler (HPA) is a Kubernetes resource that **automatically scales** the number of pods in a deployment, replica set, or stateful set based on observed metrics like `CPU utilization`, `memory usage`, or `custom metrics`.
-## Convert deployment YAMLs into a Helm template
+- [Deployment across environments](docs/deploymentacrossenv/README.md)
+## Create templates YAMLs
 - [**task-orchestrator-deployment**](orchestrate-command-services/templates/task-orchestrator-deployment.yaml)
 - [**task-orchestrator-service**](orchestrate-command-services/templates/task-orchestrator-service.yaml)
 - [**command-orchestrator-deployment**](orchestrate-command-services/templates/command-orchestrator-deployment.yaml)
@@ -71,11 +36,11 @@ orchestrate-command-services/
 ├── values.yaml
 ├── .helmignore
 ```
-## Cleanup existing Kubernetes deployment 
-```
-kubectl delete -f orchestrate-command-services.yaml
-```
 ## Install Helm release
+- Cleanup existing Kubernetes deployment 
+```
+kubectl delete -f orchestrate-sensor-services.yaml
+```
 - Go to Helm chart folder [**orchestrate-command-services**](orchestrate-command-services)
 ```powershell
 helm install ocs-release .
@@ -152,33 +117,6 @@ Events:
   ----     ------          ----  ----                       -------
   Warning  FailedGetScale  13s   horizontal-pod-autoscaler  deployments/scale.apps "task-orchestrator" not found
 ```
-## HPA simulations
-### Check if metrics server is running
-- HPAs require the Kubernetes Metrics Server.
-- Ensure it's running:
-```sh
-kubectl get deployment metrics-server -n kube-system
-```
-- If not installed, [follow these instructions to install it](https://github.com/kubernetes-sigs/metrics-server#installation).
-### Force a CPU load to test autoscaling
-- You can create a load generator pod to increase CPU usage and trigger scaling:
-```sh
-kubectl run -i --tty load-generator --rm \
-  --image=busybox /bin/sh
-
-# Inside the shell, run:
-while true; do :; done
-```
-### Watch pod scaling in real time
-- This lets you observe autoscaling behavior:
-```sh
-watch kubectl get hpa
-```
-- Or for the pods directly:
-```sh
-watch kubectl get pods -l app=registration
-```
-- replace `registration` with other service names as needed
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
 ```
