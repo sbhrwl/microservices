@@ -1,5 +1,5 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
-- [Setting up containers](#setting-up-containers)
+- [Setting up docker images](#setting-up-docker-images)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
 - [Create Helm templates from application YAMLs](#create-helm-templates-from-application-yamls)
@@ -12,7 +12,7 @@
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Troubleshooting](#troubleshooting)
   - [Dapr Commands](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/introduction/commands/README.md)
-## Setting up containers
+## Setting up docker images 
 
 | Steps | Flexibility hub simulator | Flexibility bridge | Command orchestrator | Protocol adapter | HES-AIM simulator |
 |---|---|---|---|---|---|
