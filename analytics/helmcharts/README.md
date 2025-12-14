@@ -1,42 +1,17 @@
-# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
-- [Setup](setup/README.md)
-- [Create Helm chart structure](#create-helm-chart-structure)
-- [Clean up the default templates](#clean-up-the-default-templates)
-- [Convert deployment YAMLs into a Helm template](#convert-deployment-yamls-into-a-helm-template)
+# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Settign up docker images](docs/containers/README.md)
+- [Kubernetes](docs/kubernetes/README.md)
+- [Chart setup](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/setup/README.md)
+- [Create templates YAMLs](#create-helm-templates-yamls)
 - [Chart structure](#chart-structure)
-- [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
+- [Verify HPA](#verify-hpa)
+- [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
 - [Uninstall Helm release](#uninstall-helm-release)
-## Create Helm chart structure
-- Generate the basic `Helm chart directory`. 
-- Run this in your terminal:
-  ```
-  helm create orchestrate-ingestion-services
-  ```
-- This creates a directory called [**orchestrate-ingestion-services**](orchestrate-ingestion-services) with default templates and values.
-<img src="images/directorystructure.jpg">
-
-## Clean up the default templates
-- Helm’s `create` command generates a bunch of example templates we don’t need. Let’s simplify.
-- Go to the `templates` folder:
-  ```
-  cd orchestrate-ingestion-services/templates
-  ```
-- Delete all the default templates *except* `_helpers.tpl`.
-  - *(Use **`del`** if you’re in Command Prompt on Windows instead of Git Bash or PowerShell)*
-  ```bash
-  del deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests\test-connection.yaml
-  del tests\test-connection.yaml & rmdir tests & del NOTES.txt
-
-  rm deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests/test-connection.yaml
-  ```
-- You should only have this file left:
-  ```
-  _helpers.tpl
-  ```
-## Convert deployment YAMLs into a Helm template
+- [Deployment across environments](docs/deploymentacrossenv/README.md)
+## Create templates YAMLs
 - [**ingestion-deployment**](orchestrate-ingestion-services/templates/ui-deployment.yaml)
 - [**ingestion-service**](orchestrate-ingestion-services/templates/ui-service.yaml)
 - [**`values.yaml`**](orchestrate-ingestion-services/values.yaml)
@@ -46,16 +21,17 @@ orchestrate-ingestion-services/
 ├── templates/
 │   ├── ingestion-deployment.yaml
 │   ├── ingestion-service.yaml
+│   ├── ingestion-service-hpa.yaml
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
 ├── .helmignore
 ```
-## Cleanup existing Kubernetes deployment 
+## Install Helm release
+- Cleanup existing Kubernetes deployment 
 ```
 kubectl delete -f ingestion-services.yaml
 ```
-## Install Helm release
 - Go to Helm chart folder [**orchestrate-ingestion-services**](orchestrate-ingestion-services)
 ```powershell
 helm install orchestrate-ingestion-services-release .
@@ -89,6 +65,36 @@ orchestrate-ingestion-services-release-ingestion-service   NodePort    10.98.242
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `localhost:30081/api/powerquality/generate` → `ingestion-service`
+## Verify HPA
+- **`kubectl get hpa`**
+```
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
+NAME                                                           REFERENCE                                                                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+orchestrate-ingestion-services-hpa-release-ingestion-service   Deployment/orchestrate-ingestion-services-hpa-release-ingestion-service   cpu: <unknown>/70%   1         5         0          46s
+PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl describe hpa orchestrate-ingestion-services-hpa-release-ingestion-service
+Name:                                                  orchestrate-ingestion-services-hpa-release-ingestion-service
+Namespace:                                             default
+Labels:                                                app.kubernetes.io/managed-by=Helm
+Annotations:                                           meta.helm.sh/release-name: orchestrate-ingestion-services-hpa-release
+                                                       meta.helm.sh/release-namespace: default
+CreationTimestamp:                                     Tue, 03 Jun 2025 14:16:06 +0300
+Reference:                                             Deployment/orchestrate-ingestion-services-hpa-release-ingestion-service
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  <unknown> / 70%
+Min replicas:                                          1
+Max replicas:                                          5
+Deployment pods:                                       1 current / 0 desired
+Conditions:
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+Events:
+  Type     Reason                        Age   From                       Message
+  ----     ------                        ----  ----                       -------
+  Warning  FailedGetResourceMetric       56s   horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  56s   horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `orchestrate-ingestion-services-release`
 ```
