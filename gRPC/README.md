@@ -4,13 +4,8 @@
 - [Prerequisites](prerequisites/README.md)
 - [Ingestion service](ingestion-service/README.md)
 - [Hub service](hub-service/README.md)
-- [Containers](containers/README.md)
-- [Kubernetes](kubernetes/README.md)
 - [Helm charts](helmcharts/README.md)
-- [Horizontal Pod Autoscalar](hpa/README.md)
-- [Deployment across environments](deploymentacrossenv/README.md)
 - [Verification](#verification)
-
 ## Verification
 - Push data to Broker
   - `POST`: `http://localhost:9081/generate/registration`
