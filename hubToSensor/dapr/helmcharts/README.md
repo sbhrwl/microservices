@@ -1,17 +1,14 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
+- [Dapr Commands](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/introduction/commands/README.md)
 - [Setting up docker images](#setting-up-docker-images)
-- [Create Helm chart structure](#create-helm-chart-structure)
-- [Clean up the default templates](#clean-up-the-default-templates)
-- [Create Helm templates from application YAMLs](#create-helm-templates-from-application-yamls)
+- [Chart setup](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/setup/README.md)
+- [Create templates YAMLs](#create-helm-templates-yamls)
 - [Chart structure](#chart-structure)
-- [Cleanup existing Kubernetes deployment](#cleanup-existing-kubernetes-deployment)
 - [Install Helm release](#install-helm-release)
 - [Verify deployment](#verify-deployment)
 - [Access services](#access-services)
 - [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
-- [Troubleshooting](#troubleshooting)
-  - [Dapr Commands](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/introduction/commands/README.md)
 ## Setting up docker images 
 
 | Steps | Flexibility hub simulator | Flexibility bridge | Command orchestrator | Protocol adapter | HES-AIM simulator |
@@ -23,35 +20,7 @@
 | Build image | `docker build -t sbhrwldocker/flexibility-hub-simulator:dapr-latest .` | `docker build -t sbhrwldocker/flexibility-bridge-service:dapr-latest .` | `docker build -t sbhrwldocker/storage-service:dapr-latest .` | `docker build -t sbhrwldocker/protocol-adapter-service:dapr-latest .` | `docker build -t sbhrwldocker/hes-simulator:dapr-latest .` |
 | Push image | `docker push sbhrwldocker/flexibility-hub-simulator:dapr-latest` | `docker push sbhrwldocker/flexibility-bridge-service:dapr-latest` | `docker push sbhrwldocker/storage-service:dapr-latest` | `docker push sbhrwldocker/protocol-adapter-service:dapr-latest` | `docker push sbhrwldocker/hes-simulator:dapr-latest` |
 
-## Create Helm chart structure
-- [Helm setup](setup/README.md)
-- Generate the basic `Helm chart directory`. 
-- Run this in your terminal:
-  ```
-  helm create orchestrate-hubtosensor-services
-  ```
-- This creates a directory called [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services) with default templates and values.
-<img src="images/directorystructure.jpg">
-
-## Clean up the default templates
-- Helm’s `create` command generates a bunch of example templates we don’t need. Let’s simplify.
-- Go to the `templates` folder:
-  ```
-  cd orchestrate-hubtosensor-services/templates
-  ```
-- Delete all the default templates *except* `_helpers.tpl`.
-  - *(Use **`del`** if you’re in Command Prompt on Windows instead of Git Bash or PowerShell)*
-  ```bash
-  del deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests\test-connection.yaml
-  del tests\test-connection.yaml & rmdir tests & del NOTES.txt
-
-  rm deployment.yaml service.yaml hpa.yaml ingress.yaml serviceaccount.yaml tests/test-connection.yaml
-  ```
-- You should only have this file left:
-  ```
-  _helpers.tpl
-  ```
-## Create Helm templates from application YAMLs
+## Create templates YAMLs
 - [**flexibility-hub-simulator-deployment**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-deployment.yaml)
 - [**flexibility-hub-simulator-service**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-service.yaml)
 - [**storage-service-deployment**](orchestrate-hubtosensor-services/templates/storage-service-deployment.yaml)
@@ -79,10 +48,6 @@ orchestrate-hubtosensor-services/
 ├── Chart.yaml
 ├── values.yaml
 ├── .helmignore
-```
-## Cleanup existing Kubernetes deployment 
-```
-kubectl delete -f orchestrate-hubtosensor-services.yaml
 ```
 ## Install Helm release
 - Pre-requisites: to clean the dapr componenet which were used when running app locally
@@ -144,55 +109,3 @@ helm upgrade --install ocs-h2s-release .
 ```
 helm uninstall ocs-h2s-release
 ``` 
-## Troubleshooting
-### Problem
-- After deploying via Helm, the `flexibility-hub-simulator-service` (NodePort 30881) was unreachable from the host, even though it worked before manual deployment.
-- **Approach to diagnose:**
-1. **Check pods and services** — confirm all running in the `default` namespace:
-   ```bash
-   kubectl get pods
-   kubectl get svc
-   ```
-2. **Get ClusterIP of the service** (used for internal pod access):
-   ```bash
-   kubectl get svc flexibility-hub-simulator-service -o jsonpath='{.spec.clusterIP}'
-   ```
-
-   * This gives the internal service IP (`10.x.x.x`).
-3. **Get Node IP of the cluster node** (used for NodePort access inside the cluster):
-   ```bash
-   kubectl get nodes -o wide
-   ```
-
-   * This shows the internal node IP (`192.168.65.3` for Docker Desktop).
-4. **Check NodePort mapping in service YAML** (ensure `targetPort` matches container port):
-   ```bash
-   kubectl get svc flexibility-hub-simulator-service -o yaml
-   ```
-
-   * Confirms `port: 8081` → `nodePort: 30881`.
-
-5. **Check internal pod connectivity** using ClusterIP:
-   ```bash
-   kubectl exec -it <pod-name> -- curl http://<cluster-ip>:8081
-   ```
-
-   → Responded `404` → service working internally.
-
-6. **Test NodePort inside the cluster** using node IP:
-   ```bash
-   kubectl exec -it <pod-name> -- curl http://<node-ip>:30881
-   ```
-
-   → Responded `404` → NodePort routing fine.
-
-7. **Test NodePort externally from Windows host**:
-   ```bash
-   curl http://localhost:30881
-   ```
-
-   → Responded `404` → NodePort exposed correctly to host.
-
-### Conclusion
-- Kubernetes and Helm setup were correct; the service was reachable.
-- The `404` response simply shows that `/` is not a valid endpoint — network connectivity is working as expected.
