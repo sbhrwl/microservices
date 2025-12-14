@@ -1,9 +1,9 @@
 # Services
 - [Flexibility Hub simulator](flexibility-hub-simulator/README.md)
   - [Production version](flexibility-hub-simulator-prod/README.md)
-- [GFC service](flexibility-bridge-service/README.md)
-- [Control orchestrator gRPC](storage-service-grpc/README.md)
-  - [Control orchestrator restful](storage-service/README.md)
+- [Flexibility bridge](flexibility-bridge-service/README.md)
+- [Command orchestrator gRPC](storage-service-grpc/README.md)
+  - [Command orchestrator restful](storage-service/README.md)
 - [Protocol adapter service](protocol-adapter-service/README.md)
 - [HES-AIM simulator](hes-simulator/README.md)
 - [API layer](data-api-service/README.md)
