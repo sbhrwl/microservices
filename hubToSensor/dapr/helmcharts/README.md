@@ -1,4 +1,4 @@
-# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/deployment/containerisation/Kubernetes/deploymentstrategies/README.md)
+# [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
 - [Setting up docker images](#setting-up-docker-images)
 - [Create Helm chart structure](#create-helm-chart-structure)
 - [Clean up the default templates](#clean-up-the-default-templates)
