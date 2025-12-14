@@ -17,9 +17,9 @@
 - [Helm charts](helmcharts/README.md)
 - [Horizontal Pod Autoscalar](hpa/README.md)
 - [Deployment across environments](deploymentacrossenv/README.md)
-- [Service discovery](servicediscovery/README.md)
 - [Verification](verification/README.md)
 ---
+- [Service discovery](servicediscovery/README.md)
 - [Ingress](ingress/README.md)
 - [Service mesh](servicemesh/README.md)
 - [API gateway](apigateway/README.md)
