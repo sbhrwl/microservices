@@ -1,5 +1,5 @@
 # [Helm charts](https://github.com/sbhrwl/system_design/blob/main/docs/devops/containerisation/Kubernetes/deploymentstrategies/README.md)
-- [Settign up docker images](docs/containers/README.md)
+- [Setting up docker images](docs/containers/README.md)
 - [Kubernetes](docs/kubernetes/README.md)
 - [Chart setup](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/setup/README.md)
 - [Create templates YAMLs](#create-helm-templates-yamls)
