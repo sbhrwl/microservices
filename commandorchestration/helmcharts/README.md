@@ -21,6 +21,8 @@
 - [**sensor-simulator-deployment**](orchestrate-command-services/templates/sensor-simulator-deployment.yaml)
 - [**sensor-simulator-service**](orchestrate-command-services/templates/sensor-simulator-service.yaml)
 - [**`values.yaml`**](orchestrate-command-services/values.yaml)
+- [**`values-staging.yaml`**](orchestrate-command-services/values-staging.yaml)
+- [**`values-prod.yaml`**](orchestrate-command-services/values-prod.yaml)
 ### Chart structure
 ```pgsql
 orchestrate-command-services/
@@ -35,6 +37,8 @@ orchestrate-command-services/
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
+├── values-staging.yaml
+├── values-prod.yaml
 ├── .helmignore
 ```
 ## Install Helm release
