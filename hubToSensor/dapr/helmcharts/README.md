@@ -55,13 +55,13 @@ orchestrate-hubtosensor-services/
   - `kubectl delete component postgres-statestore`
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 ```powershell
-helm install ocs-h2s-release .
+helm install ocs-release .
 ```
-- **`ocs-h2s-release`** is the name you're assigning to this Helm release (you can change it if you like).
+- **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+C:\Git\microservices\hubToSensor\dapr\helmcharts\orchestrate-hubtosensor-services>helm install ocs-release . -n dev
 NAME: ocs-h2s-release
 LAST DEPLOYED: Fri Dec  5 12:59:03 2025
 NAMESPACE: default
@@ -69,10 +69,10 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
-PS C:\Users\sabharwalr> helm list
+PS C:\Users\sabharwalr> helm list -n dev
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION
 ocs-h2s-release default         1               2025-12-05 12:59:03.4566343 +0200 EET   deployed        flexibility-hub-simulator-0.1.0 1.0.0
-PS C:\Users\sabharwalr> kubectl get pods
+PS C:\Users\sabharwalr> kubectl get pods -n dev
 NAME                                         READY   STATUS    RESTARTS   AGE
 flexibility-hub-simulator-654f7d97fc-gfhpp   2/2     Running   0          9m12s
 api-layer-77ddb6449c-mvmhk                   1/1     Running   0          9m12s
@@ -80,7 +80,7 @@ flexibility-bridge-7d485dfbdc-qhz5q          2/2     Running   0          9m12s
 command-orchestrator-7d6855bd8f-vmg4x        2/2     Running   0          9m12s
 protocol-adapter-58cfd6df87-894h6            2/2     Running   0          9m12s
 hes-aim-59dbcfc476-4r29k                     2/2     Running   0          9m12s
-PS C:\Users\sabharwalr> kubectl get svc
+PS C:\Users\sabharwalr> kubectl get svc -n dev
 NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                               AGE
 flexibility-hub-simulator        NodePort    10.109.4.63      <none>        8081:30081/TCP                        9m17s
 api-layer                        NodePort    10.103.229.230   <none>        8085:30885/TCP                        9m17s
@@ -102,10 +102,10 @@ kubernetes                       ClusterIP   10.96.0.1        <none>        443/
   * `Get sensor state` → `http://localhost:30086/sensor/<sensor-nbr>`
 ## Update Helm release
 ```
-helm upgrade --install ocs-h2s-release .
+helm upgrade --install ocs-release . -n dev
 ```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-h2s-release`
 ```
-helm uninstall ocs-h2s-release
+helm uninstall ocs-release -n dev
 ``` 
