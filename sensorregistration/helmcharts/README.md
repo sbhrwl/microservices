@@ -27,6 +27,8 @@
 - [notification-configmap](orchestrate-sensor-services/templates/notification-configmap.yaml)
 - [notification-service-hpa.yaml](orchestrate-sensor-services/templates/notification-service-hpa.yaml)
 - [`values.yaml`](orchestrate-sensor-services/values.yaml)
+- [`values-staging.yaml`](orchestrate-sensor-services/values-staging.yaml)
+- [`values-prod.yaml`](orchestrate-sensor-services/values-prod.yaml)
 ### Chart structure
 ```pgsql
 orchestrate-sensor-services/
