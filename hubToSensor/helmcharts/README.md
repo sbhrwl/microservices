@@ -119,16 +119,16 @@ mydatabase=# select * from control_requests;
 mydatabase=# select * from request_change_log;
 ```
 ## Verify HPA
-- **`kubectl get hpa`**
+- **`kubectl get hpa -n dev`**
 ```
-C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get hpa
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl get hpa -n dev
 NAME                            REFERENCE                                         TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
 data-api-hpa                    Deployment/data-api-deployment                    cpu: <unknown>/50%, memory: <unknown>/60%   1         2         0          77s
 flexibility-hub-simulator-hpa   Deployment/flexibility-hub-simulator-deployment   cpu: <unknown>/50%, memory: <unknown>/60%   1         2         1          77s
 ```
-- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
+- Describe a specific HPA: **`kubectl describe hpa data-api-hpa -n dev`**
 ```
-C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl describe hpa flexibility-hub-simulator-hpa
+C:\Git\microservices\hubToSensor\hpa\orchestrate-hubtosensor-services>kubectl describe hpa data-api-hpa -n dev
 Name:                                                     flexibility-hub-simulator-hpa
 Namespace:                                                default
 Labels:                                                   app.kubernetes.io/managed-by=Helm
