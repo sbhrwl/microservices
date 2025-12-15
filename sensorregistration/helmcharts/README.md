@@ -105,7 +105,7 @@ PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-service
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
 ## Verify HPA
-- **`kubectl get hpa`**
+- **`kubectl get hpa -n dev`**
 ```
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get hpa -n dev
 NAME                                            REFERENCE                                                      TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
@@ -114,7 +114,7 @@ ocs-release-sensor-app-chart-sensor-hpa         Deployment/ocs-release-sensor-ap
 ocs-release-sensor-app-chart-ui-hpa             Deployment/ocs-release-sensor-app-chart-ui-service             cpu: <unknown>/80%   1         5         1          92s
 registration-hpa                                Deployment/registration                                        cpu: <unknown>/80%   1         5         0          92s
 ```
-- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
+- Describe a specific HPA: **`kubectl describe hpa registration-hpa -n dev`**
 ```
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl describe hpa registration-hpa -n dev
 Name:                                                  registration-hpa
