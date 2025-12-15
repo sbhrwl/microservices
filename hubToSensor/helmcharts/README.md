@@ -56,21 +56,20 @@
 ```
 kubectl delete -f orchestrate-hubtosensor-services.yaml
 ```
+- [Dependencies](../prerequisites/README.md)
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
+- Verify existing namepsaces: `kubectl get ns`
+- Create namepsace: `kubectl create namespace dev`
+  - Verify: `kubectl get ns`
+- Install Helm release
 ```powershell
-helm install ocs-h2s-release .
+helm install ocs-h2s-release . -f values.yaml -n dev
 ```
 - **`ocs-h2s-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
-Error: INSTALLATION FAILED: template: orchestrate-hubtosensor-services/templates/ui-app-service.yaml:4:11: executing "orchestrate-hubtosensor-services/templates/ui-app-service.yaml" at <include "uiApp.name" .>: error calling include: template: no template "uiApp.name" associated with template "gotpl"
-
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
-Error: INSTALLATION FAILED: template: orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml:19:26: executing "orchestrate-hubtosensor-services/templates/protocol-adapter-deployment.yaml" at <.Values.protocolAdapter.image>: nil pointer evaluating interface {}.image
-
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release .
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm install ocs-h2s-release . -f values.yaml -n dev
 NAME: ocs-h2s-release
 LAST DEPLOYED: Sun Oct 12 11:31:07 2025
 NAMESPACE: default
@@ -78,15 +77,11 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list -n dev
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
 ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                                   APP VERSION
-ocs-h2s-release default         1               2025-10-12 11:31:07.1780478 +0300 EEST  deployed        orchestrate-hubtosensor-services-0.1.0  1.16.0
-
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get pods
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get pods -n dev
 NAME                                                    READY   STATUS    RESTARTS     AGE
 data-api-65c7b7b9d7-n5nnv                               1/1     Running   0            36s
 flexibility-bridge-deployment-54884f5cc4-qrpqg          1/1     Running   1 (9s ago)   36s
@@ -96,7 +91,7 @@ protocol-adapter-deployment-5b499cb96c-bkxnf            1/1     Running   1 (9s 
 storage-service-deployment-6f99954b-8tdmn               1/1     Running   1 (4s ago)   36s
 ui-app-676567d78f-smk9m                                 1/1     Running   0            36s
 
-C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get svc
+C:\Git\microservices\hubToSensor\helmcharts\orchestrate-hubtosensor-services>kubectl get svc -n dev
 NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 flexibility-hub-simulator-service   NodePort    10.102.128.78    <none>        8081:30881/TCP   47s
 storage-service-service             ClusterIP   10.98.125.63     <none>        9090/TCP         47s
@@ -161,62 +156,10 @@ Events:
 ```
 ## Update Helm release
 ```
-helm upgrade --install ocs-h2s-release .
+helm upgrade --install ocs-h2s-release . -n dev
 ```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-h2s-release`
 ```
-helm uninstall ocs-h2s-release
+helm uninstall ocs-h2s-release -n dev
 ``` 
-## Troubleshooting
-**Problem:**
-- After deploying via Helm, the `flexibility-hub-simulator-service` (NodePort 30881) was unreachable from the host, even though it worked before manual deployment.
-**Approach to diagnose:**
-1. **Check pods and services** — confirm all running in the `default` namespace:
-   ```bash
-   kubectl get pods
-   kubectl get svc
-   ```
-2. **Get ClusterIP of the service** (used for internal pod access):
-   ```bash
-   kubectl get svc flexibility-hub-simulator-service -o jsonpath='{.spec.clusterIP}'
-   ```
-
-   * This gives the internal service IP (`10.x.x.x`).
-3. **Get Node IP of the cluster node** (used for NodePort access inside the cluster):
-   ```bash
-   kubectl get nodes -o wide
-   ```
-
-   * This shows the internal node IP (`192.168.65.3` for Docker Desktop).
-4. **Check NodePort mapping in service YAML** (ensure `targetPort` matches container port):
-   ```bash
-   kubectl get svc flexibility-hub-simulator-service -o yaml
-   ```
-
-   * Confirms `port: 8081` → `nodePort: 30881`.
-
-5. **Check internal pod connectivity** using ClusterIP:
-   ```bash
-   kubectl exec -it <pod-name> -- curl http://<cluster-ip>:8081
-   ```
-
-   → Responded `404` → service working internally.
-
-6. **Test NodePort inside the cluster** using node IP:
-   ```bash
-   kubectl exec -it <pod-name> -- curl http://<node-ip>:30881
-   ```
-
-   → Responded `404` → NodePort routing fine.
-
-7. **Test NodePort externally from Windows host**:
-   ```bash
-   curl http://localhost:30881
-   ```
-
-   → Responded `404` → NodePort exposed correctly to host.
-
-** Conclusion:**
-- Kubernetes and Helm setup were correct; the service was reachable.
- The `404` response simply shows that `/` is not a valid endpoint — network connectivity is working as expected.
