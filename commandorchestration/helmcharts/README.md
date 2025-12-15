@@ -46,7 +46,7 @@ orchestrate-command-services/
 ```
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
-- [Dependencies](../prerequisites/README.md)
+- [Dependencies](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/prerequisites/README.md)
 - Go to Helm chart folder [**orchestrate-command-services**](orchestrate-command-services)
 - Verify existing namepsaces: `kubectl get ns`
 - Create namepsace: `kubectl create namespace dev`
