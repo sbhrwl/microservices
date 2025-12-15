@@ -89,7 +89,7 @@ ocs-release-microservices-task-orchestrator      NodePort    10.97.22.149    <no
   * Kafka listener → `protocol-gateway`
   * ClusterIP service → `sensor-simulator`
 ## Verify HPA
-- **`kubectl get hpa`**
+- **`kubectl get hpa -n dev`**
 ```
 PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get hpa -n dev
 NAME                                                 REFERENCE                                                   TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
@@ -98,9 +98,9 @@ ocs-release-microservices-protocol-gateway-hpa       Deployment/ocs-release-micr
 ocs-release-microservices-sensor-simulator-hpa       Deployment/ocs-release-microservices-sensor-simulator       cpu: <unknown>/80%   1         5         0          56s
 ocs-release-microservices-task-orchestrator-hpa      Deployment/ocs-release-microservices-task-orchestrator      cpu: <unknown>/80%   1         5         0          56s
 ```
-- Describe a specific HPA: **`kubectl describe hpa <hpa-name>`**
+- Describe a specific HPA: **`kubectl describe hpa ocs-release-microservices-sensor-simulator-hpa -n dev`**
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa <hpa-name>
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa ocs-release-microservices-sensor-simulator-hpa -n dev
 
 ```
 ## Update Helm release
