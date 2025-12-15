@@ -23,7 +23,7 @@ spec:
             - name: PROTOCOL_TYPE
               value: "{{ .Values.protocolGateway.env.PROTOCOL_TYPE }}"
             - name: SENSOR_SIMULATOR_URL
-              value: "{{ .Values.protocolGateway.env.SENSOR_SIMULATOR_URL }}"
+              value: 'http://{{ include "microservices.fullname" . }}-sensor-simulator:{{ .Values.sensorSimulator.service.port }}{{ .Values.sensorSimulator.env.SENSOR_SIMULATOR_ENDPOINT }}'
             - name: KAFKA_HOST
               value: "{{ .Values.global.hostIP }}"
             - name: KAFKA_PORT

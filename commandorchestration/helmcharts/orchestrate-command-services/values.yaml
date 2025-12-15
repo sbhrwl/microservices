@@ -1,5 +1,5 @@
 global:
-  hostIP: 192.168.0.103
+  hostIP: 10.49.145.72
 
   kafka:
     port: 29092
@@ -53,7 +53,6 @@ protocolGateway:
   env:
     SERVER_PORT: 9083
     PROTOCOL_TYPE: dlms
-    SENSOR_SIMULATOR_URL: http://sensor-simulator:9084/simulate
 
 sensorSimulator:
   replicaCount: 1
@@ -66,7 +65,6 @@ sensorSimulator:
   env:
     SERVER_PORT: 9084
     SENSOR_SIMULATOR_ENDPOINT: /simulate
-
 hpa:
   taskOrchestrator:
     enabled: true
