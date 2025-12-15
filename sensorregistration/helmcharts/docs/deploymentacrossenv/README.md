@@ -11,3 +11,4 @@
 | Upgrade command    | `helm upgrade ocs-release-dev . -n dev` | `helm upgrade ocs-release-staging . -f values-staging.yaml -n staging` | `helm upgrade ocs-release-prod . -f values-prod.yaml -n prod` |
 | Uninstall command  | `helm uninstall ocs-release-dev -n dev` | `helm uninstall ocs-release-staging -n staging`                        | `helm uninstall ocs-release-prod -n prod`                     |
 | Delete namespace   | `kubectl delete namespace dev`          | `kubectl delete namespace staging`                                     | `kubectl delete namespace prod`                               |
+| Check namespaces   | `kubectl get ns`                        | `kubectl get ns`                                                       | `kubectl get ns`                                              |
