@@ -144,5 +144,5 @@ helm upgrade --install ocs-release . -n dev
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
 ```
-helm uninstall ocs-release
+helm uninstall ocs-release -n dev
 ```
