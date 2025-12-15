@@ -46,6 +46,8 @@ orchestrate-sensor-services/
 │   └── _helpers.tpl
 ├── Chart.yaml
 ├── values.yaml
+├── values-staging.yaml
+├── values-prod.yaml
 ├── .helmignore
 ```
 ## Install Helm release
@@ -59,7 +61,7 @@ kubectl delete -f orchestrate-sensor-services.yaml
   - Verify: `kubectl get ns`
 - Install Helm release
 ```powershell
-helm install ocs-release . -f values.yaml -n staging
+helm install ocs-release . -f values-staging.yaml -n staging
 ```
 - **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
