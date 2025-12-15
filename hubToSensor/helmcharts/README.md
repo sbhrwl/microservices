@@ -11,7 +11,7 @@
 - [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
 - [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
-- [Deployment across environments](docs/deploymentacrossenv/README.md)
+- [Deployment across environments](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/deploymentacrossenv/README.md)
 ## Create templates YAMLs
 - [**flexibility-hub-simulator-deployment**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-deployment.yaml)
 - [**flexibility-hub-simulator-service**](orchestrate-hubtosensor-services/templates/flexibility-hub-simulator-service.yaml)
