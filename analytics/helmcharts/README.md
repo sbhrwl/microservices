@@ -70,12 +70,35 @@ ocs-release-ingestion-service   NodePort   10.111.140.97   <none>        9081:30
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl get hpa
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get hpa -n dev
+NAME                            REFERENCE                                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+ocs-release-ingestion-service   Deployment/ocs-release-ingestion-service   cpu: <unknown>/70%   1         5         1          86s
 ```
 - Describe a specific HPA: **`kubectl describe hpa <hpa-name>`**
 ```
-PS C:\Git\microservices\analytics\hpa\orchestrate-ingestion-services-hpa> kubectl describe hpa <hpa-name>
-
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl describe hpa ocs-release-ingestion-service -n dev
+Name:                                                  ocs-release-ingestion-service
+Namespace:                                             dev
+Labels:                                                app.kubernetes.io/managed-by=Helm
+Annotations:                                           meta.helm.sh/release-name: ocs-release
+                                                       meta.helm.sh/release-namespace: dev
+CreationTimestamp:                                     Mon, 15 Dec 2025 13:35:21 +0200
+Reference:                                             Deployment/ocs-release-ingestion-service
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  <unknown> / 70%
+Min replicas:                                          1
+Max replicas:                                          5
+Deployment pods:                                       1 current / 0 desired
+Conditions:
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+Events:
+  Type     Reason                        Age   From                       Message
+  ----     ------                        ----  ----                       -------
+  Warning  FailedGetResourceMetric       49s   horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  49s   horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 ```
 ## Update Helm release
 ```
