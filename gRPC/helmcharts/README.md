@@ -78,7 +78,7 @@ ocs-release-ingestion-grpc-service   NodePort    10.107.48.6      <none>        
 ```
 PS C:\Git\microservices\gRPC\hpa\orchestrate-ingestion-grpc-services-hpa> kubectl get hpa
 ```
-- Describe a specific HPA: **`kubectl describe hpa <hpa`**
+- Describe a specific HPA: **`kubectl describe hpa <hpa-name>`**
 ```
 PS C:\Git\microservices\gRPC\hpa\orchestrate-ingestion-grpc-services-hpa> kubectl describe hpa <hpa-name>
 
