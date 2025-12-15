@@ -9,6 +9,7 @@
 - [Access services](#access-services)
 - [Verify HPA](#verify-hpa)
 - [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
+- [Update Helm release](#update-helm-release)
 - [Uninstall Helm release](#uninstall-helm-release)
 - [Deployment across environments](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/deploymentacrossenv/README.md)
 ## Create templates YAMLs
@@ -41,39 +42,40 @@ orchestrate-command-services/
 ```
 kubectl delete -f orchestrate-sensor-services.yaml
 ```
+- [Dependencies](../prerequisites/README.md)
 - Go to Helm chart folder [**orchestrate-command-services**](orchestrate-command-services)
+- Verify existing namepsaces: `kubectl get ns`
+- Create namepsace: `kubectl create namespace dev`
+  - Verify: `kubectl get ns`
+- Install Helm release
 ```powershell
-helm install ocs-release .
+helm install ocs-release . -f values.yaml -n dev
 ```
 - **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm install ocs-release .
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm install ocs-release . -f values.yaml -n dev
 NAME: ocs-release
-LAST DEPLOYED: Mon Jun  9 15:52:31 2025
-NAMESPACE: default
+LAST DEPLOYED: Mon Dec 15 10:21:46 2025
+NAMESPACE: dev
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm list
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm list -n dev
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-release     default         1               2025-06-09 15:52:31.1892375 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-release     default         1               2025-06-09 15:52:31.1892375 +0300 EEST  deployed        microservices-0.1.0     1.0
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get pods
-NAME                                                              READY   STATUS    RESTARTS   AGE
-ocs-release-microservices-command-orchestrator-789c6d7877-sxt82   1/1     Running   0          15s
-ocs-release-microservices-protocol-gateway-7f86cfb765-hzdd4       1/1     Running   0          15s
-ocs-release-microservices-sensor-simulator-5b7686d8c-xrkqd        1/1     Running   0          15s
-ocs-release-microservices-task-orchestrator-69555b676c-jnqt2      1/1     Running   0          15s
-PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get svc
-NAME                                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-kubernetes                                       ClusterIP   10.96.0.1        <none>        443/TCP          35d
-ocs-release-microservices-command-orchestrator   ClusterIP   10.110.54.37     <none>        9082/TCP         19s
-ocs-release-microservices-sensor-simulator       ClusterIP   10.106.33.26     <none>        9084/TCP         19s
-ocs-release-microservices-task-orchestrator      NodePort    10.106.218.124   <none>        9081:31200/TCP   19s
+ocs-release     dev             1               2025-12-15 10:21:46.8873332 +0200 EET   deployed        microservices-0.1.0     1.0
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get pods -n dev
+NAME                                                             READY   STATUS    RESTARTS   AGE
+ocs-release-microservices-command-orchestrator-75b55bb46-ggwrz   1/1     Running   0          22s
+ocs-release-microservices-protocol-gateway-78d49fd4bc-nqltj      1/1     Running   0          22s
+ocs-release-microservices-sensor-simulator-5b7686d8c-x9726       1/1     Running   0          22s
+ocs-release-microservices-task-orchestrator-7b9788dd5d-h9w87     1/1     Running   0          22s
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get svc -n dev
+NAME                                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+ocs-release-microservices-command-orchestrator   ClusterIP   10.97.15.189    <none>        9082/TCP         29s
+ocs-release-microservices-sensor-simulator       ClusterIP   10.102.149.46   <none>        9084/TCP         29s
+ocs-release-microservices-task-orchestrator      NodePort    10.97.22.149    <none>        9081:30081/TCP   29s
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
@@ -85,40 +87,24 @@ ocs-release-microservices-task-orchestrator      NodePort    10.106.218.124   <n
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl get hpa
-NAME                       REFERENCE                         TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-command-orchestrator-hpa   Deployment/command-orchestrator   cpu: <unknown>/80%   1         5         0          49s
-protocol-gateway-hpa       Deployment/protocol-gateway       cpu: <unknown>/80%   1         5         0          49s
-sensor-simulator-hpa       Deployment/sensor-simulator       cpu: <unknown>/80%   1         5         0          49s
-task-orchestrator-hpa      Deployment/task-orchestrator      cpu: <unknown>/80%   1         5         0          49s
+PS C:\Git\microservices\commandorchestration\helmcharts\orchestrate-command-services> kubectl get hpa -n dev
+NAME                                                 REFERENCE                                                   TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+ocs-release-microservices-command-orchestrator-hpa   Deployment/ocs-release-microservices-command-orchestrator   cpu: <unknown>/80%   1         5         0          56s
+ocs-release-microservices-protocol-gateway-hpa       Deployment/ocs-release-microservices-protocol-gateway       cpu: <unknown>/80%   1         5         0          56s
+ocs-release-microservices-sensor-simulator-hpa       Deployment/ocs-release-microservices-sensor-simulator       cpu: <unknown>/80%   1         5         0          56s
+ocs-release-microservices-task-orchestrator-hpa      Deployment/ocs-release-microservices-task-orchestrator      cpu: <unknown>/80%   1         5         0          56s
 ```
-- Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
+- Describe a specific HPA: **`kubectl describe hpa <hpa-name>`**
 ```
-PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa task-orchestrator-hpa
-Name:                                                  task-orchestrator-hpa
-Namespace:                                             default
-Labels:                                                app=task-orchestrator
-                                                       app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: ocs-hpa-release
-                                                       meta.helm.sh/release-namespace: default
-CreationTimestamp:                                     Mon, 09 Jun 2025 20:33:05 +0300
-Reference:                                             Deployment/task-orchestrator
-Metrics:                                               ( current / target )
-  resource cpu on pods  (as a percentage of request):  <unknown> / 80%
-Min replicas:                                          1
-Max replicas:                                          5
-Deployment pods:                                       0 current / 0 desired
-Conditions:
-  Type         Status  Reason          Message
-  ----         ------  ------          -------
-  AbleToScale  False   FailedGetScale  the HPA controller was unable to get the target's current scale: deployments/scale.apps "task-orchestrator" not found
-Events:
-  Type     Reason          Age   From                       Message
-  ----     ------          ----  ----                       -------
-  Warning  FailedGetScale  13s   horizontal-pod-autoscaler  deployments/scale.apps "task-orchestrator" not found
+PS C:\Git\microservices\commandorchestration\hpa\orchestrate-command-services-with-hpa> kubectl describe hpa <hpa-name>
+
+```
+## Update Helm release
+```
+helm upgrade --install ocs-release . -n dev
 ```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
 ```
-helm uninstall ocs-release
+helm uninstall ocs-release -n dev
 ``` 
