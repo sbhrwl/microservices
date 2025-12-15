@@ -40,15 +40,13 @@ kubectl delete -f ingestion-services.yaml
   - Verify: `kubectl get ns`
 - Install Helm release
 ```powershell
-helm install ocs-release . -n dev
+helm install ocs-release . -f values.yaml -n dev
 ```
 - **`orchestrate-ingestion-services-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> kubectl get all -n dev
-No resources found in dev namespace.
-PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm install ocs-release . -n dev
+PS C:\Git\microservices\analytics\helmcharts\orchestrate-ingestion-services> helm install ocs-release . -f values.yaml -n dev
 NAME: ocs-release
 LAST DEPLOYED: Mon Dec 15 11:57:15 2025
 NAMESPACE: dev
