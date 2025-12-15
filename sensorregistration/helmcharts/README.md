@@ -68,58 +68,60 @@ helm install ocs-release . -f values.yaml -n dev
 - `.` means Helm will *install using the chart in the current directory*.
 ## Verify deployment
 ```
-PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm install ocs-release . -f values-dev.yaml -n dev
+PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm install ocs-release . -f values.yaml -n dev
+W1215 09:57:57.615364   19436 warnings.go:70] spec.template.spec.containers[0].env[8]: hides previous definition of "NOTIFICATION_SERVICE_URL", which may be dropped when using apply
 NAME: ocs-release
-LAST DEPLOYED: Fri May 30 10:57:25 2025
-NAMESPACE: default
+LAST DEPLOYED: Mon Dec 15 09:57:57 2025
+NAMESPACE: dev
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> helm list -n dev
-NAME                                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-ocs-release     default         1               2025-05-30 10:57:25.8162546 +0300 EEST  deployed        sensor-app-chart-0.1.0  1.0
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+ocs-release     dev             1               2025-12-15 09:57:57.2213469 +0200 EET   deployed        sensor-app-chart-0.1.0  1.0
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get pods -n dev
-NAME                                    READY   STATUS    RESTARTS   AGE
-notification-service-7f5845c77c-cd2qr   1/1     Running   0          2m10s
-registration-service-7c4555d588-65v4h   1/1     Running   0          2m10s
-sensor-service-59b4d96b5-v9rjj          1/1     Running   0          2m10s
-ui-service-55f94d6747-rfjnn             1/1     Running   0          2m10s
+NAME                                                              READY   STATUS    RESTARTS   AGE
+ocs-release-sensor-app-chart-notification-service-7cf97b46lrwdp   1/1     Running   0          23s
+ocs-release-sensor-app-chart-registration-service-6dd7d847x6r4z   1/1     Running   0          23s
+ocs-release-sensor-app-chart-sensor-service-69c58c96cc-2d9rc      1/1     Running   0          23s
+ocs-release-sensor-app-chart-ui-service-7c8dfbb9c7-tw5kt          1/1     Running   0          23s
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get svc -n dev
-NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-kubernetes             ClusterIP   10.96.0.1       <none>        443/TCP          25d
-notification-service   ClusterIP   10.105.187.69   <none>        9084/TCP         2m17s
-registration-service   ClusterIP   10.109.85.233   <none>        9083/TCP         2m17s
-sensor-service         NodePort    10.98.38.139    <none>        9082:30082/TCP   2m17s
-ui-service             NodePort    10.98.31.231    <none>        9081:30081/TCP   2m17s
+NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+ocs-release-sensor-app-chart-notification-service   ClusterIP   10.107.95.126    <none>        9084/TCP         30s
+ocs-release-sensor-app-chart-sensor-service         NodePort    10.107.103.156   <none>        9082:30082/TCP   30s
+ocs-release-sensor-app-chart-ui-service             NodePort    10.104.4.18      <none>        9081:30081/TCP   30s
+registration-service                                ClusterIP   10.104.23.73     <none>        9083/TCP         30s
 PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get all -n dev
 ```
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
   * `http://localhost:30081/` → `ui-service`
+    * username: endpointaccessuser
+    * password: password123
   * `http://localhost:30082/api/register/sensor` → `sensor-service`
   * ClusterIP service → `registration-service`
   * ClusterIP service → `notification-service`
 ## Verify HPA
 - **`kubectl get hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl get hpa -n dev
-NAME               REFERENCE                 TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-notification-hpa   Deployment/notification   cpu: <unknown>/80%   1         5         0          59s
-registration-hpa   Deployment/registration   cpu: <unknown>/80%   1         5         0          59s
-sensor-hpa         Deployment/sensor         cpu: <unknown>/80%   1         5         0          59s
-ui-hpa             Deployment/ui             cpu: <unknown>/80%   1         5         0          59s
+PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl get hpa -n dev
+NAME                                            REFERENCE                                                      TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+ocs-release-sensor-app-chart-notification-hpa   Deployment/ocs-release-sensor-app-chart-notification-service   cpu: <unknown>/80%   1         5         1          92s
+ocs-release-sensor-app-chart-sensor-hpa         Deployment/ocs-release-sensor-app-chart-sensor-service         cpu: <unknown>/80%   1         5         1          92s
+ocs-release-sensor-app-chart-ui-hpa             Deployment/ocs-release-sensor-app-chart-ui-service             cpu: <unknown>/80%   1         5         1          92s
+registration-hpa                                Deployment/registration                                        cpu: <unknown>/80%   1         5         0          92s
 ```
 - Describe a specific HPA: **`kubectl describe hpa registration-hpa`**
 ```
-PS C:\Git\microservices\sensorregistration\hpa\orchestrate-sensor-services-with-hpa> kubectl describe hpa registration-hpa -n dev
+PS C:\Git\microservices\sensorregistration\helmcharts\orchestrate-sensor-services> kubectl describe hpa registration-hpa -n dev
 Name:                                                  registration-hpa
-Namespace:                                             default
+Namespace:                                             dev
 Labels:                                                app=registration
                                                        app.kubernetes.io/managed-by=Helm
-Annotations:                                           meta.helm.sh/release-name: ocs-hpa-release
-                                                       meta.helm.sh/release-namespace: default
-CreationTimestamp:                                     Fri, 30 May 2025 11:01:11 +0300
+Annotations:                                           meta.helm.sh/release-name: ocs-release
+                                                       meta.helm.sh/release-namespace: dev
+CreationTimestamp:                                     Mon, 15 Dec 2025 09:57:57 +0200
 Reference:                                             Deployment/registration
 Metrics:                                               ( current / target )
   resource cpu on pods  (as a percentage of request):  <unknown> / 80%
@@ -133,11 +135,11 @@ Conditions:
 Events:
   Type     Reason          Age   From                       Message
   ----     ------          ----  ----                       -------
-  Warning  FailedGetScale  11s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
+  Warning  FailedGetScale  43s   horizontal-pod-autoscaler  deployments/scale.apps "registration" not found
 ```
 ## Update Helm release
 ```
-helm upgrade --install ocs-release .
+helm upgrade --install ocs-release . -n dev
 ```
 ## Uninstall Helm release
 - Delete all Kubernetes resources (Deployments, Services, etc.) that were created by the Helm release named `ocs-release`
