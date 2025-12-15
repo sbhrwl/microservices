@@ -10,7 +10,7 @@
 - [Verify HPA](#verify-hpa)
 - [HPA simulations](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/hpa/README.md)
 - [Uninstall Helm release](#uninstall-helm-release)
-- [Deployment across environments](docs/deploymentacrossenv/README.md)
+- [Deployment across environments](https://github.com/sbhrwl/microservices/blob/main/sensorregistration/helmcharts/docs/deploymentacrossenv/README.md)
 ## Create templates YAMLs
 - [**task-orchestrator-deployment**](orchestrate-command-services/templates/task-orchestrator-deployment.yaml)
 - [**task-orchestrator-service**](orchestrate-command-services/templates/task-orchestrator-service.yaml)
