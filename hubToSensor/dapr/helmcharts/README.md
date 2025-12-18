@@ -53,8 +53,8 @@ orchestrate-hubtosensor-services/
 - Pre-requisites: to clean the dapr componenet which were used when running app locally
   - `kubectl delete component rabbitmq-pubsub`
   - `kubectl delete component postgres-statestore`
-- [Initialise DAPR](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/prerequisites/README.md)
 - [Dependencies](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/prerequisites/README.md)
+- [Initialise DAPR](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/prerequisites/README.md)
 - Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 - Verify existing namepsaces: `kubectl get ns`
 - Create namepsace: `kubectl create namespace dev`
