@@ -55,7 +55,7 @@ orchestrate-hubtosensor-services/
   - `kubectl delete component postgres-statestore`
 - [Initialise DAPR](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/prerequisites/README.md)
 - [Dependencies](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/prerequisites/README.md)
-- Go to Helm chart folder [**orchestrate-sensor-services**](orchestrate-sensor-services)
+- Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
 - Verify existing namepsaces: `kubectl get ns`
 - Create namepsace: `kubectl create namespace dev`
   - Verify: `kubectl get ns`
