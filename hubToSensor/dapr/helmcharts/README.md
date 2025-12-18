@@ -115,3 +115,5 @@ helm upgrade --install ocs-release . -n dev
 ```
 helm uninstall ocs-release -n dev
 ``` 
+- [Bring dependencies contianer down](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/prerequisites/README.md)
+- [Bring DAPR components down](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/prerequisites/README.md)
