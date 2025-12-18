@@ -53,9 +53,15 @@ orchestrate-hubtosensor-services/
 - Pre-requisites: to clean the dapr componenet which were used when running app locally
   - `kubectl delete component rabbitmq-pubsub`
   - `kubectl delete component postgres-statestore`
-- Go to Helm chart folder [**orchestrate-hubtosensor-services**](orchestrate-hubtosensor-services)
+- [Initialise DAPR](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/dapr/prerequisites/README.md)
+- [Dependencies](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/prerequisites/README.md)
+- Go to Helm chart folder [**orchestrate-sensor-services**](orchestrate-sensor-services)
+- Verify existing namepsaces: `kubectl get ns`
+- Create namepsace: `kubectl create namespace dev`
+  - Verify: `kubectl get ns`
+- Install Helm release
 ```powershell
-helm install ocs-release .
+helm install ocs-release . -f values.yaml -n dev
 ```
 - **`ocs-release`** is the name you're assigning to this Helm release (you can change it if you like).
 - `.` means Helm will *install using the chart in the current directory*.
