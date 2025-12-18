@@ -101,8 +101,9 @@ ui-app-service                      NodePort    10.106.186.119   <none>        8
 - [Check status and perform other Kubernetes operations](https://github.com/sbhrwl/microservices/blob/main/motivation/generatemessage/kubernetes/README.md#deploy-docker-images-on-kubernetes)
 ## Access services
 * List of exposed URLs for your current services, assuming typical **NodePort** or **port-forwarding** access mappings for local development:
-  * `flexibility-hub-simulator` → `http://localhost:30881/api/messages`
-  * `data-api-service` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
+  * `flexibility-hub-simulator` → `http://localhost:30081/api/messages`
+  * `api-layer` → `http://localhost:30885/api/v1/requests/<requestID>/tracker`
+    * `kubectl port-forward service/api-layer 8085:8085 -n dev`
   * [`ui-app`](https://github.com/sbhrwl/microservices/blob/main/hubToSensor/hub-to-sensor/ui-app/README.md) → `http://localhost:4200/`
 * Database verification
 ```sql
