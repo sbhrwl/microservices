@@ -7,12 +7,12 @@
 
 | Folder/File | Purpose |
 |-------------|---------|
-| `src/main/java/com/landisgyr/gfc/` | Core Java application code |
-| `src/main/java/com/landisgyr/gfc/di/` | Dependency injection components (Dagger) |
-| `src/main/java/com/landisgyr/gfc/grpc/` | gRPC service implementations |
-| `src/main/java/com/landisgyr/gfc/server/` | Server bootstrap and configuration |
-| `src/main/java/com/landisgyr/gfc/services/` | Business logic services |
-| `src/main/java/com/landisgyr/gfc/monitoring/` | Health checks and monitoring |
+| `gfc/` | Core Java application code |
+| `gfc/di/` | Dependency injection components (Dagger) |
+| `gfc/grpc/` | gRPC service implementations |
+| `gfc/server/` | Server bootstrap and configuration |
+| `gfc/services/` | Business logic services |
+| `gfc/monitoring/` | Health checks and monitoring |
 | `src/main/resources/com/landisgyr/gfc/` | Application resources (configs, properties) |
 | `src/main/dist/etc/` | Distribution configs (application.conf, logback.xml) |
 | `src/test/` | Test code and resources |
