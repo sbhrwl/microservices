@@ -1,33 +1,38 @@
 # Application
 - [Project structure](#project-structure)
 - [Purpose](#purpose)
-- [Key dependencies](#key-dependencies)
+- [Dependencies](#dependencies)
 - [Build and run](#build-and-run)
 ## Project structure
 
 | Folder/File | Purpose |
 |-------------|---------|
 | `gfc/` | Core Java application code |
-| `gfc/di/` | Dependency injection components (Dagger) |
-| `gfc/grpc/` | gRPC service implementations |
-| `gfc/server/` | Server bootstrap and configuration |
-| `gfc/services/` | Business logic services |
-| `gfc/monitoring/` | Health checks and monitoring |
-| `src/main/resources/com/landisgyr/gfc/` | Application resources (configs, properties) |
-| `src/main/dist/etc/` | Distribution configs (application.conf, logback.xml) |
-| `src/test/` | Test code and resources |
-| `pom.xml` | Maven build configuration |
-| `Dockerfile` / `Dockerfile-dev` | Container images for prod/dev |
+| `gfc/di/` | Dependency injection components using Dagger 2; defines application-wide and gRPC server components with module bindings |
+| `gfc/grpc/` | gRPC service implementations (Device, Authorization, Event, Organization, Tag, Revision services) and interceptors |
+| `gfc/server/` | Server bootstrap, configuration loading, graceful shutdown hooks, and main application runner |
+| `gfc/services/` | Business logic services (queries, commands, authorization, git info management) |
+| `gfc/dao/` | Data Access Objects for MongoDB operations and authorization role mappings |
+| `gfc/domain/` | Domain models and business entities (Device, Organization, OperationContext, Group, etc.) |
+| `gfc/keycloak/` | Keycloak integration utilities for JWT token validation, security context, and RBAC |
+| `gfc/rbac/` | Role-Based Access Control logic and permission checking |
+| `gfc/monitoring/` | Health checks (readiness/liveness), MongoDB connection monitoring, Dapr health integration |
+| `gfc/exceptions/` | Custom exception classes (AccessDeniedException, ResourceNotFoundException, etc.) |
+| `src/main/resources/com/landisgyr/gfc/` | Application resources: manufacturer mappings, configuration files, static data |
+| `src/main/dist/etc/` | Distribution configs: `application.conf` (Typesafe Config), `logback.xml` (logging configuration) |
+| `src/test/` | Unit and integration tests with test-specific configurations |
+| `pom.xml` | Maven build configuration with dependencies, plugins, and build profiles |
+| `Dockerfile` / `Dockerfile-dev` | Container images for production and development environments |
+| `envfile.env` | Environment variables for containerized deployments |
 
 ## Purpose
-- **Smart meter operations center backend**
 - Provides CRUD operations via gRPC
 - Handles devices, work orders, organizations, tags
 - Integrates with Keycloak for authentication
 - Uses MongoDB for persistence
 - Runs with Dapr sidecar for microservices features
 
-## Key dependencies
+## Dependencies
 - **gRPC 1.77.0** - RPC framework
 - **Dapr SDK 1.16.0** - Distributed application runtime
 - **MongoDB Driver 5.6.2** - Database client
