@@ -9,42 +9,47 @@
 - Each layer has distinct responsibilities and dependencies flow downward
 - Domain model is shared across all layers but owned by domain package
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph "gRPC Layer"
-        DS[DeviceServiceImpl]
-        ES[EventServiceImpl]
-        OS[OrganizationServiceImpl]
-        TS[TagServiceImpl]
-        AS[AuthorizationServiceImpl]
-        HS[HealthServiceImpl]
+        DS["DeviceServiceImpl"]
+        ES["EventServiceImpl"]
+        OS["OrganizationServiceImpl"]
+        TS["TagServiceImpl"]
+        AS["AuthorizationServiceImpl"]
+        HS["HealthServiceImpl"]
     end
+
     subgraph "Service Layer"
-        DQS[DeviceQueryService]
-        DMS[DeviceMutationService]
-        EQS[EventQueryService]
-        EMS[EventMutationService]
-        OSV[OrganizationService]
-        TQS[TagQueryService]
-        TMS[TagMutationService]
-        AQS[AuthorizationQueryService]
+        DQS["DeviceQueryService"]
+        DMS["DeviceMutationService"]
+        EQS["EventQueryService"]
+        EMS["EventMutationService"]
+        OSV["OrganizationService"]
+        TQS["TagQueryService"]
+        TMS["TagMutationService"]
+        AQS["AuthorizationQueryService"]
     end
+
     subgraph "DAO Layer"
-        DD[DeviceDao]
-        ED[EventDao]
-        OD[OrganizationDao]
-        TD[TagDao]
-        AD[AuthorizationDao]
+        DD["DeviceDao"]
+        ED["EventDao"]
+        OD["OrganizationDao"]
+        TD["TagDao"]
+        AD["AuthorizationDao"]
     end
+
     subgraph "Domain Model"
-        DM[Device/Event/Org/Tag]
-        QF[Query Filters]
-        PG[GenericPage]
+        DM["Device / Event / Org / Tag"]
+        QF["Query Filters"]
+        PG["GenericPage"]
     end
+
     subgraph "Infrastructure"
-        MC[(MongoDB)]
-        KC[Keycloak]
-        DAPR[Dapr]
+        MC["MongoDB"]
+        KC["Keycloak"]
+        DAPR["Dapr"]
     end
+
     DS --> DQS
     DS --> DMS
     ES --> EQS
@@ -53,6 +58,7 @@ flowchart TB
     TS --> TQS
     TS --> TMS
     AS --> AQS
+
     DQS --> DD
     DMS --> DD
     EQS --> ED
@@ -61,26 +67,32 @@ flowchart TB
     TQS --> TD
     TMS --> TD
     AQS --> AD
+
     DD --> MC
     ED --> MC
     OD --> MC
     TD --> MC
     AD --> MC
+
     DQS --> DM
     EQS --> DM
     OSV --> DM
     TQS --> DM
+
     DD --> DM
     ED --> DM
     OD --> DM
     TD --> DM
+
     style DS fill:#4A90E2,color:#fff
     style ES fill:#4A90E2,color:#fff
     style OS fill:#4A90E2,color:#fff
     style TS fill:#4A90E2,color:#fff
+
     style DQS fill:#7B68EE,color:#fff
     style EQS fill:#7B68EE,color:#fff
     style OSV fill:#7B68EE,color:#fff
+
     style DD fill:#47A248,color:#fff
     style ED fill:#47A248,color:#fff
     style OD fill:#47A248,color:#fff
@@ -96,7 +108,7 @@ flowchart TB
 - Interceptors are provided via `InterceptorsModule` and applied to all gRPC calls
 - Service implementations are `@CallScoped` for per-request lifecycle management
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph "Root Component"
         AC["ApplicationComponent\n@AppScope"]
     end
@@ -247,4 +259,3 @@ flowchart TB
     style GS fill:#3498DB,color:#fff
     style MDB fill:#2ECC71,color:#fff
 ```
-
