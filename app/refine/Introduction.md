@@ -52,7 +52,7 @@ flowchart TB
     style Dapr fill:#0D7377,color:#fff
 ```
 ## Design principles
-- **Layered architecture**: Separation between `gRPC` handlers, business services (`*Service`), and data access (`*Dao`)
+- **Layered architecture**: Separation between `gRPC` handlers, business services (`service`), and data access (`dao`)
 - **Dependency injection**: Full `Dagger`-based DI for testability and modularity
 - **Multi-tenancy**: Organization-scoped data isolation at the DAO layer
 - **Security first**: Token-based authentication with method-level authorization checks
