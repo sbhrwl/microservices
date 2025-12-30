@@ -3,7 +3,7 @@
    - **High-level responsibilities** (devices, events, tags, organizations, authorization).
    - **Key technologies**: gRPC, MongoDB, Dapr, Keycloak, Dagger DI, Typesafe Config.
    - **Simple context diagram** (Mermaid flowchart): Clients ↔ gRPC ↔ gfc-service ↔ MongoDB / Dapr / Keycloak.
-2. **Runtime Overview & Startup Sequence**
+2. [**Startup Sequence**](Runtime.md)
    - **Narrative**: Flow from `Bootstrap.main` → `Server.run` → DI wiring → gRPC server start.
    - **Mermaid sequence diagram**:
      - `Client` (operator) → JVM → `Bootstrap` → `Server` → `ApplicationComponent` / Dagger → `GrpcServerComponent` → `io.grpc.Server`.
