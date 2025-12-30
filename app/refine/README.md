@@ -8,7 +8,7 @@
    - **Mermaid sequence diagram**:
      - `Client` (operator) → JVM → `Bootstrap` → `Server` → `ApplicationComponent` / Dagger → `GrpcServerComponent` → `io.grpc.Server`.
    - **Shutdown sequence**: `GracefulShutdownHook`, readiness indicator, gRPC stop.
-3. **Architecture & Components**
+3. [**Architecture & Components**](Architecture.md)
    - **Mermaid component diagram** (flowchart style):
      - `grpc` layer (`*ServiceImpl`)  
      - `services` layer (`*QueryService`, `*MutationService`, `OrganizationService`, etc.)  
