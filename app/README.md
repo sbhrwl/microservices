@@ -3,6 +3,7 @@
 - [Purpose](#purpose)
 - [Dependencies](#dependencies)
 - [Build and run](#build-and-run)
+- [Refine](refine/README.md)
 ## Project structure
 
 | Folder/File | Purpose |
