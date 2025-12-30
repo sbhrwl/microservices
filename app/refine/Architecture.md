@@ -96,33 +96,39 @@ flowchart TB
 - Interceptors are provided via `InterceptorsModule` and applied to all gRPC calls
 - Service implementations are `@CallScoped` for per-request lifecycle management
 ```mermaid
-flowchart TB
+flowchart TD
     subgraph "Root Component"
-        AC[ApplicationComponent<br/>@AppScope]
+        AC["ApplicationComponent\n@AppScope"]
     end
+
     subgraph "Modules"
-        GM[GrpcModule]
-        AM[AppModule]
+        GM["GrpcModule"]
+        AM["AppModule"]
     end
+
     subgraph "Subcomponent"
-        GSC[GrpcServerComponent<br/>@Singleton]
+        GSC["GrpcServerComponent\n@Singleton"]
     end
+
     subgraph "Call Scoped"
-        GSC2[GrpcServiceComponent<br/>@CallScoped]
+        GSC2["GrpcServiceComponent\n@CallScoped"]
     end
+
     subgraph "gRPC Services"
-        DS[DeviceServiceImpl]
-        ES[EventServiceImpl]
-        OS[OrganizationServiceImpl]
-        TS[TagServiceImpl]
-        AS[AuthorizationServiceImpl]
+        DS["DeviceServiceImpl"]
+        ES["EventServiceImpl"]
+        OS["OrganizationServiceImpl"]
+        TS["TagServiceImpl"]
+        AS["AuthorizationServiceImpl"]
     end
+
     subgraph "Interceptors"
-        AI[AuthorizationInterceptor]
-        EI[ExceptionHandlerInterceptor]
-        LI[LatencyLimiterInterceptor]
-        LOGI[LoggingInterceptor]
+        AI["AuthorizationInterceptor"]
+        EI["ExceptionHandlerInterceptor"]
+        LI["LatencyLimiterInterceptor"]
+        LOGI["LoggingInterceptor"]
     end
+
     AC --> GM
     AC --> AM
     GM --> GSC
@@ -136,6 +142,7 @@ flowchart TB
     GSC2 --> EI
     GSC2 --> LI
     GSC2 --> LOGI
+
     style AC fill:#FF6B6B,color:#fff
     style GSC fill:#4ECDC4,color:#fff
     style GSC2 fill:#95E1D3,color:#000
