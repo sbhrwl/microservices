@@ -1,4 +1,4 @@
-1. **Introduction**
+1. [**Introduction**](Introduction.md)
    - **Purpose**: What `gfc-service` does and where it fits.
    - **High-level responsibilities** (devices, events, tags, organizations, authorization).
    - **Key technologies**: gRPC, MongoDB, Dapr, Keycloak, Dagger DI, Typesafe Config.
