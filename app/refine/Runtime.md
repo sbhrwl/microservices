@@ -3,7 +3,7 @@
 - [Bootstrap & configuration](#bootstrap--configuration)
 - [Dependency injection wiring](#dependency-injection-wiring)
 - [Server startup](#server-startup)
-- [Shutdown sequence](#shutdown-sequence)## Runtime overview & startup sequence
+- [Shutdown sequence](#shutdown-sequence)
 ## Startup sequence
 - Service lifecycle follows strict initialization sequence ensuring dependencies wired before accepting requests
 - Entry point is `Bootstrap.main()` which delegates to `Server.run()` for startup logic
