@@ -71,7 +71,7 @@
      - `logback.xml`, `logging.properties`, SLF4J + logback, logging bridge via `SLF4JBridgeHandler`.
    - **Sequence diagram**:
      - Liveness/readiness probe → health endpoints → health indicators → dependencies (Mongo, Dapr).
-9. **Error Handling & Limits**
+9. [**Error Handling & Limits**](ErrorHandling.md)
    - Core exception types (`exceptions.*`): invalid request, access denied, too many requests, request too large, etc.
    - How interceptors (`ExceptionHandlerInterceptor`, `LatencyLimiterInterceptor`, `LoggingInterceptor`) wrap and translate errors.
    - Timeouts, max inbound message size, latency limiter behavior.
