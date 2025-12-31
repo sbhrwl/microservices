@@ -75,13 +75,13 @@
    - Core exception types (`exceptions.*`): invalid request, access denied, too many requests, request too large, etc.
    - How interceptors (`ExceptionHandlerInterceptor`, `LatencyLimiterInterceptor`, `LoggingInterceptor`) wrap and translate errors.
    - Timeouts, max inbound message size, latency limiter behavior.
-10. **Performance & Scalability Considerations**
+10. [**Performance & Scalability Considerations**](PerformanceScalability.md)
     - Threading model and executors:
       - Netty worker/boss executors, Dapr client executor.
     - Search strategies for Mongo (from `ApplicationSetting.SearchStrategy`).
     - Any caching / performance features (e.g. `MovingAverageLatencyTracker`).
     - Recommended deployment topologies (horizontal scaling, DB considerations).
-11. **Developer Guide**
+11. [**Developer Guide**](DeveloperGuide.md)
     - **Running locally**:
       - `mvn clean compile`, config hints, dependencies like MongoDB/Dapr/Keycloak.
     - **Adding a new gRPC service**:
