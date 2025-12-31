@@ -49,6 +49,11 @@
 | `confirmUploadFlexibilities` | `ConfirmUploadFlexibilitiesRequest` | `ConfirmUploadFlexibilitiesResponse` | Confirm flexibilities upload (not implemented) |
 
 ### Query devices flow
+<img src="images/grpc-api-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -73,6 +78,7 @@ sequenceDiagram
     DS->>DS: ProtoMapper.toProto(devicesPage)
     DS-->>Client: QueryDeviceResponse
 ```
+</details>
 
 ## Event service
 - Manages operational events for devices: storage, querying, and aggregation
@@ -122,6 +128,11 @@ sequenceDiagram
 | `tagDevice` | `TagDevicesRequest` (orgCode, deviceTags) | `Empty` | Assign tags to devices, max 1000 tags, validates tag ownership |
 
 ### Tag devices flow
+<img src="images/grpc-api-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -152,6 +163,7 @@ sequenceDiagram
     TMS-->>TS: Complete
     TS-->>Client: Empty response
 ```
+</details>
 
 ## Authorization service
 - Provides permission metadata for frontend authorization UI
@@ -168,6 +180,11 @@ sequenceDiagram
 | `getAppPermissions` | `Empty` | `GetPermissionsResponse` (permissions) | Get app-to-methods mapping from configuration |
 
 ### Get app permissions flow
+<img src="images/grpc-api-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -183,6 +200,7 @@ sequenceDiagram
     AS->>AS: Build GetPermissionsResponse
     AS-->>Client: GetPermissionsResponse
 ```
+</details>
 
 ## Health service
 - Standard gRPC health checking protocol implementation
