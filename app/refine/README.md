@@ -52,7 +52,7 @@
      - Table: example RPC → required roles/permissions (if derivable from config).
    - **Sequence diagram**:
      - Client with JWT → gRPC call → interceptors → token verification → RBAC check → service logic.
-7. **Configuration & Environments**
+7. [**Configuration & Environments**](ConfigurationEnvironments.md)
    - **Configuration sources**:
      - `application.conf` (and dist `etc/application.conf`).
      - JVM/system properties (`-Dconfig.file=...` as in `Server`).
