@@ -7,6 +7,7 @@
 - [**gRPC APIs**](gRPC-APIs.md)
   - Query devices flow, Tag devices flow, Get app permissions flow 
 - [**Data Model & Persistence**](DataModel.md)
+  - Domain entities, Query model, SearchFilter interface, PageRequest, Sorting, Aggregation pipeline builder, Data flow, Document mappers
 
 ---   
    - **Domain entities**:
