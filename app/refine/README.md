@@ -2,31 +2,13 @@
   - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
 - [**Startup Sequence**](Runtime.md)
    - Bootstrap and configuration, Dependency injection wiring, Server startup, Shutdown sequence
+- [**Architecture & Components**](Architecture.md)
+  - Component layers, gRPC server and Dagger modules, Persistence and MongoDB integration, Dapr integration, Configuration model, Protos
+- [**gRPC APIs**](gRPC-APIs.md)
+  - Query devices flow, Tag devices flow, Get app permissions flow 
+- [**Data Model & Persistence**](DataModel.md)
 
-3. [**Architecture & Components**](Architecture.md)
-   - **Mermaid component diagram** (flowchart style):
-     - `grpc` layer (`*ServiceImpl`)  
-     - `services` layer (`*QueryService`, `*MutationService`, `OrganizationService`, etc.)  
-     - `dao` layer (`DeviceDao`, `EventDao`, `TagDao`, `OrganizationDao`, `AuthorizationDao`)  
-     - `domain` model (device/event/org/query filters).
-   - **Subsections**:
-     - gRPC server and Dagger modules (`GrpcModule`, `GrpcServerComponent`, `AppModule`).
-     - Persistence and MongoDB integration (`ApplicationSetting.Mongodb`, `MongoClient` in `AppModule`, `AggregationPipelineBuilder`, DAOs).
-     - Dapr integration (health, actors if used).
-     - Configuration model (`ApplicationSetting`, `application.conf`).
-4. [**External Interfaces (gRPC APIs)**](ExternalInterfaces.md)
-   - Overview of main APIs:
-     - **Device**: `DeviceServiceImpl` (query/mutation flows).
-     - **Event**: `EventServiceImpl`.
-     - **Organization**: `OrganizationServiceImpl`.
-     - **Tag**: `TagServiceImpl`, `TagMutationService`, `TagQueryService`.
-     - **Authorization**: `AuthorizationServiceImpl`.
-     - **Health / Revision**: `GrpcHealthServiceImpl`, `DaprHealthServiceImpl`, `RevisionServiceImpl`.
-   - For each major service:
-     - **Short description**.
-     - **Key RPCs** and their purpose (table: method, request, response, notes).
-     - **Sequence diagram** for 1–2 important flows (e.g. “query devices”, “tag devices”, “get app permissions”).
-5. [**Data Model & Persistence**](DataModel.md)
+   
    - **Domain entities**:
      - Devices (`domain.device.*`).
      - Events (`domain.event.*`).
