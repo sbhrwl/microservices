@@ -42,19 +42,22 @@ flowchart TB
 </details>
 
 ## Design principles
-- **Layered architecture**: Separation between `gRPC` handlers, business services (`service`), and data access (`dao`)
-- **Dependency injection**: Full `Dagger`-based DI for testability and modularity
-- **Multi-tenancy**: Organization-scoped data isolation at the DAO layer
-- **Security first**: Token-based authentication with method-level authorization checks
+- **Layered architecture**: Separation between
+  - `gRPC handlers`
+  - Business logic (`services`)
+  - Data access (`dao`)
+- **Dependency injection**: Full `Dagger-based DI` for testability and modularity
+- **Multi-tenancy**: `Organization-scoped data isolation` at the `DAO layer`
+- **Security first**: `Token-based authentication` with method-level authorization checks
 - **Observability**: Health indicators, structured logging, and latency tracking via interceptors
 ## Technology stack
-- **Runtime**: `Java 21` with preview features (`--enable-preview` for unnamed variables)
-- **API**: `gRPC` with Protocol Buffers for type-safe contracts
-- **DI framework**: `Dagger 2` for compile-time dependency injection
-- **Database**: `MongoDB` with Atlas search support for full-text queries
+- **Runtime**: `Java 25` with preview features (`--enable-preview` for unnamed variables)
+- **API**: `gRPC` with Protocol Buffers for `type-safe contracts`
+- **DI framework**: `Dagger 2` for **`compile-time`** dependency injection
+- **Database**: `MongoDB` with Atlas search support for **full-text queries**
 - **AuthN/AuthZ**: `Keycloak` (OAuth 2.0 / OpenID Connect) for token validation
 - **Service mesh**: `Dapr` sidecar for health checks and distributed system integration
-- **Configuration**: `Typesafe Config` (HOCON format) with environment variable overrides
+- **Configuration**: `Typesafe Config` (**HOCON** format) with environment variable overrides
 - **Logging**: `SLF4J` with `Logback` for structured logging
 ## Core responsibilities
 - **Device management**: Lifecycle, registration, state transitions, and querying with complex filters
