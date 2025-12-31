@@ -4,8 +4,6 @@
 - [Persistence and MongoDB integration](#persistence-and-mongodb-integration)
 - [Dapr integration](#dapr-integration)
 - [Configuration model](#configuration-model)
-- [Summary](#summary)
-- [Protos](#protos)
 ## Component layers
 - Service follows strict layered architecture with clear separation of concerns
 - Each layer has distinct responsibilities and dependencies flow downward
@@ -106,6 +104,27 @@ flowchart LR
 ```
 </details>
 
+### gRPC layer
+* **Role:** pure boundary / transport layer
+* **Responsibilities:** delegate requests to service layer
+* **Forbidden:** validation, auth, business logic, persistence
+* **Impl classes:** adapters implementing gRPC stubs; just delegate
+### Service layer
+* **Role:** application layer / use-case orchestration
+* **Responsibilities:**
+  * Query services → read-only, return DTOs
+  * Mutation services → state changes, enforce business rules, return DTOs
+* **CQRS:** separates queries vs commands clearly
+### DAO layer
+* **Role:** persistence access (MongoDB)
+* **Responsibilities:** CRUD, queries
+* **Works with:** domain objects, never DTOs
+* **Service layer maps domain → DTO** for output
+### Domain model
+* **Role:** core business entities and logic
+* **Contains:** rich objects (`Device`, `Event`, `Org`, `Tag`)
+* **Encapsulates:** rules, invariants, behaviors
+* **Does not know about:** service layer, gRPC, or DAOs
 ## gRPC server and Dagger modules
 - gRPC services are annotated with `@GrpcService` and extend generated gRPC base classes
 - Dagger generates proxy and service modules for each gRPC implementation
@@ -293,47 +312,3 @@ flowchart TB
     style MDB fill:#2ECC71,color:#fff
 ```
 </details>
-
-## Summary
-### gRPC layer
-* **Role:** pure boundary / transport layer
-* **Responsibilities:** delegate requests to service layer
-* **Forbidden:** validation, auth, business logic, persistence
-* **Impl classes:** adapters implementing gRPC stubs; just delegate
-### Service layer
-* **Role:** application layer / use-case orchestration
-* **Responsibilities:**
-  * Query services → read-only, return DTOs
-  * Mutation services → state changes, enforce business rules, return DTOs
-* **CQRS:** separates queries vs commands clearly
-### DAO layer
-* **Role:** persistence access (MongoDB)
-* **Responsibilities:** CRUD, queries
-* **Works with:** domain objects, never DTOs
-* **Service layer maps domain → DTO** for output
-### Domain model
-* **Role:** core business entities and logic
-* **Contains:** rich objects (`Device`, `Event`, `Org`, `Tag`)
-* **Encapsulates:** rules, invariants, behaviors
-* **Does not know about:** service layer, gRPC, or DAOs
-## Protos
-- The proto files are in a separate module. In `pom.xml` line 419:
-```xml
-<protoSourceRoot>${basedir}/../gfc-apis/proto</protoSourceRoot>
-```
-- This points to `../gfc-apis/proto` (sibling directory), so the `.proto` files are in the `gfc-apis` repository/module, not in `gfc-service`.
-  - The `gfc-apis` directory exists as a sibling to `gfc-service`.
-- **During build**, the protobuf plugin compiles them from that location.
-- This is a common pattern where:
-  - **API contracts are centralized** in `gfc-apis` (shared repository)
-  - **Multiple services reference them** (like `gfc-service`, `api-gateway`, etc.)
-  - **Build-time compilation** happens via the protobuf Maven plugin pointing to `${basedir}/../gfc-apis/proto`
-- The proto files are located at:
-  - `../gfc-apis/proto/core/api/` - main service definitions (device, event, organization, tag, authorization, revision)
-  - `../gfc-apis/proto/core/type/` - shared types (search, metering_point, shared)
-  - `../gfc-apis/proto/iec61968_connector/` - connector-specific APIs
-- During `mvn compile`, the protobuf plugin:
-  - Reads proto files from `../gfc-apis/proto`
-  - Generates Java classes in `target/generated-sources/protobuf/java`
-  - Generates gRPC service stubs in `target/generated-sources/protobuf/grpc-java`
-- This keeps **API contracts** in `one place` and `shared across services`.
