@@ -19,7 +19,7 @@
      - Persistence and MongoDB integration (`ApplicationSetting.Mongodb`, `MongoClient` in `AppModule`, `AggregationPipelineBuilder`, DAOs).
      - Dapr integration (health, actors if used).
      - Configuration model (`ApplicationSetting`, `application.conf`).
-4. **External Interfaces (gRPC APIs)**
+4. [**External Interfaces (gRPC APIs)**](ExternalInterfaces.md)
    - Overview of main APIs:
      - **Device**: `DeviceServiceImpl` (query/mutation flows).
      - **Event**: `EventServiceImpl`.
