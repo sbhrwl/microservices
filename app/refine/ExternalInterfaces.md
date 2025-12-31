@@ -1,4 +1,4 @@
-# External Interfaces (gRPC APIs)
+# gRPC APIs
 - [Overview](#overview)
 - [Device service](#device-service)
   - [RPC methods](#rpc-methods)
