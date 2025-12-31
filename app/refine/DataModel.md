@@ -103,6 +103,13 @@
 - MongoDB aggregation pipeline executed, returns `Document` objects
 - Document mappers convert `Document` to domain entities
 - Domain entities converted back to protobuf via `ProtoMapper` for gRPC responses
+<img src="images/datamodel-1.jpg">
+
+<img src="images/datamodel-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     subgraph "gRPC layer"
@@ -145,19 +152,21 @@ flowchart TD
     style AG fill:#47A248,color:#ffffff
     style DM fill:#9B59B6,color:#ffffff
 ```
+</details>
 
 ## Document mappers
-- Static utility classes for bidirectional mapping between MongoDB `Document` and domain entities
-- Mappers handle type conversions: `ObjectId` ↔ `String`, `LocalDateTime` ↔ `Date`, nested objects
-- Field name mapping: MongoDB field names (snake_case) to domain property names (camelCase)
-- Null safety: mappers handle missing fields gracefully, use default values where appropriate
-- Embedded objects: nested mappers for `MeteringPoint`, `Settings`, `Group`, `Location`
-- `DeviceDocumentMapper`: maps device documents, resolves manufacturer name, handles device identifier type
-- `EventDocumentMapper`: maps event documents, handles event attributes map, metering point embedding
-- `OrgDocumentMapper`: maps organization documents, handles settings with defaults
-- `TagDocumentMapper`: maps tag documents, simple field mapping
-- `MeteringPointDocumentMapper`: maps metering point embedded documents with location and position
-- `GroupDocumentMapper`: maps aggregation group results with attributes and counts
-- `LocationMapper`: maps location embedded objects with address and position details
-- `SettingsMapper`: maps organization settings with device identifier type
-
+| Mapper                        | Responsibility                                                                    |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| Static utility classes        | bidirectional mapping between MongoDB `Document` and domain entities              |
+| Type conversions              | converts `ObjectId` ↔ `String`, `LocalDateTime` ↔ `Date`, handles nested objects  |
+| Field name mapping            | maps MongoDB snake_case fields to domain camelCase properties                     |
+| Null safety                   | handles missing fields gracefully, applies defaults where appropriate             |
+| Wmbedded objects              | delegates mapping of `MeteringPoint`, `Settings`, `Group`, `Location`             |
+| `DeviceDocumentMapper`        | maps device documents, resolves manufacturer name, handles device identifier type |
+| `EventDocumentMapper`         | maps event documents, handles attributes map and metering point embedding         |
+| `OrgDocumentMapper`           | maps organization documents, applies default settings                             |
+| `TagDocumentMapper`           | maps tag documents with straightforward field mapping                             |
+| `MeteringPointDocumentMapper` | maps embedded metering point documents with location and position                 |
+| `GroupDocumentMapper`         | maps aggregation group results with attributes and counts                         |
+| `LocationMapper`              | maps embedded location objects including address and position                     |
+| `SettingsMapper`              | maps organization settings including device identifier type                       |
