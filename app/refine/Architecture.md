@@ -284,3 +284,24 @@ flowchart TB
 * **Contains:** rich objects (`Device`, `Event`, `Org`, `Tag`)
 * **Encapsulates:** rules, invariants, behaviors
 * **Does not know about:** service layer, gRPC, or DAOs
+## Protos
+- The proto files are in a separate module. In `pom.xml` line 419:
+```xml
+<protoSourceRoot>${basedir}/../gfc-apis/proto</protoSourceRoot>
+```
+- This points to `../gfc-apis/proto` (sibling directory), so the `.proto` files are in the `gfc-apis` repository/module, not in `gfc-service`.
+  - The `gfc-apis` directory exists as a sibling to `gfc-service`.
+- **During build**, the protobuf plugin compiles them from that location.
+- This is a common pattern where:
+  - **API contracts are centralized** in `gfc-apis` (shared repository)
+  - **Multiple services reference them** (like `gfc-service`, `api-gateway`, etc.)
+  - **Build-time compilation** happens via the protobuf Maven plugin pointing to `${basedir}/../gfc-apis/proto`
+- The proto files are located at:
+  - `../gfc-apis/proto/core/api/` - main service definitions (device, event, organization, tag, authorization, revision)
+  - `../gfc-apis/proto/core/type/` - shared types (search, metering_point, shared)
+  - `../gfc-apis/proto/iec61968_connector/` - connector-specific APIs
+- During `mvn compile`, the protobuf plugin:
+  - Reads proto files from `../gfc-apis/proto`
+  - Generates Java classes in `target/generated-sources/protobuf/java`
+  - Generates gRPC service stubs in `target/generated-sources/protobuf/grpc-java`
+- This keeps **API contracts** in `one place` and `shared across services`.
