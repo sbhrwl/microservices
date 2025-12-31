@@ -58,4 +58,4 @@ dapr run --enable-profiling --app-id gfc-service --app-port 9090 --app-protocol 
 ```
 - **Access:**
 - gRPC endpoint: `localhost:9090`
-- Test with grpcurl or 
+- Test with `grpcurl`
