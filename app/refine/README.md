@@ -1,7 +1,8 @@
 - [**Introduction**](Introduction.md)
   - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
-2. [**Startup Sequence**](Runtime.md)
+- [**Startup Sequence**](Runtime.md)
    - Bootstrap and configuration, Dependency injection wiring, Server startup, Shutdown sequence
+
 3. [**Architecture & Components**](Architecture.md)
    - **Mermaid component diagram** (flowchart style):
      - `grpc` layer (`*ServiceImpl`)  
