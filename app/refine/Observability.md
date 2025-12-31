@@ -87,6 +87,11 @@
 - Health checks flow from Kubernetes probes through health endpoints to dependency monitoring
 - Readiness depends on MongoDB connection health, liveness indicates service process health
 - Health status synchronized across gRPC health and Dapr health endpoints
+<img src="images/observability-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant K8S as "Kubernetes"
@@ -125,4 +130,4 @@ sequenceDiagram
     end
 
 ```
-
+</details>
