@@ -10,6 +10,11 @@
 - Service follows strict layered architecture with clear separation of concerns
 - Each layer has distinct responsibilities and dependencies flow downward
 - Domain model is shared across all layers but owned by domain package
+<img src="images/arch-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart LR
     subgraph "gRPC Layer"
@@ -99,6 +104,7 @@ flowchart LR
     style ED fill:#47A248,color:#fff
     style OD fill:#47A248,color:#fff
 ```
+</details>
 
 ## gRPC server and Dagger modules
 - gRPC services are annotated with `@GrpcService` and extend generated gRPC base classes
@@ -111,6 +117,11 @@ flowchart LR
 - Service implementations are `@CallScoped` for per-request lifecycle management
 - **`Dagger`** → prepares and provides all the objects your services need (Mongo client, config, interceptors, etc.) at compile time, so nothing is guessed at runtime.
 - **`Netty`** → runs the actual network layer and threads for handling gRPC calls asynchronously.
+<img src="images/arch-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart LR
     subgraph "Root Component"
@@ -163,6 +174,7 @@ flowchart LR
     style GSC fill:#4ECDC4,color:#fff
     style GSC2 fill:#95E1D3,color:#000
 ```
+</details>
 
 ## Persistence and MongoDB integration
 - All DAOs use `MongoCollection<Document>` with custom codec registry for type conversion
@@ -174,6 +186,11 @@ flowchart LR
 - `BatchWriter` utility handles asynchronous batch writes for high-throughput scenarios
 - MongoDB connection string includes authentication, heartbeat, and write concern settings
 - Health monitoring via `ReadinessHealthIndicator` implements `ServerMonitorListener` for connection health
+<img src="images/arch-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart LR
     subgraph "Service Layer"
@@ -198,6 +215,7 @@ flowchart LR
     style DAO fill:#47A248,color:#fff
     style APB fill:#FFA500,color:#000
 ```
+</details>
 
 ## Dapr integration
 - `DaprHealthServiceImpl` implements `AppCallbackHealthCheckGrpc` for Dapr sidecar health checks
@@ -207,6 +225,11 @@ flowchart LR
 - Dapr client executor thread pool created with 5x CPU cores for async operations
 - Health check endpoint responds to Dapr sidecar probes for service mesh integration
 - No actor pattern implementation currently; health checks are primary Dapr integration point
+<img src="images/arch-4.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Dapr
@@ -226,6 +249,7 @@ sequenceDiagram
     MongoDB->>RHI: serverHeartbeatFailed()
     RHI->>DHSM: setStatus("gfc", NOT_SERVING)
 ```
+</details>
 
 ## Configuration model
 - `ApplicationSetting` is immutable record type built from `Typesafe Config`
@@ -238,6 +262,11 @@ sequenceDiagram
 - `Authorization` record contains method-to-roles and app-to-methods mappings
 - `FeatureFlags` record provides feature toggle mechanism via boolean flags
 - Default values provided for all optional configuration properties
+<img src="images/arch-5.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TB
     CF[ConfigFactory]
@@ -263,6 +292,8 @@ flowchart TB
     style GS fill:#3498DB,color:#fff
     style MDB fill:#2ECC71,color:#fff
 ```
+</details>
+
 ## Summary
 ### gRPC layer
 * **Role:** pure boundary / transport layer
