@@ -88,9 +88,3 @@
       - Protobuf, `*ServiceImpl`, Dagger wiring (`GrpcServerComponent`, modules), DAOs, domain objects.
     - **Extending queries**:
       - Adding new filters, updating `AggregationPipelineBuilder` and filter visitors.
-### Mermaid usage summary
-- **High-level architecture**: 1–2 flowcharts.
-- **Startup/shutdown**: 1 sequence diagram.
-- **Per-major-use-case** (e.g. device query, tag mutation, auth check): 1 sequence diagram each.
-- **Data/query pipeline**: 1 flowchart.
-- **Health/readiness**: 1 simple sequence or flowchart.
