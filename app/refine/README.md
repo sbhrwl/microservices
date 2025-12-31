@@ -63,7 +63,7 @@
    - **Docker & deployment**:
      - `Dockerfile`, `Dockerfile-dev`, `envfile.env`.
      - Simple deployment flowchart: CI → image → environment config → runtime.
-8. **Observability, Health & Readiness**
+8. [**Observability, Health & Readiness**](Observability.md)
    - **Health mechanisms**:
      - `ReadinessHealthIndicator`, `DaprHealthStatusManager`, gRPC health service.
      - How MongoDB health is monitored (server monitor listener).
