@@ -10,6 +10,7 @@
   - Domain entities, Query model, SearchFilter interface, PageRequest, Sorting, Aggregation pipeline builder, Data flow, Document mappers
 - [**Security & Authorization**](SecurityAuthorization.md)
   - 
+
 ---   
 
 6. 
