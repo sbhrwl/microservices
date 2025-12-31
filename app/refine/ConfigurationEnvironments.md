@@ -147,6 +147,11 @@
 - CI/CD pipeline builds Docker image, configures environment-specific settings, deploys to runtime
 - Configuration injection happens at container startup via environment variables
 - Service mesh integration via Dapr sidecar for distributed system features
+<img src="images/config-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 
 flowchart TD
@@ -193,4 +198,4 @@ flowchart TD
     style APP fill:#47A248,color:#ffffff
     style DAPR fill:#0D7377,color:#ffffff
 ```
-
+</details>
