@@ -11,9 +11,27 @@
 - [**Security & Authorization**](SecurityAuthorization.md)
   - Authentication (Keycloak integration), Token validation, Authorization, RBAC implementation, Method-level enforcement, Organization access control, RPC to roles mapping, Authentication and authorization flow
 - [**Configuration & Environments**](ConfigurationEnvironments.md)
+  - Configuration sources (HOCON configuration files), Environment variable overrides, System property overrides
+  - ApplicationSetting structure
+    - GrpcServer configuration
+    - Mongodb configuration
+    - Keycloak configuration
+    - Authorization configuration
+  - Feature flags, MongoDB connection, Dapr and external endpoints
+  - Docker and deployment, Production Dockerfile, Development Dockerfile
+  - Environment file, Deployment flow
 - [**Observability, Health & Readiness**](Observability.md)
+  - Health mechanisms (ReadinessHealthIndicator, DaprHealthStatusManager, gRPC health service)
+  - MongoDB health monitoring, Logging (Logback configuration, SLF4J bridge, Log levels and appenders)
+  - Health check flow
 - [**Error Handling & Limits**](ErrorHandling.md)
+  - Exception hierarchy, Exception types, Interceptor chain (ExceptionHandlerInterceptor, LatencyLimiterInterceptor, LoggingInterceptor)
+  - Request limits (Maximum message size, Latency limiter threshold, Timeouts)
 - [**Performance & Scalability Considerations**](PerformanceScalability.md)
+  - Threading model (Netty boss executor, Netty worker executor, Dapr client executor)
+  - MongoDB search strategies (PRIMARY strategy, ATLAS strategy, Strategy selection)
+  - Caching and performance features (Organization cache, Moving average latency tracker)
+  - Deployment topologies (Horizontal scaling, MongoDB connection pooling, Resource sizing)
  - [**Developer Guide**](DeveloperGuide.md)
     - **Running locally**:
       - `mvn clean compile`, config hints, dependencies like MongoDB/Dapr/Keycloak.
