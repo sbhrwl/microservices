@@ -8,7 +8,9 @@
 - Service lifecycle follows **`strict initialization sequence`** `ensuring dependencies wired` before accepting requests
 - Entry point is `Bootstrap.main()` which delegates to `Server.run()` for startup logic
 - Configuration loading uses `Typesafe Config` with environment variable overrides (`-Dconfig.file` system property)
-- Dependency injection happens via `Dagger` at compile time, creating `ApplicationComponent` with `GrpcModule` and `AppModule`
+- Dependency injection happens via `Dagger` at compile time, creating `ApplicationComponent` with 
+  - **`GrpcModule`** and 
+  - **`AppModule`**
 - gRPC server initialization requires
   - `Netty executors` (boss/worker thread pools),
   - `MongoDB client`
