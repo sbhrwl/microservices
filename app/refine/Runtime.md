@@ -1,16 +1,19 @@
 # Run time
-- [Startup sequence](#startup-sequence)
+- [Introduction](#Introduction)
 - [Bootstrap & configuration](#bootstrap--configuration)
 - [Dependency injection wiring](#dependency-injection-wiring)
 - [Server startup](#server-startup)
 - [Shutdown sequence](#shutdown-sequence)
-## Startup sequence
-- Service lifecycle follows strict initialization sequence ensuring dependencies wired before accepting requests
+## Introduction
+- Service lifecycle follows **`strict initialization sequence`** `ensuring dependencies wired` before accepting requests
 - Entry point is `Bootstrap.main()` which delegates to `Server.run()` for startup logic
 - Configuration loading uses `Typesafe Config` with environment variable overrides (`-Dconfig.file` system property)
 - Dependency injection happens via `Dagger` at compile time, creating `ApplicationComponent` with `GrpcModule` and `AppModule`
-- gRPC server initialization requires Netty executors (boss/worker thread pools), MongoDB client, and health indicators
-- Graceful shutdown ensures in-flight requests complete before termination
+- gRPC server initialization requires
+  - `Netty executors` (boss/worker thread pools),
+  - `MongoDB client`
+  - `Health indicators`
+- Graceful shutdown ensures `in-flight requests completion` before termination
 ## Bootstrap & configuration
 - `Bootstrap.main()` entry point initializes logging bridge (`SLF4JBridgeHandler`) and instantiates `Server`
 - `Server.run()` loads configuration from `ConfigFactory` (system properties → environment → classpath)
@@ -38,22 +41,43 @@ sequenceDiagram
 - `GrpcModule` provides Netty executors and builds `GrpcServerComponent` with all gRPC services
 - `GrpcServerComponent` wires all service implementations (`DeviceServiceImpl`, `EventServiceImpl`, etc.) and interceptors
 ```mermaid
-sequenceDiagram
-    participant Server
-    participant ApplicationComponent
-    participant GrpcModule
-    participant AppModule
-    participant GrpcServerComponent
-    Server->>ApplicationComponent: DaggerApplicationComponent.factory().create(config)
-    ApplicationComponent->>AppModule: provideMongoClient()
-    ApplicationComponent->>AppModule: provideApplicationSetting()
-    ApplicationComponent->>GrpcModule: provideGrpcServer()
-    GrpcModule->>GrpcModule: Create Netty executors
-    GrpcModule->>GrpcServerComponent: Builder.nettyServerModule().build()
-    GrpcServerComponent->>GrpcServerComponent: Wire gRPC services & interceptors
-    GrpcServerComponent-->>GrpcModule: io.grpc.Server
-    GrpcModule-->>ApplicationComponent: io.grpc.Server
-    ApplicationComponent->>Server: inject(this)
+flowchart TD
+    subgraph "application startup"
+        Bootstrap["Bootstrap"]
+        Server["Server"]
+    end
+
+    subgraph "dependency injection"
+        AppComponent["ApplicationComponent"]
+        DaggerFactory["DaggerApplicationComponent.factory()"]
+    end
+
+    subgraph "grpc infrastructure"
+        GrpcModule["GrpcModule"]
+        GrpcServerComponent["GrpcServerComponent"]
+    end
+
+    subgraph "grpc services"
+        DeviceService["DeviceServiceImpl"]
+        EventService["EventServiceImpl"]
+        Interceptors["gRPC interceptors"]
+    end
+
+    Bootstrap -->|"run(config)"| Server
+
+    Server -->|"create(config)"| DaggerFactory
+    DaggerFactory -->|"build graph"| AppComponent
+
+    AppComponent -->|"inject"| Server
+
+    AppComponent -->|"provide executors"| GrpcModule
+    GrpcModule -->|"build"| GrpcServerComponent
+
+    GrpcServerComponent --> DeviceService
+    GrpcServerComponent --> EventService
+    GrpcServerComponent --> Interceptors
+
+
 ```
 ## Server startup
 - `server.start()` binds to configured port (default `9090`) and begins accepting connections
