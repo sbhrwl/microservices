@@ -40,6 +40,10 @@
 - **Configuration**: `Typesafe Config` (HOCON format) with environment variable overrides
 - **Logging**: `SLF4J` with `Logback` for structured logging
 ## System context
+<img src="images/intro-1.jpg">
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TB
     Client[Client Applications<br/>Frontend/API Gateway] -->|gRPC| GFC[gfc-service<br/>Port 9090]
@@ -51,6 +55,7 @@ flowchart TB
     style Keycloak fill:#F7B500,color:#000
     style Dapr fill:#0D7377,color:#fff
 ```
+</details>
 ## Design principles
 - **Layered architecture**: Separation between `gRPC` handlers, business services (`service`), and data access (`dao`)
 - **Dependency injection**: Full `Dagger`-based DI for testability and modularity
