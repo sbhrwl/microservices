@@ -42,7 +42,7 @@
      - `AggregationPipelineBuilder` — how query filters translate to MongoDB aggregation.
      - Mermaid flowchart: From incoming gRPC request → query objects → aggregation pipeline → MongoDB → mapped domain objects → gRPC responses.
    - High-level mapping responsibilities (`*DocumentMapper` classes).
-6. **Security & Authorization**
+6. [**Security & Authorization**](SecurityAuthorization.md)
    - **Authentication**:
      - Keycloak integration (`ApplicationSetting.Keycloak`, `AccessTokenVerifier`, `IssuedForCheck`, `IssuersCheck`, `KeyProvider`, `SecurityUtils`).
      - How tokens are validated and what claims are used.
