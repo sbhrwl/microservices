@@ -95,7 +95,7 @@ flowchart TB
 - **Logback/SLF4J** - Logging
 - **Typesafe Config** - Configuration management
 ## Protos
-- The proto files are in a separate module. In `pom.xml` line 419:
+- The location of proto files can be found in `pom.xml` line 419:
 ```xml
 <protoSourceRoot>${basedir}/../gfc-apis/proto</protoSourceRoot>
 ```
