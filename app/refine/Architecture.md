@@ -4,6 +4,7 @@
 - [Persistence and MongoDB integration](#persistence-and-mongodb-integration)
 - [Dapr integration](#dapr-integration)
 - [Configuration model](#configuration-model)
+- [Summary](#summary)
 ## Component layers
 - Service follows strict layered architecture with clear separation of concerns
 - Each layer has distinct responsibilities and dependencies flow downward
@@ -259,3 +260,25 @@ flowchart TB
     style GS fill:#3498DB,color:#fff
     style MDB fill:#2ECC71,color:#fff
 ```
+## Summary
+### gRPC layer
+* **Role:** pure boundary / transport layer
+* **Responsibilities:** delegate requests to service layer
+* **Forbidden:** validation, auth, business logic, persistence
+* **Impl classes:** adapters implementing gRPC stubs; just delegate
+### Service layer
+* **Role:** application layer / use-case orchestration
+* **Responsibilities:**
+  * Query services → read-only, return DTOs
+  * Mutation services → state changes, enforce business rules, return DTOs
+* **CQRS:** separates queries vs commands clearly
+### DAO layer
+* **Role:** persistence access (MongoDB)
+* **Responsibilities:** CRUD, queries
+* **Works with:** domain objects, never DTOs
+* **Service layer maps domain → DTO** for output
+### Domain model
+* **Role:** core business entities and logic
+* **Contains:** rich objects (`Device`, `Event`, `Org`, `Tag`)
+* **Encapsulates:** rules, invariants, behaviors
+* **Does not know about:** service layer, gRPC, or DAOs
