@@ -57,6 +57,7 @@ flowchart TB
     style Dapr fill:#0D7377,color:#fff
 ```
 </details>
+
 ## Design principles
 - **Layered architecture**: Separation between `gRPC` handlers, business services (`service`), and data access (`dao`)
 - **Dependency injection**: Full `Dagger`-based DI for testability and modularity
