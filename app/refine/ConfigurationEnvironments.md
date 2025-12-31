@@ -148,41 +148,49 @@
 - Configuration injection happens at container startup via environment variables
 - Service mesh integration via Dapr sidecar for distributed system features
 ```mermaid
-flowchart TB
-    subgraph "CI/CD Pipeline"
-        CI[CI/CD System]
-        BUILD[Docker Build]
-        REG[Container Registry]
+
+flowchart TD
+    subgraph "CI/CD pipeline"
+        CI["CI/CD system"]
+        BUILD["Docker build"]
+        REG["Container registry"]
     end
-    subgraph "Configuration"
-        ENV[Environment Config<br/>Kubernetes Secrets/ConfigMaps]
-        CONF[application.conf<br/>+ Environment Variables]
+
+    subgraph "configuration"
+        ENV["Environment config (Kubernetes secrets and ConfigMaps)"]
+        CONF["application.conf and environment variables"]
     end
-    subgraph "Runtime"
-        K8S[Kubernetes Cluster]
-        POD[Pod: gfc-service]
-        DAPR[Dapr Sidecar]
-        APP[gfc-service Container]
+
+    subgraph "runtime"
+        K8S["Kubernetes cluster"]
+        POD["Pod: gfc-service"]
+        DAPR["Dapr sidecar"]
+        APP["gfc-service container"]
     end
-    subgraph "External Services"
-        MDB[(MongoDB)]
-        KC[Keycloak]
+
+    subgraph "external services"
+        MDB[("MongoDB")]
+        KC["Keycloak"]
     end
-    CI->>BUILD: Source code + gfc-apis
-    BUILD->>BUILD: Maven build
-    BUILD->>BUILD: Docker image creation
-    BUILD->>REG: Push image
-    REG->>K8S: Pull image
-    ENV->>POD: Inject env vars
-    K8S->>POD: Deploy pod
-    POD->>APP: Start container
-    POD->>DAPR: Start sidecar
-    APP->>CONF: Load configuration
-    APP->>MDB: Connect to MongoDB
-    APP->>KC: Validate tokens
-    DAPR->>APP: Health checks
-    style BUILD fill:#4A90E2,color:#fff
-    style APP fill:#47A248,color:#fff
-    style DAPR fill:#0D7377,color:#fff
+
+    CI -->|"Source code and gfc-apis"| BUILD
+    BUILD -->|"Maven build"| BUILD
+    BUILD -->|"Docker image creation"| BUILD
+    BUILD -->|"Push image"| REG
+    REG -->|"Pull image"| K8S
+
+    ENV -->|"Inject env vars"| POD
+    K8S -->|"Deploy pod"| POD
+    POD -->|"Start container"| APP
+    POD -->|"Start sidecar"| DAPR
+
+    APP -->|"Load configuration"| CONF
+    APP -->|"Connect"| MDB
+    APP -->|"Validate tokens"| KC
+    DAPR -->|"Health checks"| APP
+
+    style BUILD fill:#4A90E2,color:#ffffff
+    style APP fill:#47A248,color:#ffffff
+    style DAPR fill:#0D7377,color:#ffffff
 ```
 
