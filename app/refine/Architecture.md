@@ -108,6 +108,8 @@ flowchart LR
 - `AppModule` provides MongoDB client, health managers, and application settings
 - Interceptors are provided via `InterceptorsModule` and applied to all gRPC calls
 - Service implementations are `@CallScoped` for per-request lifecycle management
+- **`Dagger`** → prepares and provides all the objects your services need (Mongo client, config, interceptors, etc.) at compile time, so nothing is guessed at runtime.
+- **`Netty`** → runs the actual network layer and threads for handling gRPC calls asynchronously.
 ```mermaid
 flowchart LR
     subgraph "Root Component"
