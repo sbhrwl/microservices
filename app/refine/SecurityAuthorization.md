@@ -100,6 +100,11 @@
 | `core.api.datamanagement.DataManagement/UpdateDevices` | `["data-manager"]` | Data management operations |
 
 ## Authentication and authorization flow
+<img src="images/security-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
 participant Client
@@ -113,7 +118,14 @@ Interceptor->>Service: Forward request with context
 Service->>Service: Execute business logic
 Service-->>Client: Response
 ```
+</details>
+
 ### High-level authorization decision flow
+<img src="images/security-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
 A["Incoming gRPC request"] --> B{"Auth required?"}
@@ -132,7 +144,16 @@ G -->|"Not authorized"| F
 G -->|"Authorized"| H["Enrich context"]
 H --> D
 ```
+</details>
+
 ### Token verification
+<img src="images/security-3.jpg">
+
+<img src="images/security-4.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
 A["JWT token"] --> B["Extract issuer and realm"]
@@ -150,7 +171,14 @@ E --> H["Verify signature"]
 H --> I["Validate exp, iss, aud, azp"]
 I --> J["Access token trusted"]
 ```
+</details>
+
 ### Authorization and context enrichment flow
+<img src="images/security-5.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
 A["Trusted access token"] --> B["Resolve method roles"]
@@ -167,3 +195,4 @@ G --> H["Validate org access"]
 H -->|"Denied"| D
 H -->|"Granted"| I["Business response"]
 ```
+</details>
