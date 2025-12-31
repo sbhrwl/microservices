@@ -89,33 +89,40 @@
 - Health status synchronized across gRPC health and Dapr health endpoints
 ```mermaid
 sequenceDiagram
-    participant K8S as Kubernetes
-    participant Probe as Liveness/Readiness Probe
-    participant GH as GrpcHealthServiceImpl
-    participant DH as DaprHealthServiceImpl
-    participant HSM as HealthStatusManager
-    participant DHSM as DaprHealthStatusManager
-    participant RHI as ReadinessHealthIndicator
+    participant K8S as "Kubernetes"
+    participant Probe as "Liveness/Readiness Probe"
+    participant GH as "GrpcHealthServiceImpl"
+    participant DH as "DaprHealthServiceImpl"
+    participant HSM as "HealthStatusManager"
+    participant DHSM as "DaprHealthStatusManager"
+    participant RHI as "ReadinessHealthIndicator"
     participant MongoDB
-    K8S->>Probe: Periodic health check
-    Probe->>GH: Check("gfc")
-    GH->>HSM: getStatus("gfc")
-    HSM-->>GH: SERVING/NOT_SERVING
-    GH-->>Probe: HealthCheckResponse
-    Probe->>DH: healthCheck(Empty)
-    DH->>DH: getStatus("gfc")
-    DH-->>Probe: HealthCheckResponse/StatusException
-    MongoDB->>RHI: serverHeartbeatSucceeded()
-    RHI->>RHI: Add serverId to healthyServers
-    RHI->>HSM: setStatus("gfc", SERVING)
-    RHI->>DHSM: setStatus("gfc", SERVING)
-    HSM->>HSM: Update status map
-    DHSM->>DH: setStatus("gfc", SERVING)
-    MongoDB->>RHI: serverHeartbeatFailed()
-    RHI->>RHI: Remove serverId from healthyServers
-    alt All servers unhealthy
-        RHI->>HSM: setStatus("gfc", NOT_SERVING)
-        RHI->>DHSM: setStatus("gfc", NOT_SERVING)
+
+    %% ---- Kubernetes probe flow ----
+    K8S->>Probe: "Periodic health check"
+
+    Probe->>GH: "Check(gfc)"
+    GH->>HSM: "getStatus(gfc)"
+    HSM-->>GH: "SERVING | NOT_SERVING"
+    GH-->>Probe: "HealthCheckResponse"
+
+    Probe->>DH: "healthCheck()"
+    DH->>DHSM: "getStatus(gfc)"
+    DH-->>Probe: "HealthCheckResponse | StatusException"
+
+    %% ---- MongoDB-driven readiness updates ----
+    MongoDB->>RHI: "serverHeartbeatSucceeded()"
+    RHI->>RHI: "track server as healthy"
+    RHI->>HSM: "setStatus(gfc, SERVING)"
+    RHI->>DHSM: "setStatus(gfc, SERVING)"
+
+    MongoDB->>RHI: "serverHeartbeatFailed()"
+    RHI->>RHI: "remove server from healthy set"
+
+    alt "all servers unhealthy"
+        RHI->>HSM: "setStatus(gfc, NOT_SERVING)"
+        RHI->>DHSM: "setStatus(gfc, NOT_SERVING)"
     end
+
 ```
 
