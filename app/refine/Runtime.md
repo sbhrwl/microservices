@@ -18,6 +18,11 @@
 - `Bootstrap.main()` entry point initializes logging bridge (`SLF4JBridgeHandler`) and instantiates `Server`
 - `Server.run()` loads configuration from `ConfigFactory` (system properties → environment → classpath)
 - Configuration validation checks for `gfc` root path, throws `ConfigException.Missing` if absent
+<img src="images/runtime-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Operator
@@ -35,11 +40,18 @@ sequenceDiagram
     ConfigFactory-->>Server: Config
     Server->>Server: validate gfc root path
 ```
+</details>
+
 ## Dependency injection wiring
 - `DaggerApplicationComponent.factory().create(config)` builds the dependency graph
 - `ApplicationComponent` injects dependencies into `Server` instance: `io.grpc.Server`, `MongoClient`, `ReadinessHealthIndicator`, `GitInfoManager`
 - `GrpcModule` provides Netty executors and builds `GrpcServerComponent` with all gRPC services
 - `GrpcServerComponent` wires all service implementations (`DeviceServiceImpl`, `EventServiceImpl`, etc.) and interceptors
+<img src="images/runtime-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     subgraph "application startup"
@@ -76,13 +88,18 @@ flowchart TD
     GrpcServerComponent --> DeviceService
     GrpcServerComponent --> EventService
     GrpcServerComponent --> Interceptors
-
-
 ```
+</details>
+
 ## Server startup
 - `server.start()` binds to configured port (default `9090`) and begins accepting connections
 - `GracefulShutdownHook` registered as JVM shutdown hook via `Runtime.addShutdownHook()`
 - `server.awaitTermination()` blocks main thread until shutdown signal received
+<img src="images/runtime-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Server
@@ -96,6 +113,8 @@ sequenceDiagram
     Server->>GrpcServer: awaitTermination()
     Note over GrpcServer: Accepting gRPC requests
 ```
+</details>
+
 ## Shutdown sequence
 - JVM shutdown signal triggers registered `GracefulShutdownHook` thread
 - `healthIndicator.applicationShutdownStarted()` marks all services as `NOT_SERVING` via `HealthStatusManager.enterTerminalState()`
@@ -103,6 +122,11 @@ sequenceDiagram
 - `server.awaitTermination(5, TimeUnit.SECONDS)` waits for in-flight requests to complete
 - If termination not complete within 5 seconds, `server.shutdownNow()` forces immediate shutdown
 - Final `awaitTermination(2, TimeUnit.SECONDS)` allows resource cleanup
+<img src="images/runtime-4.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant JVM
@@ -123,3 +147,4 @@ sequenceDiagram
         ShutdownHook->>GrpcServer: awaitTermination(2s)
     end
 ```
+</details>
