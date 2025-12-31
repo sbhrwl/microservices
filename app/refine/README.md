@@ -8,19 +8,11 @@
   - Query devices flow, Tag devices flow, Get app permissions flow 
 - [**Data Model & Persistence**](DataModel.md)
   - Domain entities, Query model, SearchFilter interface, PageRequest, Sorting, Aggregation pipeline builder, Data flow, Document mappers
-
+- [**Security & Authorization**](SecurityAuthorization.md)
+  - 
 ---   
-   - **Domain entities**:
-     - Devices (`domain.device.*`).
-     - Events (`domain.event.*`).
-     - Organizations and settings (`domain.organization.*`).
-     - Tags and groups (`domain.common.*`, tag model).
-   - **Query model**:
-     - `domain.query` filters, `PageRequest`, `Sorting`.
-     - `AggregationPipelineBuilder` — how query filters translate to MongoDB aggregation.
-     - Mermaid flowchart: From incoming gRPC request → query objects → aggregation pipeline → MongoDB → mapped domain objects → gRPC responses.
-   - High-level mapping responsibilities (`*DocumentMapper` classes).
-6. [**Security & Authorization**](SecurityAuthorization.md)
+
+6. 
    - **Authentication**:
      - Keycloak integration (`ApplicationSetting.Keycloak`, `AccessTokenVerifier`, `IssuedForCheck`, `IssuersCheck`, `KeyProvider`, `SecurityUtils`).
      - How tokens are validated and what claims are used.
