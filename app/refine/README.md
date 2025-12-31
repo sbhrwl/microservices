@@ -8,7 +8,7 @@
   - Query devices flow, Tag devices flow, Get app permissions flow 
 - [**Data Model & Persistence**](DataModel.md)
 
-   
+---   
    - **Domain entities**:
      - Devices (`domain.device.*`).
      - Events (`domain.event.*`).
