@@ -31,7 +31,7 @@
      - **Short description**.
      - **Key RPCs** and their purpose (table: method, request, response, notes).
      - **Sequence diagram** for 1–2 important flows (e.g. “query devices”, “tag devices”, “get app permissions”).
-5. **Data Model & Persistence**
+5. [**Data Model & Persistence**](DataModel.md)
    - **Domain entities**:
      - Devices (`domain.device.*`).
      - Events (`domain.event.*`).
