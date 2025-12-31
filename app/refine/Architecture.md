@@ -5,6 +5,7 @@
 - [Dapr integration](#dapr-integration)
 - [Configuration model](#configuration-model)
 - [Summary](#summary)
+- [Protos](#protos)
 ## Component layers
 - Service follows strict layered architecture with clear separation of concerns
 - Each layer has distinct responsibilities and dependencies flow downward
