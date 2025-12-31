@@ -1,13 +1,7 @@
-1. [**Introduction**](Introduction.md)
-   - **Purpose**: What `gfc-service` does and where it fits.
-   - **High-level responsibilities** (devices, events, tags, organizations, authorization).
-   - **Key technologies**: gRPC, MongoDB, Dapr, Keycloak, Dagger DI, Typesafe Config.
-   - **Simple context diagram** (Mermaid flowchart): Clients ↔ gRPC ↔ gfc-service ↔ MongoDB / Dapr / Keycloak.
+- [**Introduction**](Introduction.md)
+  - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
 2. [**Startup Sequence**](Runtime.md)
-   - **Narrative**: Flow from `Bootstrap.main` → `Server.run` → DI wiring → gRPC server start.
-   - **Mermaid sequence diagram**:
-     - `Client` (operator) → JVM → `Bootstrap` → `Server` → `ApplicationComponent` / Dagger → `GrpcServerComponent` → `io.grpc.Server`.
-   - **Shutdown sequence**: `GracefulShutdownHook`, readiness indicator, gRPC stop.
+   - Bootstrap and configuration, Dependency injection wiring, Server startup, Shutdown sequence
 3. [**Architecture & Components**](Architecture.md)
    - **Mermaid component diagram** (flowchart style):
      - `grpc` layer (`*ServiceImpl`)  
