@@ -104,40 +104,46 @@
 - Document mappers convert `Document` to domain entities
 - Domain entities converted back to protobuf via `ProtoMapper` for gRPC responses
 ```mermaid
-flowchart LR
-    subgraph "gRPC Layer"
-        GRPC[gRPC Request<br/>Protobuf]
-        PM[ProtoMapper]
+flowchart TD
+    subgraph "gRPC layer"
+        GRPC["gRPC request (Protobuf)"]
+        PM["ProtoMapper"]
     end
-    subgraph "Service Layer"
-        QS[QueryService]
+
+    subgraph "service layer"
+        QS["QueryService"]
     end
-    subgraph "DAO Layer"
-        DAO[DAO]
-        APB[AggregationPipelineBuilder]
+
+    subgraph "DAO layer"
+        DAO["DAO"]
+        APB["AggregationPipelineBuilder"]
     end
+
     subgraph "MongoDB"
-        AG[Aggregation Pipeline]
-        DOC[(Documents)]
+        AG["Aggregation pipeline"]
+        DOC[("Documents")]
     end
-    subgraph "Mapping"
-        DM[DocumentMapper]
-        DOM[Domain Entity]
+
+    subgraph "mapping"
+        DM["DocumentMapper"]
+        DOM["Domain entity"]
     end
-    GRPC -->|Protobuf| PM
-    PM -->|SearchFilter<br/>PageRequest<br/>Sorting| QS
-    QS -->|Domain Query| DAO
-    DAO -->|Build Pipeline| APB
-    APB -->|MongoDB BSON| AG
-    AG -->|Query| DOC
-    DOC -->|Document[]| DM
-    DM -->|Domain Entity| DOM
-    DOM -->|Domain Entity| PM
-    PM -->|Protobuf| GRPC
-    style GRPC fill:#4A90E2,color:#fff
-    style APB fill:#FFA500,color:#000
-    style AG fill:#47A248,color:#fff
-    style DM fill:#9B59B6,color:#fff
+
+    GRPC -->|"Protobuf"| PM
+    PM -->|"SearchFilter, PageRequest, Sorting"| QS
+    QS -->|"Domain query"| DAO
+    DAO -->|"Build pipeline"| APB
+    APB -->|"MongoDB BSON"| AG
+    AG -->|"Query"| DOC
+    DOC -->|"Document[]"| DM
+    DM -->|"Domain entity"| DOM
+    DOM -->|"Domain entity"| PM
+    PM -->|"Protobuf"| GRPC
+
+    style GRPC fill:#4A90E2,color:#ffffff
+    style APB fill:#FFA500,color:#000000
+    style AG fill:#47A248,color:#ffffff
+    style DM fill:#9B59B6,color:#ffffff
 ```
 
 ## Document mappers
