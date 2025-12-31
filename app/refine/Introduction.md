@@ -41,6 +41,7 @@
 - **Logging**: `SLF4J` with `Logback` for structured logging
 ## System context
 <img src="images/intro-1.jpg">
+
 <details>
   <summary>mermaid</summary>
 
