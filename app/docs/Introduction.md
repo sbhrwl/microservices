@@ -4,6 +4,8 @@
 - [Design](#design)
 - [Design principles](#design-principles)
 - [Technology stack](#technology-stack)
+- [Project structure](#project-structure)
+- [Dependencies](#dependencies)
 - [Core responsibilities](#core-responsibilities)
 ## Problem statement
 - Grid Flex Control application requires a centralized service to manage flexibilities lifecycles, events, multi-tenant organizations, and authorization. 
@@ -59,6 +61,38 @@ flowchart TB
 - **Service mesh**: `Dapr` sidecar for health checks and distributed system integration
 - **Configuration**: `Typesafe Config` (**HOCON** format) with environment variable overrides
 - **Logging**: `SLF4J` with `Logback` for structured logging
+
+## Project structure
+
+| Folder/File | Purpose |
+|-------------|---------|
+| `gfc/` | Core Java application code |
+| `gfc/di/` | Dependency injection components using Dagger 2; defines application-wide and gRPC server components with module bindings |
+| `gfc/grpc/` | gRPC service implementations (Device, Authorization, Event, Organization, Tag, Revision services) and interceptors |
+| `gfc/server/` | Server bootstrap, configuration loading, graceful shutdown hooks, and main application runner |
+| `gfc/services/` | Business logic services (queries, commands, authorization, git info management) |
+| `gfc/dao/` | Data Access Objects for MongoDB operations and authorization role mappings |
+| `gfc/domain/` | Domain models and business entities (Device, Organization, OperationContext, Group, etc.) |
+| `gfc/keycloak/` | Keycloak integration utilities for JWT token validation, security context, and RBAC |
+| `gfc/rbac/` | Role-Based Access Control logic and permission checking |
+| `gfc/monitoring/` | Health checks (readiness/liveness), MongoDB connection monitoring, Dapr health integration |
+| `gfc/exceptions/` | Custom exception classes (AccessDeniedException, ResourceNotFoundException, etc.) |
+| `src/main/resources/com/landisgyr/gfc/` | Application resources: manufacturer mappings, configuration files, static data |
+| `src/main/dist/etc/` | Distribution configs: `application.conf` (Typesafe Config), `logback.xml` (logging configuration) |
+| `src/test/` | Unit and integration tests with test-specific configurations |
+| `pom.xml` | Maven build configuration with dependencies, plugins, and build profiles |
+| `Dockerfile` / `Dockerfile-dev` | Container images for production and development environments |
+| `envfile.env` | Environment variables for containerized deployments |
+
+## Dependencies
+- **gRPC 1.77.0** - RPC framework
+- **Dapr SDK 1.16.0** - Distributed application runtime
+- **MongoDB Driver 5.6.2** - Database client
+- **Keycloak 26.x** - Identity/access management
+- **Dagger 2.57.2** - Dependency injection
+- **Netty 4.2.8** - Network transport
+- **Logback/SLF4J** - Logging
+- **Typesafe Config** - Configuration management
 ## Core responsibilities
 - **Device management**: Lifecycle, registration, state transitions, and querying with complex filters
 - **Event management**: Storage, filtering, and retrieval of operational events
