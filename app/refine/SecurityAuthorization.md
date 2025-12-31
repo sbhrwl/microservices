@@ -100,60 +100,70 @@
 | `core.api.datamanagement.DataManagement/UpdateDevices` | `["data-manager"]` | Data management operations |
 
 ## Authentication and authorization flow
-- Request flow from client through interceptors to service with full security checks
-- Token extraction from metadata, verification, role checking, and organization validation
-- Context propagation ensures security context available throughout request lifecycle
 ```mermaid
 sequenceDiagram
-    participant Client
-    participant AI as AuthorizationInterceptor
-    participant ATV as AccessTokenVerifier
-    participant KP as KeyProvider
-    participant KC as Keycloak
-    participant RBAC as Rbac
-    participant Config as ApplicationSetting
-    participant Service as gRPC Service
-    participant SU as SecurityUtils
-    Client->>AI: gRPC call with JWT token
-    AI->>AI: Extract Authorization header
-    AI->>AI: Check if auth required (profile, Dapr caller)
-    alt Auth not required (dev mode)
-        AI->>AI: Set IsDev context flag
-        AI->>Service: Forward request
-    else Auth required
-        AI->>ATV: verifyToken(jwtToken)
-        ATV->>ATV: Extract realm from issuer
-        ATV->>KP: getPublicKey(keyId)
-        KP->>KP: Check cache TTL
-        alt Cache expired
-            KP->>KC: GET /realms/{realm}/protocol/openid-connect/certs
-            KC-->>KP: JWKS (public keys)
-            KP->>KP: Update cache
-        end
-        KP-->>ATV: PublicKey
-        ATV->>ATV: Build TokenVerifier with checks
-        ATV->>ATV: Verify signature, expiration, claims
-        ATV->>ATV: Check iss, aud, azp claims
-        ATV-->>AI: AccessToken
-        AI->>RBAC: isAuthorised(token, methodRoles, methodName)
-        RBAC->>Config: Get required roles for method
-        Config-->>RBAC: List<String> roles
-        RBAC->>RBAC: Check token.resourceAccess[resourceAccessKey].roles
-        RBAC-->>AI: boolean authorized
-        alt Not authorized
-            AI-->>Client: AccessDeniedException
-        else Authorized
-            AI->>RBAC: extractOrgCodes(token)
-            RBAC->>RBAC: Extract from otherClaims["orgCode"]
-            RBAC-->>AI: List<String> orgCodes
-            AI->>AI: Store token & orgCodes in Context
-            AI->>Service: Forward request with context
-            Service->>SU: validateAccess(orgCode)
-            SU->>SU: Check orgCodes from context
-            SU-->>Service: Access granted/denied
-            Service->>Service: Execute business logic
-            Service-->>Client: Response
-        end
-    end
-```
+participant Client
+participant Interceptor
+participant Service
 
+
+Client->>Interceptor: gRPC request
+Interceptor->>Interceptor: Auth decision and checks
+Interceptor->>Service: Forward request with context
+Service->>Service: Execute business logic
+Service-->>Client: Response
+```
+### High-level authorization decision flow
+```mermaid
+flowchart TD
+A["Incoming gRPC request"] --> B{"Auth required?"}
+
+
+B -->|"No (dev mode / internal caller)"| C["Set dev context flag"]
+C --> D["Forward request to service"]
+
+
+B -->|"Yes"| E["Verify access token"]
+E -->|"Invalid"| F["Access denied"]
+E -->|"Valid"| G["Check RBAC authorization"]
+
+
+G -->|"Not authorized"| F
+G -->|"Authorized"| H["Enrich context"]
+H --> D
+```
+### Token verification
+```mermaid
+flowchart TD
+A["JWT token"] --> B["Extract issuer and realm"]
+B --> C["Resolve key id"]
+C --> D{"Public key cached?"}
+
+
+D -->|"Yes"| E["Use cached key"]
+D -->|"No"| F["Fetch JWKS from Keycloak"]
+F --> G["Update key cache"]
+G --> E
+
+
+E --> H["Verify signature"]
+H --> I["Validate exp, iss, aud, azp"]
+I --> J["Access token trusted"]
+```
+### Authorization and context enrichment flow
+```mermaid
+flowchart TD
+A["Trusted access token"] --> B["Resolve method roles"]
+B --> C["Check token roles"]
+
+
+C -->|"Missing role"| D["Access denied"]
+C -->|"Role present"| E["Extract organisation codes"]
+
+
+E --> F["Store token and org codes in context"]
+F --> G["Service logic executes"]
+G --> H["Validate org access"]
+H -->|"Denied"| D
+H -->|"Granted"| I["Business response"]
+```
