@@ -271,7 +271,6 @@ sequenceDiagram
 </details>
 
 ## Configuration model
-- Configuration hierarchy: `gfc` → `grpc-server`, `mongodb`, `keycloak`, `authorization`, `feature-flags`
 - Environment variable overrides via `ConfigFactory.systemEnvironmentOverrides()`
 - System property `-Dconfig.file` allows external configuration file specification
 - `ApplicationSetting` is immutable record type built from `Typesafe Config`
