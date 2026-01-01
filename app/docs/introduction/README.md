@@ -64,6 +64,9 @@ flowchart TB
 - **Logging**: `SLF4J` with `Logback` for structured logging
 
 ## Project structure
+- `src/main/resources/com/landisgyr/gfc/` 
+  - Application resources
+    - manufacturer mappings, configuration files, static data |
 
 | Folder/File | Purpose |
 |-------------|---------|
@@ -78,7 +81,6 @@ flowchart TB
 | `gfc/rbac/` | Role-Based Access Control logic and permission checking |
 | `gfc/monitoring/` | Health checks (readiness/liveness), MongoDB connection monitoring, Dapr health integration |
 | `gfc/exceptions/` | Custom exception classes (AccessDeniedException, ResourceNotFoundException, etc.) |
-| `src/main/resources/com/landisgyr/gfc/` | Application resources: manufacturer mappings, configuration files, static data |
 | `src/main/dist/etc/` | Distribution configs: `application.conf` (Typesafe Config), `logback.xml` (logging configuration) |
 | `src/test/` | Unit and integration tests with test-specific configurations |
 | `pom.xml` | Maven build configuration with dependencies, plugins, and build profiles |
