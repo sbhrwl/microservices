@@ -7,7 +7,7 @@
 ## Component layers
 - Service follows strict layered architecture with clear separation of concerns
 - Each layer has distinct responsibilities and dependencies flow downward
-- Domain model is shared across all layers but owned by domain package
+- `Domain model` is **shared across all layers** but `owned by domain package`
 <img src="images/arch-1.jpg">
 
 <details>
