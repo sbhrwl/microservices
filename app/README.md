@@ -19,7 +19,7 @@
     - Mongodb configuration
     - Keycloak configuration
     - Authorization configuration
-  - Feature flags, MongoDB connection, Dapr and external endpoints
+  - **Feature flags**, MongoDB connection, Dapr and external endpoints
   - Docker and deployment, Production Dockerfile, Development Dockerfile
   - Environment file, Deployment flow
 - [**Observability, Health and Readiness**](docs/observability/README.md)
