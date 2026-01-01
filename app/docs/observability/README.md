@@ -1,4 +1,4 @@
-# Observability, Health & Readiness
+# Observability, Health and Readiness
 - [Health mechanisms](#health-mechanisms)
   - [ReadinessHealthIndicator](#readinesshealthindicator)
   - [DaprHealthStatusManager](#daprhealthstatusmanager)
