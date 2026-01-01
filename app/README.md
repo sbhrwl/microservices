@@ -24,9 +24,8 @@
   - Docker and deployment, Production Dockerfile, Development Dockerfile
   - Environment file, Deployment flow
 - [**Observability, Health and Readiness**](docs/observability/README.md)
-  - Health mechanisms (ReadinessHealthIndicator, DaprHealthStatusManager, gRPC health service)
-  - MongoDB health monitoring, Logging (Logback configuration, SLF4J bridge, Log levels and appenders)
-  - Health check flow
+  - Health mechanisms (ReadinessHealthIndicator, DaprHealthStatusManager, gRPC health service), MongoDB health monitoring
+  - Logging (Logback configuration, SLF4J bridge, Log levels and appenders)
 - [**Error handling and Request limits**](docs/errorhandling/README.md)
   - Exception hierarchy, Exception types, Interceptor chain (ExceptionHandlerInterceptor, LatencyLimiterInterceptor, LoggingInterceptor)
   - Request limits (Maximum message size, Latency limiter threshold, Timeouts)
