@@ -1,4 +1,4 @@
-# Run time
+# Bootstrap
 - [Introduction](#Introduction)
 - [Bootstrap & configuration](#bootstrap--configuration)
 - [Dependency injection wiring](#dependency-injection-wiring)
