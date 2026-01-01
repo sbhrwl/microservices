@@ -11,9 +11,9 @@
   - [Organization cache](#organization-cache)
   - [Moving average latency tracker](#moving-average-latency-tracker)
 - [Deployment topologies](#deployment-topologies)
-  - [Horizontal scaling](#horizontal-scaling)
-  - [MongoDB connection pooling](#mongodb-connection-pooling)
-  - [Resource sizing](#resource-sizing)
+- [Horizontal scaling](#horizontal-scaling)
+- [MongoDB connection pooling](#mongodb-connection-pooling)
+- [Resource sizing](#resource-sizing)
 
 ## Threading model
 - Service uses separate thread pools for different components to optimize resource utilization
