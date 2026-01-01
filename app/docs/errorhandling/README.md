@@ -1,4 +1,4 @@
-# Error Handling & Limits
+# Error Handling and Limits
 - [Exception hierarchy](#exception-hierarchy)
 - [Exception types](#exception-types)
 - [Interceptor chain](#interceptor-chain)
