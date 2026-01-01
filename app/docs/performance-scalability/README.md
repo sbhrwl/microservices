@@ -1,4 +1,4 @@
-# Performance & Scalability Considerations
+# Performance and Scalability
 - [Threading model](#threading-model)
   - [Netty boss executor](#netty-boss-executor)
   - [Netty worker executor](#netty-worker-executor)
