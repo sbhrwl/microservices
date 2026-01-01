@@ -271,10 +271,10 @@ sequenceDiagram
 </details>
 
 ## Configuration model
-- `ApplicationSetting` is immutable record type built from `Typesafe Config`
 - Configuration hierarchy: `gfc` → `grpc-server`, `mongodb`, `keycloak`, `authorization`, `feature-flags`
 - Environment variable overrides via `ConfigFactory.systemEnvironmentOverrides()`
 - System property `-Dconfig.file` allows external configuration file specification
+- `ApplicationSetting` is immutable record type built from `Typesafe Config`
 <img src="images/arch-5.jpg">
 
 - `GrpcServer` record contains port, thread pool counts, max message size, latency threshold
