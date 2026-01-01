@@ -1,4 +1,4 @@
-# Configuration & Environments
+# Configuration and Environments
 - [Configuration sources](#configuration-sources)
   - [HOCON configuration files](#hocon-configuration-files)
   - [Environment variable overrides](#environment-variable-overrides)
