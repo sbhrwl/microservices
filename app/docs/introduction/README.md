@@ -64,9 +64,6 @@ flowchart TB
 - **Logging**: `SLF4J` with `Logback` for structured logging
 
 ## Project structure
-- `src/main/resources/com/landisgyr/gfc/` 
-  - Application resources
-    - manufacturer mappings, configuration files, static data |
 
 | Folder/File | Purpose |
 |-------------|---------|
