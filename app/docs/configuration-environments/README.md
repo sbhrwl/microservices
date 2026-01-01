@@ -8,7 +8,7 @@
   - [Mongodb configuration](#mongodb-configuration)
   - [Keycloak configuration](#keycloak-configuration)
   - [Authorization configuration](#authorization-configuration)
-- [Feature flags](#feature-flags)
+  - [Feature flags](#feature-flags)
 - [MongoDB connection](#mongodb-connection)
 - [Dapr and external endpoints](#dapr-and-external-endpoints)
 - [Docker and deployment](#docker-and-deployment)
@@ -114,7 +114,7 @@
 | Role mapping            | Each method can require multiple roles (OR logic: user needs any one role)                               |
 | Configuration structure | HOCON list of objects with `method` and `role` fields                                                    |
 
-## Feature flags
+### Feature flags
 
 | Aspect        | Details                                                                                 |
 | ------------- | --------------------------------------------------------------------------------------- |
