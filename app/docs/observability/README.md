@@ -1,8 +1,8 @@
 # Observability, Health and Readiness
 - [Health mechanisms](#health-mechanisms)
+  - [gRPC health service](#grpc-health-service)
   - [ReadinessHealthIndicator](#readinesshealthindicator)
   - [DaprHealthStatusManager](#daprhealthstatusmanager)
-  - [gRPC health service](#grpc-health-service)
 - [MongoDB health monitoring](#mongodb-health-monitoring)
 - [Logging](#logging)
   - [Logback configuration](#logback-configuration)
@@ -25,8 +25,14 @@
   - `SERVICE_UNKNOWN` (not found)
 - **Terminal state**: entered during `shutdown` to prevent new health checks from returning `SERVING`
 - Health status stored in `ConcurrentHashMap` for thread-safe concurrent reads
-
-## ReadinessHealthIndicator
+### gRPC health service
+- Standard gRPC health checking protocol implementation (`grpc.health.v1.Health`)
+- `GrpcHealthServiceImpl` is placeholder class; actual implementation managed by `HealthStatusManager` from gRPC library
+- Health status managed by `HealthStatusManager` singleton instance
+- Service registration: health status set via `HealthStatusManager.setStatus(serviceName, status)`
+- Health check RPC: `Check(HealthCheckRequest)` returns current status for service name
+- Watch RPC: `Watch(HealthCheckRequest)` streams health status changes (not implemented in service)
+### ReadinessHealthIndicator
 - Implements MongoDB `ServerMonitorListener` interface for connection health tracking
 - Tracks healthy MongoDB servers in `Set<ServerId>` for multi-server cluster support
 - Health status updated on MongoDB heartbeat events: `serverHeartbeatSucceeded` and `serverHeartbeatFailed`
@@ -36,22 +42,13 @@
   - `SERVING` when at least one MongoDB server healthy
   - `NOT_SERVING` when all servers unhealthy
 - Shutdown handling: `applicationShutdownStarted()` marks all services as `NOT_SERVING` and enters terminal state
-
-## DaprHealthStatusManager
+### DaprHealthStatusManager
 - Wrapper around `DaprHealthServiceImpl` for Dapr-specific health status management
 - Thread-safe status updates via synchronized methods in `DaprHealthServiceImpl`
 - Terminal state protection: status updates ignored after `enterTerminalState()` called
 - Status map: `ConcurrentHashMap<String, ServingStatus>` for concurrent health status reads
 - Initial state: `SERVICE_NAME_ALL_SERVICES` set to `SERVING` on initialization
 - Dapr health endpoint: responds to Dapr sidecar health checks via `healthCheck()` RPC
-
-## gRPC health service
-- Standard gRPC health checking protocol implementation (`grpc.health.v1.Health`)
-- `GrpcHealthServiceImpl` is placeholder class; actual implementation managed by `HealthStatusManager` from gRPC library
-- Health status managed by `HealthStatusManager` singleton instance
-- Service registration: health status set via `HealthStatusManager.setStatus(serviceName, status)`
-- Health check RPC: `Check(HealthCheckRequest)` returns current status for service name
-- Watch RPC: `Watch(HealthCheckRequest)` streams health status changes (not implemented in service)
 
 ## MongoDB health monitoring
 - Health monitoring via MongoDB driver's `ServerMonitorListener` interface
