@@ -83,8 +83,12 @@
 - Purpose: circuit breaker pattern to prevent cascading failures during high load
 
 ### Timeouts
-- gRPC client timeouts: not enforced by server, clients responsible for setting appropriate timeouts
-- MongoDB timeouts: `connectTimeoutMS` in connection options (default: 30000 ms), `heartbeatFrequencyMS` for connection monitoring
-- Dapr API timeout: `DAPR_API_TIMEOUT_MILLISECONDS` environment variable (default: 30000 ms) for Dapr client calls
-- Graceful shutdown timeout: 5 seconds for in-flight requests, then 2 seconds for forced shutdown
-- No request timeout: server does not enforce per-request timeouts, relies on client timeouts and latency limiter
+| Context             | Timeout Type                                   | Default                                                       |
+| ------------------- | ---------------------------------------------- | ------------------------------------------------------------- |
+| gRPC client         | Client-side request timeout                    | Not enforced by server; clients must set appropriate timeouts |
+| MongoDB             | `connectTimeoutMS`                             | 30000 ms (connection timeout)                                 |
+| MongoDB             | `heartbeatFrequencyMS`                         | For connection monitoring                                     |
+| Dapr API            | `DAPR_API_TIMEOUT_MILLISECONDS` (env variable) | 30000 ms (client call timeout)                                |
+| Graceful shutdown   | In-flight request wait                         | 5 seconds                                                     |
+| Graceful shutdown   | Forced shutdown wait                           | 2 seconds                                                     |
+| No request timeout  | Server-side per-request timeout                | Not enforced; relies on client timeouts and latency limiter   |
