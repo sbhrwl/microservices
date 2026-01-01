@@ -84,6 +84,8 @@ flowchart TB
 | `Dockerfile` / `Dockerfile-dev` | Container images for production and development environments |
 | `envfile.env` | Environment variables for containerized deployments |
 
+- Application resources such as manufacturer mappings, configuration files, static data: `src/main/resources/com/landisgyr/gfc/`
+
 ## Dependencies
 - **gRPC 1.77.0** - RPC framework
 - **Dapr SDK 1.16.0** - Distributed application runtime
