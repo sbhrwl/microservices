@@ -23,4 +23,3 @@ dapr run --enable-profiling --app-id gfc-service --app-port 9090 --app-protocol 
   - Protobuf, `*ServiceImpl`, Dagger wiring (`GrpcServerComponent`, modules), DAOs, domain objects.
 - **Extending queries**:
   - Adding new filters, updating `AggregationPipelineBuilder` and filter visitors.
-- **Config hints**, dependencies (MongoDB/Dapr/Keycloak).
