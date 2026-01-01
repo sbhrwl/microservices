@@ -1,4 +1,4 @@
-# Data Model & Persistence
+# Data model
 - [Domain entities](#domain-entities)
   - [Device entity](#device-entity)
   - [Event entity](#event-entity)
