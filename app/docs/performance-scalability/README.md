@@ -1,8 +1,8 @@
 # Performance and Scalability
 - [Threading model](#threading-model)
-  - [Netty boss executor](#netty-boss-executor)
-  - [Netty worker executor](#netty-worker-executor)
-  - [Dapr client executor](#dapr-client-executor)
+- [Netty boss executor](#netty-boss-executor)
+- [Netty worker executor](#netty-worker-executor)
+- [Dapr client executor](#dapr-client-executor)
 - [MongoDB search strategies](#mongodb-search-strategies)
   - [PRIMARY strategy](#primary-strategy)
   - [ATLAS strategy](#atlas-strategy)
