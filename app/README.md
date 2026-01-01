@@ -10,7 +10,8 @@
 - [**Data Model & Persistence**](docs/DataModel.md)
   - Domain entities, Query model, SearchFilter interface, PageRequest, Sorting, Aggregation pipeline builder, Data flow, Document mappers
 - [**Security & Authorization**](docs/SecurityAuthorization.md)
-  - Authentication (Keycloak integration), Token validation, Authorization, RBAC implementation, Method-level enforcement, Organization access control, RPC to roles mapping, Authentication and authorization flow
+  - Authentication (Keycloak integration), Token validation
+  - Authorization, RBAC implementation, Method-level enforcement, Organization access control, RPC to roles mapping
 - [**Configuration & Environments**](docs/ConfigurationEnvironments.md)
   - Configuration sources (HOCON configuration files), Environment variable overrides, System property overrides
   - ApplicationSetting structure
