@@ -2,8 +2,8 @@
 - [Health mechanisms](#health-mechanisms)
   - [gRPC health service](#grpc-health-service)
   - [DaprHealthStatusManager](#daprhealthstatusmanager)
-  - [ReadinessHealthIndicator](#readinesshealthindicator)
   - [MongoDB health monitoring](#mongodb-health-monitoring)
+  - [ReadinessHealthIndicator](#readinesshealthindicator)
 - [Logging](#logging)
   - [Logback configuration](#logback-configuration)
   - [SLF4J bridge](#slf4j-bridge)
@@ -47,18 +47,6 @@
 | Initial state             | `SERVICE_NAME_ALL_SERVICES` set to `SERVING` on initialization                |
 | Dapr health endpoint      | Responds to Dapr sidecar health checks via `healthCheck()` RPC                |
 
-### ReadinessHealthIndicator
-- Implements MongoDB `ServerMonitorListener` interface for connection health tracking
-- Tracks healthy MongoDB servers in `Set<ServerId>` for multi-server cluster support
-- Health status updated on MongoDB heartbeat events: `serverHeartbeatSucceeded` and `serverHeartbeatFailed`
-
-| Aspect                 | Details                                                                                      |
-| ---------------------- | -------------------------------------------------------------------------------------------- |
-| Status synchronization | Updates both `HealthStatusManager` and `DaprHealthStatusManager` simultaneously              |
-| Service names          | Tracks health for `"gfc"` and `"*"` (all services)                                           |
-| Health logic           | `SERVING` when at least one MongoDB server healthy; `NOT_SERVING` when all servers unhealthy |
-| Shutdown handling      | `applicationShutdownStarted()` marks all services as `NOT_SERVING` and enters terminal state |
-
 ### MongoDB health monitoring
 - Health monitoring via MongoDB driver's `ServerMonitorListener` interface
 
@@ -70,6 +58,18 @@
 | Health propagation    | MongoDB connection health directly drives service readiness status                              |
 | Connection loss       | When all MongoDB servers fail heartbeat, service marked `NOT_SERVING` immediately               |
 | Reconnection          | When MongoDB heartbeat succeeds, service marked `SERVING` automatically                         |
+
+### ReadinessHealthIndicator
+- Implements MongoDB `ServerMonitorListener` interface for connection health tracking
+- Tracks healthy MongoDB servers in `Set<ServerId>` for multi-server cluster support
+- Health status updated on MongoDB heartbeat events: `serverHeartbeatSucceeded` and `serverHeartbeatFailed`
+
+| Aspect                 | Details                                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| Status synchronization | Updates both `HealthStatusManager` and `DaprHealthStatusManager` simultaneously              |
+| Service names          | Tracks health for `"gfc"` and `"*"` (all services)                                           |
+| Health logic           | `SERVING` when at least one MongoDB server healthy; `NOT_SERVING` when all servers unhealthy |
+| Shutdown handling      | `applicationShutdownStarted()` marks all services as `NOT_SERVING` and enters terminal state |
 
 ## Logging
 
