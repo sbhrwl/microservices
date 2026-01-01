@@ -1,4 +1,4 @@
-# Security & Authorization
+# Security
 - [Authentication](#authentication)
   - [Keycloak integration](#keycloak-integration)
   - [Token validation](#token-validation)
