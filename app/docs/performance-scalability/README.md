@@ -77,7 +77,7 @@
 | Use cases          | Equality filters, range filters, date intervals, exists filters, compound filters (AND/OR) |
 | Performance        | Leverages MongoDB indexes for fast query execution                                         |
 | Limitations        | Does not support free text search or autocomplete functionality                            |
-| Query building     | `AggregationPipelineBuilder` converts `SearchFilter` to `Filters` (BSON queries)           |
+| Query building     | `AggregationPipelineBuilder` converts `SearchFilter` to `Filters` (BSON queries), BSON is the binary version of JSON that MongoDB uses internally, and `$match` filters operate on it.       |
 | Index requirements | Requires appropriate indexes on queried fields for optimal performance                     |
 
 ### ATLAS strategy
