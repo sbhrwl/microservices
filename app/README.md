@@ -3,7 +3,7 @@
   - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
 - [**Architecture & Components**](docs/Architecture.md)
   - Component layers, gRPC server and Dagger modules, Persistence and MongoDB integration, Dapr integration, Configuration model, Protos
-- [**Startup Sequence**](docs/Runtime.md)
+- [**Bootstrap**](docs/Runtime.md)
    - Bootstrap and configuration, Dependency injection wiring, Server startup, Shutdown sequence
 - [**gRPC APIs**](docs/gRPC-APIs.md)
   - Query devices flow, Tag devices flow, Get app permissions flow 
