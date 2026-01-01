@@ -277,7 +277,7 @@ sequenceDiagram
 - System property `-Dconfig.file` allows external configuration file specification
 <img src="images/arch-5.jpg">
 
-`GrpcServer` record contains port, thread pool counts, max message size, latency threshold
+- `GrpcServer` record contains port, thread pool counts, max message size, latency threshold
 - `Mongodb` record contains connection URI, database name, search strategy, heartbeat frequency
 - `Keycloak` record contains server URL, expected audience, allowed realms, resource access key
 - `Authorization` record contains method-to-roles and app-to-methods mappings
