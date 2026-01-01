@@ -115,8 +115,8 @@
 
 | Aspect              | Details                                                                                       |
 | ------------------- | --------------------------------------------------------------------------------------------- |
-| Implementation      | Caffeine cache in `OrganizationService` for organization document caching                     |
-| Cache configuration | Maximum 50 entries, 10 minute TTL (time-to-live) after write                                  |
+| Implementation      | **`Caffeine`** cache in `OrganizationService` for organization document caching                     |
+| Cache configuration | Maximum `50 entries`, `10 minute TTL` (time-to-live) after write                                  |
 | Cache key           | Organization code (`orgCode`)                                                                 |
 | Cache population    | Lazy loading via `cache.get(key, loader)` on cache miss                                       |
 | Cache invalidation  | Cache entry invalidated on organization settings update                                       |
@@ -127,13 +127,13 @@
 
 | Aspect              | Details                                                                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------- |
-| Implementation      | Exponential Moving Average (EMA) algorithm with alpha = 0.2                                    |
+| Implementation      | Exponential Moving Average (EMA) algorithm with `alpha = 0.2`                                    |
 | Purpose             | Tracks rolling average request latency for latency-based circuit breaker                       |
-| Thread safety       | Uses `AtomicLong` for thread-safe average calculation                                          |
-| Latency measurement | Tracks request duration from interceptor start to completion                                   |
-| Algorithm           | `newAverage = 0.2 * currentLatency + 0.8 * previousAverage` for smooth averaging               |
+| Thread safety       | Uses `AtomicLong` for `thread-safe average calculation`                                          |
+| Latency measurement | Tracks request duration from `interceptor start to completion`                                   |
+| Algorithm           | `newAverage = 0.2 * currentLatency + 0.8 * previousAverage` for **smooth averaging**               |
 | Usage               | `LatencyLimiterInterceptor` uses average latency to reject requests when threshold is exceeded |
-| Performance         | O(1) time complexity, minimal memory overhead (single `AtomicLong`)                            |
+| Performance         | `O(1)` time complexity, minimal memory overhead (single `AtomicLong`)                            |
 
 ## Deployment topologies
 - Service designed for horizontal scaling with `stateless architecture`
