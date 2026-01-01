@@ -1,18 +1,18 @@
 # Application
-- [**Introduction**](docs/Introduction.md)
+- [**Introduction**](docs/introduction/README.md)
   - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
-- [**Architecture & Components**](docs/Architecture.md)
+- [**Architecture & Components**](docs/architecture/README.md)
   - Component layers, gRPC server and Dagger modules, Persistence and MongoDB integration, Dapr integration, Configuration model, Protos
-- [**Bootstrap**](docs/Runtime.md)
+- [**Bootstrap**](docs/bootstrap/README.md)
    - Bootstrap and configuration, Dependency injection wiring, Server startup, Shutdown sequence
-- [**gRPC APIs**](docs/gRPC-APIs.md)
+- [**gRPC APIs**](docs/gRPC-APIs/README.md)
   - Query devices flow, Tag devices flow, Get app permissions flow 
-- [**Data Model & Persistence**](docs/DataModel.md)
+- [**Data Model & Persistence**](docs/datamodel/README.md)
   - Domain entities, Query model, SearchFilter interface, PageRequest, Sorting, Aggregation pipeline builder, Data flow, Document mappers
-- [**Security & Authorization**](docs/SecurityAuthorization.md)
+- [**Security & Authorization**](docs/security/README.md)
   - Authentication (Keycloak integration), Token validation
   - Authorization, RBAC implementation, Method-level enforcement, Organization access control, RPC to roles mapping
-- [**Configuration & Environments**](docs/ConfigurationEnvironments.md)
+- [**Configuration & Environments**](docs/configuration-environments/README.md)
   - Configuration sources (HOCON configuration files), Environment variable overrides, System property overrides
   - ApplicationSetting structure
     - GrpcServer configuration
@@ -22,17 +22,17 @@
   - Feature flags, MongoDB connection, Dapr and external endpoints
   - Docker and deployment, Production Dockerfile, Development Dockerfile
   - Environment file, Deployment flow
-- [**Observability, Health & Readiness**](docs/Observability.md)
+- [**Observability, Health & Readiness**](docs/observability/README.md)
   - Health mechanisms (ReadinessHealthIndicator, DaprHealthStatusManager, gRPC health service)
   - MongoDB health monitoring, Logging (Logback configuration, SLF4J bridge, Log levels and appenders)
   - Health check flow
-- [**Error Handling & Limits**](docs/ErrorHandling.md)
+- [**Error Handling & Limits**](docs/errorhandling/README.md)
   - Exception hierarchy, Exception types, Interceptor chain (ExceptionHandlerInterceptor, LatencyLimiterInterceptor, LoggingInterceptor)
   - Request limits (Maximum message size, Latency limiter threshold, Timeouts)
-- [**Performance & Scalability Considerations**](docs/PerformanceScalability.md)
+- [**Performance & Scalability Considerations**](docs/performance-scalability/README.md)
   - Threading model (Netty boss executor, Netty worker executor, Dapr client executor)
   - MongoDB search strategies (PRIMARY strategy, ATLAS strategy, Strategy selection)
   - Caching and performance features (Organization cache, Moving average latency tracker)
   - Deployment topologies (Horizontal scaling, MongoDB connection pooling, Resource sizing)
- - [**Developer Guide**](docs/DeveloperGuide.md)
+ - [**Developer Guide**](docs/developer-guide/README.md)
     - Running locally, Adding a new gRPC service, Extending queries
