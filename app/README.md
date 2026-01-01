@@ -33,6 +33,6 @@
   - Threading model (Netty boss executor, Netty worker executor, Dapr client executor)
   - MongoDB search strategies (PRIMARY strategy, ATLAS strategy, Strategy selection)
   - Caching and performance features (Organization cache, Moving average latency tracker)
-  - Deployment topologies (Horizontal scaling, MongoDB connection pooling, Resource sizing)
+  - Deployment topologies, Horizontal scaling, MongoDB connection pooling, **Resource sizing**
  - [**Developer Guide**](docs/developer-guide/README.md)
     - Running locally, Adding a new gRPC service, Extending queries
