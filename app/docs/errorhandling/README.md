@@ -19,17 +19,17 @@
 
 ## Exception types
 
-| Exception Class                | Description / Use Case                                                    | gRPC Status Code            |
-| ------------------------------ | ------------------------------------------------------------------------- | --------------------------- |
-| ServiceException               | Base exception class, supports formatted messages and cause chaining      | `Status.INTERNAL`           |
-| InvalidRequestException        | Invalid request parameters or malformed data; supports path field errors  | `Status.INVALID_ARGUMENT`   |
-| AccessDeniedException          | Insufficient permissions for operation; thrown by authorization checks    | `Status.PERMISSION_DENIED`  |
-| AuthenticationException        | Missing or invalid authentication credentials; thrown by token validation | `Status.UNAUTHENTICATED`    |
-| ResourceNotFoundException      | Requested resource does not exist; used for missing devices, events, orgs | `Status.NOT_FOUND`          |
-| ResourceAlreadyExistsException | Resource creation conflict; used for duplicate resource creation          | `Status.ALREADY_EXISTS`     |
-| TooManyRequestsException       | Rate limiting or quota exceeded; used for throttling                      | `Status.RESOURCE_EXHAUSTED` |
-| RequestTooLargeException       | Request payload exceeds size limits; e.g., tag operations > 1000          | `Status.INVALID_ARGUMENT`   |
-| HighLatencyException           | Request rejected due to high average latency; thrown by latency limiter   | `Status.RESOURCE_EXHAUSTED` |
+| Exception Class                | gRPC Status Code            | Description / Use Case                                                    |
+| ------------------------------ | --------------------------- | ------------------------------------------------------------------------- |
+| ServiceException               | `Status.INTERNAL`           | Base exception class, supports formatted messages and cause chaining      |
+| InvalidRequestException        | `Status.INVALID_ARGUMENT`   | Invalid request parameters or malformed data; supports path field errors  |
+| AccessDeniedException          | `Status.PERMISSION_DENIED`  | Insufficient permissions for operation; thrown by authorization checks    |
+| AuthenticationException        | `Status.UNAUTHENTICATED`    | Missing or invalid authentication credentials; thrown by token validation |
+| ResourceNotFoundException      | `Status.NOT_FOUND`          | Requested resource does not exist; used for missing devices, events, orgs |
+| ResourceAlreadyExistsException | `Status.ALREADY_EXISTS`     | Resource creation conflict; used for duplicate resource creation          |
+| TooManyRequestsException       | `Status.RESOURCE_EXHAUSTED` | Rate limiting or quota exceeded; used for throttling                      |
+| RequestTooLargeException       | `Status.INVALID_ARGUMENT`   | Request payload exceeds size limits; e.g., tag operations > 1000          |
+| HighLatencyException           | `Status.RESOURCE_EXHAUSTED` | Request rejected due to high average latency; thrown by latency limiter   |
 
 ## Interceptor chain
 
