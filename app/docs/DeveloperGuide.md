@@ -1,5 +1,6 @@
 # Developer Guide
 - [Build and run](#build-and-run)
+- [Next](#next)
 ## Build and run
 - **Compile**: `mvn clean compile`,
 - **Build:**
@@ -17,8 +18,9 @@ dapr run --enable-profiling --app-id gfc-service --app-port 9090 --app-protocol 
 - **Access:**
   - gRPC endpoint: `localhost:9090`
   - Test with `grpcurl`
+## Next
 - **Adding a new gRPC service**:
   - Protobuf, `*ServiceImpl`, Dagger wiring (`GrpcServerComponent`, modules), DAOs, domain objects.
 - **Extending queries**:
   - Adding new filters, updating `AggregationPipelineBuilder` and filter visitors.
-- Config hints, dependencies like MongoDB/Dapr/Keycloak.
+- **Config hints**, dependencies (MongoDB/Dapr/Keycloak).
