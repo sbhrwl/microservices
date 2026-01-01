@@ -3,7 +3,7 @@
   - [gRPC health service](#grpc-health-service)
   - [DaprHealthStatusManager](#daprhealthstatusmanager)
   - [ReadinessHealthIndicator](#readinesshealthindicator)
-- [MongoDB health monitoring](#mongodb-health-monitoring)
+  - [MongoDB health monitoring](#mongodb-health-monitoring)
 - [Logging](#logging)
   - [Logback configuration](#logback-configuration)
   - [SLF4J bridge](#slf4j-bridge)
@@ -59,7 +59,7 @@
 | Health logic           | `SERVING` when at least one MongoDB server healthy; `NOT_SERVING` when all servers unhealthy |
 | Shutdown handling      | `applicationShutdownStarted()` marks all services as `NOT_SERVING` and enters terminal state |
 
-## MongoDB health monitoring
+### MongoDB health monitoring
 - Health monitoring via MongoDB driver's `ServerMonitorListener` interface
 
 | Aspect                | Details                                                                                         |
