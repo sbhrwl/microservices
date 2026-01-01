@@ -1,4 +1,4 @@
-# Architecture & Components
+# Architecture
 - [Component layers](#component-layers)
 - [gRPC server and Dagger modules](#grpc-server-and-dagger-modules)
 - [Persistence and MongoDB integration](#persistence-and-mongodb-integration)
