@@ -1,8 +1,8 @@
 # Performance and Scalability
 - [Threading model](#threading-model)
-- [Netty boss executor](#netty-boss-executor)
-- [Netty worker executor](#netty-worker-executor)
-- [Dapr client executor](#dapr-client-executor)
+  - [Netty boss executor](#netty-boss-executor)
+  - [Netty worker executor](#netty-worker-executor)
+  - [Dapr client executor](#dapr-client-executor)
 - [MongoDB search strategies](#mongodb-search-strategies)
   - [PRIMARY strategy](#primary-strategy)
   - [ATLAS strategy](#atlas-strategy)
@@ -22,7 +22,7 @@
 - Thread naming: threads named with descriptive prefixes for debugging and monitoring
 - Thread pool lifecycle: executors created at application startup, shutdown gracefully on application stop
 
-## Netty boss executor
+### Netty boss executor
 - Purpose: handles incoming connection acceptance and channel registration for gRPC server
 - Default size: `Runtime.getRuntime().availableProcessors()` threads (one per CPU core)
 - Configuration: `boss-thread-pool-count` in `grpc-server` config, overridden by environment variable
@@ -30,7 +30,7 @@
 - Thread pool type: `FixedThreadPool` with daemon threads for graceful shutdown
 - Performance: boss threads handle lightweight connection setup, minimal CPU usage
 
-## Netty worker executor
+### Netty worker executor
 - Purpose: handles actual request processing, gRPC call execution, and I/O operations
 - Default size: `Runtime.getRuntime().availableProcessors() * 5` threads (5x CPU cores)
 - Configuration: `worker-thread-pool-count` in `grpc-server` config, overridden by environment variable
@@ -39,7 +39,7 @@
 - Performance: worker threads handle request processing, database queries, and business logic execution
 - Scaling: higher multiplier (5x) accounts for I/O wait time during database and Dapr calls
 
-## Dapr client executor
+### Dapr client executor
 - Purpose: handles asynchronous Dapr API calls (state store, pub/sub, service invocation)
 - Default size: `5 * Runtime.getRuntime().availableProcessors()` threads (5x CPU cores)
 - Configuration: hardcoded in `AppModule`, not configurable via application settings
