@@ -11,11 +11,19 @@
 - [Health check flow](#health-check-flow)
 
 ## Health mechanisms
-- Three health check implementations: standard gRPC health, Dapr health, and MongoDB-driven readiness
-- Health status synchronized across all mechanisms for consistent reporting
-- Service names: `"gfc"` (service-specific) and `"*"` (all services) for health status tracking
-- Status values: `SERVING` (healthy), `NOT_SERVING` (unhealthy), `SERVICE_UNKNOWN` (not found)
-- Terminal state: entered during shutdown to prevent new health checks from returning `SERVING`
+- Three health check implementations
+  - Standard gRPC health
+  - Dapr health
+  - MongoDB-driven readiness
+- Health status `synchronized across all mechanisms for consistent reporting`
+- Service names
+  - `"gfc"` (service-specific)
+  - `"*"` (all services) for health status tracking
+- Status values
+  - `SERVING` (healthy)
+  - `NOT_SERVING` (unhealthy)
+  - `SERVICE_UNKNOWN` (not found)
+- **Terminal state**: entered during `shutdown` to prevent new health checks from returning `SERVING`
 - Health status stored in `ConcurrentHashMap` for thread-safe concurrent reads
 
 ## ReadinessHealthIndicator
@@ -24,7 +32,9 @@
 - Health status updated on MongoDB heartbeat events: `serverHeartbeatSucceeded` and `serverHeartbeatFailed`
 - Status synchronization: updates both `HealthStatusManager` and `DaprHealthStatusManager` simultaneously
 - Service names: tracks health for `"gfc"` and `"*"` (all services)
-- Health logic: `SERVING` when at least one MongoDB server healthy, `NOT_SERVING` when all servers unhealthy
+- Health logic
+  - `SERVING` when at least one MongoDB server healthy
+  - `NOT_SERVING` when all servers unhealthy
 - Shutdown handling: `applicationShutdownStarted()` marks all services as `NOT_SERVING` and enters terminal state
 
 ## DaprHealthStatusManager
