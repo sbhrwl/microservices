@@ -275,14 +275,14 @@ sequenceDiagram
 - Configuration hierarchy: `gfc` → `grpc-server`, `mongodb`, `keycloak`, `authorization`, `feature-flags`
 - Environment variable overrides via `ConfigFactory.systemEnvironmentOverrides()`
 - System property `-Dconfig.file` allows external configuration file specification
-- `GrpcServer` record contains port, thread pool counts, max message size, latency threshold
+<img src="images/arch-5.jpg">
+
+`GrpcServer` record contains port, thread pool counts, max message size, latency threshold
 - `Mongodb` record contains connection URI, database name, search strategy, heartbeat frequency
 - `Keycloak` record contains server URL, expected audience, allowed realms, resource access key
 - `Authorization` record contains method-to-roles and app-to-methods mappings
 - `FeatureFlags` record provides feature toggle mechanism via boolean flags
 - Default values provided for all optional configuration properties
-<img src="images/arch-5.jpg">
-
 <details>
   <summary>mermaid</summary>
 
