@@ -3,7 +3,7 @@
   - [Client layer](#client-layer)
   - [Edge layer](#edge-layer)
   - [Schema definition layer](#schema-definition-layer)
-  - [Microservices layer](#microservices-layer)
+  - [Services layer](#services-layer)
 - [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
   - [Mapping rules](#mapping-rules)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
@@ -87,7 +87,7 @@ flowchart LR
 | Type Mappings | snake_case ↔ camelCase, custom scalars (DateTime, JsonMap, geospatial), enums, repeated fields → arrays | Automatic conversion |
 | API Versioning | Semantic versioning, coordinated deprecation, backward compatibility | Namespaces: `core.api.device.v1`, `gfc/api/v1/` |
 
-### Microservices layer
+### Services layer
 
 | Service | Domain | Key Operations |
 |---------|--------|----------------|
