@@ -10,7 +10,7 @@
 - [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
   - Device, Event, Organization, Tag Services
 - [Data types and models](data-types-models/README.md)
-  - Core types, Pagination and Filtering 
+  - Core types, Search and Filtering 
 - [Integration patterns](integration-patterns/README.md)
   - IEC 61968 connector, Data import and export
 - [Security and authorization](security-authorization/README.md)
