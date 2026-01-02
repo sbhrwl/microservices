@@ -1,5 +1,6 @@
 # GFC APIs
 - [Introduction](introduction/README.md)
+  - Purpose, GraphQL and gRPC dual API strategy, Domain organization
 - [API architecture](api-architecture/README.md)
 - [Domain model](domain-model/README.md)
 - [GraphQL API reference](graphql-api-reference/README.md)
