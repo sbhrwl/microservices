@@ -5,6 +5,7 @@
   - [Schema definition layer](#schema-definition-layer)
   - [Microservices layer](#microservices-layer)
 - [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
+  - [Mapping rules](#mapping-rules)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
 - [API evolution strategy](#api-evolution-strategy)
 - [Documentation synchronization](#documentation-synchronization)
@@ -111,7 +112,7 @@ flowchart LR
 | `repeated` | `[Type]` | GraphQL arrays |
 | `enum` | `enum` | Proto enums → GraphQL enums |
 
-### **Mapping Rules**
+### Mapping rules
 - Proto `snake_case` fields → GraphQL `camelCase`
 - Repeated fields → GraphQL arrays
 - Enums maintain names, values preserved
