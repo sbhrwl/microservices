@@ -8,6 +8,7 @@
 - [GraphQL API reference](graphql-api-reference/README.md)
   - Queries, Mutations, Types and scalars
 - [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
+  - Device, Event, Organization, Tag Services
 - [Data types and models](data-types-models/README.md)
 - [Integration patterns](integration-patterns/README.md)
 - [Security and authorization](security-authorization/README.md)
