@@ -4,6 +4,7 @@
 - [API architecture](api-architecture/README.md)
   - Architectural layers (Client layer, API Gateway layer, Schema definition layer, Microservices layer), Protocol Buffers to GraphQL mapping, Schema synchronization strategy, API evolution strategy, Documentation synchronization
 - [Domain model](domain-model/README.md)
+  - Device, Event, Organization, Tag
 - [GraphQL API reference](graphql-api-reference/README.md)
   - Queries, Mutations, Types and scalars
 - [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
