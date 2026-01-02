@@ -8,7 +8,6 @@
   - [Microservices layer](#microservices-layer)
 - [Domain organization](#domain-organization)
 - [GraphQL and gRPC dual API strategy](#graphql-and-grpc-dual-api-strategy)
-  - [REST APIs via gRPC-Gateway](rest-apis/README.md)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
 - [API evolution strategy](#api-evolution-strategy)
 - [Documentation synchronization](#documentation-synchronization)
@@ -72,7 +71,7 @@
 |---------|---------|----------|----------|----------------|
 | GraphQL | Flexible, client-driven queries | Single request for multiple resources, precise field selection, reduced network overhead | Web/mobile UIs, complex data aggregation, exploratory queries | Custom resolvers mapping to gRPC services |
 | gRPC Native | High-performance, strongly-typed communication | Binary protocol, code generation, streaming, type safety | Microservice communication, bulk operations, real-time streams | Direct gRPC service calls |
-| REST via gRPC-Gateway | Standard HTTP/JSON API | Universal support, simple tooling | Third-party integrations, legacy systems, simple CRUD | Auto-generated from proto HTTP annotations; coverage: select endpoints only |
+| [REST via gRPC-Gateway](rest-apis/README.md) | Standard HTTP/JSON API | Universal support, simple tooling | Third-party integrations, legacy systems, simple CRUD | Auto-generated from proto HTTP annotations; coverage: select endpoints only |
 
 ### Schema definition layer
 
