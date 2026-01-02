@@ -1,7 +1,7 @@
 # API architecture
 - [Architectural layers](#architectural-layers)
   - [Client layer](#client-layer)
-  - [API Gateway layer](#api-gateway-layer)
+  - [Edge layer](#edge-layer)
   - [Schema definition layer](#schema-definition-layer)
   - [Microservices layer](#microservices-layer)
 - [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
@@ -52,7 +52,7 @@
 | Third-party Integrations | External utility systems, legacy enterprise apps, partner integrations | REST |
 | Internal Microservices | Service-to-service communication, background jobs, data sync | gRPC Native |
 
-### API Gateway layer
+### Edge layer
 
 | Gateway | Purpose | Strengths | Best For | Implementation |
 |---------|---------|----------|----------|----------------|
