@@ -1,7 +1,128 @@
 # Introduction
-- Project purpose and high-level architecture
-- GraphQL and gRPC dual API strategy
-- Target audience
-  - Developers
-  - Integrators
-- Key concepts and terminology
+- [Purpose](#purpose)
+- [High-level architecture](#high-level-architecture)
+- [Architectural layers](#architectural-layers)
+- [Domain organization](#domain-organization)
+- [GraphQL and gRPC dual API strategy](#graphql-and-grpc-dual-api-strategy)
+- [Schema synchronization strategy](#schema-synchronization-strategy)
+- [API evolution strategy](#api-evolution-strategy)
+- [Documentation synchronization](#documentation-synchronization)
+
+## Purpose
+- The **GFC APIs** project is the central API layer for a Grid Field Control (GFC) system in the energy and utilities domain.
+- It manages API schemas and bridges backend microservices with client applications, enabling consistent and efficient communication across a distributed system.
+- Provide a unified `API gateway` that `abstracts underlying microservices`
+- Support `multiple protocols` to address diverse client and integration needs
+- Maintain and version API schemas as stable contracts
+- Ensure standards compliance, especially IEC 61968
+- Organize APIs around clear business domains
+## High-level architecture
+- The project follows a **BFF (Backend for Frontend) and API gateway** pattern:
+```
+Clients
+├─ GraphQL gateway
+├─ gRPC gateway
+└─ REST (HTTP)
+↓
+GFC APIs layer
+(schemas and protocol translation)
+↓
+Device | Event | Organization
+Tag    | Authorization | IEC 61968
+```
+
+## Architectural layers
+- **Client layer**
+  - Web applications
+  - Mobile applications
+  - Third-party and external utility integrations
+- **API gateway layer**
+  - GraphQL for flexible, client-driven data access
+  - gRPC for high-performance communication
+  - REST for standard integrations
+- **Schema definition layer**
+  - Protocol Buffer definitions (`.proto`)
+  - GraphQL schema definitions (`.graphql`)
+  - Type mappings and transformations
+  - API version management
+- **Microservices layer**
+  - Device service for meters and field devices
+  - Event service for alarms and notifications
+  - Organization service for hierarchy and configuration
+  - Tag service for metadata and categorization
+  - Authorization service for permissions
+  - IEC 61968 connector for standards-based integration
+## GraphQL and gRPC dual API strategy
+- **GraphQL**
+  - Client-driven queries
+  - Reduced over-fetching and under-fetching
+  - Single-request aggregation
+  - Schema introspection and discoverability
+- **gRPC**
+  - High-performance binary protocol
+  - Strong typing with Protocol Buffers
+  - Streaming support
+  - Optimized for service-to-service communication
+
+| Use case                            | Protocol |
+| ----------------------------------- | -------------------- |
+| Web and mobile user interfaces      | GraphQL              |
+| Dashboards and analytics            | GraphQL              |
+| Device registration and ingestion   | gRPC                 |
+| Bulk and streaming data operations  | gRPC                 |
+| Third-party integrations            | GraphQL or REST      |
+| Internal microservice communication | gRPC                 |
+
+## Domain organization
+- **`core/`**
+  - **`api/`**
+    - device
+    - event
+    - organization
+    - authorization
+    - tag
+  - **`type/`**
+    - shared domain types
+    - geospatial and metering data
+    - pagination and search utilities
+- **`graphql/`**
+  - Client-facing queries and mutations
+  - Frontend-optimized type definitions
+- **`iec61968_connector/`**
+  - IEC 61968 compliant integration components
+
+## Schema synchronization strategy
+- **Protocol Buffers as the source of truth**
+  - Canonical data models defined in `.proto`
+  - GraphQL schemas derived from proto definitions
+- **Naming convention mapping**
+  - Proto uses `snake_case`
+  - GraphQL uses `camelCase`
+  - Automated tooling handles conversion
+- **Type mapping**
+  - Scalars map directly where possible
+  - Custom GraphQL scalars for dates, times, and JSON
+  - Repeated fields map to lists
+  - Enums remain consistent across protocols
+- **Version alignment**
+  - Semantic versioning for both APIs
+  - Versioned package paths in proto
+  - Versioned namespaces in GraphQL
+  - Breaking changes introduce new major versions
+
+## API evolution strategy
+- **Adding features**
+  - Extend proto definitions
+  - Update gRPC services
+  - Reflect changes in GraphQL schemas
+  - Preserve backward compatibility within major versions
+- **Deprecation**
+  - Mark proto fields as deprecated
+  - Document deprecations in GraphQL
+  - Provide clear migration timelines
+  - Remove deprecated elements in the next major version
+## Documentation synchronization
+- Field and type descriptions originate in proto files
+- GraphQL schemas inherit documentation automatically
+- Shared usage examples for both protocols
+- GraphQL introspection provides self-documenting APIs
