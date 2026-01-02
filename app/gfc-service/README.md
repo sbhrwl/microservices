@@ -1,4 +1,4 @@
-# Application
+# GFC service
 - [**Introduction**](introduction/README.md)
   - Motivation, Design principles (Layered architecture, Dependency injection, Multi-tenancy, Security first, Observability), Technology stack
 - [**Architecture**](architecture/README.md)
