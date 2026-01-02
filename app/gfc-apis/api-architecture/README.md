@@ -2,9 +2,9 @@
 - [Architectural layers](#architectural-layers)
   - [Client layer](#client-layer)
   - [Edge layer](#edge-layer)
-  - [Schema definition layer](#schema-definition-layer)
   - [Services layer](#services-layer)
-- [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
+- [Schema definition layer](#schema-definition-layer)
+  - [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
   - [Mapping rules](#mapping-rules)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
 - [API evolution strategy](#api-evolution-strategy)
@@ -22,20 +22,22 @@
 
 ```mermaid
 flowchart LR
-
-  subgraph "Client applications"
-    Web["Web UI (browser)"]
-    Mobile["Mobile app"]
-    Ext["Third-party systems"]
-    MS["Internal microservice (client)"]
+  subgraph "Client layer"
+  %% Clients with colors
+  Web["Web UI (browser)"]:::web
+  Mobile["Mobile app"]:::mobile
+  Ext["Third-party systems"]:::ext
+  MS["Internal microservice (client)"]:::ms
   end
 
+  %% Edge / BFF layer
   subgraph "Edge / BFF layer"
     GQL["GraphQL gateway (BFF)"]
     REST["REST API (HTTP)"]
     GRPCGW["gRPC gateway (HTTP to gRPC)"]
   end
 
+  %% Internal services
   subgraph "Internal services (gRPC native)"
     Device["Device service"]
     Event["Event service"]
@@ -43,6 +45,7 @@ flowchart LR
     Auth["Authorization service"]
   end
 
+  %% Connections
   Web --> GQL
   Web --> REST
 
@@ -65,6 +68,12 @@ flowchart LR
   MS --> Device
   MS --> Event
   MS --> Org
+
+  %% Styles
+  classDef web fill:#a3d5ff,stroke:#000,stroke-width:1px;
+  classDef mobile fill:#ffdda3,stroke:#000,stroke-width:1px;
+  classDef ext fill:#c1ffc1,stroke:#000,stroke-width:1px;
+  classDef ms fill:#ffb3b3,stroke:#000,stroke-width:1px;
 ```
 </details>
 
@@ -84,15 +93,6 @@ flowchart LR
 | gRPC Native | High-performance, strongly-typed communication | Binary protocol, code generation, streaming, type safety | Microservice communication, bulk operations, real-time streams | Direct gRPC service calls |
 | [REST via gRPC-Gateway](rest-apis/README.md) | Standard HTTP/JSON API | Universal support, simple tooling | Third-party integrations, legacy systems, simple CRUD | Auto-generated from proto HTTP annotations; coverage: select endpoints only |
 
-### Schema definition layer
-
-| Component | Description | Location / Notes |
-|-----------|------------|----------------|
-| Protocol Buffers (`.proto`) | Canonical data models and service definitions, source of truth, HTTP annotations for REST | `proto/core/api/`, `proto/core/type/` |
-| GraphQL Schemas (`.graphql`) | Client-optimized types, camelCase, self-documenting | `graphql/operations/` |
-| Type Mappings | snake_case ↔ camelCase, custom scalars (DateTime, JsonMap, geospatial), enums, repeated fields → arrays | Automatic conversion |
-| API Versioning | Semantic versioning, coordinated deprecation, backward compatibility | Namespaces: `core.api.device.v1`, `gfc/api/v1/` |
-
 ### Services layer
 
 | Service | Domain | Key Operations |
@@ -104,7 +104,16 @@ flowchart LR
 | Authorization Service | Permissions, roles, org-level security | Get permissions, validate access |
 | IEC 61968 Connector | Industry-standard utility integration | CIM support, bridge to external systems |
 
-## Protocol Buffers to GraphQL Mapping
+### Schema definition
+
+| Component | Description | Location / Notes |
+|-----------|------------|----------------|
+| Protocol Buffers (`.proto`) | Canonical data models and service definitions, source of truth, HTTP annotations for REST | `proto/core/api/`, `proto/core/type/` |
+| GraphQL Schemas (`.graphql`) | Client-optimized types, camelCase, self-documenting | `graphql/operations/` |
+| Type Mappings | snake_case ↔ camelCase, custom scalars (DateTime, JsonMap, geospatial), enums, repeated fields → arrays | Automatic conversion |
+| API Versioning | Semantic versioning, coordinated deprecation, backward compatibility | Namespaces: `core.api.device.v1`, `gfc/api/v1/` |
+
+### Protocol Buffers to GraphQL Mapping
 
 | Proto Concept | GraphQL Equivalent | Notes |
 |---------------|-----------------|-------|
