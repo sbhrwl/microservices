@@ -4,6 +4,7 @@
 - [Architectural layers](#architectural-layers)
 - [Domain organization](#domain-organization)
 - [GraphQL and gRPC dual API strategy](#graphql-and-grpc-dual-api-strategy)
+  - [REST APIs via gRPC-Gateway](rest-apis/README.md)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
 - [API evolution strategy](#api-evolution-strategy)
 - [Documentation synchronization](#documentation-synchronization)
