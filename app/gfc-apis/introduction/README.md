@@ -2,6 +2,10 @@
 - [Purpose](#purpose)
 - [High-level architecture](#high-level-architecture)
 - [Architectural layers](#architectural-layers)
+  - [Client layer](#client-layer)
+  - [API Gateway layer](#api-gateway-layer)
+  - [Schema definition layer](#schema-definition-layer)
+  - [Microservices layer](#microservices-layer)
 - [Domain organization](#domain-organization)
 - [GraphQL and gRPC dual API strategy](#graphql-and-grpc-dual-api-strategy)
   - [REST APIs via gRPC-Gateway](rest-apis/README.md)
@@ -20,39 +24,76 @@
 ## High-level architecture
 - The project follows a **BFF (Backend for Frontend) and API gateway** pattern:
 ```
-Clients
-├─ GraphQL gateway
-├─ gRPC gateway
-└─ REST (HTTP)
-↓
-GFC APIs layer
-(schemas and protocol translation)
-↓
-Device | Event | Organization
-Tag    | Authorization | IEC 61968
+┌─────────────────────────────────────────────────────────────┐
+│                     Client Applications                      │
+│          (Web, Mobile, Third-party Integrations)            │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ├──────────────┬──────────────┐
+                 │              │              │
+          ┌──────▼─────┐ ┌─────▼──────┐ ┌────▼─────────────┐
+          │  GraphQL   │ │    gRPC    │ │   REST (HTTP)    │
+          │  Gateway   │ │   Native   │ │ via gRPC-Gateway │
+          └──────┬─────┘ └─────┬──────┘ └────┬─────────────┘
+                 │              │              │
+                 └──────────────┴──────────────┘
+                                │
+                 ┌──────────────▼──────────────┐
+                 │      GFC APIs Layer         │
+                 │  (Schema Definitions &      │
+                 │   Protocol Translations)    │
+                 └──────────────┬──────────────┘
+                                │
+          ┌─────────────────────┼─────────────────────┐
+          │                     │                     │
+    ┌─────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
+    │   Device   │      │    Event    │      │Organization │
+    │  Service   │      │   Service   │      │   Service   │
+    └────────────┘      └─────────────┘      └─────────────┘
+          │                     │                     │
+    ┌─────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
+    │    Tag     │      │Authorization│      │IEC 61968    │
+    │  Service   │      │   Service   │      │ Connector   │
+    └────────────┘      └─────────────┘      └─────────────┘
 ```
 
-## Architectural layers
-- **Client layer**
-  - Web applications
-  - Mobile applications
-  - Third-party and external utility integrations
-- **API gateway layer**
-  - GraphQL for flexible, client-driven data access
-  - gRPC for high-performance communication
-  - REST for standard integrations
-- **Schema definition layer**
-  - Protocol Buffer definitions (`.proto`)
-  - GraphQL schema definitions (`.graphql`)
-  - Type mappings and transformations
-  - API version management
-- **Microservices layer**
-  - Device service for meters and field devices
-  - Event service for alarms and notifications
-  - Organization service for hierarchy and configuration
-  - Tag service for metadata and categorization
-  - Authorization service for permissions
-  - IEC 61968 connector for standards-based integration
+## Architectural Layers
+### Client layer
+| Client Type | Description | Recommended Protocol |
+|-------------|-------------|--------------------|
+| Web Applications | Operator dashboards, management consoles, real-time monitoring | GraphQL or REST |
+| Mobile Applications | Field technician apps, on-site device management | GraphQL or REST |
+| Third-party Integrations | External utility systems, legacy enterprise apps, partner integrations | REST |
+| Internal Microservices | Service-to-service communication, background jobs, data sync | gRPC Native |
+
+### API Gateway layer
+
+| Gateway | Purpose | Strengths | Best For | Implementation |
+|---------|---------|----------|----------|----------------|
+| GraphQL | Flexible, client-driven queries | Single request for multiple resources, precise field selection, reduced network overhead | Web/mobile UIs, complex data aggregation, exploratory queries | Custom resolvers mapping to gRPC services |
+| gRPC Native | High-performance, strongly-typed communication | Binary protocol, code generation, streaming, type safety | Microservice communication, bulk operations, real-time streams | Direct gRPC service calls |
+| REST via gRPC-Gateway | Standard HTTP/JSON API | Universal support, simple tooling | Third-party integrations, legacy systems, simple CRUD | Auto-generated from proto HTTP annotations; coverage: select endpoints only |
+
+### Schema definition layer
+
+| Component | Description | Location / Notes |
+|-----------|------------|----------------|
+| Protocol Buffers (`.proto`) | Canonical data models and service definitions, source of truth, HTTP annotations for REST | `proto/core/api/`, `proto/core/type/` |
+| GraphQL Schemas (`.graphql`) | Client-optimized types, camelCase, self-documenting | `graphql/operations/` |
+| Type Mappings | snake_case ↔ camelCase, custom scalars (DateTime, JsonMap, geospatial), enums, repeated fields → arrays | Automatic conversion |
+| API Versioning | Semantic versioning, coordinated deprecation, backward compatibility | Namespaces: `core.api.device.v1`, `gfc/api/v1/` |
+
+### Microservices layer
+
+| Service | Domain | Key Operations |
+|---------|--------|----------------|
+| Device Service | Smart meters, sensors, device lifecycle | Register devices, query/update state, track communication, bulk import |
+| Event Service | System events, alarms, notifications | Add/query events, manage retention, device state tracking |
+| Organization Service | Utility hierarchy, settings, policies | Create/update organizations, query hierarchy, configure warranties |
+| Tag Service | Metadata, categorization, device tagging | Create/update tags, tag devices, query tags |
+| Authorization Service | Permissions, roles, org-level security | Get permissions, validate access |
+| IEC 61968 Connector | Industry-standard utility integration | CIM support, bridge to external systems |
+
 ## GraphQL and gRPC dual API strategy
 - **GraphQL**
   - Client-driven queries
