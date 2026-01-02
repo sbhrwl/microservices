@@ -1,3 +1,11 @@
-# Application
-- [gfc-service](gfc-service/README.md)
-- [gfc-apis](gfc-apis/README.md)
+# GFC APIs
+- [Introduction](introduction/README.md)
+- [API architecture](api-architecture/README.md)
+- [Domain model](domain-model/README.md)
+- [GraphQL API reference](graphql-api-reference/README.md)
+- [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
+- [Data types and models](data-types-models/README.md)
+- [Integration patterns](integration-patterns/README.md)
+- [Security and authorization](security-authorization/README.md)
+- [Operational concerns](operational-concerns/README.md)
+- [Appendices](appendices/README.md)
