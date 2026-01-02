@@ -5,7 +5,7 @@
   - Architectural layers (Client layer, API Gateway layer, Schema definition layer, Microservices layer), Protocol Buffers to GraphQL mapping, Schema synchronization strategy, API evolution strategy, Documentation synchronization
 - [Domain model](domain-model/README.md)
 - [GraphQL API reference](graphql-api-reference/README.md)
-  - Queries, Mutations
+  - Queries, Mutations, Types and scalars
 - [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
 - [Data types and models](data-types-models/README.md)
 - [Integration patterns](integration-patterns/README.md)
