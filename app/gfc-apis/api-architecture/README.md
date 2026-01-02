@@ -15,6 +15,11 @@
   - Routes and composes queries from clients to multiple GraphQL services.
 - **Optimizes UI queries**: 
   - Parallelizes requests, caches results, enforces query complexity limits.
+<img src="images/arch-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart LR
 
@@ -61,6 +66,7 @@ flowchart LR
   MS --> Event
   MS --> Org
 ```
+</details>
 
 ### Client layer
 | Client Type | Description | Recommended Protocol |
