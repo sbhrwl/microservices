@@ -11,6 +11,7 @@
   - Device, Event, Organization, Tag Services
 - [Data types and models](data-types-models/README.md)
 - [Integration patterns](integration-patterns/README.md)
+  - IEC 61968 connector, Data import and export
 - [Security and authorization](security-authorization/README.md)
 - [Operational concerns](operational-concerns/README.md)
 - [Appendices](appendices/README.md)
