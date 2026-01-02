@@ -111,7 +111,7 @@ flowchart LR
 | `repeated` | `[Type]` | GraphQL arrays |
 | `enum` | `enum` | Proto enums → GraphQL enums |
 
-**Mapping Rules**
+### **Mapping Rules**
 - Proto `snake_case` fields → GraphQL `camelCase`
 - Repeated fields → GraphQL arrays
 - Enums maintain names, values preserved
