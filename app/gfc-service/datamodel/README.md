@@ -61,7 +61,7 @@
 - Field projection supported via `List<String>` field names list
 - Query model is protocol-agnostic, works with both gRPC and potential REST endpoints
 
-## SearchFilter interface
+### SearchFilter interface
 - Base interface for all query filters with `isEmpty()` method
 - Filter types: `UnaryFilter` (single property/value), `CompoundFilter` (AND/OR combinations)
 - Unary filters: `EqFilter`, `InFilter`, `NinFilter`, `LtFilter`, `ExistsFilter`, `DateIntervalFilter`
@@ -71,14 +71,14 @@
 - Special: `Unfiltered` (no filtering, returns all documents)
 - Filters visitable via `QueryVisitor` pattern for MongoDB aggregation translation
 
-## PageRequest
+### PageRequest
 - Immutable record for pagination with `pageNumber`, `pageSize`, and `onlyCount` flag
 - Default page size 50 for queries, `Integer.MAX_VALUE` for unpaged queries
 - `onlyCount` flag enables count-only queries without document retrieval
 - Static factory: `PageRequest.unpaged()` for queries without pagination
 - Implements `Aggregable` for visitor pattern translation to MongoDB `$facet` stage
 
-## Sorting
+### Sorting
 - Mutable class with `LinkedHashMap<String, Order>` to preserve field order
 - Order enum: `ASC`, `DESC` for ascending/descending sort
 - Multiple sort fields supported with order preservation
