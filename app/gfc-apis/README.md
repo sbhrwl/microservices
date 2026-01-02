@@ -2,6 +2,7 @@
 - [Introduction](introduction/README.md)
   - Purpose, GraphQL and gRPC dual API strategy, Domain organization
 - [API architecture](api-architecture/README.md)
+  - Architectural layers (Client layer, API Gateway layer, Schema definition layer, Microservices layer), Protocol Buffers to GraphQL mapping, Schema synchronization strategy, API evolution strategy, Documentation synchronization
 - [Domain model](domain-model/README.md)
 - [GraphQL API reference](graphql-api-reference/README.md)
 - [Protocol buffers API reference](protocol-buffers-api-reference/README.md)
