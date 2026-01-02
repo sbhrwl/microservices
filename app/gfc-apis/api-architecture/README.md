@@ -104,7 +104,7 @@ flowchart LR
 | Authorization Service | Permissions, roles, org-level security | Get permissions, validate access |
 | IEC 61968 Connector | Industry-standard utility integration | CIM support, bridge to external systems |
 
-### Schema definition
+## Schema definition
 
 | Component | Description | Location / Notes |
 |-----------|------------|----------------|
