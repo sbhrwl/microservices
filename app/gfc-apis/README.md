@@ -16,4 +16,5 @@
 - [Security and authorization](security-authorization/README.md)
   - Permission models, Organization-level access control, API authentication patterns
 - [Operational concerns](operational-concerns/README.md)
+  - Data retention, Monitoring and analytics, Warranty management
 - [Appendices](appendices/README.md)
