@@ -14,5 +14,6 @@
 - [Integration patterns](integration-patterns/README.md)
   - IEC 61968 connector, Data import and export
 - [Security and authorization](security-authorization/README.md)
+  - Permission models, Organization-level access control, API authentication patterns
 - [Operational concerns](operational-concerns/README.md)
 - [Appendices](appendices/README.md)
