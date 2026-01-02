@@ -10,38 +10,51 @@
 - [Documentation synchronization](#documentation-synchronization)
 ## Architectural Layers
 - The project follows a **BFF (Backend for Frontend) and API gateway** pattern:
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Client Applications                      │
-│          (Web, Mobile, Third-party Integrations)            │
-└────────────────┬────────────────────────────────────────────┘
-                 │
-                 ├──────────────┬──────────────┐
-                 │              │              │
-          ┌──────▼─────┐ ┌─────▼──────┐ ┌────▼─────────────┐
-          │  GraphQL   │ │    gRPC    │ │   REST (HTTP)    │
-          │  Gateway   │ │   Native   │ │ via gRPC-Gateway │
-          └──────┬─────┘ └─────┬──────┘ └────┬─────────────┘
-                 │              │              │
-                 └──────────────┴──────────────┘
-                                │
-                 ┌──────────────▼──────────────┐
-                 │      GFC APIs Layer         │
-                 │  (Schema Definitions &      │
-                 │   Protocol Translations)    │
-                 └──────────────┬──────────────┘
-                                │
-          ┌─────────────────────┼─────────────────────┐
-          │                     │                     │
-    ┌─────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
-    │   Device   │      │    Event    │      │Organization │
-    │  Service   │      │   Service   │      │   Service   │
-    └────────────┘      └─────────────┘      └─────────────┘
-          │                     │                     │
-    ┌─────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
-    │    Tag     │      │Authorization│      │IEC 61968    │
-    │  Service   │      │   Service   │      │ Connector   │
-    └────────────┘      └─────────────┘      └─────────────┘
+```mermaid
+flowchart LR
+
+  subgraph "Client applications"
+    Web["Web UI (browser)"]
+    Mobile["Mobile app"]
+    Ext["Third-party systems"]
+    MS["Internal microservice (client)"]
+  end
+
+  subgraph "Edge / BFF layer"
+    GQL["GraphQL gateway (BFF)"]
+    REST["REST API (HTTP)"]
+    GRPCGW["gRPC gateway (HTTP to gRPC)"]
+  end
+
+  subgraph "Internal services (gRPC native)"
+    Device["Device service"]
+    Event["Event service"]
+    Org["Organization service"]
+    Auth["Authorization service"]
+  end
+
+  Web --> GQL
+  Web --> REST
+
+  Mobile --> GQL
+  Mobile --> REST
+  Mobile --> GRPCGW
+
+  Ext --> REST
+  Ext --> GRPCGW
+
+  GQL --> Device
+  GQL --> Event
+  GQL --> Org
+
+  REST --> GRPCGW
+  GRPCGW --> Device
+  GRPCGW --> Event
+  GRPCGW --> Auth
+
+  MS --> Device
+  MS --> Event
+  MS --> Org
 ```
 
 ### Client layer
