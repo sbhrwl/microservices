@@ -4,7 +4,7 @@
   - [API Gateway layer](#api-gateway-layer)
   - [Schema definition layer](#schema-definition-layer)
   - [Microservices layer](#microservices-layer)
-- Protocol Buffers to GraphQL mapping
+- [Protocol Buffers to GraphQL mapping](#protocol-buffers-to-graphql-mapping)
 - [Schema synchronization strategy](#schema-synchronization-strategy)
 - [API evolution strategy](#api-evolution-strategy)
 - [Documentation synchronization](#documentation-synchronization)
@@ -80,6 +80,26 @@
 | Authorization Service | Permissions, roles, org-level security | Get permissions, validate access |
 | IEC 61968 Connector | Industry-standard utility integration | CIM support, bridge to external systems |
 
+## Protocol Buffers to GraphQL Mapping
+
+| Proto Concept | GraphQL Equivalent | Notes |
+|---------------|-----------------|-------|
+| `string` | `String` | Direct mapping |
+| `int32`, `int64` | `Int` | GraphQL `Int` is 32-bit signed |
+| `double`, `float` | `Float` | Floating-point numbers |
+| `bool` | `Boolean` | Boolean values |
+| `google.type.DateTime` | `DateTime` (custom scalar) | ISO 8601 format |
+| `google.type.Date` | `Date` (custom scalar) | Date-only format |
+| `map<string, string>` | `JsonMap` (custom scalar) | Key-value storage |
+| `repeated` | `[Type]` | GraphQL arrays |
+| `enum` | `enum` | Proto enums → GraphQL enums |
+
+**Mapping Rules**
+- Proto `snake_case` fields → GraphQL `camelCase`
+- Repeated fields → GraphQL arrays
+- Enums maintain names, values preserved
+- Custom scalars (DateTime, JsonMap) provide consistent client usage
+- All GraphQL types derived from proto definitions to ensure a single source of truth
 ## Schema synchronization strategy
 - **Protocol Buffers as the source of truth**
   - Canonical data models defined in `.proto`
