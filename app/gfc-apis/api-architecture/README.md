@@ -10,9 +10,9 @@
 - [Documentation synchronization](#documentation-synchronization)
 ## Architectural Layers
 - The project follows a **BFF (Backend for Frontend) and API gateway** (`Apollo router`) pattern:
-- GraphQL gateway/federation layer: 
+- **GraphQL gateway/federation layer**: 
   - Routes and composes queries from clients to multiple GraphQL services.
-- Optimizes UI queries: 
+- **Optimizes UI queries**: 
   - Parallelizes requests, caches results, enforces query complexity limits.
 ```mermaid
 flowchart LR
