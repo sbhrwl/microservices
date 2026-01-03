@@ -2,9 +2,9 @@
 - [Overview](#overview)
 - [Layers](#layers)
 ## Overview
-- This is a **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
-- Serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
-- Supports both **gRPC and HTTP protocols** for service-to-service communication via Dapr sidecars
+- **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
+- It serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
+- It Supports both **gRPC and HTTP protocols** for service-to-service communication via `Dapr sidecars`
 ## Layers
 - Authentication layer: **OAuth2/JWT authentication** via Keycloak for secure access
 - Distributed tracing layer: with **Zipkin** for observability
