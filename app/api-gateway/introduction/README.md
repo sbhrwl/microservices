@@ -38,11 +38,39 @@ graph TD
 - **Automated client code generation** for protocol buffers
   - Uses Protocol Buffers for gRPC service definitions with automated code generation
   - Automated code generation ensures the gateway has **type-safe client stubs** to call services without manual boilerplate.
+<img src="images/intro-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TD
+    A["**GraphQL resolver**"] --> B["**Generated gRPC client stub**"]
+    B --> C["**Dapr sidecar**"]
+    C --> D["**Microservice gRPC server**"]
+```
+</details>
+
  - **Schema code generation** for TypeScript type safety
    - The gateway exposes a **GraphQL API to clients**.
    - Code generation converts the GraphQL schema into **TypeScript types** used in the gateway code.
    - Ensures that resolvers return the **correct data types**, matching the schema.
    - **Prevents runtime errors** in responses to clients.
+<img src="images/intro-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TD
+    A["**GraphQL schema** schema.graphql"] --> B["**GraphQL code generator**"]
+    B --> C["**Generated TypeScript types**"]
+    C --> D["**Typed GraphQL resolvers**"]
+    D --> E["**Generated gRPC client stubs**"]
+    E --> F["**Backend microservices**"]
+```
+</details>
+
 - **Designed for cloud-native deployment** with Kubernetes health probes and Dapr sidecar integration
   - **Health probes:** Kubernetes can check if the gateway is alive and ready.
   - **Dapr sidecar:** Gateway can call microservices via Dapr (gRPC or HTTP) without worrying about service discovery, retries, or protocol details.
