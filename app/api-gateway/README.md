@@ -1,4 +1,4 @@
-# API gateway
+# GraphQL API gateway
 - [Introduction](introduction/README.md)
   - `Apollo Server` and `Fastify`, `Zipkins` for distributed tracing, Authentication, Security and Distributed tracing layer
   - Features (Automated client code generation for protocol buffers, Schema code generation for TypeScript type safety, Designed for cloud-native deployment, Supports hybrid architecture with both GraphQL queries and REST endpoints)
