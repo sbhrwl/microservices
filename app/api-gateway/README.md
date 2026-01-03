@@ -3,7 +3,7 @@
 * [Documentation outline](#documentation-outline)
 * [Section readiness assessment](#section-readiness-assessment)
 ## Understanding summary
-* This is a **GraphQL API Gateway (BFF - Backend for Frontend)** built with Apollo Server and Fastify
+* This is a **GraphQL API Gateway (BFF - Backend for Frontend)** built with `Apollo Server` and `Fastify`
 * Serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
 * Supports both **gRPC and HTTP protocols** for service-to-service communication via Dapr sidecars
 * Integrates **OAuth2/JWT authentication** via Keycloak for secure access
