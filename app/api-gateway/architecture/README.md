@@ -28,6 +28,11 @@
 * Type-safe code generation for both GraphQL and Protocol Buffers
 * Hybrid API support (GraphQL + REST endpoints)
 ## System architecture
+<img src="images/arch-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 graph TD
     Client["Client Application"]
@@ -51,6 +56,8 @@ graph TD
         DaprSidecar
     end
 ```
+</details>
+
 ### Components
 * **Client layer** - External applications sending GraphQL queries with JWT authentication
 * **API Gateway** - Apollo Server on Fastify handling GraphQL requests
@@ -63,6 +70,11 @@ graph TD
 * **Protocol:** HTTP/HTTPS
 * **Format:** GraphQL queries/mutations
 * **Authentication:** JWT Bearer tokens from Keycloak
+
+<img src="images/arch-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -78,6 +90,7 @@ sequenceDiagram
     Resolver-->>Gateway: Response data
     Gateway-->>Client: GraphQL Response
 ```
+</details>
 
 * Token acquisition: `curl -X POST "https://dev.idp.landisgyr.com/keyc01/realms/gfc/protocol/openid-connect/token"`
 * Apollo Server configured with Fastify as HTTP server
@@ -86,6 +99,12 @@ sequenceDiagram
 ### Gateway to services (outbound)
 * **Primary protocol:** gRPC via Dapr
 * **Fallback protocol:** HTTP via Dapr
+
+<img src="images/arch-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 sequenceDiagram
     participant Resolver
@@ -100,6 +119,7 @@ sequenceDiagram
     DaprSidecar-->>DaprClient: gRPC response
     DaprClient-->>Resolver: Parsed data
 ```
+</details>
 
 * Dapr app protocol: `--app-protocol http` (gateway accepts HTTP from its sidecar)
 * Dapr gRPC port: `--dapr-grpc-port 50001` (gateway communicates with Dapr via gRPC)
@@ -218,6 +238,10 @@ src/
 ```
 
 ### Code generation pipeline
+<img src="images/arch-4.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 graph TD
@@ -238,6 +262,7 @@ graph TD
         GraphQLCodegen
     end
 ```
+</details>
 
 * **Build sequence:**
   * **Prebuild:** Protocol Buffer compilation (`protoc.bat` or `protoc.sh`)
