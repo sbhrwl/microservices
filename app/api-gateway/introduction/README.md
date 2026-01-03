@@ -4,6 +4,7 @@
 - [Features](#features)
 ## Overview
 - **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
+- The gateway `exposes` a **GraphQL API to clients**
 - It serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
 - It Supports both **gRPC and HTTP protocols** for service-to-service communication via `Dapr sidecars`
 ## Layers
