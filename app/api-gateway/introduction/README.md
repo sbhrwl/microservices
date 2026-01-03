@@ -7,19 +7,19 @@
 - Supports both **gRPC and HTTP protocols** for service-to-service communication via Dapr sidecars
 ## Layers
 - Authentication layer: **OAuth2/JWT authentication** via Keycloak for secure access
-- Distributed tracing layer: with Zipkin for observability
-- Security layer: GraphQL Armor plugins (cost limits, depth limits, token limits, etc.)
+- Distributed tracing layer: with **Zipkin** for observability
+- Security layer: **GraphQL Armor plugins** (cost limits, depth limits, token limits, etc.)
 
 ```mermaid
 graph TD
     A["**Client / Frontend**"] --> B["**GraphQL API Gateway** Apollo Server + Fastify"]
-    subgraph L1 ["**Authentication Layer** OAuth2/JWT via Keycloak"]
+    subgraph L1 ["**Authentication Layer**"]
         B
     end
-    subgraph L2 ["**Security Layer** GraphQL Armor Plugins"]
+    subgraph L2 ["**Security Layer**"]
         L1
     end
-    subgraph L3 ["**Distributed Tracing** Zipkin"]
+    subgraph L3 ["**Distributed Tracing**"]
         L2
     end
     L3 --> F["**Microservices via Dapr**"]
