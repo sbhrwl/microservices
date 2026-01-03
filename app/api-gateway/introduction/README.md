@@ -13,13 +13,13 @@
 ```mermaid
 graph TD
     A["**Client / Frontend**"] --> B["**GraphQL API Gateway** Apollo Server + Fastify"]
-    subgraph L1 ["**Authentication Layer**"]
+    subgraph L1 ["**Authentication layer**"]
         B
     end
-    subgraph L2 ["**Security Layer**"]
+    subgraph L2 ["**Security layer**"]
         L1
     end
-    subgraph L3 ["**Distributed Tracing**"]
+    subgraph L3 ["**Distributed tracing layer**"]
         L2
     end
     L3 --> F["**Microservices via Dapr**"]
