@@ -9,3 +9,26 @@
 - Provides **GraphQL schema code generation** for TypeScript type safety
 - Designed for **cloud-native deployment** with Kubernetes health probes and Dapr sidecar integration
 - Supports **hybrid architecture** with both GraphQL queries and REST endpoints (e.g., CSV import)
+
+```mermaid
+graph TD
+    A["**Client / Frontend**"] --> B["**GraphQL API Gateway** Apollo Server + Fastify"]
+
+    subgraph L1 ["**Authentication Layer** OAuth2/JWT via Keycloak"]
+        B
+    end
+
+    subgraph L2 ["**Security Layer** GraphQL Armor Plugins"]
+        L1
+    end
+
+    subgraph L3 ["**Distributed Tracing** Zipkin"]
+        L2
+    end
+
+    L3 --> F["**Microservices via Dapr**"]
+    L3 --> I["**Hybrid Endpoints** REST e.g., CSV import"]
+
+    F --> G["**gRPC Services** Protocol Buffers"]
+    F --> H["**HTTP Services**"]
+```
