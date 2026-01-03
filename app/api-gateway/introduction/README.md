@@ -1,6 +1,7 @@
 # Introduction
 - [Overview](#overview)
 - [Layers](#layers)
+- [Features](#features)
 ## Overview
 - **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
 - It serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
@@ -27,7 +28,7 @@ graph TD
     F --> G["**gRPC Services** Protocol Buffers"]
     F --> H["**HTTP Services**"]
 ```
-## 
+## Features
 - Uses **Protocol Buffers** for gRPC service definitions with automated code generation
 - Provides **GraphQL schema code generation** for TypeScript type safety
 - Designed for **cloud-native deployment** with Kubernetes health probes and Dapr sidecar integration
