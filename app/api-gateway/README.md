@@ -1,6 +1,6 @@
 # API gateway
 - [Introduction](introduction/README.md)
-  - Repository contains README with clear purpose statement and architecture description
+  - Overview, Layers, Features
 - [Architecture](architecture/README.md)
   - Evidence of multi-protocol communication (GraphQL, gRPC, HTTP), Dapr integration, and security layers
 - [Installation](installation/README.md)
