@@ -20,8 +20,8 @@
 - [Error handling](error-handling/README.md)
   - Error handling architecture, GraphQL error handling, Fastify error handling, GraphQL armor validation errors
 - [Deployment](deployment/README.md)
-  - Dockerfile present, Dapr annotations and commands documented
+  - Containerization, Dapr sidecar configuration, Local development with Dapr, Health checks, Environment configuration, Production deployment
 - [Observability](observability/README.md)
-  - Zipkin tracing integration mentioned in README
+  - Zipkin integration, Trace propagation
 - [Performance considerations](performance-considerations/README.md)
-  - Compression, rate limiting, and caching mechanisms present
+  - Compression, rate limiting, caching mechanisms, request optimization
