@@ -113,7 +113,7 @@ flowchart TD
   * Kubernetes liveness probes
   * Kubernetes readiness probes
   * Dapr sidecar health monitoring
-** **Protocol support:**
+* **Protocol support:**
   * HTTP endpoint available
   * gRPC endpoint available (application side only)
 * The "healthz" endpoint is used both by dapr for its health check by Kubernetes liveness probes, as well as our application for its health check by dapr.
