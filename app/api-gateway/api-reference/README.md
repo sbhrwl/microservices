@@ -60,5 +60,8 @@ src/routes/
 * **Protocols:**
   * HTTP
   * gRPC (application side only, not Dapr sidecar)
-* The "healthz" endpoint is used both by dapr for its health check by Kubernetes liveness probes, as well as our application for its health check by dapr.
+* The "healthz" endpoint is used by 
+  * DAPR for its health check 
+  * Kubernetes liveness probes
+  * Our application for its health check by dapr.
 * **Note:** Health check implementation, response format, and dependency checks are not visible in provided snippets.
