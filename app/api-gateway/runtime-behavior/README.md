@@ -40,7 +40,7 @@ const fastify = Fastify({
 
 * Environment-based configuration determines HTTP/2 enablement and development features.
 ## Server initialization
-* The application uses Fastify as the underlying HTTP server with Apollo Server for GraphQL.
+* The application uses **Fastify** as the underlying **HTTP server** with `Apollo Server` for `GraphQL`.
 * **Server configuration:**
   * HTTP/2 enabled when `NODE_ENV` is not `local`
   * Apollo Server playground available only in development mode
