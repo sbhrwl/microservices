@@ -7,8 +7,6 @@
   - Supports hybrid architecture with both GraphQL queries and REST endpoints)
 - [Architecture](architecture/README.md)
   - Evidence of multi-protocol communication (GraphQL, gRPC, HTTP), Dapr integration, and security layers
-- [Installation](installation/README.md)
-  - Package.json with dependencies and npm scripts present
 - [Configuration](configuration/README.md)
   - Config file exists (src/common/config.ts), environment variables referenced in scripts
 - [API reference](api-reference/README.md)
