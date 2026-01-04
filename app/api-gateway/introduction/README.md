@@ -26,7 +26,7 @@
   * Apollo Server validates and resolves the query
   * Resolvers call backend services
   * Data is aggregated and returned as one response
-<img src="images/intro-1.jpg">
+<img src="images/intro-4.jpg">
 
 <details>
   <summary>mermaid</summary>
