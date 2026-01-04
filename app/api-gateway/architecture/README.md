@@ -100,7 +100,7 @@ sequenceDiagram
 * **Primary protocol:** gRPC via Dapr
 * **Fallback protocol:** HTTP via Dapr
 
-<img src="images/arch-2.jpg">
+<img src="images/arch-3.jpg">
 
 <details>
   <summary>mermaid</summary>
