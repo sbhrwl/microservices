@@ -57,6 +57,11 @@ const fastify = Fastify({
   * `@fastify/multipart` version `^9.3.0`
   * Optimized file upload processing for CSV imports
 * **GraphQL query optimization:**
+<img src="images/performance-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     A["GraphQL request"] --> B["GraphQL Armor validation"]
@@ -70,6 +75,7 @@ flowchart TD
     G --> H["gRPC backend call"]
     H --> I["Response compression"]
 ```
+</details>
 
 * **GraphQL Armor protections:**
   * `@escape.tech/graphql-armor-cost-limit` version `^2.4.3`
