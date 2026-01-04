@@ -1,13 +1,13 @@
 # Performance considerations
 * [Overview](#overview)
-* [Compression](#compression)
+* [HTTP Compression](#compression)
 * [Rate limiting](#rate-limiting)
 * [Caching mechanisms](#caching-mechanisms)
 * [Request optimization](#request-optimization)
 * [Gaps and unknowns](#gaps-and-unknowns)
 ## Overview
 * The API Gateway implements multiple performance optimization strategies including HTTP compression, rate limiting, and caching to handle production workloads efficiently.
-## Compression
+## HTTP Compression
 * **Fastify plugin:**
   * `@fastify/compress` version `^8.3.0`
 * **Capabilities:**
