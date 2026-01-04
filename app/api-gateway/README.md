@@ -14,7 +14,7 @@
 - [API reference](api-reference/README.md)
   - GraphQL schema, Resolver structure, Custom scalar types, Type definitions organization, REST endpoints, Health endpoint
 - [Runtime behavior](runtime-behavior/README.md)
-  - Application startup, Server initialization, Dapr sidecar integration, Health check mechanism, Request processing flow, Shutdown behavior
+  - Application startup, Server initialization, Dapr sidecar integration, Health check mechanism, **Request processing flow**, Shutdown behavior
 - [Security](security/README.md)
   - Security architecture, GraphQL armor plugins, HTTP security headers, Cross-origin resource sharing, Rate limiting, Authentication, File upload restrictions
 - [Error handling](error-handling/README.md)
