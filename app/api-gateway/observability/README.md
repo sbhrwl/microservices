@@ -13,6 +13,10 @@
   * Identify performance bottlenecks
   * Debug distributed system failures
 * **Architecture pattern:**
+<img src="images/observability-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -24,6 +28,7 @@ flowchart TD
     D --> E
     E --> F["Zipkin UI"]
 ```
+</details>
 
 ## Zipkin integration
 * **Local development endpoint:**
