@@ -4,7 +4,7 @@
 - [Features](#features)
 ## Overview
 * **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
-* The gateway `exposes `single GraphQL endpoint` between frontends and multiple backend services.
+* The gateway exposes `single GraphQL endpoint` between frontends and multiple backend services.
 * It Supports both **gRPC and HTTP protocols** for service-to-service communication via `Dapr sidecars`
 * **Benefits**
   * Hides backend complexity from frontends
