@@ -8,6 +8,10 @@
 ## Application startup
 * The application entry point is `src/index.ts`.
 * **Startup sequence:**
+<img src="images/runtime-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -22,6 +26,7 @@ flowchart TD
     H --> I["Register health endpoint"]
     I --> J["Listen on configured port"]
 ```
+</details>
 
 ```typescript
 // File: c:\Git\gfc-app\api-gateway\src\index.ts
@@ -57,6 +62,10 @@ const server = new ApolloServer({
 ## Dapr sidecar integration
 * When Dapr is enabled, the application runs alongside a Dapr sidecar process.
 * **Communication architecture:**
+<img src="images/runtime-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -84,6 +93,7 @@ flowchart TD
     E -->|"Service Invocation"| F
     E -->|"Service Invocation"| G
 ```
+</details>
 
 * **Dapr client initialization:**
 ```json
@@ -110,6 +120,10 @@ flowchart TD
 ## Request processing flow
 * The application processes requests through multiple layers.
 * **GraphQL request flow:**
+<img src="images/runtime-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -134,6 +148,7 @@ sequenceDiagram
     Apollo-->>Fastify: Response
     Fastify-->>Client: JSON Response
 ```
+</details>
 
 * **Security layer processing:**
   * GraphQL Armor plugins execute before resolver invocation:
