@@ -9,6 +9,11 @@
 
 ## Security architecture
 * The application implements multiple security layers
+<img src="images/security-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     A["Incoming Request"] --> B["Rate Limiting"]
@@ -21,6 +26,7 @@ flowchart TD
     G --> H
     H --> I["Request Processing"]
 ```
+</details>
 
 * **Security layers applied in order:**
   * Rate limiting (request throttling)
