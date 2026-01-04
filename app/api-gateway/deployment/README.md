@@ -53,6 +53,10 @@ npm run start:dapr:cache
 npm run start
 ```
 * **Flow diagram:**
+<img src="images/deployment-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -66,6 +70,8 @@ flowchart TD
     H --> C
     G --> I["Accept HTTP requests"]
 ```
+</details>
+
 ## Health checks
 * **Endpoint:** `/healthz`
 * **Consumers:**
@@ -100,6 +106,11 @@ node dist/index.js
   * Environment variables configured
   * Dapr sidecar deployed separately (Kubernetes annotations or standalone)
 * **Kubernetes deployment pattern (inferred):**
+<img src="images/deployment-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     A["Kubernetes Pod"] --> B["api-gateway container"]
@@ -110,6 +121,7 @@ flowchart TD
     F["Ingress"] --> D
     C --> G["Service mesh"]
 ```
+</details>
 
 * **Expected Dapr annotations (not present in repository):**
   * `dapr.io/enabled: "true"`
