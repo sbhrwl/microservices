@@ -3,10 +3,58 @@
 - [Layers](#layers)
 - [Features](#features)
 ## Overview
-- **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
-- The gateway `exposes` a **GraphQL API to clients**
-- It serves as an entry point for microservices communication using **Dapr** (Distributed Application Runtime)
-- It Supports both **gRPC and HTTP protocols** for service-to-service communication via `Dapr sidecars`
+* **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
+* The gateway `exposes` a **GraphQL API to clients**
+* It Supports both **gRPC and HTTP protocols** for service-to-service communication via `Dapr sidecars`
+* A `single GraphQL endpoint` between frontends and multiple backend services.
+* **Benefits**
+  * Hides backend complexity from frontends
+  * Delivers UI-specific data shapes
+  * Prevents over- and under-fetching
+* **Responsibilities**
+  * Schema and data aggregation
+  * Backend request orchestration
+  * Authentication and context propagation
+  * Caching and N+1 query prevention
+* **Why Apollo Server**
+  * Mature GraphQL execution engine with resolvers, directives, plugins, and federation support.
+* **Why Fastify**
+  * High-performance, low-overhead HTTP server with a plugin-based architecture.
+* **Typical architecture flow**
+  * Frontend sends a GraphQL query
+  * Fastify handles the HTTP request
+  * Apollo Server validates and resolves the query
+  * Resolvers call backend services
+  * Data is aggregated and returned as one response
+<img src="images/intro-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TD
+    A["Frontend client"] --> B["Fastify server"]
+    B --> C["Apollo Server"]
+    C --> D["GraphQL schema & resolvers"]
+
+    D --> E["Service A (REST / gRPC)"]
+    D --> F["Service B (REST / gRPC)"]
+    D --> G["Database"]
+
+    E --> D
+    F --> D
+    G --> D
+
+    D --> C
+    C --> B
+    B --> A
+```
+</details>
+
+* **When to use**
+  * Microservice backends
+  * Multiple frontend clients
+  * Rapid UI iteration
 ## Layers
 - Authentication layer: **OAuth2/JWT authentication** via Keycloak for secure access
 - Security layer: **GraphQL Armor plugins** (cost limits, depth limits, token limits, etc.)
