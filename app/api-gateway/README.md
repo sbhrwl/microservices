@@ -6,17 +6,19 @@
   - Designed for cloud-native deployment
   - Supports hybrid architecture with both GraphQL queries and REST endpoints)
 - [Architecture](architecture/README.md)
-  - Evidence of multi-protocol communication (GraphQL, gRPC, HTTP), Dapr integration, and security layers
+  - Principles, System architecture, Communication protocols, Dapr integration
+  - Security layers (Transport security, Rate limiting, GraphQL query protection, Authentication, Input validation)
+  - Component structure (Directory organization, Code generation pipeline, Runtime components), Deployment architecture
 - [Configuration](configuration/README.md)
-  - Config file exists (src/common/config.ts), environment variables referenced in scripts
+  - Configuration file, Environment variables, Runtime modes, Dapr configuration, Script-based configuration
 - [API reference](api-reference/README.md)
-  - GraphQL schema definitions (type-defs.ts) and resolver structure present
+  - GraphQL schema, Resolver structure, Custom scalar types, Type definitions organization, REST endpoints, Health endpoint
 - [Runtime behavior](runtime-behavior/README.md)
-  - Dapr sidecar integration, health checks, and server lifecycle evident from code
+  - Application startup, Server initialization, Dapr sidecar integration, Health check mechanism, Request processing flow, Shutdown behavior
 - [Security](security/README.md)
-  - Multiple GraphQL Armor plugins, Helmet, CORS, rate limiting, and JWT authentication configured
+  - Security architecture, GraphQL armor plugins, HTTP security headers, Cross-origin resource sharing, Rate limiting, Authentication, File upload restrictions
 - [Error handling](error-handling/README.md)
-  - Fastify error handling and GraphQL error mechanisms present
+  - Error handling architecture, GraphQL error handling, Fastify error handling, GraphQL armor validation errors
 - [Deployment](deployment/README.md)
   - Dockerfile present, Dapr annotations and commands documented
 - [Observability](observability/README.md)
