@@ -106,7 +106,7 @@ node dist/index.js
   * Environment variables configured
   * Dapr sidecar deployed separately (Kubernetes annotations or standalone)
 * **Kubernetes deployment pattern (inferred):**
-<img src="images/deployment-1.jpg">
+<img src="images/deployment-2.jpg">
 
 <details>
   <summary>mermaid</summary>
