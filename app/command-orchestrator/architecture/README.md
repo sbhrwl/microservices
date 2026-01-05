@@ -1,10 +1,10 @@
 ## Architecture
 - [Overview](#overview)
-- [actor-based design](#actor-based-design)
-- [dapr sidecar interaction](#dapr-sidecar-interaction)
-- [http callback server](#http-callback-server)
-- [state store usage](#state-store-usage)
-- [high-level component interactions](#high-level-component-interactions)
+- [Actor-based design](#actor-based-design)
+- [Dapr sidecar interaction](#dapr-sidecar-interaction)
+- [HTTP callback server](#http-callback-server)
+- [State store usage](#state-store-usage)
+- [High-level component interactions](#high-level-component-interactions)
 
 ## Overview
 - Actor-hosting microservice that runs alongside a Dapr sidecar; actors encapsulate per-device state and behavior
