@@ -1,1 +1,23 @@
-
+# Protocol adapter
+- [Introduction](introduction/README.md)
+  - purpose and context
+- [Architecture](architecture/README.md)
+  - Dapr sidecar, gRPC server, message bus usage, and schema resources
+- [Installation](installation/README.md)
+  - Build prerequisites and Maven build commands are provided
+- [Configuration](configuration/README.md)
+  - application.conf path, environment variables, and Dapr parameters are present
+- [Data models](data-models/README.md)
+  - XSD schemas exist under resources with IEC model details
+- [Security](security/README.md)
+  - Some security-related schema types exist (e.g., SecurityCredentialChange), but operational security details are limited
+- [API reference](api-reference/README.md)
+  - gRPC is used, but no .proto or service interface details are visible in provided content
+- [Runtime behavior](runtime-behavior/README.md)
+  - Dapr run command, health checks, and gRPC details indicate runtime characteristics
+- [Deployment](deployment/README.md)
+  - Docker native image build and Kubernetes rollout examples exist
+- [Observability](observability/README.md)
+  - Dapr health references and Zipkin URL are included
+- [Testing](testing/README.md)
+  - No tests or testing guidance are present in the provided materials
