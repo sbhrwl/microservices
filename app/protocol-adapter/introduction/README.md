@@ -1,6 +1,6 @@
 # Introduction
 - [Overview](#overview)
-# Overview
+## Overview
 * **Purpose**
   * Java connector that pulls messages from an `iec4hes ActiveMQ` source and forwards them to a `device hub`
 * **System type**
