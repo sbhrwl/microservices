@@ -19,5 +19,3 @@
   - Docker native image build and Kubernetes rollout examples exist
 - [Observability](observability/README.md)
   - Dapr health references and Zipkin URL are included
-- [Testing](testing/README.md)
-  - No tests or testing guidance are present in the provided materials
