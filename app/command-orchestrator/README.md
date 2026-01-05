@@ -4,7 +4,7 @@
 - [Architecture](architecture/README.md)
   - Actor-based design, Dapr sidecar interaction, HTTP callback server, state store usage, high-level component interactions
 - [Installation](installation/README.md)
-  - Prerequisites, local setup requirements, Maven build and run steps
+  - Maven build and run
 - [Configuration](configuration/README.md)
   - Application settings structure and defaults, environment variables, configuration files and overrides
 - [API reference](api-reference/README.md)
