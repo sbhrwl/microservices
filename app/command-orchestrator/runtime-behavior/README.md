@@ -8,6 +8,10 @@
 - The service configures Dapr’s ActorRuntime at startup, registers actors, and starts a Reactor Netty HTTP server to receive Dapr callbacks
 - Dapr sidecar invokes HTTP endpoints for actor configuration, method calls, reminders, timers, and deactivation
 - Actor activation/deactivation hooks (onActivate/onDeactivate) are provided in actors and executed by the runtime
+<img src="images/runtime-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -18,6 +22,7 @@ flowchart TD
   E --> F["Register actors (e.g., 'DeviceTwin')"]
   F --> G["Start Reactor Netty HTTP server (routes)"]
 ```
+</details>
 
 ## Actor lifecycle handling
 - activation
