@@ -1,1 +1,21 @@
-
+# Command orchestrator
+- [Introduction](introduction/README.md)
+  - Purpose and scope of the service, problem statement, core technologies inferred from README and pom.xml
+- [Architecture](architecture/README.md)
+  - Actor-based design, Dapr sidecar interaction, HTTP callback server, state store usage, high-level component interactions
+- [Installation](installation/README.md)
+  - Prerequisites, local setup requirements, Maven build and run steps
+- [Configuration](configuration/README.md)
+  - Application settings structure and defaults, environment variables, configuration files and overrides
+- [API reference](api-reference/README.md)
+  - HTTP endpoints exposed for Dapr actor callbacks, request and response expectations
+- [Data models](data-models/README.md)
+  - Core domain models used by actors, including device configuration structures
+- [Runtime behavior](runtime-behavior/README.md)
+  - Actor lifecycle handling, reminder and timer flows, runtime interactions with Dapr
+- [Deployment](deployment/README.md)
+  - Self-hosted Dapr deployment, runnable JAR execution, Kubernetes restart example
+- [Testing](testing/README.md)
+  - Test structure, in-memory state provider usage, actor state testing approach
+- [Observability](observability/README.md)
+  - Logging setup, tracing with Zipkin, health and diagnostics endpoints exposed via Dapr
