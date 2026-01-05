@@ -77,25 +77,24 @@ flowchart TD
   <summary>mermaid</summary>
 
 ```mermaid
-sequenceDiagram
-  autonumber
-  participant C as "Client or integration"
-  participant D as "Dapr sidecar"
-  participant H as "HTTP server"
-  participant Ctl as "ActorCallbackController"
-  participant R as "Actor runtime"
-  participant A as "Device actor"
-  participant S as "State store (PostgreSQL)"
+flowchart TD
+  C[[Client or integration]]
+  D[[Dapr sidecar]]
+  H[HTTP server]
+  Ctl[ActorCallbackController]
+  R[[Actor runtime]]
+  A[Device actor]
+  S[(State store PostgreSQL)]
 
-  C->>D: "Invoke actor method"
-  D->>H: "PUT '/actors/{type}/{id}/method/{method}'"
-  H->>Ctl: "Dispatch request"
-  Ctl->>R: "Invoke actor (type, id, method)"
-  R->>A: "Execute method"
-  A-->>R: "Return result and state updates"
-  R->>S: "Persist actor state"
-  R-->>Ctl: "Return response"
-  Ctl-->>D: "HTTP 200 response"
-  D-->>C: "Method result"
+  C -->|Invoke actor method| D
+  D -->|HTTP callback| H
+  H --> Ctl
+  Ctl --> R
+  R --> A
+  A --> R
+  R --> S
+  R --> Ctl
+  Ctl --> D
+  D --> C
 ```
 </details>
