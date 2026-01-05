@@ -18,4 +18,3 @@
 - [Service mesh](addons/servicemesh/README.md)
 - [API gateway](addons/apigateway/README.md)
 - [DAPR](dapr/README.md)
-- [Cloud](addons/cloud/README.md)
