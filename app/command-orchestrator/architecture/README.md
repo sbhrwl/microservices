@@ -45,6 +45,11 @@
 - Tests include an `in-memory` Dapr state provider to facilitate isolated actor behavior verification
 
 ## High-level component interactions
+<img src="images/arch-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
   A["Client or integration"] --> B["Dapr sidecar"]
@@ -64,26 +69,33 @@ flowchart TD
   F --> G
   F --> H
 ```
+</details>
+
+<img src="images/arch-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
   autonumber
   participant C as "Client or integration"
-  participant S as "Dapr sidecar"
+  participant D as "Dapr sidecar"
   participant H as "HTTP server"
   participant Ctl as "ActorCallbackController"
-  participant R as "ActorRuntime"
+  participant R as "Actor runtime"
   participant A as "Device actor"
-  participant DB as "PostgreSQL (state store)"
+  participant S as "State store (PostgreSQL)"
 
-  C->>S: "Invoke actor method"
-  S->>H: "PUT '/actors/{type}/{id}/method/{method}'"
-  H->>Ctl: "route to handler"
-  Ctl->>R: "invoke(type, id, method, payload)"
-  R->>A: "dispatch(method, payload)"
-  A-->>R: "response, state changes"
-  R->>DB: "persist state"
-  R-->>Ctl: "serialized response"
-  Ctl-->>S: "HTTP 200 + body"
-  S-->>C: "result"
+  C->>D: "Invoke actor method"
+  D->>H: "PUT '/actors/{type}/{id}/method/{method}'"
+  H->>Ctl: "Dispatch request"
+  Ctl->>R: "Invoke actor (type, id, method)"
+  R->>A: "Execute method"
+  A-->>R: "Return result and state updates"
+  R->>S: "Persist actor state"
+  R-->>Ctl: "Return response"
+  Ctl-->>D: "HTTP 200 response"
+  D-->>C: "Method result"
 ```
+</details>
