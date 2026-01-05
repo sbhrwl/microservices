@@ -5,8 +5,6 @@
 * [Key types in Message.xsd](#key-types-in-message-xsd-selected)
 * [Selected types in EndDeviceControls.xsd](#selected-types-in-enddevicecontrols-xsd-from-provided-excerpt)
 * [Test XML sample indicating schema usage](#test-xml-sample-indicating-schema-usage)
-* [Unknowns and gaps](#unknowns-and-gaps)
-
 ## Overview
 * Repository includes `IEC 61968`-aligned `XSD` files under `src/main/resources/schemas/xsd`
 * `JAXB` classes are generated at build time via `jaxb2-maven-plugin` into `target/generated-sources/xjc`
