@@ -35,6 +35,10 @@
 | PUT         | `/actors/{type}/{id}/method/timer/{timer}`     | Raw bytes forwarded to `ActorRuntime.invokeTimer`    | `200` with empty body                                  | Error propagates, resulting in server error                         |
 | GET         | `/healthz`                                     | None                                                 | `200` (health response)                                | Implementation details not visible in provided code                 |
 
+<img src="images/api-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -53,3 +57,4 @@ sequenceDiagram
   R-->>Ctl: "response bytes"
   Ctl-->>S: "HTTP 200 + response bytes"
 ```
+</details>
