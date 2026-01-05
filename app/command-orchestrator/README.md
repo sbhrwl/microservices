@@ -15,7 +15,7 @@
   - Actor lifecycle handling, reminder and timer flows, runtime interactions with Dapr
 - [Deployment](deployment/README.md)
   - Self-hosted Dapr deployment, runnable JAR execution, Kubernetes restart example
-- [Testing](testing/README.md)
-  - Test structure, in-memory state provider usage, actor state testing approach
 - [Observability](observability/README.md)
   - Logging setup, tracing with Zipkin, health and diagnostics endpoints exposed via Dapr
+- [Testing](testing/README.md)
+  - Test structure, in-memory state provider usage, actor state testing approach
