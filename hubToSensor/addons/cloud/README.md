@@ -1,4 +1,4 @@
-# [Architecting for Cloud](flexcontrol/README.md)
+# Architecting for Cloud
 * [Goal](#goal)
 * [Guiding principles](#guiding-principles)
 * [Overview](#overview)

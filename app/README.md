@@ -1,4 +1,5 @@
 # Application
+- [Platform engineering](platform-engineering/README.md)
 - [bff](api-gateway/README.md)
 - [gfc-apis](gfc-apis/README.md)
 - [gfc-core](gfc-service/README.md)
