@@ -16,7 +16,7 @@
 
 ## In-memory state provider usage
 
-| aspect   | details      |
+| Aspect   | Details      |
 | -------- | ------------ |
 | File                        | `src/test/java/io/dapr/actors/runtime/DaprInMemoryStateProvider.java`         |
 | Extends                     | `DaprStateAsyncProvider`      |
