@@ -35,6 +35,10 @@ flowchart TD
 - configuration fetch
   - Endpoint: GET /dapr/config
   - Returns serialized ActorRuntime configuration to the Dapr sidecar
+<img src="images/runtime-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -55,6 +59,7 @@ sequenceDiagram
   R-->>C: "bytes"
   C-->>S: "HTTP 200 + bytes"
 ```
+</details>
 
 ## Reminder and timer flows
 - reminder delivery
@@ -67,6 +72,10 @@ sequenceDiagram
   - On error, the handler logs a warning and propagates the error (server error response)
 - reminders storage
   - The number of reminders storage partitions is set on ActorRuntime configuration at startup
+<img src="images/runtime-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -85,6 +94,7 @@ sequenceDiagram
   R-->>C: "complete"
   C-->>S: "HTTP 200 (empty body)"
 ```
+</details>
 
 ## Runtime interactions with dapr
 - configuration exchange
