@@ -23,4 +23,4 @@
 ## Health and diagnostics endpoints
 - HTTPttp health endpoint
   - `GET` `/healthz`
-  - Registered in `HealthCheckController`, `Dapr compliant``
+  - Registered in `HealthCheckController`, `Dapr compliant`
