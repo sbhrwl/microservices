@@ -32,8 +32,8 @@
 | Deliver reminders                 | PUT         | `/actors/{type}/{id}/method/remind/{reminder}` |
 | Deliver timers                    | PUT         | `/actors/{type}/{id}/method/timer/{timer}`     |
 
-- ActorCallbackController receives these requests and delegates to ActorRuntime for execution
-- Actor runtime configuration is serialized and returned to the sidecar by GET /dapr/config
+- `ActorCallbackController` receives these requests and delegates to `ActorRuntime` for execution
+- Actor runtime configuration is serialized and returned to the sidecar by `GET` `/dapr/config`
 
 ## HTTP callback server
 - Implemented with Reactor Netty
