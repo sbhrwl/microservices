@@ -1,1 +1,11 @@
 
+- Device-hub is a Java microservice hosting Dapr actors representing devices
+- It exposes Dapr-required HTTP callbacks to manage actor lifecycle, method invocations, reminders, and timers
+- Dapr persists actor state to PostgreSQL configured under components/postgresql.yaml
+- The service is packaged as an executable JAR with dependencies copied to target/libs
+- Configuration is via Typesafe Config; ApplicationSetting provides defaults for HTTP server, reminders, and actor runtime
+- Build uses Maven, protoc, gRPC, and reactor-grpc; proto sources live outside the repo in ../gfc-apis/proto
+- Git build metadata is embedded via git-commit-id-maven-plugin and read at runtime by GitInfoManager
+- Local development uses Dapr self-hosted mode, optional local Postgres Docker, or CloudSQL proxy tunneling
+- Logging uses SLF4J/Logback with optional JSON encoder; Zipkin link in README suggests tracing can be enabled
+- Entry point is com.landisgyr.gfc.devicehub.Bootstrap; DeviceHub orchestrates server and actor runtime
