@@ -71,30 +71,6 @@ postgres-statestore   108s
 rabbitmq-pubsub       2m18s
 ```
 
-- **Verify RabbitMQ and Postgres connectivity from inside your cluster**
-- Run a temporary test pod
-  - Run an interactive pod in the same namespace as your services:
-```bash
-kubectl run netcheck --rm -it --image=busybox --namespace=default -- /bin/sh
-```
-
-- Test RabbitMQ connection
-  - Inside the pod shell:
-```bash
-telnet host.docker.internal 5672
-```
-  - ✅ If you see “Connected to host.docker.internal”, it’s reachable.
-  - ❌ If it hangs or says “Connection refused”, we’ll need to tweak Docker Desktop networking.
-- Test Postgres connection
-  - Still in the same shell:
-```bash
-telnet host.docker.internal 5432
-```
-  - ✅ Connected → good.
-  - ❌ If not, Postgres isn’t reachable from the cluster (we can fix that with a `NodePort` or by moving it into K8s later).
-- Exit
-  - Type `exit` to close the pod.
-
 ## Stop or remove Dapr system pods
 * Unistall
   * This deletes all pods in `dapr-system` and the Dapr CRDs.
