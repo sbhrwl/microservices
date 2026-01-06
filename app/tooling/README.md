@@ -4,7 +4,7 @@
 - [Architecture](architecture/README.md)
   - System overview, Component breakdown, Technology stack rationale, Component interactions
   - Execution models, Configuration architecture, Scalability considerations, Error handling architecture, External dependencies
-- [Installation](installation/README.md)Prerequisites
+- [Installation](installation/README.md)
   - Infrastructure prerequisites, Installation steps, Post-installation verification, Troubleshooting, Build artifacts
 - [Configuration](configuration/README.md)
   - MongoDB schema loader configuration, IEC 61968 test producer configuration
