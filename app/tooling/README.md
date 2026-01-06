@@ -1,13 +1,14 @@
 # Tooling
 - [Introduction](introduction/README.md)
-  - Purpose and scope of the tooling suite, relationship to the parent GFC application, problem statement, and why multiple tools exist
+  - Purpose and scope, Why multiple tools exist, Typical usage scenarios, Scope limitations
 - [Architecture](architecture/README.md)
-  - Separation between producer and schema loader components, technology stacks (Java vs Node.js), data flow, and high-level component interactions
-- [Installation](installation/README.md)
-  - Prerequisites and setup for Java runtime, Maven, Node.js, npm, and project build steps for each tool
+  - System overview, Component breakdown, Technology stack rationale, Component interactions
+  - Execution models, Configuration architecture, Scalability considerations, Error handling architecture, External dependencies
+- [Installation](installation/README.md)Prerequisites
+  - Infrastructure prerequisites, Installation steps, Post-installation verification, Troubleshooting, Build artifacts
 - [Configuration](configuration/README.md)
-  - Environment variables, `.env` usage, MongoDB connection details, message broker configuration, and configuration defaults and overrides
+  - MongoDB schema loader configuration, IEC 61968 test producer configuration
 - [Data models](data-models/README.md)
-  - MongoDB schemas defined via Mongoose, supported data types (`geojson`, `int32`, `long`), and schema responsibilities
+  - Schema-architecture, Core-schemas, Specialized-data-types, Schema-responsibilities, Schema-design-patterns, Schema-validation, Schema-indexes, Data-model-uncertainties
 - [Runtime behavior](runtime-behavior/README.md)
-  - How to execute each tool, entry points (`ClassicProducer.main()`, npm scripts), runtime modes, and expected outputs
+  - MongoDB schema loader, IEC 61968 test producer
