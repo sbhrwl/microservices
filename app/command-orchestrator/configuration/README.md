@@ -1,5 +1,5 @@
 ## Configuration
-- [overview](#overview)
+- [Overview](#overview)
 - [Application settings structure and defaults](#application-settings-structure-and-defaults)
 - [Environment variables](#environment-variables)
 - [Configuration files and overrides](#configuration-files-and-overrides)
