@@ -5,8 +5,8 @@
 - [Serialization](#serialization)
 
 ## Overview
-- Core domain data used by actors is represented by the DeviceConfiguration class
-- DeviceConfiguration is referenced by the Device actor interface as the payload for configureDevice
+- Core domain data used by actors is represented by the `DeviceConfiguration` class
+- `DeviceConfiguration` is referenced by the Device actor interface as the payload for `configureDevice`
 
 ## Device configuration
 
@@ -18,8 +18,10 @@
 | Known fields & accessors | - `commTechnology: String` — getter: `getCommTechnology()` <br> - `meterUtilitySerialNumber: String` <br> - `deviceState: String` — allowed values (from class comment): <br>   • `NOT_DEFINED` <br>   • `INVENTORY` <br>   • `DISCOVERED` <br>   • `IN_OPERATION` <br>   • `UPDATE_IN_PROGRESS` <br>   • `POOR_COMMUNICATION` <br>   • `ERROR` <br>   • `REMOVED` |
 
 - notes
-  - deviceState is a String with documented allowed values; no enum is defined in the provided code
-  - Only the fields shown above are evidenced in the repository snippets; other members, if present, are not documented here
+  - `deviceState` is a String with documented allowed values
+     - no enum is defined in the provided code
+  - Only the fields shown above are evidenced in the repository snippets
+    - other members, if present, are not documented here
 
 ## Actor interfaces using the model
 
