@@ -10,3 +10,6 @@ mvn clean install -DskipTests=true -D"checkstyle.skip"=true
 mvn clean install -DskipTests=true -D"checkstyle.skip"=true -U
 ```
 ## Run
+```
+mvn spring-boot:run
+```
