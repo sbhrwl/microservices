@@ -72,6 +72,12 @@ flowchart TD
 * Location is `tooling/mongodb-schemas`
 * Purpose is schema-based MongoDB initialization
 * Mongoose is used as the ODM
+  * ODM stands for `Object Data Modeling` (sometimes called `Object Document Mapper`).
+  * Mongoose acts as the ODM for MongoDB in Node.js:
+    * Defines schemas for documents
+    * Enforces structure and validation
+Maps MongoDB documents ↔ JavaScript objects
+    * Provides query, update, and lifecycle hooks
 * Execution is script-driven and developer-controlled
 <img src="images/arch-3.jpg">
 
