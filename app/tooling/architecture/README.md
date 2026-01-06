@@ -13,6 +13,10 @@
 * Each tool targets a different part of the GFC infrastructure
 * No runtime dependency exists between the tools
 * Coordination happens indirectly through the GFC application
+<img src="images/arch-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -27,6 +31,7 @@ flowchart TD
     B --> D
     C --> E
 ```
+</details>
 
 * Each tool operates independently
 * Each tool prepares a different infrastructure dependency for GFC
@@ -37,6 +42,10 @@ flowchart TD
 * Purpose is generation of IEC 61968-compliant test messages
 * Messages are published to JMS queues
 * ActiveMQ is used as the message broker
+<img src="images/arch-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -51,6 +60,7 @@ flowchart TD
     C --> D
     D --> E
 ```
+</details>
 
 * Responsibilities include
   * Synthetic event and alarm generation
@@ -63,6 +73,10 @@ flowchart TD
 * Purpose is schema-based MongoDB initialization
 * Mongoose is used as the ODM
 * Execution is script-driven and developer-controlled
+<img src="images/arch-3.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -79,6 +93,7 @@ flowchart TD
     D --> E
     E --> F
 ```
+</details>
 
 * Responsibilities include
   * Schema definition
@@ -101,6 +116,10 @@ flowchart TD
 ## Component interactions
 ### Independence
 * No direct communication exists between the tools
+<img src="images/arch-4.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -109,9 +128,14 @@ flowchart TD
 
     A -. "no direct dependency" .- B
 ```
+</details>
 
 ### Indirect coordination via GFC
 * Both tools prepare inputs consumed by GFC
+<img src="images/arch-5.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -126,6 +150,7 @@ flowchart TD
     A --> G
     M --> G
 ```
+</details>
 
 * Producer generates temporal event streams
 * Loader initializes persistent application state
