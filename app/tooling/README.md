@@ -11,5 +11,3 @@
   - MongoDB schemas defined via Mongoose, supported data types (`geojson`, `int32`, `long`), and schema responsibilities
 - [Runtime behavior](runtime-behavior/README.md)
   - How to execute each tool, entry points (`ClassicProducer.main()`, npm scripts), runtime modes, and expected outputs
-- [Testing](testing/README.md)
-  - Test data generation patterns, validation strategies, and how the tools are used to support IEC 61968 test scenarios
