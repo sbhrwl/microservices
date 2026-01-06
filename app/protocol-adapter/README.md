@@ -1,20 +1,22 @@
 # Protocol adapter
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
-  - Dapr sidecar, gRPC server, message bus usage, and schema resources
+  - Components, Runtime interactions, Message bus configuration, Configuration inputs, Schema resources
 - [Installation](installation/README.md)
-  - Build prerequisites and Maven build commands are provided
 - [Configuration](configuration/README.md)
-  - application.conf path, environment variables, and Dapr parameters are present
+  - Loading order and sources, Required root path, System properties used in this repository, Dapr parameters (example flags observed), Configuration keys and defaults under "iec61968-connector"
+  - Environment variable overrides, Logging configuration, Validation behavior
 - [Data models](data-models/README.md)
-  - XSD schemas exist under resources with IEC model details
+  - Build-time code generation, Schemas and namespaces observed, Key types in Message.xsd
+  - Selected types in EndDeviceControls.xsd, Test XML sample indicating schema usage
 - [Security](security/README.md)
-  - Some security-related schema types exist (e.g., SecurityCredentialChange), but operational security details are limited
+  - Message-level security capabilities, Configuration and logging, Dapr and transport
 - [API reference](api-reference/README.md)
-  - gRPC is used, but no .proto or service interface details are visible in provided content
+  - gRPC endpoints, Message bus interface, Payload schemas, Health and observability
 - [Runtime behavior](runtime-behavior/README.md)
-  - Dapr run command, health checks, and gRPC details indicate runtime characteristics
+  - Process model, Health probing flow, Message bus probe during health check
+  - Threading and execution, Ports and sidecar interaction, Logging and observability
 - [Deployment](deployment/README.md)
-  - Docker native image build and Kubernetes rollout examples exist
+  - Ports and config alignment, Health checks at runtime, Run locally with Dapr (JAR)
 - [Observability](observability/README.md)
-  - Dapr health references and Zipkin URL are included
+  - Health checks (Dapr -> app), Logging, Tracing (Zipkin), Example: run with debug sidecar logs (JAR), Troubleshooting signals
