@@ -1,6 +1,5 @@
 # Protocol adapter
 - [Introduction](introduction/README.md)
-  - purpose and context
 - [Architecture](architecture/README.md)
   - Dapr sidecar, gRPC server, message bus usage, and schema resources
 - [Installation](installation/README.md)
