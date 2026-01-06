@@ -7,7 +7,7 @@
 - [High-level component interactions](#high-level-component-interactions)
 
 ## Overview
-- Actor-hosting microservice that runs alongside a Dapr sidecar
+- **Actor-hosting `microservice`** that runs alongside a Dapr sidecar
   - Actors encapsulate per-device state and behavior
 - Reactor Netty HTTP server exposes Dapr-required callbacks and forwards to Dapr’s ActorRuntime
 - PostgreSQL is used as the Dapr state store for durable actor state
