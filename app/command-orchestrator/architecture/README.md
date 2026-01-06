@@ -9,16 +9,18 @@
 ## Overview
 - **Actor-hosting `microservice`** that runs alongside a Dapr sidecar
   - Actors encapsulate per-device state and behavior
-- Reactor Netty HTTP server exposes Dapr-required callbacks and forwards to Dapr’s ActorRuntime
+- Reactor Netty HTTP server 
+  - Exposes Dapr-required callbacks and
+  - Forwards to Dapr’s ActorRuntime
 - PostgreSQL is used as the Dapr state store for durable actor state
-- Configuration is provided via Typesafe Config
-  - Defaults and structure are defined in ApplicationSetting
+- Configuration is provided via `Typesafe Config`
+  - Defaults and structure are defined in `ApplicationSetting`
 ## Actor-based design
 - Actors are registered at startup with Dapr’s `ActorRuntime` and created on-demand per `actor id`
-- Per-actor state is accessed through Dapr’s state abstractions
-  - Serialization uses the SDK-configured `ObjectMapper`
+- `Per-actor state` is accessed through `Dapr’s state abstractions`
+  - `Serialization` uses the SDK-configured `ObjectMapper`
 - **Reminders** and **timers** are supported via `ActorRuntime`
-  - Scheduling parameters (initial delay, period, partitions, execution window) are configurable in `ApplicationSetting`
+  - Scheduling parameters (|initial delay`, `period`, `partitions`, |execution window`) are configurable in `ApplicationSetting`
 - Example domain model present:
   - `DeviceConfiguration` with `builder` and `getters/setters` used by device actors
 ## Dapr sidecar interaction
