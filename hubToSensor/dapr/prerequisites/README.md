@@ -136,7 +136,6 @@ spec:
 scopes:
   - flexibility-bridge-service
 ```
-### ✅ Explanation of improvements
 * **`requeueInFailure: true`** — makes sure failed messages are requeued for retry rather than lost.
 * **`prefetchCount: 10`** — ensures better throughput without overloading one consumer.
 * **`exclusive: false`** — ensures multiple services can bind to the same exchange if needed.
