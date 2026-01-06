@@ -9,7 +9,7 @@
 * [Uncertainty notes](#uncertainty-notes)
 ## Overview
 * Development tooling support
-* **Purpose**: Test data generation and database population tooling for a Grid Field Communication (GFC) application
+* **Purpose**: Test data generation and database population tooling for the application
 * **System Type**: Collection of utilities - Java message producer + Node.js MongoDB schema loader
 * **Technologies**: 
   * Java (IEC 61968 test producer)
