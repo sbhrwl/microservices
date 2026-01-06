@@ -34,11 +34,11 @@
 | Deliver reminders                 | PUT         | `/actors/{type}/{id}/method/remind/{reminder}` |
 | Deliver timers                    | PUT         | `/actors/{type}/{id}/method/timer/{timer}`     |
 
-- `ActorCallbackController` receives these requests and delegates to `ActorRuntime` for execution
+- **`ActorCallbackController`** receives these requests and delegates to **`ActorRuntime`** for execution
 - Actor runtime configuration is serialized and returned to the sidecar by `GET` `/dapr/config`
 
 ## HTTP callback server
-- Implemented with Reactor Netty
+- Implemented with `Reactor Netty`
   - Routes are registered by `RoutingService` implementations (e.g., `ActorCallbackController`)
 - Server binds to the configured interface and port (defaults: `0.0.0.0:3501`) and uses dedicated `selector/worker` event loops
 - Graceful shutdown is handled by adding a JVM shutdown hook to dispose the Reactor Netty server
