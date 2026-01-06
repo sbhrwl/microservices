@@ -10,7 +10,7 @@
 - The service is packaged as an executable JAR and runs alongside a Dapr sidecar in self-hosted or cluster environments
 ## Purpose
 - Provide an application host for device actors (for example, DeviceTwin) that encapsulate device `state` and `behavior`
-- Bridge external integrations (such as an IEC61968 connector) to device actors through Dapr’s standardized invocation model
+- **Bridge external integrations** (such as an IEC61968 connector) to device actors through **Dapr’s standardized invocation model**
 - Offer operational endpoints required by Dapr (actor config, deactivate, method, reminder, timer) via a **Reactor `Netty HTTP server`**
 - Support scheduled device workflows through actor reminders and timers with configurable defaults
 - Configure runtime behavior through `Typesafe Config`, including HTTP server settings and actor runtime parameters
