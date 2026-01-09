@@ -1,5 +1,5 @@
 # Switching flexibilities
-* **Devices (Flexibilities)**
+* **Load devices (Flexibilities)**
   * Execute commands (on/off)
   * Send **responses asynchronously**
     * Some responses arrive **immediately**, others may take **minutes or even 30+ minutes**
