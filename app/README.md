@@ -7,4 +7,4 @@
 - [protocol-adapter](protocol-adapter/README.md)
 - [Tooling](tooling/README.md)
 - Use cases
-  - [Switching](usecases/switching/README.md)
+  - [Switching flexibilities](usecases/switching/README.md)
