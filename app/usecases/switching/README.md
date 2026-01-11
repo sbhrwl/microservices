@@ -24,6 +24,7 @@
   * Shows **dynamic progress** of switching operations (e.g., 5,000 done, 11,000 done … until completion)
 * **Key insight:** the system is **highly asynchronous**, with responses arriving at unpredictable intervals, and the architecture is designed to **roll-up partial results progressively** so the user always sees live status.
   * We need a broker in between `Command Orchestrator` and `GFC Core` services
+  * `GFC Core` will `pull` responses from the broker 
 ```mermaid
 sequenceDiagram
     participant User as User Interface
