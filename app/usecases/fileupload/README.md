@@ -7,6 +7,7 @@
 * [Proto mapping](#proto-mapping)
 * [Summary](#summary)
 ## Overview
+- Endpoint `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
 - Handle **file uploads** (CSV in this case) from a client.
 ```ts
 // Fastify route expects multipart/form-data
