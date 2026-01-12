@@ -75,8 +75,8 @@ return reply.code(200).send(response);
 sequenceDiagram
   Client->>Gateway: POST /api/flexibilities/import (multipart CSV)
   Gateway->>Gateway: Extract file, read orgCode, create UploadCsvRequest
-  Gateway->>UploadService: uploadFlexibilities(UploadCsvRequest, metadata)
-  UploadService-->>Gateway: UploadCsvResponse
+  Gateway->>FlexibilityService: uploadFlexibilities(UploadCsvRequest, metadata)
+  FlexibilityService-->>Gateway: UploadCsvResponse
   Gateway-->>Client: JSON response with upload result
 ```
 </details>
@@ -115,3 +115,32 @@ sequenceDiagram
 * Dapr gRPC client manages service discovery and routing.
 * Response is converted back → client-friendly format.
 * GraphQL equivalent could wrap this in a mutation with `Upload` scalar → internally call same proto service.
+<img src="images/fileupload-2.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TD
+  A[Client] -->|POST CSV multipart form data| B[Fastify Route Handler flexibilitiesImport]
+  B --> C[File Extractor and Validation request file and check data]
+  C --> D[Input Converter createFileRequest]
+  D --> E[Proto Request Builder UploadCsvRequest]
+  E --> F[Dapr gRPC Client FlexibilityServiceClient uploadFlexibilities]
+  F --> G[FlexibilityService uploadFlexibilities RPC]
+  G --> F
+  F --> H[Response Mapper UploadCsvResponse to JSON]
+  H --> B
+  B -->|HTTP JSON Response| A
+
+  %% Node colors
+  style A fill:#fef3c7,stroke:#facc15,stroke-width:1px
+  style B fill:#dbeafe,stroke:#3b82f6,stroke-width:1px
+  style C fill:#ede9fe,stroke:#7c3aed,stroke-width:1px
+  style D fill:#fef2f2,stroke:#ef4444,stroke-width:1px
+  style E fill:#ecfdf5,stroke:#10b981,stroke-width:1px
+  style F fill:#f0f9ff,stroke:#0284c7,stroke-width:1px
+  style G fill:#fefce8,stroke:#f59e0b,stroke-width:1px
+  style H fill:#f5f3ff,stroke:#8b5cf6,stroke-width:1px
+```
+</details>
