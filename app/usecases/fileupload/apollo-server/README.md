@@ -95,6 +95,10 @@ api-gateway/
 │   ├── resolver-definitions/           # GraphQL resolver implementations
 │   │   └── core/
 │   │       └── authorization/          # Authorization resolvers
+│   │       └── device/                 # Device resolvers
+│   │       └── event/                  # Event resolvers
+│   │       └── organization/           # Organization resolvers
+│   │       └── tag/                    # Tag resolvers
 │   │
 │   ├── routes/                         # REST API routes
 │   │   └── flexibilities-import.route.ts  # File upload endpoint
