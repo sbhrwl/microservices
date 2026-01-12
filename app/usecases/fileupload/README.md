@@ -115,7 +115,7 @@ sequenceDiagram
 * Dapr gRPC client manages `service discovery` and `routing`.
 * Response is converted back → **client-friendly format**.
 * GraphQL equivalent could wrap this in a mutation with `Upload` scalar → internally call same proto service.
-<img src="images/fileupload-2.jpg">
+<img src="images/fileupload.jpg">
 
 <details>
   <summary>mermaid</summary>
