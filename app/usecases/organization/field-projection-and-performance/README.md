@@ -9,7 +9,7 @@
   - `GetOrganizationsRequest.field_projections`
 - Reduces payload size by returning only requested fields.
 - Enables backend to optimize queries and serialization.
-## graphql selection mapping
+## Graphql selection mapping
 - GraphQL selection sets are converted to FieldMask paths in the gateway resolver.
 - Nested fields are flattened for FieldMask:
   - Example: `settings.warrantyRules.activationDate` → `settings.warranty_rules.activation_date`
