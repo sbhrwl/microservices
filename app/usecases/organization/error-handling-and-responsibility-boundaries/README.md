@@ -23,7 +23,7 @@
   - Valid parent organization if provided.
 - Violations result in business error responses in proto messages.
 - Gateway maps business errors to GraphQL errors.
-## Wrror propagation
+## Error propagation
 - GraphQL errors follow standard GraphQL error format:
   - `message`: human-readable error.
   - `path`: query/mutation path where error occurred.
