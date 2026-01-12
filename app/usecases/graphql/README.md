@@ -16,7 +16,7 @@
 
 | Operation        | GraphQL                           | gRPC / Proto                        | Practical impact                 |
 | ---------------- | --------------------------------- | ----------------------------------- | -------------------------------- |
-| Add org          | `AddOrganizationInput` (implied)  | `AddOrganizationRequest`            | Same payload                     |
+| Add organization | `AddOrganizationInput` (implied)  | `AddOrganizationRequest`            | Same payload                     |
 | Update settings  | `UpdateOrganizationSettingsInput` | `UpdateOrganizationSettingsRequest` | GraphQL separates input/output   |
 | Input validation | Schema-level                      | Mostly runtime                      | GraphQL catches more at boundary |
 | Partial updates  | Client controls fields            | Entire message unless masked        | GraphQL safer for UIs            |
@@ -56,15 +56,6 @@ OrganizationService
 
 ### Why this works beautifully
 * GraphQL becomes a **query lens**, not a data store.
-
-| Layer            | Why GraphQL fits | Why gRPC fits    |
-| ---------------- | ---------------- | ---------------- |
-| Frontend API     | Flexible queries | Too rigid        |
-| Aggregation      | Easy composition | Hard             |
-| Backend services | Overkill         | Fast + strict    |
-| Internal traffic | Verbose          | Efficient        |
-| Schema evolution | Fast iteration   | Stable contracts |
-
 * Your **proto** defines the *truth*
 * Your **GraphQL** defines the *experience*
 * Proto optimizes **speed and safety**
