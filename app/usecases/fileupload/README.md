@@ -23,6 +23,21 @@
   * Converts proto `UploadCsvResponse` to plain object (`toObject()`).
   * Returns JSON to the client.
 * Errors are caught and returned as HTTP errors (400 for invalid input, 500 for server/proto errors).
+<img src="images/fileupload-1.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+sequenceDiagram
+  Client->>Gateway: POST /api/flexibilities/import (multipart CSV)
+  Gateway->>Gateway: Extract file, read orgCode, create UploadCsvRequest
+  Gateway->>UploadService: uploadFlexibilities(UploadCsvRequest, metadata)
+  UploadService-->>Gateway: UploadCsvResponse
+  Gateway-->>Client: JSON response with upload result
+```
+</details>
+
 ## Functions
 
 | Function                                 | Purpose                                              | Proto Interaction                                              |
