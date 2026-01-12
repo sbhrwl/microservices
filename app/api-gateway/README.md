@@ -7,6 +7,7 @@
   - Schema code generation for TypeScript type safety
   - Designed for cloud-native deployment
   - Supports hybrid architecture with both GraphQL queries and REST endpoints)
+  - Resolver
 - [Architecture](architecture/README.md)
   - Principles, System architecture, Communication protocols, Dapr integration
   - Security layers (Transport security, Rate limiting, GraphQL query protection, Authentication, Input validation)
