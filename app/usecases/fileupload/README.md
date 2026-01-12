@@ -122,7 +122,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-  A[Client] -->|POST CSV multipart form data| B[Fastify Route Handler flexibilitiesImport]
+  A[User Interface] -->|POST CSV multipart form data| B[Fastify Route Handler flexibilitiesImport]
   B --> C[File Extractor and Validation request file and check data]
   C --> D[Input Converter createFileRequest]
   D --> E[Proto Request Builder UploadCsvRequest]
