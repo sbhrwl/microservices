@@ -110,10 +110,10 @@ sequenceDiagram
 * Metadata includes `orgCode` to associate the uploaded file with the correct organization.
 * File content is sent as raw bytes (`setContent(buf)`), similar to sending structured fields in Organization API requests.
 ## Summary
-* Fastify endpoint = API Gateway for file uploads.
-* Gateway converts HTTP input → gRPC proto request (like GraphQL resolvers do for queries/mutations).
-* Dapr gRPC client manages service discovery and routing.
-* Response is converted back → client-friendly format.
+* `Fastify endpoint` = API Gateway for file uploads.
+* Gateway `converts HTTP input` → `gRPC proto request` (like GraphQL resolvers do for queries/mutations).
+* Dapr gRPC client manages `service discovery` and `routing`.
+* Response is converted back → **client-friendly format**.
 * GraphQL equivalent could wrap this in a mutation with `Upload` scalar → internally call same proto service.
 <img src="images/fileupload-2.jpg">
 
