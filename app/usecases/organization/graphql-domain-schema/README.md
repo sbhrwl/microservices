@@ -1,4 +1,5 @@
 # Graphql domain schema
+- [GraphQL Vs Protos](usecases/graphql/README.md)
 - [Types](#types)
 - [Inputs](#inputs)
 - [Enums](#enums)
