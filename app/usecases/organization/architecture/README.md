@@ -2,7 +2,6 @@
 - [Components involved](#components-involved)
 - [Responsibility boundaries](#responsibility-boundaries)
 - [Why GraphQL and gRPC](#why-graphql-and-grpc)
-- [Architecture diagram](#architecture-diagram)
 ## Components involved
 - **Client:** Sends GraphQL queries or mutations requesting Organization data or updates.
 - **GraphQL Gateway:** Receives client requests, resolves them using gateway resolvers, translates GraphQL input into gRPC requests, and maps responses back.
