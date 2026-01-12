@@ -47,13 +47,7 @@ flowchart TD
 
     Client --> Fastify
     Client --> Routes
-
     Fastify --> Apollo
-    Apollo --> Schema
-    Apollo --> ResolverMap
-    Apollo --> Context
-    Apollo --> Plugins
-
     ResolverMap --> Resolvers
     Resolvers --> Dapr
     Resolvers --> GRPC
