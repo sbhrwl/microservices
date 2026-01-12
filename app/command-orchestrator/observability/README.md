@@ -21,6 +21,6 @@
 ## Tracing with zipkin
 - Zipkin UI: `http://localhost:9411/zipkin/`
 ## Health and diagnostics endpoints
-- HTTPttp health endpoint
+- HTTP health endpoint
   - `GET` `/healthz`
   - Registered in `HealthCheckController`, `Dapr compliant`
