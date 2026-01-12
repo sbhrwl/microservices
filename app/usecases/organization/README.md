@@ -8,7 +8,7 @@
 - [Proto contract](proto-contract/README.md)
   - RPCs, Messages, Enums, FieldMask usage
 - [Graphql domain schema](graphql-domain-schema/README.md)
- - Types, Inputs, Enums, Scalars, Proto mapping
+  - Types, Inputs, Enums, Scalars, Proto mapping
 - [Graphql API surface](graphql-api-surface/README.md)
   - Queries, Mutations, Resolver mapping table
 - [Execution flow: read path](execution-flow-read-path/README.md)
