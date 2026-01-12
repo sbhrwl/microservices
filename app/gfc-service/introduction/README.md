@@ -18,7 +18,7 @@
 - Fine-grained authorization with role-based access control
 - `Integration with service mesh infrastructure` for distributed systems
 ## Design
-- `gfc-service` implements a **gRPC-based microservice** providing CRUD operations for the Grid Flex Control application. 
+- `gfc-core` implements a **gRPC-based microservice** providing CRUD operations for the Grid Flex Control application. 
 - It serves as the 
   - Core backend
   - Exposing type-safe APIs through protocol buffers 
@@ -33,7 +33,7 @@
 
 ```mermaid
 flowchart TB
-    Client[Client Applications<br/>Frontend/API Gateway] -->|gRPC| GFC[gfc-service<br/>Port 9090]
+    Client[Client Applications<br/>Frontend/API Gateway] -->|gRPC| GFC[gfc-core<br/>Port 9090]
     GFC -->|Read/Write| MongoDB[(MongoDB<br/>Device/Event/Org Data)]
     GFC -->|Token Validation| Keycloak[Keycloak<br/>OAuth 2.0 Provider]
     GFC -->|Health/Actors| Dapr[Dapr Sidecar<br/>Service Mesh]
