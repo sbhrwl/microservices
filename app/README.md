@@ -9,3 +9,4 @@
 - Use cases
   - [Switching flexibilities](usecases/switching/README.md)
   - [Organization API](usecases/organization/README.md)
+  - [File upload](fileupload/README.md)
