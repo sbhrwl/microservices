@@ -1,8 +1,8 @@
 # Architecture
-- [Components involved](#components-involved)
+- [Components](#components)
 - [Responsibility boundaries](#responsibility-boundaries)
 - [Why GraphQL and gRPC](#why-graphql-and-grpc)
-## Components involved
+## Components
 - **Client:** Sends GraphQL queries or mutations requesting Organization data or updates.
 - **GraphQL Gateway:** Receives client requests, resolves them using gateway resolvers, translates GraphQL input into gRPC requests, and maps responses back.
 - **Dapr:** Provides gRPC client connectivity, metadata handling, and service discovery.
