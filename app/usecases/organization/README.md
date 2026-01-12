@@ -34,10 +34,10 @@ flowchart TD
 ```
 ## Proto contract
 * OrganizationService RPCs:
-  * GetOrganization
-  * GetOrganizations
-  * AddOrganization
-  * UpdateOrganizationSettings
+  * `GetOrganization`
+  * `GetOrganizations`
+  * `AddOrganization`
+  * `UpdateOrganizationSettings`
 * Message structures
 * Enum semantics
 * FieldMask usage and expectations
@@ -98,7 +98,7 @@ sequenceDiagram
 * What proto enforces
 * Transport vs business errors
 * Error propagation strategy
-## extending the organization API safely
+## Extending the organization API safely
 * Adding fields
 * Adding RPCs
 * Adding GraphQL operations
