@@ -12,7 +12,15 @@
 | Dates              | `Date` (scalar)            | `google.type.Date`         | Proto is stricter        |
 
 ## Inputs vs requests 
-- Writes
+- GraphQL separates:
+  - What you send → `input`
+  - What you get → `type`
+
+| GraphQL  | Proto      |
+| -------- | ---------- |
+| `input`  | `*Request` |
+| `type`   | `message`  |
+| Mutation | RPC        |
 
 | Operation        | GraphQL                           | gRPC / Proto                        | Practical impact                 |
 | ---------------- | --------------------------------- | ----------------------------------- | -------------------------------- |
