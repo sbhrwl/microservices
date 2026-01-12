@@ -1,5 +1,5 @@
 # Organization API
-- [Introduction and scope](introduction/README.md)
+- [Introduction](introduction/README.md)
 - [Organization domain overview](organization-domain-overview/README.md)
 - [High-level architecture](architecture/README.md)
 - [Proto contract](proto-contract/README.md)
