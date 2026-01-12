@@ -1,10 +1,16 @@
 # Organization API
 - [Introduction](introduction/README.md)
+  - Purpose, Scope, Audience
 - [Organization domain overview](organization-domain-overview/README.md)
+  - Organization entity, Settings, Warranty rule, Ownership of data, Domain invariants
 - [Architecture](architecture/README.md)
+  - Components, Responsibility boundaries, Why GraphQL and gRPC
 - [Proto contract](proto-contract/README.md)
+  - RPCs, Messages, Enums, FieldMask usage
 - [Graphql domain schema](graphql-domain-schema/README.md)
+ - Types, Inputs, Enums, Scalars, Proto mapping
 - [Graphql API surface](graphql-api-surface/README.md)
+  - Queries, Mutations, Resolver mapping table
 - [Execution flow: read path](execution-flow-read-path/README.md)
 - [Execution flow: write path](execution-flow-write-path/README.md)
 - [Field projection and performance](field-projection-and-performance/README.md)
