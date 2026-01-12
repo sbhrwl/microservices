@@ -10,8 +10,8 @@
 - [API evolution strategy](#api-evolution-strategy)
 - [Documentation synchronization](#documentation-synchronization)
 ## Architectural Layers
-- The project follows a `BFF` (Backend for Frontend) and `API gateway` (**Apollo router**) pattern
-- Apollo router
+- The project follows a `BFF` (Backend for Frontend) and `API gateway` (**Apollo server**) pattern
+- Apollo server
   - **GraphQL gateway/federation layer**: 
     - Routes and composes queries from clients to multiple GraphQL services.
   - **Optimizes UI queries**: 
