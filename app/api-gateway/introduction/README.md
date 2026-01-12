@@ -2,6 +2,7 @@
 - [Overview](#overview)
 - [Layers](#layers)
 - [Features](#features)
+- [Resolver](#resolver)
 ## Overview
 * **GraphQL API Gateway** (Backend for Frontend) built with `Apollo Server` and `Fastify`
 * The gateway exposes `single GraphQL endpoint` between frontends and multiple backend services.
@@ -127,3 +128,47 @@ flowchart TD
   - Gateway can **serve GraphQL queries to clients** for standard data access.
   - It can also **expose REST endpoints** for specific tasks (like bulk CSV import).
   * Internally, it can route these requests to services using the same Dapr layer.
+## Resolver
+```ts
+import date from "./common/scalars/date.js";
+import dateTime from "./common/scalars/date-time.js";
+import jsonMapScalar from "./common/scalars/json-map-scalar.js";
+import latitude from "./common/scalars/latitude.js";
+import longitude from "./common/scalars/longitude.js";
+import appAuthorization from "./resolver-definitions/core/authorization/app-authorization.js";
+import authorization from "./resolver-definitions/core/authorization/authorization.js";
+import device from "./resolver-definitions/core/device/device.js";
+import devices from "./resolver-definitions/core/device/devices.js";
+import event from "./resolver-definitions/core/event/event.js";
+import organization from "./resolver-definitions/core/organization/organization.js";
+import organizations from "./resolver-definitions/core/organization/organizations.js";
+import updateOrganizationSettings from "./resolver-definitions/core/organization/update-organization-settings.js";
+import createOrUpdateTag from "./resolver-definitions/core/tag/create-or-update-tag.js";
+import deleteTag from "./resolver-definitions/core/tag/delete-tag.js";
+import tagDevices from "./resolver-definitions/core/tag/tag-devices.js";
+import tags from "./resolver-definitions/core/tag/tags.js";
+
+export default {
+	DateTime: dateTime,
+	Date: date,
+	Latitude: latitude,
+	Longitude: longitude,
+	JsonMap: jsonMapScalar,
+	Mutation: {
+		createOrUpdateTag,
+		deleteTag,
+		tagDevices,
+		updateOrganizationSettings,
+	},
+	Query: {
+		devices,
+		device,
+		event,
+		appAuthorization,
+		authorization,
+		organizations,
+		organization,
+		tags		
+	},
+};
+```
