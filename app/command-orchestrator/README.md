@@ -1,6 +1,5 @@
 # Command orchestrator
 - [Introduction](introduction/README.md)
-  - Purpose and scope of the service, problem statement, core technologies inferred from README and pom.xml
 - [Architecture](architecture/README.md)
   - Actor-based design, Dapr sidecar interaction, HTTP callback server, state store usage, high-level component interactions
 - [Installation](installation/README.md)
