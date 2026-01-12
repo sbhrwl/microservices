@@ -15,6 +15,7 @@
 - GraphQL separates:
   - What you send → `input`
   - What you get → `type`
+- **Services**
 
 | GraphQL  | Proto      |
 | -------- | ---------- |
