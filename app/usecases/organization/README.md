@@ -1,7 +1,7 @@
 # Organization API
 - [Introduction](introduction/README.md)
 - [Organization domain overview](organization-domain-overview/README.md)
-- [High-level architecture](architecture/README.md)
+- [Architecture](architecture/README.md)
 - [Proto contract](proto-contract/README.md)
 - [Graphql domain schema](graphql-domain-schema/README.md)
 - [Graphql API surface](graphql-api-surface/README.md)
