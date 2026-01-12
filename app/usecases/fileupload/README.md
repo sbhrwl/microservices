@@ -6,11 +6,54 @@
 * [Proto mapping](#proto-mapping)
 * [Summary](#summary)
 ## Overview
-* This code handles **file uploads** (CSV in this case) from a client.
+- Handle **file uploads** (CSV in this case) from a client.
+```ts
+// Fastify route expects multipart/form-data
+const data = await request.file();
+if (!data) {
+  return reply.code(400).send({ error: "Invalid data." });
+}
+```
 * `Fastify` acts as the **HTTP API gateway** endpoint.
+```ts
+// Exported as a route handler
+export const flexibilitiesImport = async (
+  request: FastifyRequest,
+  reply: FastifyReply,
+) => { ... }
+```
 * The file is converted into a **gRPC proto request** (`UploadCsvRequest`) and sent to `DeviceServiceClient`.
-* Dapr gRPC client is used for **service invocation**, similar to your Organization API flows.
+```ts
+const fileReq = await createFileRequest(data as MultipartFile);
+
+const createFileRequest = async (data: MultipartFile): Promise<UploadCsvRequest> => {
+  const orgCode = (data.fields?.orgCode as MultipartValue)?.value;
+  const metadata = JSON.stringify({ mimetype: data.mimetype, orgCode });
+  const buf = await data.toBuffer();
+  return new UploadCsvRequest()
+    .setMetadata(metadata)
+    .setContent(buf)
+    .setFilename(data.filename || "");
+};
+```
+* `Dapr gRPC client` is used for **service invocation**, similar to your Organization API flows.
+```ts
+const response: any = await new Promise((resolve, reject) => {
+  daprGrpcClient(DeviceServiceClient).uploadFlexibilities(
+    fileReq,
+    metaData(request.headers.authorization as string, appId),
+    (err, res: UploadCsvResponse) => {
+      if (err) return reject(err);
+      return resolve(res ? res.toObject() : {});
+    },
+  );
+});
+```
 * Response (`UploadCsvResponse`) is mapped back to HTTP JSON and sent to the client.
+```ts
+console.log(`Uploaded flexibilities file: ${data.filename}, ${data.mimetype}`);
+return reply.code(200).send(response);
+```
 ## Flow
 * Client uploads a CSV using multipart/form-data.
 * Gateway endpoint receives the request (`flexibilitiesImport`).
