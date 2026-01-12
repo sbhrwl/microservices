@@ -8,4 +8,4 @@
 - [Tooling](tooling/README.md)
 - Use cases
   - [Switching flexibilities](usecases/switching/README.md)
-  - [GraphQL](usecases/switching/graphql/README.md)
+  - [GraphQL](usecases/graphql/README.md)
