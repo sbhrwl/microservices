@@ -1,0 +1,42 @@
+# Pre-requisites
+- [Keycloak setup](#keycloak-setup)
+- [Kafka setup](#kafka-setup)
+- [MongoDB setup](#mongodb-setup)
+## Keycloak setup
+- Create a [`docker-compose.yaml`](keycloak/docker-compose.yaml)
+  - [V26: Organizations support](https://www.youtube.com/watch?v=tY06l4KRHKk) [`docker-compose.yaml`](keycloak/keycloakv26/docker-compose.yaml)
+- Run docker compose: `docker-compose up -d`
+- Access Keycloak
+  * URL: [http://localhost:8080](http://localhost:8080)
+  * Username: `admin`
+  * Password: `admin`/`your_strong_admin_password` for **V26**
+- Stop Services: `docker-compose down`
+- [User, role and client creation](https://github.com/sbhrwl/microservices/blob/main/motivation/springframework/SpringSecurity/authenticatewithkeycloak/README.md)
+
+## Kafka setup
+- Create a `docker-compose.yml`
+  - [Kafka setup for local development](kafka/kafka-setup-for-localdevelopment/docker-compose.yml)
+  - [Kafka setup for Docker containers](kafka/kafka-setup-for-containers/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
+- Verify: `docker-compose logs kafka`
+- Kafka user interface: `http://localhost:8081/`
+- Log in to container via `Docker Desktop` or `console`
+  - `docker exec -it <kafka_container_id_or_name> /bin/bash`
+- Verify topics: `kafka-topics --bootstrap-server localhost:9092 --list`
+- View messages from a topic
+  - If you don’t want to read from the beginning but only new messages, omit the `--from-beginning` flag
+    ```
+    kafka-console-consumer --bootstrap-server localhost:9092 --topic sensor-registrations --from-beginning --max-messages 10
+    ```
+- Publish message to a topic
+  ```
+  kafka-console-producer.sh --bootstrap-server localhost:9092 --topic sensor-registrations
+  ```
+## MongoDB setup
+- Create a [`docker-compose.yml`](mongodb/docker-compose.yml)
+- Run docker compose: `docker-compose up -d`
+- [Download MongoDB shell](https://www.mongodb.com/try/download/shell)
+- Open MongoDB shell
+  ```bash
+  Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin
+  ```
