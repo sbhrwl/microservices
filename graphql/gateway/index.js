@@ -56,7 +56,8 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  uploads: false,
+  csrfPrevention: true,
+  cache: "bounded",
   context: ({ req }) => ({ req }),
   formatError: (error) => {
     console.error("GraphQL Error:", error);

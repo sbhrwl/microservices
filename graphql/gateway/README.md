@@ -3,7 +3,5 @@
 Apollo GraphQL Gateway that connects to the Spring Boot gRPC service.
 
 ## Setup
-
-1. Install dependencies:
-```bash
-npm install
+- Install dependencies: `npm install`
+- Run: `node index.js`
