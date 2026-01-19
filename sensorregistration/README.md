@@ -1,4 +1,5 @@
 # Sensor registration
+- [GraphQL](graphql/README.md)
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
