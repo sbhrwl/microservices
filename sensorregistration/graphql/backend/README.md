@@ -27,3 +27,14 @@ proto/           - Protocol buffer definitions
 |Postcode unchanged	| INVALID_ARGUMENT    |
 |No data found	| FAILED_PRECONDITION |
 |Internal error	| INTERNAL            |
+
+## Connect MongoDB
+- Verify at **MongoDB**
+- Open MongoDB shell
+    - Connect: `Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://root:root123@localhost:27017/admin`
+    - Check available Databases: `show dbs`
+    - Swicth to DB: `use sensorregistration`
+    - Query documents in the collections: `db.sensorRegistrations.find().pretty()`
+        - Find a sensor: `db.sensorRegistrations.findOne({ sensorId: "sensor789" })`
+    - Delete documents from the collections: `db.sensorRegistrations.deleteMany({})`
+        - Delete a sensor: `db.sensorRegistrations.deleteOne({ sensorId: "sensor789" })`
