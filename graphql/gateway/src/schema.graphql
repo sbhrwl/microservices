@@ -1,0 +1,26 @@
+type Sensor {
+  sensorId: ID!
+  userEmail: String!
+  postcode: String!
+  status: String!
+  registeredAt: String!
+  lastUpdatedAt: String!
+}
+
+type Query {
+  sensor(sensorId: ID!): Sensor
+  sensorsByUser(userEmail: String!): [Sensor!]!
+}
+
+type Mutation {
+  registerSensor(
+    sensorId: ID!
+    userEmail: String!
+    postcode: String!
+  ): Sensor!
+  
+  updateSensorPostcode(
+    sensorId: ID!
+    newPostcode: String!
+  ): Sensor!
+}
