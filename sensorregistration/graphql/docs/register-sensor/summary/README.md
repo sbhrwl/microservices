@@ -2,7 +2,7 @@
 * [Backend](#backend)
 * [Gateway](#gateway)
 * [Frontend](#frontend)
-* [Quick view)](#quick-view)
+* [Quick view](#quick-view)
 ## Backend
 * Define proto files
   * Create `.proto` file for gRPC:
