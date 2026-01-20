@@ -1,16 +1,12 @@
 package com.example.sensor.repository;
 
 import com.example.sensor.domain.Sensor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * MongoDB implementation of SensorRepository.
- * Translates MongoDB exceptions to domain exceptions.
- */
 @Repository
 public class MongoSensorRepository implements SensorRepository {
     
@@ -23,13 +19,25 @@ public class MongoSensorRepository implements SensorRepository {
     @Override
     public Sensor save(Sensor sensor) {
         try {
-            SensorDocument document = new SensorDocument(sensor);
+            // Find existing document to preserve MongoDB _id
+            Optional<SensorDocument> existingDoc = springDataRepository.findBySensorId(sensor.getSensorId());
+            
+            SensorDocument document;
+            if (existingDoc.isPresent()) {
+                // Update existing document (preserves _id)
+                document = existingDoc.get();
+                document.setUserEmail(sensor.getUserEmail());
+                document.setPostcode(sensor.getPostcode());
+                document.setStatus(sensor.getStatus().name());
+                document.setUpdatedAt(sensor.getLastUpdatedAt());
+                // Don't update createdAt - it should remain unchanged
+            } else {
+                // Create new document
+                document = new SensorDocument(sensor);
+            }
+            
             SensorDocument saved = springDataRepository.save(document);
             return saved.toDomain();
-        } catch (DuplicateKeyException e) {
-            throw new SensorAlreadyExistsException(
-                "Sensor with ID '" + sensor.getSensorId() + "' already exists"
-            );
         } catch (Exception e) {
             throw new SensorRepositoryException("Failed to save sensor", e);
         }
@@ -40,6 +48,10 @@ public class MongoSensorRepository implements SensorRepository {
         try {
             return springDataRepository.findBySensorId(sensorId)
                 .map(SensorDocument::toDomain);
+        } catch (org.springframework.dao.IncorrectResultSizeDataAccessException e) {
+            throw new SensorRepositoryException(
+                "Data integrity violation: Multiple sensors found with ID: " + sensorId + 
+                ". Please check database constraints.", e);
         } catch (Exception e) {
             throw new SensorRepositoryException("Failed to find sensor", e);
         }
@@ -48,12 +60,11 @@ public class MongoSensorRepository implements SensorRepository {
     @Override
     public List<Sensor> findByUserEmail(String userEmail) {
         try {
-            return springDataRepository.findByUserEmail(userEmail)
-                .stream()
+            return springDataRepository.findByUserEmail(userEmail).stream()
                 .map(SensorDocument::toDomain)
                 .collect(Collectors.toList());
         } catch (Exception e) {
-            throw new SensorRepositoryException("Failed to find sensors by user", e);
+            throw new SensorRepositoryException("Failed to find sensors by user email", e);
         }
     }
 
