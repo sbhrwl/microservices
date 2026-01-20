@@ -4,4 +4,5 @@
 - [Backend](backend/README.md)
 ## Use cases
 - [Register sensor](docs/register-sensor/README.md)
-- [search sensor](docs/search-sensor/README.md)
+- [Search sensor](docs/search-sensor/README.md)
+- [Update postcode](docs/update-postcode/README.md)
