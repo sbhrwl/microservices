@@ -15,7 +15,7 @@
 ## Introduction
 * Postcode update is a partial entity update
 * Modifies existing data with strict business rules
-* Emphasizes consistency, auditability, and validation
+* [Emphasizes](summary/README.md) consistency, auditability, and validation
 * Key themes
   * Optimistic concurrency
   * Business rule validation
