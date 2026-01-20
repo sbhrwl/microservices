@@ -1,6 +1,5 @@
 # Sensor registration
 * [Introduction](#introduction)
-* [sensorResolver.ts](../../gateway/src/resolvers/sensorResolver.ts)
 * [Architecture overview](#architecture-overview)
 * [Frontend initiation](#frontend-initiation)
 * [Gateway and protocol translation](#gateway-and-protocol-translation)
@@ -37,6 +36,7 @@
   * Backend to database uses MongoDB
 ## Frontend initiation
 ### User interaction (Angular component)
+* [app.component.ts](../../frontend/src/app/app.component.ts)
 ```typescript
 // File: c:\Git\microservices\sensorregistration\graphql\frontend\src\app\app.component.ts
 registerSensor() {
@@ -72,6 +72,7 @@ registerSensor() {
   * Delegation to service layer
   * Reactive error handling
 ### GraphQL service layer
+* [graphql.service.ts](../../frontend/src/app/services/graphql.service.ts)
 ```typescript
 // File: c:\Git\microservices\sensorregistration\graphql\frontend\src\app\services\graphql.service.ts
 registerSensor(sensorId: string, userEmail: string, postcode: string): Observable<Sensor> {
@@ -107,6 +108,7 @@ registerSensor(sensorId: string, userEmail: string, postcode: string): Observabl
   * Error mapping from GraphQL response
 ## Gateway and protocol translation
 ### GraphQL schema definition
+* [schema.graphql](../../gateway/src/schema.graphql)
 ```graphql
 // File: c:\Git\microservices\sensorregistration\graphql\gateway\src\schema.graphql
 type Mutation {
@@ -127,6 +129,7 @@ type Mutation {
   * Validation layer
   * Type boundary
 ### GraphQL resolver
+* [sensorResolver.ts](../../gateway/src/resolvers/sensorResolver.ts)
 ```typescript
 // File: c:\Git\microservices\sensorregistration\graphql\gateway\src\resolvers\sensorResolver.ts
 async registerSensor(_: any, args: RegisterSensorArgs): Promise<Sensor> {
