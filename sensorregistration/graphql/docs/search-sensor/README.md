@@ -13,7 +13,7 @@
 - [Best practices and lessons learned](#best-practices-and-lessons-learned)
 - [Conclusion](#conclusion)
 ## Introduction
-- Demonstrates the read path through the microservices architecture
+- [Demonstrates](summary/README.md) the read path through the microservices architecture
 - Highlights separation of concerns, protocol translation, and error handling
 - Emphasizes handling of non-existent data as a first-class scenario
 ## Architecture overview
