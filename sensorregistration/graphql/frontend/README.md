@@ -1,9 +1,31 @@
 # SensorRegistrationFrontend
+- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+## Installation and Running Instructions
+```bash
+# Navigate to frontend directory
+cd C:\Git\microservices\sensorregistration\graphql\frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Access at http://localhost:4200
+```
+
+## Testing Checklist
+- Before marking as "done", verify:
+  - ✅ Register Sensor - All fields required, clears on success, shows friendly errors
+  - ✅ List Sensors - Shows loading state, handles empty results gracefully, displays table
+  - ✅ Update Postcode - Validates input, shows success message, handles "same postcode" error
+  - ✅ Error Handling - All errors are friendly and inline
+  - ✅ No GraphQL in Components - All queries/mutations in separate files
+  - ✅ No Auto-refresh - Lists don't update automatically (intentional)
+  - ✅ Compiles Successfully - No TypeScript errors
+- This completes the Angular frontend build following your exact specifications. The application is ready for manual testing against the GraphQL gateway running on http://localhost:4000/graphql.
 
 ## Development server
-
 To start a local development server, run:
 
 ```bash
