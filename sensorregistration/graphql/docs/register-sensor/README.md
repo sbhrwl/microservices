@@ -14,7 +14,7 @@
 * [Conclusion](#conclusion)
 
 ## Introduction
-* Walkthrough of a single business operation across a microservices architecture
+* [Walkthrough](summary/README.md) of a single business operation across a microservices architecture
 * Focus on a sensor registration flow
 * Demonstrates interaction between:
   * Angular
