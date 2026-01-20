@@ -1,5 +1,5 @@
 type Sensor {
-  sensorId: ID!
+  sensorId: String!
   userEmail: String!
   postcode: String!
   status: String!
@@ -8,19 +8,19 @@ type Sensor {
 }
 
 type Query {
-  sensor(sensorId: ID!): Sensor
+  sensor(sensorId: String!): Sensor
   sensorsByUser(userEmail: String!): [Sensor!]!
 }
 
 type Mutation {
   registerSensor(
-    sensorId: ID!
+    sensorId: String!
     userEmail: String!
     postcode: String!
   ): Sensor!
   
   updateSensorPostcode(
-    sensorId: ID!
+    sensorId: String!
     newPostcode: String!
   ): Sensor!
 }

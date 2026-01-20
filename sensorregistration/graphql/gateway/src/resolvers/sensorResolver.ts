@@ -1,118 +1,77 @@
 import { mapGrpcError } from '../utils/errorMapping';
-import {
-  RegisterSensorRequest,
-  GetSensorRequest,
-  ListSensorsByUserRequest,
-  UpdatePostcodeRequest,
-  SensorResponse,
-  ListSensorsResponse
-} from '../grpc/generated/sensor';
-import { grpcClient } from '../grpc/client';
-import { ServiceError } from '@grpc/grpc-js';
-
-// Helper to convert proto timestamp to ISO string
-function toISOString(epochMillis: number): string {
-  return new Date(epochMillis).toISOString();
-}
-
-// Helper to convert SensorResponse to GraphQL format
-function toGraphQLSensor(response: SensorResponse) {
-  return {
-    sensorId: response.sensorId,
-    userEmail: response.userEmail,
-    postcode: response.postcode,
-    status: response.status,
-    registeredAt: toISOString(response.registeredAt),
-    lastUpdatedAt: toISOString(response.lastUpdatedAt)
-  };
-}
 
 export const resolvers = {
   Query: {
-    sensor: async (_: any, { sensorId }: { sensorId: string }) => {
+    sensor: async (_: any, { sensorId }: { sensorId: string }, { grpcClient }: any) => {
       return new Promise((resolve, reject) => {
-        const request: GetSensorRequest = { sensorId };
-        
-        grpcClient.getClient().getSensor(request, (error: ServiceError | null, response?: SensorResponse) => {
+        grpcClient.getSensor({ sensorId }, (error: any, response: any) => {
           if (error) {
             reject(mapGrpcError(error));
-          } else if (response) {
-            resolve(toGraphQLSensor(response));
           } else {
-            reject(new Error('No response from gRPC service'));
+            resolve(response);
           }
         });
       });
     },
 
-    sensorsByUser: async (_: any, { userEmail }: { userEmail: string }) => {
+    sensorsByUser: async (_: any, { userEmail }: { userEmail: string }, { grpcClient }: any) => {
       return new Promise((resolve, reject) => {
-        const request: ListSensorsByUserRequest = { userEmail };
-        
-        grpcClient.getClient().listSensorsByUser(request, (error: ServiceError | null, response?: ListSensorsResponse) => {
+        grpcClient.getSensorsByUser({ userEmail }, (error: any, response: any) => {
           if (error) {
             reject(mapGrpcError(error));
-          } else if (response) {
-            resolve(response.sensors.map(toGraphQLSensor));
           } else {
-            reject(new Error('No response from gRPC service'));
+            resolve(response.sensors || []);
           }
         });
       });
-    }
+    },
   },
 
   Mutation: {
     registerSensor: async (
-      _: any,
-      { sensorId, userEmail, postcode }: {
-        sensorId: string;
-        userEmail: string;
-        postcode: string;
-      }
+        _: any,
+        { sensorId, userEmail, postcode }: { sensorId: string; userEmail: string; postcode: string },
+        { grpcClient }: any
     ) => {
       return new Promise((resolve, reject) => {
-        const request: RegisterSensorRequest = {
-          sensorId,
-          userEmail,
-          postcode
-        };
-        
-        grpcClient.getClient().registerSensor(request, (error: ServiceError | null, response?: SensorResponse) => {
-          if (error) {
-            reject(mapGrpcError(error));
-          } else if (response) {
-            resolve(toGraphQLSensor(response));
-          } else {
-            reject(new Error('No response from gRPC service'));
-          }
-        });
+        grpcClient.registerSensor(
+            {
+              sensorId: sensorId,
+              userEmail: userEmail,
+              postcode: postcode
+            },
+            (error: any, response: any) => {
+              if (error) {
+                console.error('gRPC Error:', error);
+                reject(mapGrpcError(error));
+              } else {
+                resolve(response);
+              }
+            }
+        );
       });
     },
 
     updateSensorPostcode: async (
-      _: any,
-      { sensorId, newPostcode }: {
-        sensorId: string;
-        newPostcode: string;
-      }
+        _: any,
+        { sensorId, newPostcode }: { sensorId: string; newPostcode: string },
+        { grpcClient }: any
     ) => {
       return new Promise((resolve, reject) => {
-        const request: UpdatePostcodeRequest = {
-          sensorId,
-          newPostcode
-        };
-        
-        grpcClient.getClient().updateSensorPostcode(request, (error: ServiceError | null, response?: SensorResponse) => {
-          if (error) {
-            reject(mapGrpcError(error));
-          } else if (response) {
-            resolve(toGraphQLSensor(response));
-          } else {
-            reject(new Error('No response from gRPC service'));
-          }
-        });
+        grpcClient.updateSensorPostcode(
+            {
+              sensorId: sensorId,
+              newPostcode: newPostcode
+            },
+            (error: any, response: any) => {
+              if (error) {
+                reject(mapGrpcError(error));
+              } else {
+                resolve(response);
+              }
+            }
+        );
       });
-    }
-  }
+    },
+  },
 };
