@@ -104,8 +104,8 @@ export class GraphQLService {
 
   updateSensorPostcode(sensorId: string, postcode: string): Observable<Sensor> {
     const mutation = `
-      mutation UpdateSensorPostcode($sensorId: String!, $postcode: String!) {
-        updateSensorPostcode(sensorId: $sensorId, postcode: $postcode) {
+      mutation UpdateSensorPostcode($sensorId: String!, $newPostcode: String!) {
+        updateSensorPostcode(sensorId: $sensorId, newPostcode: $newPostcode) {
           sensorId
           userEmail
           postcode
@@ -117,7 +117,7 @@ export class GraphQLService {
 
     return this.http.post<GraphQLResponse<{ updateSensorPostcode: Sensor }>>(this.graphqlUrl, {
       query: mutation,
-      variables: { sensorId, postcode }
+      variables: { sensorId, newPostcode: postcode }
     }).pipe(
       map(response => {
         if (response.errors) {
