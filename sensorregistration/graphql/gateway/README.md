@@ -62,19 +62,3 @@ mutation {
   }
 }
 ```
-## Environment Variables
-- PORT - Gateway port (default: 4000)
-- GRPC_SERVER - Backend address (default: localhost:9090)
-- **Create gateway folder** and initialize:
-```bash
-cd gateway
-npm init -y
-npm install
-```
-- Generate TypeScript from proto:
-```bash
-npm run generate-proto
-```
-- Start backend (Java service on port 9090)
-- Start gateway: `npm run dev`
-- Test in GraphQL Playground at `http://localhost:4000`
