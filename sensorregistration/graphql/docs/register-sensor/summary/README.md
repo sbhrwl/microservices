@@ -124,9 +124,11 @@
 * [ ] Setup grpc client
 * [ ] Implement resolver
   * Receive args
-  * Create grpc request using generated ts type
+  * Map args from camelCase → snake_case
+  * Create grpc `request` using generated ts type
   * Call grpc
   * Handle response using generated ts type
+  * Map `response` from snake_case → camelCase
   * Handle errors
 ### Frontend
 * [ ] Setup apollo client
