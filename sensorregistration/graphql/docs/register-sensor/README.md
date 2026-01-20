@@ -1,5 +1,6 @@
 # Sensor registration
 * [Introduction](#introduction)
+* [sensorResolver.ts](../../gateway/src/resolvers/sensorResolver.ts)
 * [Architecture overview](#architecture-overview)
 * [Frontend initiation](#frontend-initiation)
 * [Gateway and protocol translation](#gateway-and-protocol-translation)
@@ -126,8 +127,6 @@ type Mutation {
   * Validation layer
   * Type boundary
 ### GraphQL resolver
-- [File]:(../../gateway\src\resolvers\sensorResolver.ts)
-
 ```typescript
 // File: c:\Git\microservices\sensorregistration\graphql\gateway\src\resolvers\sensorResolver.ts
 async registerSensor(_: any, args: RegisterSensorArgs): Promise<Sensor> {
