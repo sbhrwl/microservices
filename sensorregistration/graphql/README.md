@@ -40,3 +40,62 @@
 * [ ] Add validation
 * [ ] Create graphql query service
 * [ ] Call query from component
+
+```mermaid
+
+flowchart TD
+  subgraph "Frontend"
+    F1["Setup Apollo client"]
+    F2["Build search UI"]
+    F3["Add validation"]
+    F4["Create GraphQL query service"]
+    F5["Call query from component"]
+
+    F1 --> F2 --> F3 --> F4 --> F5
+  end
+
+  subgraph "Gateway"
+    G1["Setup GraphQL server"]
+    G2["Define schema"]
+    G3["Generate TS types from proto"]
+    G4["Setup gRPC client"]
+
+    subgraph "Implement resolver"
+      R1["Receive args"]
+      R2["Map camelCase to snake_case"]
+      R3["Create gRPC request using generated TS type"]
+      R4["Call gRPC"]
+      R5["Handle response using generated TS type"]
+      R6["Map snake_case to camelCase"]
+      R7["Handle not found"]
+      R8["Handle errors"]
+
+      R1 --> R2 --> R3 --> R4 --> R5 --> R6 --> R7 --> R8
+    end
+
+    G1 --> G2 --> G3 --> G4 --> R1
+  end
+
+  subgraph "Backend"
+    B1["Define .proto"]
+    B2["Generate gRPC code"]
+    B3["Create domain model"]
+    B4["Create MongoDB repository"]
+    B5["Build application service"]
+
+    subgraph "Implement gRPC server"
+      S1["Accept request"]
+      S2["Call application service"]
+      S3["Build response"]
+      S4["Return response"]
+      S5["Handle errors"]
+
+      S1 --> S2 --> S3 --> S4 --> S5
+    end
+
+    B1 --> B2 --> B3 --> B4 --> B5 --> S1
+  end
+
+  F5 --> G1
+  R4 --> B1
+```
