@@ -5,8 +5,7 @@
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
-- [Hub to Sensor](hubToSensor/README.md)
-- [GraphQL](graphql/README.md)
+- [Hub to Sensor](hubToSensor/README.md)
 - [App](app/README.md)   LandisGyr2026RS
 <details>
   <summary>prompt</summary>
