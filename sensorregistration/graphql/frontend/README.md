@@ -8,6 +8,9 @@ cd C:\Git\microservices\sensorregistration\graphql\frontend
 # Install dependencies
 npm install
 
+# Install Apollo Angular and its dependencies
+npm install @apollo/client apollo-angular graphql
+
 # Start development server
 npm start
 
