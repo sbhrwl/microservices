@@ -126,6 +126,7 @@ type Mutation {
   * Validation layer
   * Type boundary
 ### GraphQL resolver
+- [File]:(../../gateway\src\resolvers\sensorResolver.ts)
 ```typescript
 // File: c:\Git\microservices\sensorregistration\graphql\gateway\src\resolvers\sensorResolver.ts
 async registerSensor(_: any, args: RegisterSensorArgs): Promise<Sensor> {
