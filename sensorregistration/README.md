@@ -1,5 +1,4 @@
 # Sensor registration
-- [GraphQL](graphql/README.md)
 - [Introduction](introduction/README.md)
 - [Architecture](architecture/README.md)
 - [Prerequisites](prerequisites/README.md)
@@ -10,3 +9,4 @@
   - [Notification service](sensor-registration/notification-service/README.md)
 - [Helm charts](helmcharts/README.md)
 - [Verification](verification/README.md)
+- [GraphQL](graphql/README.md)
