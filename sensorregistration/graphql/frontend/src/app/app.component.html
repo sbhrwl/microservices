@@ -1,0 +1,206 @@
+<div class="container">
+  <header>
+    <h1>{{ title }}</h1>
+    <p class="subtitle">Manage your IoT sensors</p>
+  </header>
+
+  <nav class="tabs">
+    <button 
+      [class.active]="activeTab === 'register'" 
+      (click)="setActiveTab('register')">
+      Register Sensor
+    </button>
+    <button 
+      [class.active]="activeTab === 'search'" 
+      (click)="setActiveTab('search')">
+      Search Sensor
+    </button>
+    <button 
+      [class.active]="activeTab === 'list'" 
+      (click)="setActiveTab('list')">
+      List by User
+    </button>
+    <button 
+      [class.active]="activeTab === 'update'" 
+      (click)="setActiveTab('update')">
+      Update Postcode
+    </button>
+  </nav>
+
+  <div class="messages">
+    <div *ngIf="error" class="alert alert-error">
+      {{ error }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="loading" class="alert alert-info">
+      Loading...
+    </div>
+  </div>
+
+  <main>
+    <!-- Register Sensor Tab -->
+    <div *ngIf="activeTab === 'register'" class="tab-content">
+      <h2>Register New Sensor</h2>
+      <form (ngSubmit)="registerSensor()" class="form">
+        <div class="form-group">
+          <label for="sensorId">Sensor ID:</label>
+          <input 
+            type="text" 
+            id="sensorId" 
+            [(ngModel)]="registerForm.sensorId" 
+            name="sensorId"
+            placeholder="e.g., SENSOR-001"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="userEmail">User Email:</label>
+          <input 
+            type="email" 
+            id="userEmail" 
+            [(ngModel)]="registerForm.userEmail" 
+            name="userEmail"
+            placeholder="user@example.com"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="postcode">Postcode:</label>
+          <input 
+            type="text" 
+            id="postcode" 
+            [(ngModel)]="registerForm.postcode" 
+            name="postcode"
+            placeholder="12345"
+            required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          Register Sensor
+        </button>
+      </form>
+
+      <div *ngIf="currentSensor && activeTab === 'register'" class="sensor-card">
+        <h3>Registered Sensor</h3>
+        <div class="sensor-details">
+          <p><strong>Sensor ID:</strong> {{ currentSensor.sensorId }}</p>
+          <p><strong>User Email:</strong> {{ currentSensor.userEmail }}</p>
+          <p><strong>Postcode:</strong> {{ currentSensor.postcode }}</p>
+          <p><strong>Status:</strong> <span class="status">{{ currentSensor.status }}</span></p>
+          <p><strong>Registered At:</strong> {{ currentSensor.registeredAt | date:'medium' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Sensor Tab -->
+    <div *ngIf="activeTab === 'search'" class="tab-content">
+      <h2>Search Sensor</h2>
+      <form (ngSubmit)="searchSensor()" class="form">
+        <div class="form-group">
+          <label for="searchSensorId">Sensor ID:</label>
+          <input 
+            type="text" 
+            id="searchSensorId" 
+            [(ngModel)]="searchSensorId" 
+            name="searchSensorId"
+            placeholder="e.g., SENSOR-001"
+            required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          Search
+        </button>
+      </form>
+
+      <div *ngIf="currentSensor" class="sensor-card">
+        <h3>Sensor Details</h3>
+        <div class="sensor-details">
+          <p><strong>Sensor ID:</strong> {{ currentSensor.sensorId }}</p>
+          <p><strong>User Email:</strong> {{ currentSensor.userEmail }}</p>
+          <p><strong>Postcode:</strong> {{ currentSensor.postcode }}</p>
+          <p><strong>Status:</strong> <span class="status">{{ currentSensor.status }}</span></p>
+          <p><strong>Registered At:</strong> {{ currentSensor.registeredAt | date:'medium' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- List Sensors Tab -->
+    <div *ngIf="activeTab === 'list'" class="tab-content">
+      <h2>List Sensors by User</h2>
+      <form (ngSubmit)="listSensorsByUser()" class="form">
+        <div class="form-group">
+          <label for="searchUserEmail">User Email:</label>
+          <input 
+            type="email" 
+            id="searchUserEmail" 
+            [(ngModel)]="searchUserEmail" 
+            name="searchUserEmail"
+            placeholder="user@example.com"
+            required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          List Sensors
+        </button>
+      </form>
+
+      <div *ngIf="userSensors.length > 0" class="sensors-list">
+        <h3>User's Sensors ({{ userSensors.length }})</h3>
+        <div *ngFor="let sensor of userSensors" class="sensor-card">
+          <div class="sensor-details">
+            <p><strong>Sensor ID:</strong> {{ sensor.sensorId }}</p>
+            <p><strong>Postcode:</strong> {{ sensor.postcode }}</p>
+            <p><strong>Status:</strong> <span class="status">{{ sensor.status }}</span></p>
+            <p><strong>Registered At:</strong> {{ sensor.registeredAt | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="userSensors.length === 0 && !loading && !error" class="empty-state">
+        <p>No sensors found for this user.</p>
+      </div>
+    </div>
+
+    <!-- Update Sensor Tab -->
+    <div *ngIf="activeTab === 'update'" class="tab-content">
+      <h2>Update Sensor Postcode</h2>
+      <form (ngSubmit)="updateSensor()" class="form">
+        <div class="form-group">
+          <label for="updateSensorId">Sensor ID:</label>
+          <input 
+            type="text" 
+            id="updateSensorId" 
+            [(ngModel)]="updateForm.sensorId" 
+            name="updateSensorId"
+            placeholder="e.g., SENSOR-001"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="updatePostcode">New Postcode:</label>
+          <input 
+            type="text" 
+            id="updatePostcode" 
+            [(ngModel)]="updateForm.postcode" 
+            name="updatePostcode"
+            placeholder="12345"
+            required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          Update Postcode
+        </button>
+      </form>
+
+      <div *ngIf="currentSensor && activeTab === 'update'" class="sensor-card">
+        <h3>Updated Sensor</h3>
+        <div class="sensor-details">
+          <p><strong>Sensor ID:</strong> {{ currentSensor.sensorId }}</p>
+          <p><strong>User Email:</strong> {{ currentSensor.userEmail }}</p>
+          <p><strong>Postcode:</strong> {{ currentSensor.postcode }}</p>
+          <p><strong>Status:</strong> <span class="status">{{ currentSensor.status }}</span></p>
+          <p><strong>Registered At:</strong> {{ currentSensor.registeredAt | date:'medium' }}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Sensor Registration System - Microservices Architecture</p>
+  </footer>
+</div>

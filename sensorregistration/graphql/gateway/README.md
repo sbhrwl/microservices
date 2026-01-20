@@ -7,8 +7,7 @@
 - Install dependencies: `npm install`
 - Generate TypeScript from proto: `npm run generate-proto`
   - Make sure directory exists: `mkdir src\grpc\generated`
-- Build in development: `npm run dev`
-  - Build for production: `npm run build`
+- Build: `npm run build`
 - Run: `npm start`
 ## GraphQL Playground
 - Access at: `http://localhost:4000`
