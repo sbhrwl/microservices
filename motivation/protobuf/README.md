@@ -1,6 +1,7 @@
 # Protobuf usage
 - [Introduction](#introduction)
 - [Protobuf setup guide for Java projects](#protobuf-setup-guide-for-java-projects)
+  - [Install protoc](#install-protoc)
   - [Verify protoc version](#verify-protoc-version)
   - [Add your proto files](#add-your-proto-files)
   - [Add Protobuf dependencies and plugin to pom](#add-protobuf-dependencies-and-plugin-to-pom)
@@ -21,7 +22,10 @@
 | Event-driven architecture     | ✅ Yes          | Used for structured, fast, and evolvable event formats             |
 
 ## Protobuf setup guide for Java projects
-## Verify protoc version
+### Install protoc
+- [link](https://github.com/protocolbuffers/protobuf/releases)
+- Extract and add the bin directory to your PATH
+### Verify protoc version
 - Check version: `protoc --version`
 - Location: `where protoc`
 ### Add your proto files
