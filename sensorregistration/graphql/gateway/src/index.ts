@@ -4,10 +4,7 @@ import { join } from 'path';
 import { resolvers } from './resolvers/sensorResolver';
 import { grpcClient } from './grpc/client';
 
-const typeDefs = readFileSync(
-  join(__dirname, 'schema.graphql'),
-  'utf-8'
-);
+const typeDefs = readFileSync(join(__dirname, '../src/schema.graphql'), 'utf-8');
 
 const server = new ApolloServer({
   typeDefs,
@@ -24,14 +21,20 @@ const server = new ApolloServer({
 const PORT = process.env.PORT || 4000;
 
 server.listen(PORT).then(({ url }) => {
-  console.log(`🚀 Gateway ready at ${url}`);
-  console.log(`📡 Connected to gRPC backend at ${process.env.GRPC_SERVER || 'localhost:9090'}`);
+  console.log(`🚀 GraphQL Gateway ready at ${url}`);
 });
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {
-  console.log('SIGTERM received, shutting down gracefully...');
-  await grpcClient.shutdown();
+  console.log('SIGTERM signal received: closing HTTP server');
   await server.stop();
+  grpcClient.shutdown();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('SIGINT signal received: closing HTTP server');
+  await server.stop();
+  grpcClient.shutdown();
   process.exit(0);
 });

@@ -1,12 +1,14 @@
-import { grpcClient } from '../grpc/client';
 import { mapGrpcError } from '../utils/errorMapping';
 import {
   RegisterSensorRequest,
   GetSensorRequest,
   ListSensorsByUserRequest,
   UpdatePostcodeRequest,
-  SensorResponse
+  SensorResponse,
+  ListSensorsResponse
 } from '../grpc/generated/sensor';
+import { grpcClient } from '../grpc/client';
+import { ServiceError } from '@grpc/grpc-js';
 
 // Helper to convert proto timestamp to ISO string
 function toISOString(epochMillis: number): string {
@@ -31,7 +33,7 @@ export const resolvers = {
       return new Promise((resolve, reject) => {
         const request: GetSensorRequest = { sensorId };
         
-        grpcClient.getClient().getSensor(request, (error, response) => {
+        grpcClient.getClient().getSensor(request, (error: ServiceError | null, response?: SensorResponse) => {
           if (error) {
             reject(mapGrpcError(error));
           } else if (response) {
@@ -47,7 +49,7 @@ export const resolvers = {
       return new Promise((resolve, reject) => {
         const request: ListSensorsByUserRequest = { userEmail };
         
-        grpcClient.getClient().listSensorsByUser(request, (error, response) => {
+        grpcClient.getClient().listSensorsByUser(request, (error: ServiceError | null, response?: ListSensorsResponse) => {
           if (error) {
             reject(mapGrpcError(error));
           } else if (response) {
@@ -76,7 +78,7 @@ export const resolvers = {
           postcode
         };
         
-        grpcClient.getClient().registerSensor(request, (error, response) => {
+        grpcClient.getClient().registerSensor(request, (error: ServiceError | null, response?: SensorResponse) => {
           if (error) {
             reject(mapGrpcError(error));
           } else if (response) {
@@ -101,7 +103,7 @@ export const resolvers = {
           newPostcode
         };
         
-        grpcClient.getClient().updateSensorPostcode(request, (error, response) => {
+        grpcClient.getClient().updateSensorPostcode(request, (error: ServiceError | null, response?: SensorResponse) => {
           if (error) {
             reject(mapGrpcError(error));
           } else if (response) {

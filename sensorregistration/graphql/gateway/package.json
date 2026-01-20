@@ -4,10 +4,12 @@
   "description": "GraphQL gateway for sensor gRPC service",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "npm run copy-files",
     "build": "tsc",
+    "copy-files": "xcopy /E /I /Y src\\grpc\\proto dist\\grpc\\proto && xcopy /Y src\\schema.graphql dist",
     "dev": "ts-node src/index.ts",
     "start": "node dist/index.js",
-    "generate-proto": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/grpc/generated --ts_proto_opt=outputClientImpl=grpc-js,esModuleInterop=true -I ./src/grpc/proto ./src/grpc/proto/sensor.proto"
+    "generate-proto": "protoc --plugin=protoc-gen-ts_proto=node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_out=src\\grpc\\generated --ts_proto_opt=outputClientImpl=grpc-js,esModuleInterop=true -I src\\grpc\\proto src\\grpc\\proto\\sensor.proto"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.9.0",
