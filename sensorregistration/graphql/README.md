@@ -40,6 +40,10 @@
 * [ ] Add validation
 * [ ] Create graphql query service
 * [ ] Call query from component
+<img src="images/checklist.jpg">
+
+<details>
+  <summary>mermaid</summary>
 
 ```mermaid
 
@@ -99,3 +103,4 @@ flowchart TD
   F5 --> G1
   R4 --> B1
 ```
+</details>
