@@ -166,7 +166,7 @@ function toGraphQLSensor(response: any) {
   * Observability hooks
 ## Backend domain and persistence
 ### gRPC service entry point
-- [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/gRPC/SensorGrpcService.java)
+- [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/grpc/SensorGrpcService.java)
 ```java
 // File: c:\Git\microservices\sensorregistration\graphql\backend\src\main\java\com\example\sensor\grpc\SensorGrpcService.java
 @Override
