@@ -36,18 +36,18 @@
 ### Frontend
 * [ ] Setup apollo client
 * [ ] Generate TypeScript types from GraphQL schema
-  * [ ] Use GraphQL Code Generator (or equivalent)
-  * [ ] Input
-    * [ ] GraphQL schema
-    * [ ] Queries and mutations
-  * [ ] Output
-    * [ ] Query result types
-    * [ ] Mutation result types
-    * [ ] Variable types
+  * Use GraphQL Code Generator (or equivalent)
+  * Input
+    * GraphQL schema
+    * Queries and mutations
+  * Output
+    * Query result types
+    * Mutation result types
+    * Variable types
 * [ ] Build UI (search / register / update)
 * [ ] Add validation
 * [ ] Create GraphQL query or mutation service
-  * [ ] Use generated TypeScript types in `apollo.query()` / `apollo.mutate()`
+  * Use generated TypeScript types in `apollo.query()` / `apollo.mutate()`
 * [ ] Call query or mutation from component
 <img src="images/checklist.jpg">
 
