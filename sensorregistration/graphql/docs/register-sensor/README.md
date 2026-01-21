@@ -204,7 +204,7 @@ public void registerSensor(RegisterSensorRequest request,
 }
 ```
 ### Application service layer
-- [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/application/SensorApplicationService.java)
+- [SensorApplicationService.java](../../backend/src/main/java/com/example/sensor/application/SensorApplicationService.java)
 ```java
 // File: c:\Git\microservices\sensorregistration\graphql\backend\src\main\java\com\example\sensor\application\SensorApplicationService.java
 @Service
@@ -224,7 +224,7 @@ public class SensorApplicationService {
 }
 ```
 ### Domain entity
-- [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/domain/Sensor.java)
+- [Sensor.java](../../backend/src/main/java/com/example/sensor/domain/Sensor.java)
 ```java
 // File: c:\Git\microservices\sensorregistration\graphql\backend\src\main\java\com\example\sensor\domain\Sensor.java
 @Document(collection = "sensorRegistrations")
@@ -268,7 +268,7 @@ public class Sensor {
 }
 ```
 ### MongoDB repository
-- [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/repository/SensorRepository.java)
+- [SensorRepository.java](../../backend/src/main/java/com/example/sensor/repository/SensorRepository.java)
 ```java
 // File: c:\Git\microservices\sensorregistration\graphql\backend\src\main\java\com\example\sensor\repository\SensorRepository.java
 public interface SensorRepository extends MongoRepository<Sensor, String> {
