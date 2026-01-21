@@ -37,8 +37,8 @@
 * [ ] Setup apollo client
 * [ ] Build search ui
 * [ ] Add validation
-* [ ] Create graphql query service
-* [ ] Call query from component
+* [ ] Create graphql query/mutation service
+* [ ] Call query/mutation from component
 <img src="images/checklist.jpg">
 
 <details>
@@ -51,8 +51,8 @@ flowchart TD
     F1["Setup Apollo client"]
     F2["Build search UI"]
     F3["Add validation"]
-    F4["Create GraphQL query service"]
-    F5["Call query from component"]
+    F4["Create GraphQL query/mutation service"]
+    F5["Call query/mutation from component"]
 
     F1 --> F2 --> F3 --> F4 --> F5
   end
