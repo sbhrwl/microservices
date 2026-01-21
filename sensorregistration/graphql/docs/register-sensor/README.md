@@ -165,6 +165,7 @@ function toGraphQLSensor(response: any) {
   * Data mapping
   * Observability hooks
 ## Backend domain and persistence
+- [sensor.proto](../../backend/src/main/proto/sensor.proto)
 ### gRPC service entry point
 - [SensorGrpcService.java](../../backend/src/main/java/com/example/sensor/grpc/SensorGrpcService.java)
 ```java
