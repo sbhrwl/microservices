@@ -32,7 +32,6 @@
   * Call grpc
   * Handle response using generated ts type
   * Map `response` from snake_case → camelCase
-  * Handle not found
   * Handle errors
 ### Frontend
 * [ ] Setup apollo client
