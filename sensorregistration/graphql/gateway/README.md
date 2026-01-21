@@ -10,6 +10,7 @@
 - Build: `npm run build`
 - Run: `npm start`
 ## GraphQL Playground
+- [schema.graphql](src/schema.graphql)
 - Access at: `http://localhost:4000`
 - Register Sensor
 ```graphql
