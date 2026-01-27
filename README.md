@@ -6,7 +6,7 @@
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
-- [App](app/README.md)   LandisGyr2026RS
+- [App](app/README.md)
 <details>
   <summary>prompt</summary>
 
@@ -52,6 +52,7 @@
       * Ensure arrows and node labels match the textual explanation.
       * Place diagrams **after** the relevant descriptive section.
 </details>
+
 
 
 
