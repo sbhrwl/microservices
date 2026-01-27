@@ -34,3 +34,5 @@
     - Go to `api-gateway`
       - Build: `npm install`
       - Run: `npm run start:dev`
+      - Compiling protos: `npm run proto:compile`
+      - Generate typescript from protos: `npm run codegen`
