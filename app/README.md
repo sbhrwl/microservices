@@ -36,3 +36,36 @@
       - Run: `npm run start:dev`
       - Compiling protos: `npm run proto:compile`
       - Generate typescript from protos: `npm run codegen`
+      - Open `playground`: `http://127.0.0.1:4000/api/graphql`
+        - Query
+          ```graphql
+          query ExampleQuery($input: FlexibilitiesInput) {
+            
+            flexibilities(input: $input) {
+              items {
+                flexibilityType
+                name
+                id
+              }
+            }
+          }
+          ```
+        - Mutation
+          ```graphql
+          mutation Mutation($input: ConfirmUploadFlexibilitiesInput!) {
+            confirmUploadFlexibilities(input: $input) {
+              importSummary {
+                totalRows
+                importedRows
+                failedRows
+                errorDetails {
+                  errors {
+                    rowNumber
+                    errorMessage
+                    columnName
+                  }
+                }
+              }
+            }
+          }
+          ```
