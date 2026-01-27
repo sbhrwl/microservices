@@ -24,6 +24,7 @@
         dapr run --enable-profiling --app-id gfc-service --app-port 9090 --app-protocol grpc --dapr-grpc-port 50012 -- mvn exec:java -D"config.file"=src/main/dist/etc/application.conf -D"logback.configurationFile"=src/main/dist/etc/logback.xml -D"log.appender"=STDOUT
         ```
       - Run Dapr client: `C:\Git\gfc-app\gfc-core\src\test\java\com\landisgyr\gfc\api\v1\SampleDaprGrpcClient.java`
+        - Verify Dapr port: `50012`
         - Run it from file editor (right click)
       - Verify gRPC from `Kreya`
         - Refresh protos from the menu button
@@ -69,3 +70,10 @@
             }
           }
           ```
+
+- routes: `C:\Git\gfc-app\api-gateway\src\routes\flexibilities-import.route.ts`
+  - Test on windows prompt: `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
+- flexibility.proto: `C:\Git\gfc-app\gfc-apis\proto\core\api\flexibility\v1\flexibility.proto`
+- flexibility.graphql: `C:\Git\gfc-app\api-gateway\graphql\core\api\v1\flexibility.graphql`
+- operations.graphql: `C:\Git\gfc-app\api-gateway\graphql\operations.graphql`
+- `
