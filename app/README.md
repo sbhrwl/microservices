@@ -73,6 +73,11 @@
 
 - routes: `C:\Git\gfc-app\api-gateway\src\routes\flexibilities-import.route.ts`
   - Test on windows prompt: `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
+    ```bash
+    C:\Git\gfc-app\api-gateway\test>curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv
+    {"uploadId":"a71f84ae-77be-42fa-b98d-bc632e1515c2","csvSummary":{"fileMetadata":{"filename":"Flexibilities-L540.csv","fileSizeBytes":"13157","uploadedAt":"2026-01-27T12:01:50.244Z"},"totalRows":100,"invalidRows":12,"flexibilityTypeCounts":[{"flexibilityType":"Boiler","count":45},{"flexibilityType":"Heat pump","count":32},{"flexibilityType":"Lighting","count":28},{"flexibilityType":"PV","count":18}],"errorDetails":{"errors":[{"rowNumber":5,"columnName":"FlexibilityId","errorMessage":"Duplicate FlexibilityId found: FLEX-001"},{"rowNumber":12,"columnName":"Tenant","errorMessage":"Invalid tenant format: expected alphanumeric"},{"rowNumber":18,"columnName":"FlexibilityId","errorMessage":"Duplicate FlexibilityId found: FLEX-042"},{"rowNumber":23,"columnName":"FlexibilityType","errorMessage":"Unknown flexibility type: InvalidType"},{"rowNumber":31,"columnName":"Name","errorMessage":"Missing required field: Name"},{"rowNumber":45,"columnName":"FlexibilityId","errorMessage":"Duplicate FlexibilityId found: FLEX-078"},{"rowNumber":67,"columnName":"Capacity","errorMessage":"Invalid format: expected numeric value"},{"rowNumber":89,"columnName":"Location","errorMessage":"Missing required field: Location"}]}}}
+    C:\Git\gfc-app\api-gateway\test>
+     ```
 - flexibility.proto: `C:\Git\gfc-app\gfc-apis\proto\core\api\flexibility\v1\flexibility.proto`
 - flexibility.graphql: `C:\Git\gfc-app\api-gateway\graphql\core\api\v1\flexibility.graphql`
 - operations.graphql: `C:\Git\gfc-app\api-gateway\graphql\operations.graphql`
