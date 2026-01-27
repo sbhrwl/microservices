@@ -70,7 +70,6 @@
             }
           }
           ```
-
 - routes: `C:\Git\gfc-app\api-gateway\src\routes\flexibilities-import.route.ts`
   - Test on windows prompt: `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
     ```bash
@@ -81,4 +80,3 @@
 - flexibility.proto: `C:\Git\gfc-app\gfc-apis\proto\core\api\flexibility\v1\flexibility.proto`
 - flexibility.graphql: `C:\Git\gfc-app\api-gateway\graphql\core\api\v1\flexibility.graphql`
 - operations.graphql: `C:\Git\gfc-app\api-gateway\graphql\operations.graphql`
-- `
