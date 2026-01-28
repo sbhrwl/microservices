@@ -11,11 +11,10 @@
 * **List**: written as `[Type]`, meaning multiple items.
 * **Non-null (`!`)**: the value must always be present.
 ## Flow
-* You can:
-  * query flexibilities (optionally filtered and paginated),
-  * create or update them using inputs,
-  * upload many at once and confirm the upload,
-  * receive a clear summary of successes and errors
+* query flexibilities (optionally filtered and paginated),
+* create or update them using inputs,
+* upload many at once and confirm the upload,
+* receive a clear summary of successes and errors
 ## What this schema is about
   * It describes how a system stores and works with **flexibility resources** (for example boilers, lighting, or heat pumps).
   * GraphQL is used to define the *shape of the data* and how it can be sent or received.
