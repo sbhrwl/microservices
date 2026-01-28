@@ -6,7 +6,7 @@
 - [Dapr service invocation](#dapr-service-invocation)
 - [Response flow (reverse)](#response-flow-reverse)
 ## GraphQL query entry
-- **File:** GraphQL Playground / client
+- **File:** GraphQL Playground / client: `http://127.0.0.1:4000/api/graphql`
 - Query
 ```graphql
 query ExampleQuery($input: FlexibilitiesInput) {
@@ -21,7 +21,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
 ````
 ## Schema definition
 * **File:** `graphql/operations.graphql`
-  * Defines the `flexibilities` query signature
+  * Defines the flexibilities `query and mutations signature`
 * **File:** `graphql/core/api/v1/flexibility.graphql`
   * Defines `FlexibilitiesInput`
   * Defines `FlexibilityQueryFilter`
