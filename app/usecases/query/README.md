@@ -28,9 +28,9 @@ query ExampleQuery($input: FlexibilitiesInput) {
 * **File:** [`graphql/operations.graphql`](gateway/graphql/operations.graphql)
   * Defines the flexibilities `query and mutations signature`
 * **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
-  * Defines `FlexibilitiesInput`
-  * Defines `FlexibilityQueryFilter`
-  * Defines `Flexibilities` types
+  * Defines `Flexibility` type 
+  * Defines `Flexibilities` type 
+  * Defines `ConfirmUploadFlexibilitiesInput`
   * [Documentation](gateway/graphql/README.md)
 ## Resolver execution
 * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](gateway/resolver/flexibilities.ts)
