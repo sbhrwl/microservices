@@ -15,7 +15,8 @@
 ## what this schema is about
   * It describes how a system stores and works with **flexibility resources** (for example boilers, lighting, or heat pumps).
   * GraphQL is used to define the *shape of the data* and how it can be sent or received.
-## types (objects you can read)
+## types 
+* objects you can read
   * `Flexibility`
     * Represents one flexibility resource.
     * Fields:
@@ -40,7 +41,8 @@
       * which row failed,
       * which column caused the problem,
       * why it failed.
-## Input types (objects you send)
+## Input types 
+* Objects you send
   * Inputs are used when **sending data to the API**, for example when creating, updating, or filtering data.
   * `FlexibilityInput`
     * Used to create or update a flexibility.
