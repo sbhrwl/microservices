@@ -30,7 +30,7 @@
       - Start Dapr: `dapr init`
       - Run Dapr side car for `gfc-core` on port `50012`
         ```
-        dapr run --enable-profiling --app-id gfc-service --app-port 9090 --app-protocol grpc --dapr-grpc-port 50012 -- mvn exec:java -D"config.file"=src/main/dist/etc/application.conf -D"logback.configurationFile"=src/main/dist/etc/logback.xml -D"log.appender"=STDOUT
+        dapr run --enable-profiling --app-id gfc-core --app-port 9090 --app-protocol grpc --dapr-grpc-port 50012 --scheduler-host-address  `"`"
         ```
       - Run Dapr client: `C:\Git\gfc-app\gfc-core\src\test\java\com\landisgyr\gfc\api\v1\SampleDaprGrpcClient.java`
         - Verify Dapr port: `50012`
