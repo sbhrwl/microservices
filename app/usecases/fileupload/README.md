@@ -3,7 +3,7 @@
 - [Protos](#protos)
 - [GraphQL schema](#graphql-schema)
 ## Protos
-<img src="images/protos.jpg">
+<img src="images/protos.png">
 
 <details>
   <summary>mermaid</summary>
@@ -92,7 +92,7 @@ GRPC --> ConfirmUploadFlexibilitiesResponse
 </details>
 
 ## GraphQL schema
-<img src="images/graphql.jpg">
+<img src="images/graphql.png">
 
 <details>
   <summary>mermaid</summary>
