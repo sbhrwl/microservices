@@ -1,5 +1,9 @@
 # GraphQL
-
+- [GraphQL concepts](#graphql-concepts)
+- [Flow](#flow)
+- [What this schema is about](#what-this-schema-is-about)
+- [Types](#types)
+- [Input types](#input-types)
 ## GraphQL concepts
 * **Type**: defines what data you can read.
 * **Input**: defines what data you can send.
@@ -12,10 +16,10 @@
   * create or update them using inputs,
   * upload many at once and confirm the upload,
   * receive a clear summary of successes and errors
-## what this schema is about
+## What this schema is about
   * It describes how a system stores and works with **flexibility resources** (for example boilers, lighting, or heat pumps).
   * GraphQL is used to define the *shape of the data* and how it can be sent or received.
-## types 
+## Types 
 * objects you can read
   * `Flexibility`
     * Represents one flexibility resource.
