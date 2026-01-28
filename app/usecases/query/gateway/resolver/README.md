@@ -20,6 +20,7 @@
 * Maps the result into GraphQL-friendly fields
 * Handles and normalizes errors
 ## Request handling
+* Builds a `QueryFlexibilitiesRequest` protobuf object
 * Conditionally builds:
   * `filter` object (only if provided in GraphQL input)
   * `pagination` object (page size and page number)
