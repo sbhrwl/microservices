@@ -73,6 +73,13 @@
             }
           }
           ```
+- `dapr list`
+```bash
+C:\Users\SabharwalR>dapr list
+APP ID       HTTP PORT  GRPC PORT  APP PORT  COMMAND               AGE  CREATED              DAPRD PID  CLI PID  APP PID
+api-gateway  3500       50001      0         tsx watch src/ind...  1h   2026-01-28 09:55.38  11396      9296     21772
+gfc-core     53028      50012      9090                            1h   2026-01-28 10:27.43  17284      30728    0
+```
 - routes: `C:\Git\gfc-app\api-gateway\src\routes\flexibilities-import.route.ts`
   - Test on windows prompt: `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
     ```bash
