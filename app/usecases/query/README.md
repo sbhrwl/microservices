@@ -33,7 +33,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
   * Defines `Flexibilities` types
   * [Documentation](gateway/graphql/README.md)
 ## Resolver execution
-* **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](flexibilities.ts)
+* **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](gateway/resolver/flexibilities.ts)
 * Receives GraphQL arguments and context
 * Extracts auth token from context
 * Creates `FlexibilityClient` instance
@@ -41,7 +41,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
 * Calls `client.queryFlexibilities()`
 * [Documentation](gateway/resolver/README.md)
 ## gRPC client
-* **File:** [`src/clients/flexibility-client.ts`](flexibility-client.ts)
+* **File:** [`src/clients/flexibility-client.ts`](gateway/client/flexibility-client.ts)
 * `queryFlexibilities()` method
 * Retrieves Dapr proxy
 * Creates dapr metadata with auth token
@@ -58,9 +58,9 @@ gfc-core Dapr (port 50012)
 gfc-core gRPC (port 9090)
 ```
 ## gRPC service handler
-* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](flexibility.proto)
+* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](gfc-core/proto/flexibility.proto)
   * [Documentation](gfc-core/proto/README.md)
-* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](FlexibilityServiceImpl.java)
+* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](gfc-core/serviceimpl/FlexibilityServiceImpl.java)
   * [Documentation](gfc-core/serviceimpl/README.md)
 * Validates JWT token (Keycloak)
 * Parses filter & pagination
