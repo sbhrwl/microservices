@@ -89,6 +89,8 @@ GRPC --> UploadCsvResponse
 GRPC --> ConfirmUploadFlexibilitiesRequest
 GRPC --> ConfirmUploadFlexibilitiesResponse
 ```
+</details>
+
 ## GraphQL schema
 <img src="images/graphql.jpg">
 
@@ -130,3 +132,4 @@ ConfirmFlexibilityUploadResult --> ImportSummary
 ImportSummary --> ErrorDetails
 ErrorDetails --> RowError
 ```
+</details>
