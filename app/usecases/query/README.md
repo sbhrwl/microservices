@@ -25,12 +25,13 @@ query ExampleQuery($input: FlexibilitiesInput) {
 }
 ````
 ## Schema definition
-* **File:** [`graphql/operations.graphql`](operations.graphql)
+* **File:** [`graphql/operations.graphql`](gateway/operations.graphql)
   * Defines the flexibilities `query and mutations signature`
-* **File:** [`graphql/core/api/v1/flexibility.graphql`](flexibility.graphql)
+* **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
   * Defines `FlexibilitiesInput`
   * Defines `FlexibilityQueryFilter`
   * Defines `Flexibilities` types
+  * [Documentation](gateway/graphql/README.md)
 ## Resolver execution
 * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](flexibilities.ts)
 * Receives GraphQL arguments and context
