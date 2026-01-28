@@ -1,52 +1,49 @@
-* **what this schema is about**
-  * It describes how a system stores and works with **flexibility resources** (for example boilers, lighting, or heat pumps).
-  * GraphQL is used to define the *shape of the data* and how it can be sent or received.
-* **types (objects you can read)**
-  * `Flexibility`
-    * Represents one flexibility resource.
-    * Fields:
-      * `id`: a required unique ID.
-      * `name`: a readable name.
-      * `flexibilityType`: the category of the resource.
-  * `Flexibilities`
-    * Represents a **collection** of flexibility items.
-    * Contains:
-      * `items`: a list of `Flexibility` objects.
-      * `meta`: extra information such as pagination details.
-  * `ConfirmFlexibilityUploadResult`
-    * Returned after confirming a bulk upload.
-    * Shows the upload ID and a summary of the import.
-  * `ImportSummary`
-    * Explains what happened during an import:
-      * how many rows were processed,
-      * how many succeeded,
-      * how many failed.
-  * `ErrorDetails` and `RowError`
-    * Describe errors in detail, including:
-      * which row failed,
-      * which column caused the problem,
-      * why it failed.
-* **input types (objects you send)**
-  * Inputs are used when **sending data to the API**, for example when creating, updating, or filtering data.
-  * `FlexibilityInput`
-    * Used to create or update a flexibility.
-    * Requires an `id`.
-  * `FlexibilitiesInput`
-    * Used when requesting a list of flexibilities.
-    * Allows filtering and pagination.
-  * `FlexibilityQueryFilter`
-    * Lets you filter flexibilities by type (for example only “Boiler”).
-  * `ConfirmUploadFlexibilitiesInput`
-    * Used to confirm a previously uploaded file using its `uploadId`.
-* **common GraphQL concepts shown here**
-  * **Type**: defines what data you can read.
-  * **Input**: defines what data you can send.
-  * **Field**: a single piece of data on a type (like `id` or `name`).
-  * **List**: written as `[Type]`, meaning multiple items.
-  * **Non-null (`!`)**: the value must always be present.
-* **overall flow**
-  * You can:
-    * query flexibilities (optionally filtered and paginated),
-    * create or update them using inputs,
-    * upload many at once and confirm the upload,
-    * receive a clear summary of successes and errors.
+# Flexibility proto
+- [Package & options](#package--options)
+- [Services](#services)
+- [Upload messages](#upload-messages)
+- [Confirm upload messages](#confirm-upload-messages)
+- [Flexibility retrieval](#flexibility-retrieval)
+- [Flexibility schema](#flexibility-schema)
+- [Query filter](#query-filter)
+- [Order enum](#order-enum)
+- [Flexibilities collection](#flexibilities-collection)
+## Package & options
+- **Package:** core.api.flexibility.v1
+- **Java package:** com.landisgyr.gfc.api.v1.flexibility
+- **Go package:** gfc/api/flexibility/v1;apiv1
+## Services
+**FlexibilityService** exposes 4 RPCs:
+- GetFlexibility(GetFlexibilityRequest) → GetFlexibilityResponse
+- QueryFlexibilities(QueryFlexibilitiesRequest) → QueryFlexibilitiesResponse
+- UploadFlexibilities(UploadCsvRequest) → UploadCsvResponse
+- ConfirmUploadFlexibilities(ConfirmUploadFlexibilitiesRequest) → ConfirmUploadFlexibilitiesResponse
+## Upload messages
+- **UploadCsvRequest:** metadata, content, filename
+- **UploadCsvResponse:** upload_id, csv_summary
+- **CsvSummary:** file_metadata, total_rows, invalid_rows, flexibility_type_counts, error_details
+- **FileMetadata:** filename, file_size_bytes, uploaded_at
+- **FlexibilityTypeCount:** flexibility_type, count
+- **ErrorDetails:** errors: RowError[]
+- **RowError:** row_number, column_name, error_message
+## Confirm upload messages
+- **ConfirmUploadFlexibilitiesRequest:** upload_id
+- **ConfirmUploadFlexibilitiesResponse:** upload_id, import_summary
+- **ImportSummary:** total_rows, imported_rows, failed_rows, error_details
+## Flexibility retrieval
+- **GetFlexibilityRequest:** org_code, id, field_projections
+- **GetFlexibilityResponse:** flexibility: Flexibility
+- **QueryFlexibilitiesRequest:** org_codes, filter, order, pagination, field_projections
+- **QueryFlexibilitiesResponse:** flexibilities: Flexibilities
+## Flexibility schema
+- **Flexibility:** id, name, flexibility_type
+## Query filter
+- **FlexibilityQueryFilter:** flexibility_id_in[], flexibility_name_in[], flexibility_type_in[]
+## Order enum
+- DEVICE_ORDER_NOT_DEFINED = 0
+- DEVICE_ID_ASC = 1
+- DEVICE_ID_DESC = 2
+- DEVICE_MODEL_ASC = 3
+- DEVICE_MODEL_DESC = 4
+## Flexibilities collection
+- **Flexibilities:** meta, items: Flexibility[]
