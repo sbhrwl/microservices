@@ -40,7 +40,7 @@
       * which row failed,
       * which column caused the problem,
       * why it failed.
-* **input types (objects you send)**
+## Input types (objects you send)
   * Inputs are used when **sending data to the API**, for example when creating, updating, or filtering data.
   * `FlexibilityInput`
     * Used to create or update a flexibility.
