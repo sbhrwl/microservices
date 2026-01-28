@@ -30,7 +30,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
 * **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
   * Defines `Flexibility` type 
   * Defines `Flexibilities` type 
-  * Defines `ConfirmUploadFlexibilitiesInput`
+  * Defines `ConfirmUploadFlexibilitiesInput` input type
   * [Documentation](gateway/graphql/README.md)
 ## Resolver execution
 * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](gateway/resolver/flexibilities.ts)
