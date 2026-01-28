@@ -1,4 +1,11 @@
 # Resolver
+- [What this resolver does](#what-this-resolver-does)
+- [Flow](#flow)
+- [Request handling](#request-handling)
+- [Response mapping](#response-mapping)
+- [Error handling](#error-handling)
+- [Why this pattern matters](#why-this-pattern-matters)
+- [Next](#next)
 ## What this resolver does
 * Implements the **GraphQL `flexibilities` query**
 * Acts as a bridge between **GraphQL** and a **gRPC Flexibility service**
