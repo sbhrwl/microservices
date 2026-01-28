@@ -94,3 +94,39 @@ GRPC --> UploadCsvResponse
 GRPC --> ConfirmUploadFlexibilitiesRequest
 GRPC --> ConfirmUploadFlexibilitiesResponse
 ```
+
+```mermaid
+classDiagram
+direction TD
+
+class ConfirmUploadFlexibilitiesInput {
+  String uploadId
+}
+
+class ConfirmFlexibilityUploadResult {
+  String uploadId
+  ImportSummary importSummary
+}
+
+class ImportSummary {
+  Int totalRows
+  Int importedRows
+  Int failedRows
+  ErrorDetails errorDetails
+}
+
+class ErrorDetails {
+  RowError[] errors
+}
+
+class RowError {
+  Int rowNumber
+  String columnName
+  String errorMessage
+}
+
+%% Relationships
+ConfirmFlexibilityUploadResult --> ImportSummary
+ImportSummary --> ErrorDetails
+ErrorDetails --> RowError
+```
