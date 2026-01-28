@@ -5,7 +5,7 @@
 * Translates:
   * GraphQL arguments → gRPC request
   * gRPC response → GraphQL response shape
-## main flow
+## Flow
 * Reads the auth token from `context`
 * Creates a new `FlexibilityClient`
 * Builds a `QueryFlexibilitiesRequest` protobuf object
