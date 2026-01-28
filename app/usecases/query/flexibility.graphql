@@ -1,0 +1,109 @@
+"""
+Represents a flexibility resource in the system
+"""
+type Flexibility {
+    """
+    Unique identifier for the flexibility
+    """
+    id: ID!
+
+    """
+    Display name of the flexibility
+    """
+    name: String
+
+    """
+    Type of flexibility (e.g., Boiler, Lighting, Heat pump)
+    """
+    flexibilityType: String
+}
+
+"""
+Input type for creating or updating a flexibility
+"""
+input FlexibilityInput {
+    id: ID!
+}
+
+"""
+Filter options for querying flexibilities
+"""
+input FlexibilitiesInput {
+    filter: FlexibilityQueryFilter
+    pagination: Pagination
+}
+
+input FlexibilityQueryFilter {
+    flexibilityTypeIn: String    
+}
+
+type Flexibilities {
+    """
+    List of flexibilities
+    """
+    items: [Flexibility!]!
+
+    meta: Meta
+}
+
+input ConfirmUploadFlexibilitiesInput {
+    uploadId: String!
+}
+
+type ConfirmFlexibilityUploadResult {
+    """
+    Unique identifier for the upload
+    """
+    uploadId: String!
+    
+    """
+    Status of the upload confirmation
+    """
+    importSummary: ImportSummary        
+}
+
+type ImportSummary {
+    """
+    Total number of rows in the upload
+    """
+    totalRows: Int!
+    
+    """
+    Number of successfully imported rows
+    """
+    importedRows: Int!
+    
+    """
+    Number of rows that failed to import
+    """
+    failedRows: Int!
+    
+    """
+    Details about errors encountered during import
+    """
+    errorDetails: ErrorDetails
+}
+
+type ErrorDetails {
+    """
+    List of row-specific errors
+    """
+    errors: [RowError!]!
+}
+
+type RowError {
+    """
+    Row number where the error occurred
+    """
+    rowNumber: Int!
+    
+    """
+    Name of the column with the error
+    """
+    columnName: String!
+    
+    """
+    Description of the error
+    """
+    errorMessage: String!
+}
