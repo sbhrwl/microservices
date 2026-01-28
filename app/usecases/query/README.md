@@ -25,7 +25,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
 }
 ````
 ## Schema definition
-* **File:** [`graphql/operations.graphql`](gateway/operations.graphql)
+* **File:** [`graphql/operations.graphql`](gateway/graphql/operations.graphql)
   * Defines the flexibilities `query and mutations signature`
 * **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
   * Defines `FlexibilitiesInput`
