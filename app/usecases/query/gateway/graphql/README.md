@@ -1,7 +1,21 @@
-* **what this schema is about**
+# GraphQL
+
+## GraphQL concepts
+* **Type**: defines what data you can read.
+* **Input**: defines what data you can send.
+* **Field**: a single piece of data on a type (like `id` or `name`).
+* **List**: written as `[Type]`, meaning multiple items.
+* **Non-null (`!`)**: the value must always be present.
+## Flow
+* You can:
+  * query flexibilities (optionally filtered and paginated),
+  * create or update them using inputs,
+  * upload many at once and confirm the upload,
+  * receive a clear summary of successes and errors
+## what this schema is about
   * It describes how a system stores and works with **flexibility resources** (for example boilers, lighting, or heat pumps).
   * GraphQL is used to define the *shape of the data* and how it can be sent or received.
-* **types (objects you can read)**
+## types (objects you can read)
   * `Flexibility`
     * Represents one flexibility resource.
     * Fields:
@@ -38,15 +52,3 @@
     * Lets you filter flexibilities by type (for example only “Boiler”).
   * `ConfirmUploadFlexibilitiesInput`
     * Used to confirm a previously uploaded file using its `uploadId`.
-* **common GraphQL concepts shown here**
-  * **Type**: defines what data you can read.
-  * **Input**: defines what data you can send.
-  * **Field**: a single piece of data on a type (like `id` or `name`).
-  * **List**: written as `[Type]`, meaning multiple items.
-  * **Non-null (`!`)**: the value must always be present.
-* **overall flow**
-  * You can:
-    * query flexibilities (optionally filtered and paginated),
-    * create or update them using inputs,
-    * upload many at once and confirm the upload,
-    * receive a clear summary of successes and errors.
