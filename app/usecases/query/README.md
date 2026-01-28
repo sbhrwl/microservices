@@ -56,6 +56,7 @@ gfc-core gRPC (port 9090)
 ```
 ## gRPC service handler
 * **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](flexibility.proto)
+* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](FlexibilityServiceImpl.java)
 * Validates JWT token (Keycloak)
 * Parses filter & pagination
 * Queries MongoDB
