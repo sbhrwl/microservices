@@ -13,10 +13,14 @@
 - **Java package:** `com.landisgyr.gfc.api.v1.flexibility`
 ## Services
 **FlexibilityService** exposes 4 RPCs:
-- `GetFlexibility`(GetFlexibilityRequest) → GetFlexibilityResponse
-- `QueryFlexibilities`(QueryFlexibilitiesRequest) → QueryFlexibilitiesResponse
-- `UploadFlexibilities`(UploadCsvRequest) → UploadCsvResponse
-- `ConfirmUploadFlexibilities`(ConfirmUploadFlexibilitiesRequest) → ConfirmUploadFlexibilitiesResponse
+- `GetFlexibility`
+  - GetFlexibilityRequest → GetFlexibilityResponse
+- `QueryFlexibilities`
+  - QueryFlexibilitiesRequest → QueryFlexibilitiesResponse
+- `UploadFlexibilities`
+  - UploadCsvRequest → UploadCsvResponse
+- `ConfirmUploadFlexibilities`
+  - ConfirmUploadFlexibilitiesRequest → ConfirmUploadFlexibilitiesResponse
 ## Upload messages
 - **UploadCsvRequest:** metadata, content, filename
 - **UploadCsvResponse:** upload_id, csv_summary
