@@ -36,9 +36,9 @@
   * `createDaprProxy`
   * `createDaprMetadata`
 * Key files:
-* `flexibility-client.ts` → this wrapper
-* `dapr-client.ts` → shared Dapr utilities
-* `__generated__/` → protobuf-generated code
+  * `flexibility-client.ts` → this wrapper
+  * `dapr-client.ts` → shared Dapr utilities
+  * `__generated__/` → protobuf-generated code
 ## Initialization flow
 * How the client boots up:
   * First API call triggers `getProxy()`
