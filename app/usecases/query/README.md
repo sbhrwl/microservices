@@ -39,12 +39,14 @@ query ExampleQuery($input: FlexibilitiesInput) {
 * Creates `FlexibilityClient` instance
 * Builds `QueryFlexibilitiesRequest` protobuf object
 * Calls `client.queryFlexibilities()`
+* [Documentation](gateway/resolver/README.md)
 ## gRPC client
 * **File:** [`src/clients/flexibility-client.ts`](flexibility-client.ts)
 * `queryFlexibilities()` method
 * Retrieves Dapr proxy
 * Creates dapr metadata with auth token
 * Makes gRPC call via Dapr
+* [Documentation](gateway/client/README.md)
 ## Dapr service invocation
 * Dapr sidecar discovers `gfc-core` service via mDNS
 * Routes gRPC request to target service
@@ -57,8 +59,9 @@ gfc-core gRPC (port 9090)
 ```
 ## gRPC service handler
 * **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](flexibility.proto)
+  * [Documentation](gfc-core/proto/README.md)
 * ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](FlexibilityServiceImpl.java)
-  * [Documentation](serviceimpl/README.md)
+  * [Documentation](gfc-core/serviceimpl/README.md)
 * Validates JWT token (Keycloak)
 * Parses filter & pagination
 * Queries MongoDB
