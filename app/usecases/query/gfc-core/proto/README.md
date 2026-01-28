@@ -9,15 +9,15 @@
 - [Order enum](#order-enum)
 - [Flexibilities collection](#flexibilities-collection)
 ## Package & options
-- **Package:** core.api.flexibility.v1
-- **Java package:** com.landisgyr.gfc.api.v1.flexibility
-- **Go package:** gfc/api/flexibility/v1;apiv1
+- **Package:** `core.api.flexibility.v1`
+- **Java package:** `com.landisgyr.gfc.api.v1.flexibility
+- **Go package:** gfc/api/flexibility/v1;apiv1`
 ## Services
 **FlexibilityService** exposes 4 RPCs:
-- GetFlexibility(GetFlexibilityRequest) → GetFlexibilityResponse
-- QueryFlexibilities(QueryFlexibilitiesRequest) → QueryFlexibilitiesResponse
-- UploadFlexibilities(UploadCsvRequest) → UploadCsvResponse
-- ConfirmUploadFlexibilities(ConfirmUploadFlexibilitiesRequest) → ConfirmUploadFlexibilitiesResponse
+- `GetFlexibility`(GetFlexibilityRequest) → GetFlexibilityResponse
+- `QueryFlexibilities`(QueryFlexibilitiesRequest) → QueryFlexibilitiesResponse
+- `UploadFlexibilities`(UploadCsvRequest) → UploadCsvResponse
+- `ConfirmUploadFlexibilities`(ConfirmUploadFlexibilitiesRequest) → ConfirmUploadFlexibilitiesResponse
 ## Upload messages
 - **UploadCsvRequest:** metadata, content, filename
 - **UploadCsvResponse:** upload_id, csv_summary
