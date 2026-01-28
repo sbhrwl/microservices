@@ -12,3 +12,85 @@
   - [File upload](usecases/fileupload/README.md)
   - [Running the app](usecases/running-app/README.md)
   - [Query flexibilities](usecases/query/README.md)
+
+```mermaid
+classDiagram
+direction TD
+
+class UploadCsvRequest {
+  string metadata
+  bytes content
+  string filename
+}
+
+class UploadCsvResponse {
+  string upload_id
+  CsvSummary csv_summary
+}
+
+class CsvSummary {
+  FileMetadata file_metadata
+  int32 total_rows
+  int32 invalid_rows
+  FlexibilityTypeCount[] flexibility_type_counts
+  ErrorDetails error_details
+}
+
+class FileMetadata {
+  string filename
+  int64 file_size_bytes
+  Timestamp uploaded_at
+}
+
+class FlexibilityTypeCount {
+  string flexibility_type
+  int32 count
+}
+
+class ErrorDetails {
+  RowError[] errors
+}
+
+class RowError {
+  int32 row_number
+  string column_name
+  string error_message
+}
+
+class ConfirmUploadFlexibilitiesRequest {
+  string upload_id
+}
+
+class ConfirmUploadFlexibilitiesResponse {
+  string upload_id
+  ImportSummary import_summary
+}
+
+class ImportSummary {
+  int32 total_rows
+  int32 imported_rows
+  int32 failed_rows
+  ErrorDetails error_details
+}
+
+%% Relationships
+UploadCsvResponse --> CsvSummary
+CsvSummary --> FileMetadata
+CsvSummary --> FlexibilityTypeCount
+CsvSummary --> ErrorDetails
+ErrorDetails --> RowError
+
+ConfirmUploadFlexibilitiesResponse --> ImportSummary
+ImportSummary --> ErrorDetails
+
+%% RPC calls
+class GRPC {
+  +UploadFlexibilities(UploadCsvRequest) returns UploadCsvResponse
+  +ConfirmUploadFlexibilities(ConfirmUploadFlexibilitiesRequest) returns ConfirmUploadFlexibilitiesResponse
+}
+
+GRPC --> UploadCsvRequest
+GRPC --> UploadCsvResponse
+GRPC --> ConfirmUploadFlexibilitiesRequest
+GRPC --> ConfirmUploadFlexibilitiesResponse
+```
