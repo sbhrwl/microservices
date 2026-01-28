@@ -20,7 +20,7 @@
 - Registered via Dagger `@GrpcService`
 ## Class role
 - file: `gfc-core/src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`
-- runtime identity: **Dapr app-id = gfc-service**
+- runtime identity: **Dapr app-id = gfc-core**
 - responsibility:
   - serve gRPC requests
   - orchestrate query, upload, confirm flows
@@ -29,7 +29,7 @@
 ### Queryflexibilities
 - entry point for GraphQL → gRPC calls
 - currently **mock implementation**
-- ignores request filters and pagination
+- `ignores request filters and pagination`
 ### Getflexibility
 - stub only
 - not implemented
