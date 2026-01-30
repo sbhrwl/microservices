@@ -16,7 +16,5 @@ gfc-core Dapr (port 50012)
 gfc-core gRPC (port 9090)
 ```
 ## gRPC service handler
-* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](gfc-core/proto/flexibility.proto)
-  * [Documentation](gfc-core/proto/README.md)
 * ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](gfc-core/serviceimpl/FlexibilityServiceImpl.java)
   * [Documentation](gfc-core/serviceimpl/README.md)
