@@ -9,6 +9,5 @@
 - Use cases
   - [Switching flexibilities](usecases/switching/README.md)
   - [Organization API](usecases/organization/README.md)
-  - [File upload](usecases/fileupload/README.md)
   - [Running the app](usecases/running-app/README.md)
-  - [Query flexibilities](usecases/query/README.md)
+  - [Import flexibilities](usecases/import-flexibilities/README.md)
