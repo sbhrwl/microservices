@@ -1,4 +1,4 @@
-# File upload
+# Confirm upload
 - [Basics](basics/README.md)
 - [Protos](#protos)
 - [GraphQL schema](#graphql-schema)
