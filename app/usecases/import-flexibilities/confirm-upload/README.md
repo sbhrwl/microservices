@@ -3,8 +3,7 @@
 - [Protos](#protos)
 - [GraphQL schema](#graphql-schema)
 - [Response](#response)
-- [Flexibilities import route](#flexibilities-import-route)
-- [GraphQL query entry](#graphql-query-entry)
+- [GraphQL mutation entry](#graphql-mutation-entry)
 - [Schema definition](#schema-definition)
 - [Resolver execution](#resolver-execution)
 - [gRPC client](#grpc-client)
@@ -224,10 +223,7 @@ ErrorDetails --> RowError
   }
 }
 ```
-## Flexibilities import route
-- [`routes/flexibilities-import.route.ts`](routes/flexibilities-import.route.ts)
-- `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
-## GraphQL query entry
+## GraphQL mutation entry
 - **File:** GraphQL Playground / client: `http://127.0.0.1:4000/api/graphql`
 - Query
 ```graphql
