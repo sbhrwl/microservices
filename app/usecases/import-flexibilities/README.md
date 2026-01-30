@@ -1,3 +1,3 @@
 # Import flexibilities
-- [File upload](usecases/fileupload/README.md)
-- [Query flexibilities](usecases/query/README.md)
+- [File upload](fileupload/README.md)
+- [Query flexibilities](query/README.md)
