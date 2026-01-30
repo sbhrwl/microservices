@@ -3,7 +3,7 @@
 - [Dapr service invocation](#dapr-service-invocation)
 - [gRPC service handler](#grpc-service-handler)
 ## Flexibilities import route
-- [`routes/flexibilities-import.route.ts`](routes/flexibilities-import.route.ts)
+- [`routes/flexibilities-import.route.ts`](gateway/routes/flexibilities-import.route.ts)
 - `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
 ## Dapr service invocation
 * Dapr sidecar discovers `gfc-core` service via mDNS
