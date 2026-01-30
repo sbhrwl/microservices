@@ -1,0 +1,18 @@
+type Query {
+    """
+    Get flexibilities
+    """
+    flexibilities(input: FlexibilitiesInput): Flexibilities
+
+    """
+    Get a single flexibility by ID
+    """
+    flexibility(input: FlexibilityInput): Flexibility
+}
+
+type Mutation {
+    """
+    Confirm the uploaded flexibilities file
+    """
+    confirmUploadFlexibilities(input: ConfirmUploadFlexibilitiesInput!): ConfirmFlexibilityUploadResult
+}
