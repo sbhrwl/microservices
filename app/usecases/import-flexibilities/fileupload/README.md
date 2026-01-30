@@ -239,7 +239,6 @@ query ExampleQuery($input: FlexibilitiesInput) {
 }
 ````
 ## Schema definition
-* `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
 * **File:** [`graphql/operations.graphql`](gateway/graphql/operations.graphql)
   * Defines the flexibilities `query and mutations signature`
 * **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
