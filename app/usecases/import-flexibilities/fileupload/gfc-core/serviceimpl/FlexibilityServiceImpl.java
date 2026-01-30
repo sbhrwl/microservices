@@ -1,21 +1,23 @@
 package com.landisgyr.gfc.grpc;
 
-import static com.landisgyr.gfc.keycloak.SecurityUtils.validateAccess;
-
-import com.google.protobuf.FieldMask;
+import com.google.protobuf.Timestamp;
 import com.landisgyr.gfc.api.v1.flexibility.FlexibilityPb;
 import com.landisgyr.gfc.api.v1.flexibility.FlexibilityServiceGrpc;
 import com.landisgyr.gfc.config.ApplicationSetting;
-import com.landisgyr.gfc.domain.common.GenericPage;
-import com.landisgyr.gfc.domain.device.*;
-import com.landisgyr.gfc.domain.organization.DeviceIdentifierType;
-import com.landisgyr.gfc.domain.query.Sorting;
-import com.landisgyr.gfc.domain.query.filters.SearchFilter;
+import com.landisgyr.gfc.dao.FlexibilityRsDao;
+import com.landisgyr.gfc.domain.flexibility.Flexibility;
+import com.landisgyr.gfc.domain.flexibility.FlexibilityCsvParser;
 import com.landisgyr.gfc.exceptions.InvalidRequestException;
-import com.landisgyr.gfc.grpc.support.FieldMaskUtils;
 import com.landisgyr.gfc.services.*;
 import dagger.grpc.server.GrpcService;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.inject.Inject;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -24,27 +26,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.*;
-import javax.inject.Inject;
-
 @GrpcService(grpcClass = FlexibilityServiceGrpc.class)
 public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilityServiceImplBase {
   private final FlexibilityQueryService flexibilityQueryService;
   private final FlexibilityRegistrationService deviceRegistrationService;
   private final FlexibilityMutationService flexibilityMutationService;
+  private final FlexibilityRsDao flexibilityRsDao;
+  private final FlexibilityUploadService uploadService;
 
   private static final Logger logger = LoggerFactory.getLogger(FlexibilityServiceImpl.class);
 
   private final ApplicationSetting.FeatureFlags featureFlags;
 
   public static final String COMMA = ",";
-
   public static final Character DOUBLE_QUOTE_CHAR = '"';
 
   @Inject
@@ -52,13 +46,14 @@ public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilitySe
       FlexibilityQueryService flexibilityQueryService,
       FlexibilityRegistrationService deviceRegistrationService,
       FlexibilityMutationService flexibilityMutationService,
+      FlexibilityRsDao flexibilityRsDao,
+      FlexibilityUploadService uploadService,
       ApplicationSetting.FeatureFlags featureFlags) {
     this.flexibilityQueryService = flexibilityQueryService;
     this.deviceRegistrationService = deviceRegistrationService;
     this.flexibilityMutationService = flexibilityMutationService;
-
-    // TODO:
-    // https://gitlab.cicd.landisgyr.com/landisgyr/rnd/emea/greenfield-gfc/emea-gfc-dev-app/-/issues/464
+    this.flexibilityRsDao = flexibilityRsDao;
+    this.uploadService = uploadService;
     this.featureFlags = featureFlags;
   }
 
@@ -67,76 +62,105 @@ public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilitySe
       FlexibilityPb.QueryFlexibilitiesRequest request,
       StreamObserver<FlexibilityPb.QueryFlexibilitiesResponse> responseObserver) {
 
-    logger.info("Querying flexibilities");
+    logger.info("Querying flexibilities with filters: {}", request);
 
     try {
-      // Create mock flexibilities with realistic data
-      List<FlexibilityPb.Flexibility> flexibilities = new ArrayList<>();
+      // Extract filter parameters from request
+      FlexibilityPb.FlexibilityQueryFilter filter =
+          request.hasFilter()
+              ? request.getFilter()
+              : FlexibilityPb.FlexibilityQueryFilter.getDefaultInstance();
 
-      // Define flexibility types
-      String[] types = {
-        "xxBoiler", "Lighting", "Heat pump", "Beleuchtung", "Wärmepumpe", "Elektroauto", "PV"
-      };
-      String[] baseIds = {"53851129", "53851130", "53851131", "53851142", "53851143", "53851163"};
+      List<String> flexibilityIdIn = filter.getFlexibilityIdInList();
+      List<String> flexibilityNameIn = filter.getFlexibilityNameInList();
+      List<String> flexibilityTypeIn = filter.getFlexibilityTypeInList();
 
-      // Generate flexibilities for base IDs with suffixes
-      for (String baseId : baseIds) {
-        int count =
-            baseId.equals("53851142") || baseId.equals("53851143") || baseId.equals("53851163")
-                ? 1
-                : 4;
+      // Use default pagination values since proto doesn't have these fields yet
+      int pageNumber = 1;
+      int pageSize = 50;
 
-        for (int i = 1; i <= count; i++) {
-          String id = baseId + "_" + i;
-          String name = "L" + id;
-          String type = getFlexibilityType(baseId, i);
+      String orgCode = "GFC_CPE"; // TODO: Get from request context
 
-          FlexibilityPb.Flexibility flexibility =
-              FlexibilityPb.Flexibility.newBuilder()
-                  .setId(id)
-                  .setName(name)
-                  .setFlexibilityType(type)
-                  .build();
+      logger.info(
+          "Query parameters - Page: {}, Size: {}, OrgCode: {}, Filters: [IdIn={}, NameIn={}, TypeIn={}]",
+          pageNumber,
+          pageSize,
+          orgCode,
+          flexibilityIdIn.size(),
+          flexibilityNameIn.size(),
+          flexibilityTypeIn.size());
 
-          flexibilities.add(flexibility);
-        }
-      }
+      // Query from DAO
+      FlexibilityRsDao.QueryResult queryResult =
+          flexibilityRsDao.findFlexibilities(
+              flexibilityIdIn.isEmpty() ? null : flexibilityIdIn,
+              flexibilityNameIn.isEmpty() ? null : flexibilityNameIn,
+              flexibilityTypeIn.isEmpty() ? null : flexibilityTypeIn,
+              pageNumber,
+              pageSize);
 
-      // Add PV flexibilities
-      for (int i = 1; i <= 2; i++) {
-        String id = String.format("%02d_PV", i);
-        FlexibilityPb.Flexibility flexibility =
-            FlexibilityPb.Flexibility.newBuilder()
-                .setId(id)
-                .setName(id)
-                .setFlexibilityType("PV")
-                .build();
+      // Convert MongoDB documents to Flexibility domain objects
+      List<Flexibility> flexibilities =
+          queryResult.getDocuments().stream()
+              .map(flexibilityRsDao::fromDocument)
+              .collect(Collectors.toList());
 
-        flexibilities.add(flexibility);
-      }
+      logger.info(
+          "Retrieved {} flexibilities from database (total: {})",
+          flexibilities.size(),
+          queryResult.getTotalCount());
 
-      FlexibilityPb.Flexibilities.Builder builder = FlexibilityPb.Flexibilities.newBuilder();
-      builder.addAllItems(flexibilities);
+      // Convert domain objects to protobuf messages
+      List<FlexibilityPb.Flexibility> flexibilityProtos =
+          flexibilities.stream().map(this::toFlexibilityProto).collect(Collectors.toList());
+
+      // Build response with only the fields that exist in proto
+      FlexibilityPb.Flexibilities flexibilitiesMsg =
+          FlexibilityPb.Flexibilities.newBuilder().addAllItems(flexibilityProtos).build();
 
       FlexibilityPb.QueryFlexibilitiesResponse response =
           FlexibilityPb.QueryFlexibilitiesResponse.newBuilder()
-              .setFlexibilities(builder.build())
+              .setFlexibilities(flexibilitiesMsg)
               .build();
 
       responseObserver.onNext(response);
       responseObserver.onCompleted();
 
+      logger.info("Successfully returned {} flexibilities", flexibilityProtos.size());
+
     } catch (Exception e) {
       logger.error("Error querying flexibilities", e);
-      responseObserver.onError(e);
+      responseObserver.onError(
+          Status.INTERNAL
+              .withDescription("Failed to query flexibilities: " + e.getMessage())
+              .withCause(e)
+              .asRuntimeException());
     }
   }
 
-  @Override
-  public void getFlexibility(
-      FlexibilityPb.GetFlexibilityRequest request,
-      StreamObserver<FlexibilityPb.GetFlexibilityResponse> responseObserver) {
-    super.getFlexibility(request, responseObserver);
+  /**
+   * Convert domain Flexibility to protobuf Flexibility. Only maps fields that exist in the proto
+   * definition.
+   */
+  private FlexibilityPb.Flexibility toFlexibilityProto(Flexibility flexibility) {
+    FlexibilityPb.Flexibility.Builder builder = FlexibilityPb.Flexibility.newBuilder();
+
+    // Only set fields that definitely exist in proto
+    if (flexibility.getFlexibilityId() != null) {
+      builder.setId(flexibility.getFlexibilityId());
+    }
+
+    if (flexibility.getFlexibilityName() != null) {
+      builder.setName(flexibility.getFlexibilityName());
+    }
+
+    if (flexibility.getFlexibilityType() != null) {
+      builder.setFlexibilityType(flexibility.getFlexibilityType());
+    }
+
+    // TODO: Add more field mappings once proto is updated with all fields
+
+    return builder.build();
   }
 
   @Override
@@ -144,15 +168,15 @@ public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilitySe
       FlexibilityPb.UploadCsvRequest request,
       StreamObserver<FlexibilityPb.UploadCsvResponse> responseObserver) {
 
-    logger.info(
-        "Received Flexibilities file: {}",
-        new String(
-            request
-                .getContent()
-                .substring(0, Math.min(128, request.getContent().size()))
-                .toByteArray()));
+    logger.info("Received Flexibilities file: {}", request.getFilename());
 
     String uploadId = UUID.randomUUID().toString();
+    String orgCode = "GFC_CPE"; // TODO: Get from request context
+
+    List<Flexibility> validFlexibilities = new ArrayList<>();
+    List<FlexibilityPb.RowError> errors = new ArrayList<>();
+    Map<String, Integer> typeCountMap = new HashMap<>();
+    int totalRows = 0;
 
     try (Reader reader = new InputStreamReader(request.getContent().newInput());
         CSVParser csvParser =
@@ -165,111 +189,92 @@ public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilitySe
                 .setQuote(DOUBLE_QUOTE_CHAR)
                 .setQuoteMode(QuoteMode.MINIMAL)
                 .setTrim(true)
-                .get()
+                .build()
                 .parse(reader)) {
 
-      List<String> uniqueColumns = List.of("FlexibilityId", "Tenant");
-
-      if (!new HashSet<>(csvParser.getHeaderNames()).containsAll(uniqueColumns)) {
-        logger.warn(
-            "Received: {}",
-            new String(
-                request
-                    .getContent()
-                    .substring(0, Math.min(128, request.getContent().size()))
-                    .toByteArray()));
-
+      // Validate required columns exist
+      List<String> requiredColumns = List.of("FlexibilityId");
+      if (!new HashSet<>(csvParser.getHeaderNames()).containsAll(requiredColumns)) {
         throw new InvalidRequestException(
-            "Missing unique columns. Expected=%s. Actual=%s",
-            StringUtils.join(uniqueColumns), StringUtils.join(csvParser.getHeaderNames()));
+            "Missing required columns. Expected=%s. Actual=%s",
+            StringUtils.join(requiredColumns), StringUtils.join(csvParser.getHeaderNames()));
       }
 
+      // Parse each CSV row
+      for (CSVRecord record : csvParser) {
+        totalRows++;
+        int rowNumber = (int) record.getRecordNumber();
+
+        try {
+          Flexibility flexibility = FlexibilityCsvParser.parseRecord(record, rowNumber);
+          validFlexibilities.add(flexibility);
+
+          String type = flexibility.getFlexibilityType();
+          if (type != null) {
+            typeCountMap.merge(type, 1, Integer::sum);
+          }
+
+        } catch (IllegalArgumentException e) {
+          errors.add(
+              FlexibilityPb.RowError.newBuilder()
+                  .setRowNumber(rowNumber)
+                  .setColumnName("FlexibilityId")
+                  .setErrorMessage(e.getMessage())
+                  .build());
+        }
+      }
+
+      logger.info(
+          "CSV parsing completed. Total rows: {}, Valid: {}, Invalid: {}",
+          totalRows,
+          validFlexibilities.size(),
+          errors.size());
+
+      // Store the CSV file for later confirmation
+      uploadService.storeUpload(
+          uploadId, request.getFilename(), request.getContent().toByteArray(), orgCode);
+
     } catch (IOException e) {
-      throw new InvalidRequestException("Error parsing cvs", e);
+      throw new InvalidRequestException("Error parsing csv", e);
     }
 
-    FlexibilityPb.CsvSummary.Builder summary =
+    // Build flexibility type counts
+    List<FlexibilityPb.FlexibilityTypeCount> typeCounts =
+        typeCountMap.entrySet().stream()
+            .map(
+                entry ->
+                    FlexibilityPb.FlexibilityTypeCount.newBuilder()
+                        .setFlexibilityType(entry.getKey())
+                        .setCount(entry.getValue())
+                        .build())
+            .collect(Collectors.toList());
+
+    // Build error details
+    FlexibilityPb.ErrorDetails errorDetails =
+        FlexibilityPb.ErrorDetails.newBuilder().addAllErrors(errors).build();
+
+    // Build CSV summary
+    FlexibilityPb.CsvSummary summary =
         FlexibilityPb.CsvSummary.newBuilder()
-                .setTotalRows(100)
-                .setInvalidRows(12)
+            .setTotalRows(totalRows)
+            .setInvalidRows(errors.size())
             .setFileMetadata(
                 FlexibilityPb.FileMetadata.newBuilder()
                     .setFilename(request.getFilename())
                     .setFileSizeBytes(request.getContent().size())
                     .setUploadedAt(
-                        com.google.protobuf.Timestamp.newBuilder()
+                        Timestamp.newBuilder()
                             .setSeconds(System.currentTimeMillis() / 1000)
-                            .setNanos((int) ((System.currentTimeMillis() % 1000) * 1000000))
                             .build())
                     .build())
-            .addAllFlexibilityTypeCounts(
-                Arrays.asList(
-                    FlexibilityPb.FlexibilityTypeCount.newBuilder()
-                        .setFlexibilityType("Boiler")
-                        .setCount(45)
-                        .build(),
-                    FlexibilityPb.FlexibilityTypeCount.newBuilder()
-                        .setFlexibilityType("Heat pump")
-                        .setCount(32)
-                        .build(),
-                    FlexibilityPb.FlexibilityTypeCount.newBuilder()
-                        .setFlexibilityType("Lighting")
-                        .setCount(28)
-                        .build(),
-                    FlexibilityPb.FlexibilityTypeCount.newBuilder()
-                        .setFlexibilityType("PV")
-                        .setCount(18)
-                        .build()))
-            .setErrorDetails(
-                FlexibilityPb.ErrorDetails.newBuilder()
-                    .addAllErrors(
-                        Arrays.asList(
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(5)
-                                .setColumnName("FlexibilityId")
-                                .setErrorMessage("Duplicate FlexibilityId found: FLEX-001")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(12)
-                                .setColumnName("Tenant")
-                                .setErrorMessage("Invalid tenant format: expected alphanumeric")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(18)
-                                .setColumnName("FlexibilityId")
-                                .setErrorMessage("Duplicate FlexibilityId found: FLEX-042")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(23)
-                                .setColumnName("FlexibilityType")
-                                .setErrorMessage("Unknown flexibility type: InvalidType")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(31)
-                                .setColumnName("Name")
-                                .setErrorMessage("Missing required field: Name")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(45)
-                                .setColumnName("FlexibilityId")
-                                .setErrorMessage("Duplicate FlexibilityId found: FLEX-078")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(67)
-                                .setColumnName("Capacity")
-                                .setErrorMessage("Invalid format: expected numeric value")
-                                .build(),
-                            FlexibilityPb.RowError.newBuilder()
-                                .setRowNumber(89)
-                                .setColumnName("Location")
-                                .setErrorMessage("Missing required field: Location")
-                                .build()))
-                    .build());
+            .addAllFlexibilityTypeCounts(typeCounts)
+            .setErrorDetails(errorDetails)
+            .build();
 
     FlexibilityPb.UploadCsvResponse response =
         FlexibilityPb.UploadCsvResponse.newBuilder()
             .setUploadId(uploadId)
-            .setCsvSummary(summary.build())
+            .setCsvSummary(summary)
             .build();
 
     responseObserver.onNext(response);
@@ -280,128 +285,138 @@ public class FlexibilityServiceImpl extends FlexibilityServiceGrpc.FlexibilitySe
   public void confirmUploadFlexibilities(
       FlexibilityPb.ConfirmUploadFlexibilitiesRequest request,
       StreamObserver<FlexibilityPb.ConfirmUploadFlexibilitiesResponse> responseObserver) {
+
     logger.info("confirmUploadFlexibilities for uploadId: {}", request.getUploadId());
-    
-    FlexibilityPb.ConfirmUploadFlexibilitiesResponse response =
-        FlexibilityPb.ConfirmUploadFlexibilitiesResponse.newBuilder()
-            .setUploadId(request.getUploadId())
-            .setImportSummary(
-                FlexibilityPb.ImportSummary.newBuilder()
-                    .setTotalRows(100)
-                    .setImportedRows(88)
-                    .setFailedRows(12)
-                    .setErrorDetails(
-                        FlexibilityPb.ErrorDetails.newBuilder()
-                            .addAllErrors(
-                                Arrays.asList(
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(5)
-                                        .setColumnName("FlexibilityId")
-                                        .setErrorMessage("Duplicate FlexibilityId found: FLEX-001")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(12)
-                                        .setColumnName("Tenant")
-                                        .setErrorMessage("Invalid tenant format: expected alphanumeric")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(18)
-                                        .setColumnName("FlexibilityId")
-                                        .setErrorMessage("Duplicate FlexibilityId found: FLEX-042")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(23)
-                                        .setColumnName("FlexibilityType")
-                                        .setErrorMessage("Unknown flexibility type: InvalidType")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(31)
-                                        .setColumnName("Name")
-                                        .setErrorMessage("Missing required field: Name")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(45)
-                                        .setColumnName("FlexibilityId")
-                                        .setErrorMessage("Duplicate FlexibilityId found: FLEX-078")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(67)
-                                        .setColumnName("Capacity")
-                                        .setErrorMessage("Invalid format: expected numeric value")
-                                        .build(),
-                                    FlexibilityPb.RowError.newBuilder()
-                                        .setRowNumber(89)
-                                        .setColumnName("Location")
-                                        .setErrorMessage("Missing required field: Location")
-                                        .build()))
-                            .build())
-                    .build())
-            .build();
-    
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
-  }
 
-  private String getFlexibilityType(String baseId, int index) {
-    // Map flexibility types based on baseId and index
-    switch (baseId) {
-      case "53851129":
-      case "53851130":
-        switch (index) {
-          case 1:
-            return "Boiler";
-          case 2:
-            return "Lighting";
-          case 3:
-            return "Boiler";
-          case 4:
-            return "Heat pump";
+    String uploadId = request.getUploadId();
+
+    try {
+      // Retrieve the stored CSV file
+      byte[] csvContent = uploadService.retrieveUpload(uploadId);
+      String orgCode = uploadService.getOrgCode(uploadId);
+
+      logger.info(
+          "Retrieved CSV for uploadId: {}. Size: {} bytes, OrgCode: {}",
+          uploadId,
+          csvContent.length,
+          orgCode);
+
+      // Parse CSV file again
+      List<Flexibility> validFlexibilities = new ArrayList<>();
+      List<FlexibilityPb.RowError> errors = new ArrayList<>();
+      int totalRows = 0;
+
+      try (Reader reader = new InputStreamReader(new java.io.ByteArrayInputStream(csvContent));
+          CSVParser csvParser =
+              CSVFormat.DEFAULT
+                  .builder()
+                  .setHeader()
+                  .setSkipHeaderRecord(true)
+                  .setDelimiter(COMMA)
+                  .setEscape(DOUBLE_QUOTE_CHAR)
+                  .setQuote(DOUBLE_QUOTE_CHAR)
+                  .setQuoteMode(QuoteMode.MINIMAL)
+                  .setTrim(true)
+                  .build()
+                  .parse(reader)) {
+
+        List<String> requiredColumns = List.of("FlexibilityId");
+        if (!new HashSet<>(csvParser.getHeaderNames()).containsAll(requiredColumns)) {
+          throw new InvalidRequestException(
+              "Missing required columns. Expected=%s. Actual=%s",
+              StringUtils.join(requiredColumns), StringUtils.join(csvParser.getHeaderNames()));
         }
-        break;
-      case "53851131":
-        switch (index) {
-          case 1:
-            return "Boiler";
-          case 2:
-            return "Beleuchtung";
-          case 3:
-            return "Boiler";
-          case 4:
-            return "Wärmepumpe";
+
+        for (CSVRecord record : csvParser) {
+          totalRows++;
+          int rowNumber = (int) record.getRecordNumber();
+
+          try {
+            Flexibility flexibility = FlexibilityCsvParser.parseRecord(record, rowNumber);
+            validFlexibilities.add(flexibility);
+          } catch (IllegalArgumentException e) {
+            errors.add(
+                FlexibilityPb.RowError.newBuilder()
+                    .setRowNumber(rowNumber)
+                    .setColumnName("FlexibilityId")
+                    .setErrorMessage(e.getMessage())
+                    .build());
+          }
         }
-        break;
-      case "53851142":
-        switch (index) {
-          case 1:
-            return "Boiler";
-          case 2:
-            return "Beleuchtung";
-        }
-        break;
-      case "53851143":
-      case "53851163":
-        return "Elektroauto";
-    }
-    return "Unknown";
-  }
 
-  private int getOrDefault(int value, int defaultValue) {
-    return (value == 0) ? defaultValue : value;
-  }
-
-  private List<String> toProjectionFields(List<String> fieldNamesList) {
-    List<String> updatedList = new ArrayList<>();
-
-    for (String value : fieldNamesList) {
-      if (value.equals("deviceAliasId")) {
-        updatedList.addAll(
-            List.of(
-                DeviceIdentifierType.SERIAL_NUMBER.getCode(),
-                DeviceIdentifierType.UTILITY_SERIAL_NUMBER.getCode()));
-      } else {
-        updatedList.add(value);
+        logger.info(
+            "CSV re-parsing completed. Total rows: {}, Valid: {}, Invalid: {}",
+            totalRows,
+            validFlexibilities.size(),
+            errors.size());
       }
+
+      // Check for existing flexibilities
+      List<String> flexibilityIds =
+          validFlexibilities.stream()
+              .map(Flexibility::getFlexibilityId)
+              .collect(Collectors.toList());
+
+      Set<String> existingIds =
+          flexibilityRsDao.findExistingFlexibilityIds(flexibilityIds, orgCode);
+
+      logger.info(
+          "Duplicate check: {} flexibilities already exist in database", existingIds.size());
+
+      // Separate new vs existing
+      List<Flexibility> newFlexibilities =
+          validFlexibilities.stream()
+              .filter(f -> !existingIds.contains(f.getFlexibilityId()))
+              .collect(Collectors.toList());
+
+      logger.info("Import plan: {} new flexibilities", newFlexibilities.size());
+
+      // Insert new flexibilities
+      int insertedCount = 0;
+      if (!newFlexibilities.isEmpty()) {
+        try {
+          insertedCount = flexibilityRsDao.bulkInsert(newFlexibilities, orgCode);
+          logger.info("Successfully inserted {} new flexibilities", insertedCount);
+        } catch (Exception e) {
+          logger.error("Failed to insert flexibilities", e);
+          errors.add(
+              FlexibilityPb.RowError.newBuilder()
+                  .setRowNumber(0)
+                  .setColumnName("Database")
+                  .setErrorMessage("Failed to insert flexibilities: " + e.getMessage())
+                  .build());
+        }
+      }
+
+      // Build response
+      FlexibilityPb.ImportSummary.Builder summaryBuilder =
+          FlexibilityPb.ImportSummary.newBuilder()
+              .setTotalRows(totalRows)
+              .setImportedRows(insertedCount)
+              .setFailedRows(errors.size());
+
+      if (!errors.isEmpty()) {
+        summaryBuilder.setErrorDetails(
+            FlexibilityPb.ErrorDetails.newBuilder().addAllErrors(errors).build());
+      }
+
+      FlexibilityPb.ConfirmUploadFlexibilitiesResponse response =
+          FlexibilityPb.ConfirmUploadFlexibilitiesResponse.newBuilder()
+              .setUploadId(uploadId)
+              .setImportSummary(summaryBuilder.build())
+              .build();
+
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+      logger.info("Import completed. Inserted: {}, Failed: {}", insertedCount, errors.size());
+
+    } catch (Exception e) {
+      logger.error("Error during confirmUploadFlexibilities", e);
+      responseObserver.onError(
+          Status.INTERNAL
+              .withDescription("Failed to import flexibilities: " + e.getMessage())
+              .withCause(e)
+              .asRuntimeException());
     }
-    return updatedList;
   }
 }
