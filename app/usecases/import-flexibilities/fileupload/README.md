@@ -224,6 +224,7 @@ ErrorDetails --> RowError
 }
 ```
 ## GraphQL query entry
+- `curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`
 - **File:** GraphQL Playground / client: `http://127.0.0.1:4000/api/graphql`
 - Query
 ```graphql
