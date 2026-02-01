@@ -11,8 +11,9 @@
   * Build and run settings
   * Go to `Modify options` and Add this as "**Add VM options**"
     ```bash
--Dconfig.file=gfc-core/src/main/dist/etc/application.conf -Dlogback.configurationFile=gfc-core/src/main/dist/etc/logback.xml -Dlog.appender=STDOUT --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+    -Dconfig.file=gfc-core/src/main/dist/etc/application.conf -Dlogback.configurationFile=gfc-core/src/main/dist/etc/logback.xml -Dlog.appender=STDOUT --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
     ```
+
   * Working directory: `C:/Git/gfc-app`
   * Environment variables: `C:/Git/gfc-app/gfc-core/envfile.env`
 <img src="../images/play-button-config.png">
