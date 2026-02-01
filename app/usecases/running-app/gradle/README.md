@@ -15,8 +15,8 @@
 ```
 <img src="../images/play-button-config.png">
 
-* Working directory: `C:/Git/gfc-app`
-* Environment variables: `C:/Git/gfc-app/gfc-core/envfile.env`
+  * Working directory: `C:/Git/gfc-app`
+  * Environment variables: `C:/Git/gfc-app/gfc-core/envfile.env`
 * Verify gRPC using Kreya
   * Refresh protos from menu
   * Check `GetRevisionInfo`
