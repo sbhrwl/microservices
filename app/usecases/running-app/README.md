@@ -10,3 +10,5 @@
 
 - google-java-formatter-plugin
 <img src="images/google-java-formatter-plugin.png">
+
+<img src="images/google-java-formatter.png">
