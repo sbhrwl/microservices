@@ -1,7 +1,6 @@
 # Running the application
 - [Gradle](gradle/README.md)
 - [Maven](maven/README.md)
-
 - Java setup via IntelliJ IDEA
 <img src="images/java-setup.png">
 
