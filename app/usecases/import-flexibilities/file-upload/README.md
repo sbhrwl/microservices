@@ -8,7 +8,6 @@
 * [Design notes](#design-notes)
 * [Response structure](#response-structure)
 ## Overview
-* Multipart CSV sent via HTTP
 * Gateway translates `HTTP → gRPC`
 * Core `parses`, `validates`, `stores` CSV
 * MongoDB used for temporary `persistence`
@@ -21,6 +20,7 @@ flowchart TD
     B -->|"gRPC / protobuf"| C
 ```
 ## HTTP post
+* Multipart CSV sent via HTTP
 * **`curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`**
 ## Tracing the code
 * Route handles HTTP and file extraction
