@@ -1,7 +1,7 @@
 # Import flexibilities
 - [File upload](file-upload/README.md)
 - [Confirm upload](confirm-upload/README.md)
-- [Query flexibilities](query/README.md)
+- [Query flexibilities](query-flexibilities/README.md)
 ---
 - [Apollo server](apollo-server/README.md)
 - [Dapr service invocation](#dapr-service-invocation)
