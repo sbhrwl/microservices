@@ -97,18 +97,18 @@ graph TD
 ```
 ## API gateway
 ### Schema definition
-* **File:** [`graphql/operations.graphql`](gateway/graphql/operations.graphql)
+* **File:** [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
   * Defines the flexibilities `query and mutations signature`
   * Declares `confirmUploadFlexibilities` mutation
   * Defines input and response contract
   * Single source of truth for API shape
-* **File:** [`graphql/core/api/v1/flexibility.graphql`](gateway/graphql/flexibility.graphql)
+* **File:** [`graphql/core/api/v1/flexibility.graphql`](../file-upload/gateway/graphql/flexibility.graphql)
   * Defines `Flexibility` type (what data you can read)
   * Defines `Flexibilities` type (what data you can read)
   * Defines `ConfirmUploadFlexibilitiesInput` input type (what data you can send)
   * [Documentation](gateway/graphql/README.md)
 ### Resolver execution
-* **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](gateway/resolver/flexibilities.ts)
+* **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver/flexibilities.ts)
 * Maps mutation name to resolver function
 * Thin routing layer only
 * No business logic
@@ -129,12 +129,12 @@ graph TD
 * Handles encode/decode and builders
 * Ensures type safety across gateway and core
 ### gRPC client
-* **File:** [`src/clients/flexibility-client.ts`](gateway/client/flexibility-client.ts)
+* **File:** [`src/clients/flexibility-client.ts`](../file-upload/gateway/clients/flexibility-client.ts)
 * `queryFlexibilities()` method
 * Retrieves Dapr proxy
 * Creates dapr metadata with auth token
 * Makes gRPC call via Dapr
-* [Documentation](gateway/client/README.md)
+* [Documentation](../file-upload/gateway/clients/README.md)
 ## Dapr service invocation
 * Dapr sidecar discovers `gfc-core` service via mDNS
 * Routes gRPC request to target service
@@ -147,10 +147,10 @@ gfc-core gRPC (port 9090)
 ```
 ## GFC core
 ### gRPC service handler
-* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](gfc-core/proto/flexibility.proto)
-  * [Documentation](gfc-core/proto/README.md)
-* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](gfc-core/serviceimpl/FlexibilityServiceImpl.java)
-  * [Documentation](gfc-core/serviceimpl/README.md)
+* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](../file-upload/gfc-core/proto/flexibility.proto)
+  * [Documentation](../file-upload/gfc-core/proto/README.md)
+* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](../file-upload/gfc-core/serviceimpl/FlexibilityServiceImpl.java)
+  * [Documentation](../file-upload/gfc-core/serviceimpl/README.md)
 * Validates JWT token (Keycloak)
 ### FlexibilityServiceImpl.java
 * gRPC entry point
