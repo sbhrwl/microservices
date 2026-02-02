@@ -1,6 +1,5 @@
 # File upload
 * [Overview](#overview)
-* [Dapr service invocation](#dapr-service-invocation)
 * [Tracing the code](#tracing-the-code)
 * [Dependencies](#dependencies)
 * [API gateway](#api-gateway)
@@ -19,18 +18,6 @@ flowchart TD
     C --> D["mongodb"]
 
     B -->|"gRPC / protobuf"| C
-```
-## Dapr service invocation
-* Dapr sidecar discovers `gfc-core` service via mDNS
-* Routes gRPC request to target service
-```mermaid
-flowchart TD
-    A["api gateway dapr (port 4000)"]
-    B["gfc-core dapr (port 50012)"]
-    C["gfc-core grpc (port 9090)"]
-
-    A --> B
-    B --> C
 ```
 ## Tracing the code
 * Route handles HTTP and file extraction
