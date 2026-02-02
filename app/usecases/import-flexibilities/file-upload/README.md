@@ -1,5 +1,6 @@
 # File upload
 * [Overview](#overview)
+* [HTTP post](#http-post)
 * [Tracing the code](#tracing-the-code)
 * [Dependencies](#dependencies)
 * [API gateway](#api-gateway)
@@ -19,6 +20,8 @@ flowchart TD
 
     B -->|"gRPC / protobuf"| C
 ```
+## HTTP post
+* **`curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`**
 ## Tracing the code
 * Route handles HTTP and file extraction
 * Client wraps gRPC invocation
