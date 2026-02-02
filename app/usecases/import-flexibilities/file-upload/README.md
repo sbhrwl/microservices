@@ -52,7 +52,7 @@ flowchart TD
         B1["FlexibilityServiceImpl.java"]
         B2["FlexibilityCsvParser.java"]
         B3["FlexibilityUploadService.java"]
-        B4["FlexibilityRsDao.java"]
+        B4["flexibility_uploads collection"]
 
         B1 --> B2
         B2 --> B3
@@ -119,9 +119,18 @@ flowchart TD
 * **FlexibilityUploadService**: [`services/FlexibilityUploadService.java`](gfc-core/services/FlexibilityUploadService.java)
   * Temporary persistence layer
   * Stores raw CSV and metadata
-* **FlexibilityRsDao**: [`dao/FlexibilityRsDao.java`](gfc-core/dao/FlexibilityRsDao.java)
-  * Not used in upload phase
-  * Used later during confirmation
+* **flexibility_uploads collection**
+  * Mongodb collection
+    ```
+    {
+      "uploadId": "...",
+      "filename": "...",
+      "content": "base64-encoded-string-here",  // ← Binary stored as string
+      "orgCode": "...",
+      "status": "pending",
+      "createdAt": 1234567890
+    }
+    ```
 ## Design notes
 ### Upload pattern
 * Two-phase workflow
