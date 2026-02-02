@@ -117,7 +117,7 @@ graph TD
 * Creates `FlexibilityClient` instance
 * Builds `QueryFlexibilitiesRequest` protobuf object
 * Calls `client.queryFlexibilities()`
-* [Documentation](gateway/resolver/README.md)
+* [Documentation](../file-upload/gateway/resolver/README.md)
 ### confirm-upload-flexibilities.ts
 * Extracts input arguments
 * Builds gRPC proto request
