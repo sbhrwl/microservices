@@ -14,6 +14,11 @@
 - gfc-core owns validation and persistence
   - `gRPC service, domain service, DAO`
 - MongoDB for persistence
+<img src="images/overview.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 graph TD
   A["GraphQL client"] -->|"mutation"| B["api gateway"]
@@ -44,8 +49,14 @@ mutation Mutation($input: ConfirmUploadFlexibilitiesInput!) {
   }
 }
 ```
+</details>
 
 ## Tracing the code
+<img src="images/tracing.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 graph TD
   A["operations.graphql"] --> B["flexibility.graphql"]
@@ -58,11 +69,18 @@ graph TD
   G --> I["FlexibilityDao"]
   I --> J["mongodb"]
 ```
+</details>
+
 ## Dependencies
 - Fastify hosts Apollo
 - Apollo resolves schema to resolver
 - gRPC handles transport and streaming
 - MongoDB driver handles batching and writes
+<img src="images/dependencies.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 graph TD
   A["HTTP POST"] --> B["Fastify"]
@@ -89,6 +107,8 @@ graph TD
   C --> B
   B --> A
 ```
+</details>
+
 ## API gateway
 * **Schema definition**
   * **File:** [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
