@@ -125,23 +125,23 @@ graph TD
 
 ## API gateway
 * **Schema definition**
-  * **File:** [`graphql/operations.graphql`](../api-gateway/graphql/operations.graphql)
+  * [`graphql/operations.graphql`](../api-gateway/graphql/operations.graphql)
     * Defines the flexibilities `query` signature
     * Declares `flexibilities` query
     * Defines input and response contract
     * Single source of truth for API shape
-  * **File:** [`graphql/core/api/v1/flexibility.graphql`](../api-gateway/graphql/flexibility.graphql)
+  * [`graphql/core/api/v1/flexibility.graphql`](../api-gateway/graphql/flexibility.graphql)
     * Defines `Flexibility` type (individual flexibility data)
     * Defines `Flexibilities` type (list with metadata)
     * Defines `FlexibilitiesInput` input type (filters and pagination)
     * Defines `FlexibilityFilter` for filtering options
     * Defines `Pagination` for page control
 * **Resolver execution**
-  * **File:** [`src/resolvers.ts`](../api-gateway/src/resolvers.ts)
+  * [`src/resolvers.ts`](../api-gateway/src/resolvers.ts)
     * Maps query name `flexibilities` to resolver function
     * Thin routing layer only
     * No business logic
-  * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../api-gateway/src/resolver-definitions/core/flexibilities/flexibilities.ts)
+  * [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../api-gateway/src/resolver-definitions/core/flexibilities/flexibilities.ts)
     * Receives GraphQL arguments and context
     * Extracts auth token from context
     * Creates `FlexibilityClient` instance
@@ -159,7 +159,7 @@ graph TD
     * Extracts totalCount from meta
     * Handles errors and converts to GraphQL errors
 * **flexibility.ts** (generated proto bindings)
-  * **File:** [`src/__generated__/core/api/flexibility/v1/flexibility.ts`](../api-gateway/src/__generated__/core/api/flexibility/v1/flexibility.ts)
+  * [`src/__generated__/core/api/flexibility/v1/flexibility.ts`](../api-gateway/src/__generated__/core/api/flexibility/v1/flexibility.ts)
   * Auto-generated from `.proto`
   * Defines `QueryFlexibilitiesRequest` interface
   * Defines `QueryFlexibilitiesResponse` interface
@@ -169,7 +169,7 @@ graph TD
   * Handles encode/decode and builders
   * Ensures type safety across gateway and core
 * **gRPC client**
-  * **File:** [`src/clients/flexibility-client.ts`](../api-gateway/src/clients/flexibility-client.ts)
+  * [`src/clients/flexibility-client.ts`](../api-gateway/src/clients/flexibility-client.ts)
   * `queryFlexibilities()` method
   * Retrieves Dapr proxy
   * Creates dapr metadata with auth token
