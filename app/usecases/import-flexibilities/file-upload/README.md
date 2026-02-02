@@ -11,6 +11,11 @@
 * Gateway translates `HTTP → gRPC`
 * Core `parses`, `validates`, `stores` CSV
 * MongoDB used for temporary `persistence`
+<img src="images/overview.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     A["curl client"] --> B["api gateway"]
@@ -19,6 +24,8 @@ flowchart TD
 
     B -->|"gRPC / protobuf"| C
 ```
+</details>
+
 ## HTTP post
 * Multipart CSV sent via HTTP
 * **`curl -X POST http://localhost:4000/api/flexibilities/import -F file=@Flexibilities-L540.csv`**
@@ -27,6 +34,11 @@ flowchart TD
 * Client wraps gRPC invocation
 * Proto defines shared contract
 * Core parses, validates, stores data
+<img src="images/tracing.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     subgraph G["api gateway"]
@@ -51,11 +63,20 @@ flowchart TD
 
     A3 -->|"gRPC"| B1
 ```
+</details>
+
 ## Dependencies
 * Fastify handles `streaming multipart parsing`
 * gRPC abstracts `HTTP/2 framing`
 * Protobuf enforces `schema consistency`
 * CSV library handles `quoting` and `delimiters`
+<img src="images/dependencies-1.png">
+
+<img src="images/dependencies-2.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
     A["curl multipart request"] --> B["fastify server"]
@@ -79,6 +100,7 @@ flowchart TD
         M --> N["mongodb"]
     end
 ```
+</details>
 
 ## API gateway
 * **Flexibilities import route**: [`routes/flexibilities-import.route.ts`](gateway/routes/flexibilities-import.route.ts)
