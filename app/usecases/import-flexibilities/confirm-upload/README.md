@@ -48,14 +48,15 @@ mutation Mutation($input: ConfirmUploadFlexibilitiesInput!) {
 ## Tracing the code
 ```mermaid
 graph TD
-  A["operations.graphql"] --> B["resolvers.ts"]
-  B --> C["confirm-upload-flexibilities.ts"]
-  C --> D["flexibility.proto (ts bindings)"]
-  C --> E["FlexibilityClient"]
-  E --> F["FlexibilityServiceImpl.java"]
-  F --> G["FlexibilityUploadService"]
-  F --> H["FlexibilityRsDao"]
-  H --> I["mongodb"]
+  A["operations.graphql"] --> B["flexibility.graphql"]
+  B --> C["resolvers.ts"]
+  C --> D["confirm-upload-flexibilities.ts"]
+  D --> E["flexibility.proto (ts bindings)"]
+  D --> F["FlexibilityClient"]
+  F --> G["FlexibilityServiceImpl.java"]
+  G --> H["FlexibilityUploadService"]
+  G --> I["FlexibilityDao"]
+  I --> J["mongodb"]
 ```
 ## Dependencies
 - Fastify hosts Apollo
