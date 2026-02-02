@@ -5,8 +5,8 @@
 * [Dependencies](#dependencies)
 * [API gateway](#api-gateway)
 * [GFC core](#gfc-core)
-* [Design notes](#design-notes)
 * [Response structure](#response-structure)
+* [Design notes](#design-notes)
 ## Overview
 * Gateway translates `HTTP → gRPC`
 * Core `parses`, `validates`, `stores` CSV
@@ -121,6 +121,18 @@ flowchart TD
       "createdAt": 1234567890
     }
     ```
+## Response structure
+```json
+{
+  "uploadId": "uuid",
+  "csvSummary": {
+    "totalRows": 100,
+    "invalidRows": 5,
+    "flexibilityTypeCounts": [],
+    "errorDetails": []
+  }
+}
+```
 ## Design notes
 ### Upload pattern
 * Two-phase workflow
@@ -136,15 +148,3 @@ flowchart TD
 ### Contract safety
 * Protobuf shared schema
 * Strong typing across Node.js and Java
-## Response structure
-```json
-{
-  "uploadId": "uuid",
-  "csvSummary": {
-    "totalRows": 100,
-    "invalidRows": 5,
-    "flexibilityTypeCounts": [],
-    "errorDetails": []
-  }
-}
-```
