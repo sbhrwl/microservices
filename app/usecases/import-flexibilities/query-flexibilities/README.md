@@ -192,7 +192,7 @@ graph TD
     - `flexibilityTypeIn`
   * Uses default pagination values (pageNumber=1, pageSize=50)
   * Gets orgCode from context (currently hardcoded as "GFC_CPE")
-  * Calls `FlexibilityRsDao.findFlexibilities()`
+  * Calls `FlexibilityDao.findFlexibilities()`
   * Converts MongoDB documents to domain objects
   * Maps domain objects to protobuf messages via `toFlexibilityProto()`
   * Builds response with items and metadata
