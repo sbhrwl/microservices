@@ -225,7 +225,7 @@ graph TD
 4. gRPC call to gfc-core via Dapr
 5. FlexibilityServiceImpl receives request
 6. Extracts filters and pagination
-7. Calls FlexibilityRsDao with parameters
+7. Calls FlexibilityDao with parameters
 8. DAO builds MongoDB query
 9. MongoDB executes query with filters and pagination
 10. Results returned to DAO
