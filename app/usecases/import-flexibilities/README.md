@@ -164,6 +164,9 @@ ErrorDetails --> RowError
 </details>
 
 ## Response
+<details>
+  <summary>expand</summary>
+  
 ```json
 {
   "uploadId": "a4fed697-c437-44e4-846f-d0e093283c6f",
@@ -240,3 +243,4 @@ ErrorDetails --> RowError
   }
 }
 ```
+</details>
