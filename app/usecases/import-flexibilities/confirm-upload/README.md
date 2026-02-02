@@ -96,86 +96,75 @@ graph TD
   B --> A
 ```
 ## API gateway
-### Schema definition
-* **File:** [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
-  * Defines the flexibilities `query and mutations signature`
-  * Declares `confirmUploadFlexibilities` mutation
-  * Defines input and response contract
-  * Single source of truth for API shape
-* **File:** [`graphql/core/api/v1/flexibility.graphql`](../file-upload/gateway/graphql/flexibility.graphql)
-  * Defines `Flexibility` type (what data you can read)
-  * Defines `Flexibilities` type (what data you can read)
-  * Defines `ConfirmUploadFlexibilitiesInput` input type (what data you can send)
-  * [Documentation](../file-upload/gateway/graphql/README.md)
-### Resolver execution
-* **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver-definitions/core/flexibilities/flexibilities.ts)
-* Maps mutation name to resolver function
-* Thin routing layer only
-* No business logic
-* Receives GraphQL arguments and context
-* Extracts auth token from context
-* Creates `FlexibilityClient` instance
-* Builds `QueryFlexibilitiesRequest` protobuf object
-* Calls `client.queryFlexibilities()`
-* [Documentation](../file-upload/gateway/resolver-definitions/core/flexibilities/README.md)
-* [confirm-upload-flexibilities.ts](../file-upload/gateway/resolver-definitions/core/flexibilities/confirm-upload-flexibilities.ts)
-* Extracts input arguments
-* Builds gRPC proto request
-* Forwards auth/context metadata
-* Maps proto response to GraphQL type
-* Converts system errors to GraphQL errors
-### flexibility.ts (generated proto bindings)
-* Auto-generated from `.proto`: `\__generated__\core\api\flexibility\v1\flexibility.ts`
-* Handles encode/decode and builders
-* Ensures type safety across gateway and core
-### gRPC client
-* **File:** [`src/clients/flexibility-client.ts`](../file-upload/gateway/clients/flexibility-client.ts)
-* `queryFlexibilities()` method
-* Retrieves Dapr proxy
-* Creates dapr metadata with auth token
-* Makes gRPC call via Dapr
-* [Documentation](../file-upload/gateway/clients/README.md)
-## Dapr service invocation
-* Dapr sidecar discovers `gfc-core` service via mDNS
-* Routes gRPC request to target service
-```
-API Gateway Dapr (port 4000) 
-  ↓ 
-gfc-core Dapr (port 50012)
-  ↓
-gfc-core gRPC (port 9090)
-```
+* **Schema definition**
+  * **File:** [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
+    * Defines the flexibilities `query and mutations signature`
+    * Declares `confirmUploadFlexibilities` mutation
+    * Defines input and response contract
+    * Single source of truth for API shape
+  * **File:** [`graphql/core/api/v1/flexibility.graphql`](../file-upload/gateway/graphql/flexibility.graphql)
+    * Defines `Flexibility` type (what data you can read)
+    * Defines `Flexibilities` type (what data you can read)
+    * Defines `ConfirmUploadFlexibilitiesInput` input type (what data you can send)
+    * [Documentation](../file-upload/gateway/graphql/README.md)
+* **Resolver execution**
+  * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver-definitions/core/flexibilities/flexibilities.ts)
+  * Maps mutation name to resolver function
+  * Thin routing layer only
+  * No business logic
+  * Receives GraphQL arguments and context
+  * Extracts auth token from context
+  * Creates `FlexibilityClient` instance
+  * Builds `QueryFlexibilitiesRequest` protobuf object
+  * Calls `client.queryFlexibilities()`
+  * [Documentation](../file-upload/gateway/resolver-definitions/core/flexibilities/README.md)
+* [**confirm-upload-flexibilities.ts**](../file-upload/gateway/resolver-definitions/core/flexibilities/confirm-upload-flexibilities.ts)
+  * Extracts input arguments
+  * Builds gRPC proto request
+  * Forwards auth/context metadata
+  * Maps proto response to GraphQL type
+  * Converts system errors to GraphQL errors
+* **flexibility.ts** (generated proto bindings)
+  * Auto-generated from `.proto`: `\__generated__\core\api\flexibility\v1\flexibility.ts`
+  * Handles encode/decode and builders
+  * Ensures type safety across gateway and core
+* **gRPC client**: [`src/clients/flexibility-client.ts`](../file-upload/gateway/clients/flexibility-client.ts)
+  * `queryFlexibilities()` method
+  * Retrieves Dapr proxy
+  * Creates dapr metadata with auth token
+  * Makes gRPC call via Dapr
+  * [Documentation](../file-upload/gateway/clients/README.md)
 ## GFC core
 * **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](../file-upload/gfc-core/proto/flexibility.proto)
   * [Documentation](../file-upload/gfc-core/proto/README.md)
-* ServiceImpl: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](../file-upload/gfc-core/serviceimpl/FlexibilityServiceImpl.java)
+* **FlexibilityServiceImpl**: [`src/main/java/com/landisgyr/gfc/grpc/FlexibilityServiceImpl.java`](../file-upload/gfc-core/serviceimpl/FlexibilityServiceImpl.java)
   * [Documentation](../file-upload/gfc-core/serviceimpl/README.md)
-* Validates JWT token (Keycloak)
-* gRPC entry point
-* Orchestrates full import flow
-* No persistence logic inline
-### FlexibilityUploadService: [`services/FlexibilityUploadService.java`](../file-upload/gfc-core/services/FlexibilityUploadService.java)
-* Retrieves uploaded CSV by uploadId
-* Abstracts storage or cache layer
-* Returns raw CSV bytes
-### Apache Commons CSV
-* Parses CSV content
-* Handles headers, quotes, delimiters
-* Streams records row by row
-### FlexibilityCsvParser: [`domain/FlexibilityCsvParser.java`](../file-upload/gfc-core/domain/FlexibilityCsvParser.java)
-* Validates mandatory columns
-* Converts CSV rows to domain objects
-* Collects row-level errors
-### FlexibilityDao: [`dao/FlexibilityDao.java`](../file-upload/gfc-core/domain/FlexibilityDao.java)
-* Queries existing flexibility IDs
-* Performs bulk insert
-* Isolates MongoDB access
-## MongoDB query
-* **Database:** `gfc-dev`
-* **Collection:** `flexibilities` (assumed)
-* Applies filters
-* Executes pagination
-* Returns results + totalCount
+  * Validates JWT token (Keycloak)
+  * gRPC entry point
+  * Orchestrates full import flow
+  * No persistence logic inline
+* **FlexibilityUploadService**: [`services/FlexibilityUploadService.java`](../file-upload/gfc-core/services/FlexibilityUploadService.java)
+  * Retrieves uploaded CSV by uploadId
+  * Abstracts storage or cache layer
+  * Returns raw CSV bytes
+* Apache Commons CSV
+  * Parses CSV content
+  * Handles headers, quotes, delimiters
+  * Streams records row by row
+* **FlexibilityCsvParser**: [`domain/FlexibilityCsvParser.java`](../file-upload/gfc-core/domain/FlexibilityCsvParser.java)
+  * Validates mandatory columns
+  * Converts CSV rows to domain objects
+  * Collects row-level errors
+* **FlexibilityDao**: [`dao/FlexibilityDao.java`](../file-upload/gfc-core/domain/FlexibilityDao.java)
+  * Queries existing flexibility IDs
+  * Performs bulk insert
+  * Isolates MongoDB access
+* MongoDB query
+  * **Database:** `gfc-dev`
+  * **Collection:** `flexibilities` (assumed)
+  * Applies filters
+  * Executes pagination
+  * Returns results + totalCount
 ## Request path
 * GraphQL mutation received
 * Resolver builds gRPC request
