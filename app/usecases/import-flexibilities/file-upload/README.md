@@ -105,6 +105,8 @@ flowchart TD
   * Shared request/response schema
   * Enforces type safety across services
 ## GFC core
+* **Proto:** [`gfc-apis/proto/core/api/flexibility/v1/flexibility.proto`](gfc-core/proto/flexibility.proto)
+  * [Documentation](gfc-core/proto/README.md)
 * **FlexibilityServiceImpl**: [`grpc/FlexibilityServiceImpl.java`](gfc-core/serviceimpl/FlexibilityServiceImpl.java)
   * gRPC entry point
   * Orchestrates upload workflow
