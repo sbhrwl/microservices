@@ -11,8 +11,8 @@
 - [Error handling](#error-handling)
 - [Configuration dependencies](#configuration-dependencies)
 ## GraphQL mutation entry
-- **File:** GraphQL Playground / client: `http://127.0.0.1:4000/api/graphql`
-- Query
+- **GraphQL playground/client**: `http://127.0.0.1:4000/api/graphql`
+- Mutation
 ```graphql
 mutation Mutation($input: ConfirmUploadFlexibilitiesInput!) {
   confirmUploadFlexibilities(input: $input) {
