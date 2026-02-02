@@ -121,7 +121,7 @@ flowchart TD
   * Stores raw CSV and metadata
 * **flexibility_uploads collection**
   * Mongodb collection
-    ```
+    ```json
     {
       "uploadId": "...",
       "filename": "...",
