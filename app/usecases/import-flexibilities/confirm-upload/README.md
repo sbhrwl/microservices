@@ -171,19 +171,16 @@ graph TD
   * Queries existing flexibility IDs
   * Performs bulk insert
   * Isolates MongoDB access
-* MongoDB query
+* MongoDB
   * **Database:** `gfc-dev`
-  * **Collection:** `flexibilities` (assumed)
-  * Applies filters
-  * Executes pagination
-  * Returns results + totalCount
+  * **Collection:** `flexibilities`
 ## Request path
 * GraphQL mutation received
 * Resolver builds gRPC request
 * gRPC call to gfc-core
 * CSV loaded and parsed
-* Rows validated and deduplicated
-* Valid rows inserted into MongoDB
+* Rows validated
+* Binary(base64) file inserted into MongoDB
 ## Response path
 * Import summary built in core
 * gRPC response returned to `FlexibilityClient`
