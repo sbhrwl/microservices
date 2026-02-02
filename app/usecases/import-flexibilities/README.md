@@ -11,15 +11,26 @@
 ## Dapr service invocation
 * Dapr sidecar discovers `gfc-core` service via mDNS
 * Routes gRPC request to target service
+<img src="images/dapr-invocation.png">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
-flowchart TD
+flowchart LR
     A["api gateway dapr (port 4000)"]
     B["gfc-core dapr (port 50012)"]
     C["gfc-core grpc (port 9090)"]
 
     A --> B
     B --> C
+
+    style A fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px
+    style B fill:#e8f5e9,stroke:#43a047,stroke-width:2px
+    style C fill:#fff3e0,stroke:#fb8c00,stroke-width:2px
 ```
+</details>
+
 ## Protos
 <img src="images/protos.png">
 
