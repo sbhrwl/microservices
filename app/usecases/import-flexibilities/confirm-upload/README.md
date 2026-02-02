@@ -77,7 +77,7 @@ graph TD
   J --> K["FlexibilityUploadService"]
   J --> L["Apache Commons CSV"]
   J --> M["FlexibilityCsvParser"]
-  J --> N["FlexibilityRsDao"]
+  J --> N["FlexibilityDao"]
   N --> O["MongoDB driver"]
   O --> N
   J --> P["ConfirmUploadFlexibilitiesResponse proto"]
