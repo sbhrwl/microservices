@@ -106,7 +106,7 @@ graph TD
   * Defines `Flexibility` type (what data you can read)
   * Defines `Flexibilities` type (what data you can read)
   * Defines `ConfirmUploadFlexibilitiesInput` input type (what data you can send)
-  * [Documentation](gateway/graphql/README.md)
+  * [Documentation](../file-upload/gateway/graphql/README.md)
 ### Resolver execution
 * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver/flexibilities.ts)
 * Maps mutation name to resolver function
