@@ -111,26 +111,24 @@ graph TD
 
 ## API gateway
 * **Schema definition**
-  * **File:** [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
+  * [`graphql/operations.graphql`](../file-upload/gateway/graphql/operations.graphql)
     * Defines the flexibilities `query and mutations signature`
     * Declares `confirmUploadFlexibilities` mutation
     * Defines input and response contract
     * Single source of truth for API shape
-  * **File:** [`graphql/core/api/v1/flexibility.graphql`](../file-upload/gateway/graphql/flexibility.graphql)
+  * [`graphql/core/api/v1/flexibility.graphql`](../file-upload/gateway/graphql/flexibility.graphql)
     * Defines `Flexibility` type (what data you can read)
     * Defines `Flexibilities` type (what data you can read)
     * Defines `ConfirmUploadFlexibilitiesInput` input type (what data you can send)
     * [Documentation](../file-upload/gateway/graphql/README.md)
 * **Resolver execution**
-  * **File:** [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver-definitions/core/flexibilities/flexibilities.ts)
+  * [`src/resolver-definitions/core/flexibilities/flexibilities.ts`](../file-upload/gateway/resolver-definitions/core/flexibilities/flexibilities.ts)
   * Maps mutation name to resolver function
   * Thin routing layer only
   * No business logic
   * Receives GraphQL arguments and context
   * Extracts auth token from context
   * Creates `FlexibilityClient` instance
-  * Builds `QueryFlexibilitiesRequest` protobuf object
-  * Calls `client.queryFlexibilities()`
   * [Documentation](../file-upload/gateway/resolver-definitions/core/flexibilities/README.md)
 * [**confirm-upload-flexibilities.ts**](../file-upload/gateway/resolver-definitions/core/flexibilities/confirm-upload-flexibilities.ts)
   * Extracts input arguments
