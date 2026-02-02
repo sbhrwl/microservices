@@ -5,10 +5,9 @@
 - [Dependencies](#dependencies)
 - [API gateway](#api-gateway)
 - [GFC core](#gfc-core)
-- [Response flow](#response-flow)
-- [Authentication flow](#authentication-flow)
-- [Error handling](#error-handling)
-- [Configuration dependencies](#configuration-dependencies)
+- [Request path](#request-path)
+- [Response path](#response-path)
+- [Design notes](#design-notes)
 ## Overview
 - [Basics](basics/README.md)
 - Gateway acts as protocol translator
@@ -177,20 +176,21 @@ graph TD
 ```
 MongoDB → gfc-core → Dapr → API Gateway → Client
 ```
-## Authentication Flow
+## Design notes
+### Authentication Flow
 - Client sends JWT in `Authorization` header
 - API Gateway extracts token → context
 - Token forwarded via Dapr metadata
 - gfc-core validates against Keycloak
 - Checks realm: `gfc`, client: `test-client-01`
-## Error Handling
+### Error Handling
 - Row-level errors returned in payload
 - System errors via gRPC status
 - Gateway converts to GraphQL errors
 - **GraphQL errors:** Thrown as `GraphQLError` with codes
 - **gRPC errors:** Caught and wrapped in GraphQL errors
 - **Auth failures:** Return `UNAUTHENTICATED` status
-## Configuration Dependencies
+### Configuration dependencies
 - **API gateway:** `BACKEND_API`, Keycloak config
 - **gfc-core:** MongoDB credentials, Keycloak validation
 - **Dapr:** App IDs, ports, config.
