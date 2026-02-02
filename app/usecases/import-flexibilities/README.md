@@ -3,6 +3,7 @@
 - [Confirm upload](confirm-upload/README.md)
 - [Query flexibilities](query/README.md)
 ---
+- [Apollo server](apollo-server/README.md)
 - [Dapr service invocation](#dapr-service-invocation)
 - [Protos](#protos)
 - [GraphQL schema](#graphql-schema)

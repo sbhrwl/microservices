@@ -9,7 +9,6 @@
 - [Response path](#response-path)
 - [Design notes](#design-notes)
 ## Overview
-- [Basics](basics/README.md)
 - Gateway acts as protocol translator
   - `schema, resolver, gRPC client`
 - gfc-core owns validation and persistence
