@@ -67,7 +67,7 @@ query ExampleQuery($input: FlexibilitiesInput) {
 </details>
 
 ## Tracing the code
-<img src="images/tracing-query.png">
+<img src="images/tracing.png">
 
 <details>
   <summary>mermaid</summary>
@@ -91,7 +91,7 @@ graph TD
 - Apollo resolves schema to resolver
 - gRPC handles transport
 - MongoDB driver handles queries and pagination
-<img src="images/dependencies-query.png">
+<img src="images/dependencies.png">
 
 <details>
   <summary>mermaid</summary>
