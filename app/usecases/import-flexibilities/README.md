@@ -3,9 +3,22 @@
 - [Confirm upload](confirm-upload/README.md)
 - [Query flexibilities](query/README.md)
 ---
+- [Dapr service invocation](#dapr-service-invocation)
 - [Protos](#protos)
 - [GraphQL schema](#graphql-schema)
 - [Response](#response)
+## Dapr service invocation
+* Dapr sidecar discovers `gfc-core` service via mDNS
+* Routes gRPC request to target service
+```mermaid
+flowchart TD
+    A["api gateway dapr (port 4000)"]
+    B["gfc-core dapr (port 50012)"]
+    C["gfc-core grpc (port 9090)"]
+
+    A --> B
+    B --> C
+```
 ## Protos
 <img src="images/protos.png">
 
