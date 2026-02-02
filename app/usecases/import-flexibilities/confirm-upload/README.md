@@ -1,7 +1,6 @@
 # Confirm upload
-- [Basics](basics/README.md)
-- [GraphQL mutation entry](#graphql-mutation-entry)
 - [Overview](#overview)
+- [GraphQL mutation](#graphql-mutation)
 - [Tracing the code](#tracing-the-code)
 - [Dependencies](#dependencies)
 - [API gateway](#api-gateway)
@@ -10,7 +9,23 @@
 - [Authentication flow](#authentication-flow)
 - [Error handling](#error-handling)
 - [Configuration dependencies](#configuration-dependencies)
-## GraphQL mutation entry
+## Overview
+- [Basics](basics/README.md)
+- Gateway acts as protocol translator
+  - `schema, resolver, gRPC client`
+- gfc-core owns validation and persistence
+  - `gRPC service, domain service, DAO`
+- MongoDB for persistence
+```mermaid
+graph TD
+  A["GraphQL client"] -->|"mutation"| B["api gateway"]
+  B -->|"gRPC"| C["gfc-core service"]
+  C -->|"read/write"| D["mongodb"]
+  D --> C
+  C -->|"gRPC response"| B
+  B -->|"GraphQL response"| A
+```
+## GraphQL mutation
 - **GraphQL playground/client**: `http://127.0.0.1:4000/api/graphql`
 - Mutation
 ```graphql
@@ -31,21 +46,7 @@ mutation Mutation($input: ConfirmUploadFlexibilitiesInput!) {
   }
 }
 ```
-## Overview
-- Gateway acts as protocol translator
-  - `schema, resolver, gRPC client`
-- gfc-core owns validation and persistence
-  - `gRPC service, domain service, DAO`
-- MongoDB for persistence
-```mermaid
-graph TD
-  A["GraphQL client"] -->|"mutation"| B["api gateway"]
-  B -->|"gRPC"| C["gfc-core service"]
-  C -->|"read/write"| D["mongodb"]
-  D --> C
-  C -->|"gRPC response"| B
-  B -->|"GraphQL response"| A
-```
+
 ## Tracing the code
 ```mermaid
 graph TD
