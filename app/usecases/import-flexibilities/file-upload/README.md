@@ -1,6 +1,6 @@
 # File upload
 * [Overview](#overview)
-  * [Dapr service invocation](#dapr-service-invocation)
+* [Dapr service invocation](#dapr-service-invocation)
 * [Tracing the code](#tracing-the-code)
 * [Dependencies](#dependencies)
 * [API gateway](#api-gateway)
@@ -20,7 +20,7 @@ flowchart TD
 
     B -->|"gRPC / protobuf"| C
 ```
-### Dapr service invocation
+## Dapr service invocation
 * Dapr sidecar discovers `gfc-core` service via mDNS
 * Routes gRPC request to target service
 ```mermaid
