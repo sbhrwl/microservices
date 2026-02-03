@@ -1,6 +1,16 @@
 # Generate message
 - Create spring boot app with [spring initialiser](https://start.spring.io/)
+## Java sdk
+- Go to `File → Project Structure` (or `Ctrl+Alt+Shift+S`)
+- Project Settings → Project
+- Set: 
+  - `SDK`: Select Java 21
+- `build.gradle` ~ `pom.xml` 
+<img src="images/setup-java-sdk.png">
 
 ## Build
+```bash
+gradle clean build
+```
 
 ## Run

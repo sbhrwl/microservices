@@ -1,13 +1,16 @@
-package com.example.demo;
+package com.org.messagegenerator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class GetMessage {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(GetMessage.class, args);
 	}
 
 }
+
+// Go to browser and type
+// localhost:9080/message/generate
