@@ -12,5 +12,10 @@
 ```bash
 gradle clean build
 ```
-
 ## Run
+```bash
+gradle bootRun
+```
+## 
+- Open browser:
+  - `http://localhost:9080/message/generate`
