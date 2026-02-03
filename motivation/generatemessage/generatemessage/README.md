@@ -1,5 +1,6 @@
 # Introduction
 - `RESTful API endpoint` to generate a greeting message based on time of the day.
+- Create spring boot app with [spring initialiser](https://start.spring.io/)
 ## Properties
 - [application.properties](src/main/resources/application.properties)
 ## How to run
