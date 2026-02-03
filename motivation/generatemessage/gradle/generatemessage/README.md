@@ -12,6 +12,7 @@
 ```bash
 gradle clean build
 ```
+- Compile: `gradle clean compileJava`
 ## Run
 ```bash
 gradle bootRun
