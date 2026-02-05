@@ -11,3 +11,8 @@
 <img src="images/google-java-formatter-plugin.png">
 
 <img src="images/google-java-formatter.png">
+
+- Install [Visual studio installer](https://visualstudio.microsoft.com/downloads/) for latest build tools
+<img src="images/visual-studio-installer-1.png">
+
+<img src="images/visual-studio-installer-2.png">
