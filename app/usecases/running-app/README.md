@@ -8,6 +8,7 @@
 <img src="images/env-path.png">
 
 - google-java-formatter-plugin
+  - `gradle format`
 <img src="images/google-java-formatter-plugin.png">
 
 <img src="images/google-java-formatter.png">
