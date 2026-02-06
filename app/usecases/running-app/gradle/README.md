@@ -5,8 +5,9 @@
 - [References](#references)
 ## GFC core
 * Go to `gfc-core`
-* Build
-  * `mvn install` or `mvn clean install`
+* Build: `gradle clean build`
+* Compile: `gradle clean compileJava`
+* Run: `gradle bootRun`
 * Run using IntelliJ IDEA play button
   * Build and run settings
   * Go to `Modify options` and Add this as "**Add VM options**"
