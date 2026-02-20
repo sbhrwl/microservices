@@ -1,12 +1,13 @@
 # Microservices
-- [App](app/README.md)
+- [App](app/README.md): LandisGyr2026RS
 - [Motivation](motivation/README.md)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
 - [Registering sensors](sensorregistration/README.md)
 - [Sending commands to sensors](commandorchestration/README.md)
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
-- [Hub to Sensor](hubToSensor/README.md)
+- [Hub to Sensor](hubToSensor/README.md)
+
 <details>
   <summary>prompt</summary>
 
@@ -52,6 +53,7 @@
       * Ensure arrows and node labels match the textual explanation.
       * Place diagrams **after** the relevant descriptive section.
 </details>
+
 
 
 
