@@ -62,7 +62,7 @@ public class ResponseConsumer {
             // 3. Determine Final Status and Update
             String finalStatus;
             if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                finalStatus = "	Request status: Completed successfully";
+                finalStatus = "Request status: Completed successfully";
                 log.info("Request {} completed successfully.", recordId);
             } else {
                  finalStatus = String.format("Request staus: Failed (Code: %s, Msg: %s)", 
