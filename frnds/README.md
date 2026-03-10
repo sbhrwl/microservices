@@ -27,6 +27,13 @@
 * [Security considerations](#security-considerations)
 * [End to end architecture](#recommended-end-to-end-architecture)
 * [Conclusion](#conclusion)
+* [Boomi deployment architecture](#boomi-deployment-architecture)
+  * [What changes with boomi](#what-changes-with-boomi)
+  * [Process implementation](#process-implementation)
+  * [Transformation approach](#transformation-approach)
+  * [API layer](#api-layer)
+  * [Correlation implementation](#correlation-implementation)
+  * [Monitoring](#monitoring)
 ## Introduction
 * Receiving **authority-issued control requests**
 * Converting them to **industry-standard control messages**
@@ -285,3 +292,93 @@ flowchart TD
   * full request traceability
   * operational transparency
   * regulatory compliance for energy-sector integrations.
+
+
+## Boomi deployment architecture
+
+```mermaid
+flowchart TD
+
+  Authority((Authority))
+  API[API Gateway]
+  Boomi[Integration Process]
+  DB[(SQL Database)]
+  Downstream[Operational System]
+  UI[Monitoring UI]
+
+  Authority -->|JSON request| API
+  API --> Boomi
+  Boomi -->|ACK| Authority
+  Boomi -->|device lookup| DB
+  Boomi -->|CIM XML| Downstream
+  Downstream -->|callback result| API
+  API --> Boomi
+  Boomi -->|update status| DB
+  Boomi -->|async response| Authority
+  UI -->|read| DB
+
+  style Authority fill:#EAF4FF,stroke:#4A90E2
+  style API fill:#E8F0FE,stroke:#5C6BC0
+  style Boomi fill:#E8F8F0,stroke:#27AE60
+  style DB fill:#FFF6E6,stroke:#F39C12
+  style Downstream fill:#F3EFFF,stroke:#9B59B6
+  style UI fill:#FDECEC,stroke:#E74C3C
+```
+## What changes with boomi
+* Boomi introduces **Atoms / Molecules**.
+* Execution happens on:
+  * **Atom** (runtime node)
+  * **Molecule** (cluster)
+  * **Cloud runtime**
+* So you gain easier **horizontal scaling**.
+* Frends typically runs:
+  * On **workers / agents**
+  * Inside **customer infrastructure**.
+### Process implementation
+* In **Dell Boomi** you implement flows using:
+ * **Process shapes**
+ * **Connectors**
+ * **Maps**
+ * **Document flows**
+* Instead of:
+ * Frends processes
+ * .NET script tasks
+* Example differences:
+
+| Capability    | Frends            | Boomi          |
+| ------------- | ----------------- | -------------- |
+| process logic | workflows + C#    | process shapes |
+| mapping       | code or tasks     | visual map     |
+| scripting     | C#                | Groovy / Java  |
+| execution     | process instances | document flows |
+
+### Transformation approach
+* In Boomi:
+ * Use **Map component**
+ * JSON profile → XML profile
+ * CIM XML generated via **XML profiles**
+* Less code, more **visual mapping**.
+### API layer
+* Frends:
+  * HTTP trigger processes
+* Boomi:
+  * **API Management + API proxy**
+  * API component routes to process.
+### Correlation implementation
+* Frends:
+  * DB lookup + correlation table
+* Boomi options:
+  * DB connector
+  * Process properties
+  * Document properties
+* But **external DB still recommended**.
+### Monitoring
+* Frends monitoring:
+  * Process instances
+  * Logs
+  * Execution traces
+* Boomi monitoring:
+  * **AtomSphere process reporting**
+  * document tracking
+  * execution logs.
+* But your **business UI is still needed**.
