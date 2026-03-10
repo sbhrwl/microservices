@@ -310,9 +310,8 @@ flowchart TD
   API --> Boomi
   Boomi -->|ACK| Authority
   Boomi -->|device lookup| DB
-  Boomi -->|CIM XML| Downstream
+  Boomi -->|IEC XML| Downstream
   Downstream -->|callback result| API
-  API --> Boomi
   Boomi -->|update status| DB
   Boomi -->|async response| Authority
   UI -->|read| DB
