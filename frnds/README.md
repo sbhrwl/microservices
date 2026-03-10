@@ -252,9 +252,9 @@ flowchart TD
 * This integration pattern combines:
   * **Frends iPaaS orchestration**
   * **CIM XML interoperability**
-  * **dual-phase response model**
-  * **durable external persistence**
-  * **operator monitoring interface**
+  * **Dual-phase response model**
+  * **Durable external persistence**
+  * **Operator monitoring interface**
 * The result is a solution that provides:
   * reliable control execution
   * full request traceability
