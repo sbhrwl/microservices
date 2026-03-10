@@ -25,7 +25,7 @@
   * [frends operational monitoring](#frends-operational-monitoring)
   * [Business monitoring UI](#business-monitoring-ui)
 * [Security considerations](#security-considerations)
-* [End to end architecture](#recommended-end-to-end-architecture)
+* [End to end architecture](#end-to-end-architecture)
 * [Conclusion](#conclusion)
 * [Boomi deployment architecture](#boomi-deployment-architecture)
   * [What changes with boomi](#what-changes-with-boomi)
