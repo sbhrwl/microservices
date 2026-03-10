@@ -34,7 +34,7 @@
 * Reporting both **immediate acknowledgement** and **final execution outcome**
 * This document describes an integration pattern where:
   * Requests arrive as **JSON**
-  * Control messages are converted to **IEC 61968 / 61970 CIM XML**
+  * Control messages are converted to **IEC 61968 XML**
   * **Frends iPaaS** orchestrates the workflow
   * A **durable SQL database** stores correlation state
   * A **monitoring UI** provides operational visibility
