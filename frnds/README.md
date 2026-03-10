@@ -279,6 +279,13 @@ flowchart TD
   FrendsB -->|update status| DB
   FrendsB -->|async response| Authority
   UI -->|query| DB
+
+  style Authority fill:#EAF4FF,stroke:#4A90E2
+  style FrendsA fill:#E8F8F0,stroke:#27AE60
+  style FrendsB fill:#E8F8F0,stroke:#27AE60
+  style DB fill:#FFF6E6,stroke:#F39C12
+  style Downstream fill:#F3EFFF,stroke:#9B59B6
+  style UI fill:#FDECEC,stroke:#E74C3C
 ```
 ## Conclusion
 * This integration pattern combines:
