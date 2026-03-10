@@ -49,7 +49,11 @@
   * synchronous **ACK**
   * asynchronous **final outcome**
 * This pattern is common in **regulated grid control integrations**.
+<img src="images/ipaas-1.png">
 
+<details>
+  <summary>uml</summary>
+ 
 ```mermaid
 flowchart TD
 
@@ -74,6 +78,8 @@ flowchart TD
   style Downstream fill:#F3EFFF,stroke:#9B59B6
   style UI fill:#FDECEC,stroke:#E74C3C
 ```
+</details>
+
 ## Integration principles
 ### Loose coupling
 * Authorities send **logical identifiers**
@@ -168,7 +174,12 @@ flowchart TD
   * validate identifiers
   * create correlation record
   * acknowledge immediately
+<img src="images/ipaas-2.png">
 
+<details>
+  <summary>uml</summary>
+ 
+```mermaid
 ```mermaid
 sequenceDiagram
   participant A as Authority
@@ -181,6 +192,7 @@ sequenceDiagram
   F->>DB: insert request record
   F-->>A: ACK (ControlRequestIdentifier)
 ```
+</details>
 
 * Key requirement:
   * response latency should remain **very low**.
@@ -189,7 +201,12 @@ sequenceDiagram
   * receive downstream execution result
   * correlate to original request
   * notify authority
+<img src="images/ipaas-3.png">
 
+<details>
+  <summary>uml</summary>
+ 
+```mermaid
 ```mermaid
 sequenceDiagram
   participant D as Downstream system
@@ -202,6 +219,8 @@ sequenceDiagram
   F->>A: POST final response
   A-->>F: 200 OK
 ```
+</details>
+
 ## Error handling and reliability
 ### Mapping failure
 * If no device mapping exists:
@@ -261,7 +280,12 @@ sequenceDiagram
   * enforce schema validation
   * sanitize input before transformation
 ## End to end architecture
+<img src="images/ipaas-4.png">
 
+<details>
+  <summary>uml</summary>
+ 
+```mermaid
 ```mermaid
 flowchart TD
   Authority((Authority))
@@ -287,6 +311,8 @@ flowchart TD
   style Downstream fill:#F3EFFF,stroke:#9B59B6
   style UI fill:#FDECEC,stroke:#E74C3C
 ```
+</details>
+
 ## Conclusion
 * This integration pattern combines:
   * **Frends iPaaS orchestration**
@@ -302,7 +328,12 @@ flowchart TD
 
 
 ## Boomi deployment architecture
+<img src="images/ipaas-5.png">
 
+<details>
+  <summary>uml</summary>
+ 
+```mermaid
 ```mermaid
 flowchart TD
 
@@ -331,6 +362,8 @@ flowchart TD
   style Downstream fill:#F3EFFF,stroke:#9B59B6
   style UI fill:#FDECEC,stroke:#E74C3C
 ```
+</details>
+
 ## What changes with boomi
 * Boomi introduces **Atoms / Molecules**.
 * Execution happens on:
