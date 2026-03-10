@@ -312,6 +312,7 @@ flowchart TD
   Boomi -->|device lookup| DB
   Boomi -->|IEC XML| Downstream
   Downstream -->|callback result| API
+  API --> Boomi
   Boomi -->|update status| DB
   Boomi -->|async response| Authority
   UI -->|read| DB
