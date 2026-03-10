@@ -97,18 +97,18 @@
   * `UsagePointIdentifier` → logical grid connection point
   * `RelayState` → control instruction
 ## Mapping JSON to IEC XML
-* Utility control systems commonly communicate using **CIM XML messages**.
+* Utility control systems commonly communicate using **IEC XML messages**.
 * Frends performs the transformation using:
   * C# script tasks
   * XML generation using `XDocument`
 * The transformation produces a **IEC-compliant control command**.
 ### Field mapping
 
-| JSON field               | CIM field               |
+| JSON field               | IEC XML field               |
 | ------------------------ | ----------------------- |
 | ControlRequestIdentifier | MessageID               |
 | PartyIdentifier          | Destination             |
-| UsagePointIdentifier     | Target resolution input |
+| UsagePointIdentifier     | Device ID |
 | RelayState               | EndDeviceControlType    |
 
 ## Device identification strategy
