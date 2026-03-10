@@ -343,13 +343,13 @@ flowchart TD
   * Inside **customer infrastructure**.
 ### Process implementation
 * In **Dell Boomi** you implement flows using:
- * **Process shapes**
- * **Connectors**
- * **Maps**
- * **Document flows**
+  * **Process shapes**
+  * **Connectors**
+  * **Maps**
+  * **Document flows**
 * Instead of:
- * Frends processes
- * .NET script tasks
+  * Frends processes
+  * .NET script tasks
 * Example differences:
 
 | Capability    | Frends            | Boomi          |
@@ -361,9 +361,9 @@ flowchart TD
 
 ### Transformation approach
 * In Boomi:
- * Use **Map component**
- * JSON profile → XML profile
- * CIM XML generated via **XML profiles**
+  * Use **Map component**
+  * JSON profile → XML profile
+  * IEC XML generated via **XML profiles**
 * Less code, more **visual mapping**.
 ### API layer
 * Frends:
