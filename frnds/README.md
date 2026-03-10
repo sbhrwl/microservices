@@ -55,7 +55,7 @@ flowchart TD
   Authority -->|JSON request| Integration
   Integration -->|ACK| Authority
   Integration -->|lookup device| DB
-  Integration -->|CIM XML command| Downstream
+  Integration -->|IEC XML command| Downstream
   Downstream -->|callback| Integration
   Integration -->|update state| DB
   Integration -->|async response| Authority
