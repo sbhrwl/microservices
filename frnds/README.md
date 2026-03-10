@@ -200,7 +200,7 @@ sequenceDiagram
   * request tracking
   * monitoring UI queries
   * operational reporting
-## observability and monitoring
+## Observability and monitoring
 * Operational visibility is critical for regulated systems.
 * Two layers of monitoring are recommended.
 ### frends operational monitoring
