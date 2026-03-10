@@ -42,7 +42,32 @@
   * synchronous **ACK**
   * asynchronous **final outcome**
 * This pattern is common in **regulated grid control integrations**.
-# Integration principles
+
+```mermaid
+flowchart TD
+
+  Authority((Authority))
+  Integration[Integration Platform]
+  DB[(SQL DB)]
+  Downstream[Operational System]
+  UI[Monitoring UI]
+
+  Authority -->|JSON request| Integration
+  Integration -->|ACK| Authority
+  Integration -->|lookup device| DB
+  Integration -->|CIM XML command| Downstream
+  Downstream -->|callback| Integration
+  Integration -->|update state| DB
+  Integration -->|async response| Authority
+  UI -->|query| DB
+
+  style Authority fill:#EAF4FF,stroke:#4A90E2
+  style Integration fill:#E8F8F0,stroke:#2ECC71
+  style DB fill:#FFF6E6,stroke:#F39C12
+  style Downstream fill:#F3EFFF,stroke:#9B59B6
+  style UI fill:#FDECEC,stroke:#E74C3C
+```
+## Integration principles
 ### Loose coupling
 * Authorities send **logical identifiers**
 * Internal systems resolve **physical device identifiers**
