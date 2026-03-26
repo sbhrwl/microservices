@@ -5,6 +5,11 @@
 * [Code mapping](#code-mapping)
 ## System context
 - Who interacts with your system?
+<img src="images/system-context.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
   Client["External Client<br/>(calls gRPC)"]
@@ -18,6 +23,7 @@ flowchart TD
   System --> Broker
   Broker --> Downstream
 ```
+</details>
 
 ## Container view
 - What are the major building blocks inside?
@@ -26,6 +32,11 @@ flowchart TD
   - **jaxb layer** → object → XML
   - **routing** → delivery via Camel
 - This behaves like an **assembly line**
+<img src="images/container-view.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
   subgraph ClientSide
@@ -47,10 +58,17 @@ flowchart TD
   Jaxb --> Routing
   Routing --> Broker
 ```
+</details>
+
 ## Component view
 - What are the real moving parts (your actual classes)?
   - The **most critical boundary** sits at:
     - `ProtoToJaxbMapper`
+<img src="images/component-view.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
   subgraph GrpcLayer
@@ -82,10 +100,17 @@ flowchart TD
   G --> F
   H --> F
 ```
+</details>
+
 ## Code mapping
 - How does the build enforce architecture?
   - Schema is not documentation, Schema is **compiled truth**
   - If the schema changes, your code must obey or fail
+<img src="images/code-mapping.jpg">
+
+<details>
+  <summary>mermaid</summary>
+
 ```mermaid
 flowchart TD
   XSD["XSD Schemas"]
@@ -101,3 +126,4 @@ flowchart TD
   JAXB --> Compile
   Compile --> Code
 ```
+</details>
