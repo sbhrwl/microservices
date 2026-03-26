@@ -11,3 +11,4 @@
   - [Organization API](usecases/organization/README.md)
   - [Running the app](usecases/running-app/README.md)
   - [Import flexibilities](usecases/import-flexibilities/README.md)
+  - [Send commands](usecases/send-commands/README.md)
