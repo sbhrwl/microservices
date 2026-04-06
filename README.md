@@ -8,6 +8,7 @@
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
 - [frnds IPaaS](frnds/README.md)
+- [Docker sandboxes](https://share.google/hPJp4kIFGiHAXyrIB)
 
 <details>
   <summary>prompt</summary>
