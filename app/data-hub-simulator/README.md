@@ -51,7 +51,7 @@ Gradle Build
     └── Git commit info
 ```
 
-## Camel routes
+## [Camel](https://github.com/sbhrwl/system_design/blob/main/docs/services/camel/README.md) routes
 - This class is opening 2 APIs, one SOAP and one REST, using Camel as the router forwarding requests to service logic.
   - SOAP comes in → `webServiceImpl`
   - REST comes in → `Camel chooses operation` → service method
