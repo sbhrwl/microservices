@@ -1,5 +1,6 @@
 # Data hub simulator
 - [Gradle build](#gradle-build)
+- [Camel routes](#camel-routes)
 ## Gradle build
 - This Gradle build creates a Docker‑deployable Java simulator application using `Apache Camel` + `CXF to expose SOAP and REST services`, packaged as an executable JAR with external dependencies and embedded Git build metadata.
 ```
@@ -48,4 +49,32 @@ Gradle Build
 │
 └── Build metadata
     └── Git commit info
+```
+
+## Camel routes
+- This class is opening 2 APIs, one SOAP and one REST, using Camel as the router forwarding requests to service logic.
+  - SOAP comes in → `webServiceImpl`
+  - REST comes in → `Camel chooses operation` → service method
+```
+CamelRoutes
+│
+├── SOAP side
+│   ├── Endpoint: /soap/FGR
+│   ├── Uses WSDL
+│   ├── Logs request
+│   └── Calls webServiceImpl
+│
+└── REST side
+    ├── Endpoint: /rest/FGR
+    ├── Resource class: MessageResourceImpl
+    ├── JSON provider: Jackson
+    ├── Dispatch by operation name
+    │   ├── peekMessage     -> direct:market-rs.list
+    │   ├── processMessage  -> direct:market-rs.get
+    │   ├── sendMessage     -> direct:market-rs.send
+    │   └── dequeueMessage  -> direct:market-rs.delete
+    │
+    └── Implemented handlers
+        ├── direct:market-rs.list -> MarketMessagingService.peekMessage()
+        └── direct:market-rs.send -> MarketMessagingService.sendMessage()
 ```
