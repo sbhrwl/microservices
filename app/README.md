@@ -8,8 +8,7 @@
 - [data-hub-simulator](data-hub-simulator/README.md)
 - [Tooling](tooling/README.md)
 - Use cases
-  - [Switching flexibilities](usecases/switching/README.md)
-  - [Organization API](usecases/organization/README.md)
   - [Running the app](usecases/running-app/README.md)
   - [Import flexibilities](usecases/import-flexibilities/README.md)
   - [Send commands](usecases/send-commands/README.md)
+  - [Switching flexibilities](usecases/switching/README.md)
