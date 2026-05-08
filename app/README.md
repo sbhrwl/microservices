@@ -5,6 +5,7 @@
 - [gfc-core](gfc-service/README.md)
 - [command-orchestrator](command-orchestrator/README.md)
 - [protocol-adapter](protocol-adapter/README.md)
+- [data-hub-simulator](data-hub-simulator/README.md)
 - [Tooling](tooling/README.md)
 - Use cases
   - [Switching flexibilities](usecases/switching/README.md)
