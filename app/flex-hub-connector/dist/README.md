@@ -46,7 +46,7 @@ flex-hub-connector {
 
 ```
 ## logging.properties
-```
+```python
 # register SLF4JBridgeHandler as handler for the j.u.l. root logger
 handlers = org.slf4j.bridge.SLF4JBridgeHandler
 # handlers= java.util.logging.ConsoleHandler
