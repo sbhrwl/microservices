@@ -6,6 +6,7 @@
 - [command-orchestrator](command-orchestrator/README.md)
 - [protocol-adapter](protocol-adapter/README.md)
 - [data-hub-simulator](data-hub-simulator/README.md)
+- [flex-hub-connector](flex-hub-connector/README.md)
 - [Tooling](tooling/README.md)
 - Use cases
   - [Running the app](usecases/running-app/README.md)
