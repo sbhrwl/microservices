@@ -8,6 +8,7 @@
 - [Note](#note)
   - [What does `etc` mean?](#w-does-`etc`-mean?)
   - [What does `dist` mean?](#w-does-`dist`-mean?)
+  - [Layout created by `createDistribution`](#layout-created-by-`createDistribution`)
 ## Introduction
 - Build
 ```
