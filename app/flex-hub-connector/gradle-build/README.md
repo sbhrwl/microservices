@@ -6,8 +6,8 @@
   - [Packaging / Docker](#packaging-/-docker)
 - [JAR](#jar)
 - [Note](#note)
- - [What does `etc` mean?](#w-does-`etc`-mean?)
- - [What does `dist` mean?](#w-does-`dist`-mean?)
+  - [What does `etc` mean?](#w-does-`etc`-mean?)
+  - [What does `dist` mean?](#w-does-`dist`-mean?)
 ## Introduction
 - Build
 ```
