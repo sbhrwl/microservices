@@ -10,7 +10,7 @@
 
 ## High level flow
 ```mermaid
-flowchart LR
+flowchart TD
     %% High-level component flow
 
     classDef inbound fill:#ecfdf5,stroke:#86efac,color:#111827
@@ -31,7 +31,7 @@ flowchart LR
 
 ## Startup
 ```mermaid
-flowchart LR
+flowchart TD
     %% Startup flow
 
     classDef startup fill:#f1f5f9,stroke:#cbd5e1,color:#111827
@@ -47,7 +47,7 @@ flowchart LR
 
 ## gRPC client to TenantIdInterceptor
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 1: gRPC client to TenantIdInterceptor
 
     classDef inbound fill:#ecfdf5,stroke:#86efac,color:#111827
@@ -65,7 +65,7 @@ flowchart LR
 
 ## TenantIdInterceptor to FlexMarketService
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 2: TenantIdInterceptor to FlexMarketService
 
     classDef inbound fill:#ecfdf5,stroke:#86efac,color:#111827
@@ -84,7 +84,7 @@ flowchart LR
 
 ## FlexMarketService to CommandProcessor
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 3: FlexMarketService to CommandProcessor
 
     classDef inbound fill:#ecfdf5,stroke:#86efac,color:#111827
@@ -105,7 +105,7 @@ flowchart LR
 
 ## CommandProcessor to RequestDispatcher
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 4: CommandProcessor to RequestDispatcher
 
     classDef app fill:#fefce8,stroke:#fde68a,color:#111827
@@ -123,7 +123,7 @@ flowchart LR
 
 ## RequestDispatcher to Camel route
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 5: RequestDispatcher to Camel route
 
     classDef outbound fill:#eef2ff,stroke:#c7d2fe,color:#111827
@@ -138,7 +138,7 @@ flowchart LR
 
 ## Camel route to SOAP endpoint
 ```mermaid
-flowchart LR
+flowchart TD
     %% Handoff 6: Camel route to SOAP endpoint
 
     classDef outbound fill:#eef2ff,stroke:#c7d2fe,color:#111827
