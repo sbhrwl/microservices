@@ -2,7 +2,12 @@
 - [High level flow](#high-level-flow)
 - [Startup](#startup)
 - [gRPC client to TenantIdInterceptor](#grpc-client-to-tenantidinterceptor)
+- [TenantIdInterceptor to FlexMarketService](#tenantidinterceptor-to-flexmarketservice)
 - [FlexMarketService to CommandProcessor](#flexmarketservice-to-commandprocessor)
+- [CommandProcessor to RequestDispatcher](#commandprocessor-to-requestdispatcher)
+- [RequestDispatcher to Camel route](#requestdispatcher-to-camel-route)
+- [Camel route to SOAP endpoint](#camel-route-to-soap-endpoint)
+
 ## High level flow
 ```mermaid
 flowchart LR
@@ -23,6 +28,7 @@ flowchart LR
     class App app
     class Outbound outbound
 ```
+
 ## Startup
 ```mermaid
 flowchart LR
@@ -38,6 +44,7 @@ flowchart LR
 
     class Bootstrap,Main,Config,Dagger,Camel,Grpc startup
 ```
+
 ## gRPC client to TenantIdInterceptor
 ```mermaid
 flowchart LR
@@ -55,6 +62,26 @@ flowchart LR
     class Client external
     class Server,Interceptor,Present,Reject,Context inbound
 ```
+
+## TenantIdInterceptor to FlexMarketService
+```mermaid
+flowchart LR
+    %% Handoff 2: TenantIdInterceptor to FlexMarketService
+
+    classDef inbound fill:#ecfdf5,stroke:#86efac,color:#111827
+    classDef app fill:#fefce8,stroke:#fde68a,color:#111827
+    classDef note fill:#fff7d6,stroke:#eab308,color:#111827
+
+    Context["Tenant id in Context"] --> Service["FlexMarketService.sendCommand()"]
+    Service --> ReadTenant["Read Tenant-Id from Context"]
+    ReadTenant --> DomainRequest["Create SendMessageRequest"]
+    DomainRequest --> Gap["Current gap:<br/>request fields are not populated"]
+
+    class Context,Service,ReadTenant inbound
+    class DomainRequest app
+    class Gap note
+```
+
 ## FlexMarketService to CommandProcessor
 ```mermaid
 flowchart LR
@@ -74,4 +101,55 @@ flowchart LR
     class Processor,Intended app
     class Gap note
     class DispatcherCall outbound
+```
+
+## CommandProcessor to RequestDispatcher
+```mermaid
+flowchart LR
+    %% Handoff 4: CommandProcessor to RequestDispatcher
+
+    classDef app fill:#fefce8,stroke:#fde68a,color:#111827
+    classDef outbound fill:#eef2ff,stroke:#c7d2fe,color:#111827
+
+    Processor["CommandProcessor"] --> Dispatcher["RequestDispatcher.dispatch(...)"]
+    Dispatcher --> SoapType["Build SendMessageRequestType"]
+    SoapType --> Container["Create MessageContainer"]
+    Container --> Payload["Create SendMessageRequestMessageType"]
+    Payload --> Event["Add MasterDataMPEventMessage payload"]
+
+    class Processor app
+    class Dispatcher,SoapType,Container,Payload,Event outbound
+```
+
+## RequestDispatcher to Camel route
+```mermaid
+flowchart LR
+    %% Handoff 5: RequestDispatcher to Camel route
+
+    classDef outbound fill:#eef2ff,stroke:#c7d2fe,color:#111827
+
+    Dispatcher["RequestDispatcher"] --> Producer["ProducerTemplate.requestBodyAndHeaders"]
+    Producer --> Direct["Endpoint: direct:soap"]
+    Producer --> Header["Header: operationName = sendMessage"]
+    Direct --> Route["OutboundCamelRouteBuilder"]
+
+    class Dispatcher,Producer,Direct,Header,Route outbound
+```
+
+## Camel route to SOAP endpoint
+```mermaid
+flowchart LR
+    %% Handoff 6: Camel route to SOAP endpoint
+
+    classDef outbound fill:#eef2ff,stroke:#c7d2fe,color:#111827
+    classDef external fill:#fce7f3,stroke:#f9a8d4,color:#111827
+
+    Route["Camel route direct:soap"] --> Cxf["CXF SOAP Client"]
+    Cxf --> ServiceClass["MarketMessagingB2BInboundServiceV01PortType"]
+    ServiceClass --> Endpoint["http://localhost:9090/soap/FGR"]
+    Endpoint --> Response["SendMessageResponseType"]
+    Response --> Log["Log documentReferenceNumber"]
+
+    class Route,Cxf,ServiceClass,Response,Log outbound
+    class Endpoint external
 ```
