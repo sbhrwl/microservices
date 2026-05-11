@@ -1,4 +1,5 @@
 # Gradle build
+- Build
 ```
 Gradle build file
 │
@@ -28,4 +29,24 @@ Gradle build file
 └── Runtime tasks
     ├── run
     └── createDistribution
+```
+- Run
+```
+Run via Gradle
+    │
+    ▼
+Check project graph
+    │
+    ├─ generate git info
+    ├─ process resources
+    ├─ generate code (wsdl2java)
+    ├─ compile API
+    ├─ build API jar
+    ├─ compile simulator
+    │
+    ▼
+Run Bootstrap.main()
+    │
+    ▼
+Logback → Camel → CXF → Jetty starts
 ```
