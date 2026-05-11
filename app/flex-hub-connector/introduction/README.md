@@ -9,6 +9,11 @@
 - [Camel route to SOAP endpoint](#camel-route-to-soap-endpoint)
 
 ## High level flow
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/inbound/grpc/FlexMarketService.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/app/service/CommandProcessor.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/RequestDispatcher.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/OutboundCamelRouteBuilder.java
 ```mermaid
 flowchart TD
     %% High-level component flow
@@ -30,6 +35,14 @@ flowchart TD
 ```
 
 ## Startup
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/Bootstrap.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/app/Main.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/Application.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/ApplicationComponent.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/GrpcServerModule.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/CamelModule.java
+  - src/main/dist/etc/application.conf
 ```mermaid
 flowchart TD
     %% Startup flow
@@ -46,6 +59,10 @@ flowchart TD
 ```
 
 ## gRPC client to TenantIdInterceptor
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/inbound/grpc/TenantIdInterceptor.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/GrpcBindingsModule.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/GrpcServerModule.java
 ```mermaid
 flowchart TD
     %% Handoff 1: gRPC client to TenantIdInterceptor
@@ -64,6 +81,10 @@ flowchart TD
 ```
 
 ## TenantIdInterceptor to FlexMarketService
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/inbound/grpc/TenantIdInterceptor.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/inbound/grpc/FlexMarketService.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/domain/model/SendMessageRequest.java
 ```mermaid
 flowchart TD
     %% Handoff 2: TenantIdInterceptor to FlexMarketService
@@ -83,6 +104,11 @@ flowchart TD
 ```
 
 ## FlexMarketService to CommandProcessor
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/inbound/grpc/FlexMarketService.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/app/service/CommandProcessor.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/app/service/NetworkIdLookupService.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/domain/model/SendMessageRequest.java
 ```mermaid
 flowchart TD
     %% Handoff 3: FlexMarketService to CommandProcessor
@@ -104,6 +130,9 @@ flowchart TD
 ```
 
 ## CommandProcessor to RequestDispatcher
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/app/service/CommandProcessor.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/RequestDispatcher.java
 ```mermaid
 flowchart TD
     %% Handoff 4: CommandProcessor to RequestDispatcher
@@ -122,6 +151,10 @@ flowchart TD
 ```
 
 ## RequestDispatcher to Camel route
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/RequestDispatcher.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/OutboundCamelRouteBuilder.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/infrastructure/di/CamelModule.java
 ```mermaid
 flowchart TD
     %% Handoff 5: RequestDispatcher to Camel route
@@ -137,6 +170,10 @@ flowchart TD
 ```
 
 ## Camel route to SOAP endpoint
+- Files involved:
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/OutboundCamelRouteBuilder.java
+  - src/main/java/com/landisgyr/gfc/flexhub_connector/adapters/outbound/soap/RequestDispatcher.java
+  - src/main/dist/etc/application.conf
 ```mermaid
 flowchart TD
     %% Handoff 6: Camel route to SOAP endpoint
