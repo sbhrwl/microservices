@@ -5,6 +5,9 @@
   - [Local run](#local-run)
   - [Packaging / Docker](#packaging-/-docker)
 - [JAR](#jar)
+- [Note](#note)
+ - [What does `etc` mean?](#w-does-`etc`-mean?)
+ - [What does `dist` mean?](#w-does-`dist`-mean?)
 ## Introduction
 - Build
 ```
@@ -104,3 +107,61 @@ Logback → Camel → CXF → Jetty starts
 | `Class-Path: libs/*.jar` | Copies dependencies into `dist/libs/` |
 | `Main-Class`             | JAR is runnable                       |
 | Version metadata         | Used for runtime diagnostics          |
+
+## Note
+> **`dist` is what you ship.  
+> `etc` is how you configure it when it runs.**
+
+| Name   | Means                | Purpose             |
+| ------ | -------------------- | ------------------- |
+| `etc`  | **Configuration**    | How the app behaves |
+| `dist` | **Runnable package** | What you deploy     |
+
+### What does `etc` mean?
+- **`etc` = configuration files**
+- It comes from Unix/Linux convention:
+- **`/etc` = “et cetera” → system configuration**
+- `etc/` holds **runtime configuration**
+- things you **change per environment**, not per build
+- Typical contents
+  - `application.conf`
+  - `logback.xml`
+  - YAML / properties files
+  - certificates, keystores (sometimes)
+- Example
+  > “Copy my app’s configuration files into an `etc/` folder in the distribution”
+  > So at runtime:
+    > the **code** stays the same
+    > only `etc/` changes between dev / test / prod
+
+```groovy
+from('src/main/dist/etc') {
+    into 'etc'
+}
+```
+
+### What does **`dist`** mean?
+- **`dist` = distributable output**
+- It comes from **dist = distribution**
+- It means, “This is the folder I can ship, zip, or put into Docker”
+- Example
+```groovy
+into layout.buildDirectory.dir('dist')
+```
+- So Gradle creates:
+```text
+build/dist/
+```
+- This is the **final runtime package**, not source, not intermediate build files.
+### Layout created by `createDistribution`
+```text
+build/dist/
+├── flex-hub-connector.jar   ← application code
+├── libs/                    ← dependencies
+│   ├── grpc.jar
+│   ├── camel.jar
+│   └── ...
+└── etc/                     ← configuration
+    ├── application.conf
+    └── logback.xml
+```
