@@ -1,4 +1,5 @@
 # env file
+- Use env vars only as **`overrides`**, not as the primary config source.
 ```
 # Include following parameters to JVM options (In IntelliJ, Add VM options in Run/Debug configurations)
 # -Dconfig.file=flex-hub-connector/src/main/dist/etc/application.conf -Dlogback.configurationFile=flex-hub-connector/src/main/dist/etc/logback.xml -Dlog.appender=STDOUT --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
