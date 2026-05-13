@@ -123,7 +123,7 @@ flowchart TD
   - `F35_LoadControlMessage.xsd` = root business message shape
   - `F35_LoadControlMessage_ElementTypes.xsd` = Transaction body shape
   - `loadcontrolmessage.xml` = actual message instance
-  - So `Messages.wsdl` carries the payload, but F35_LoadControlMessage.xsd and its ElementTypes schema define whether the payload content is valid.
+  - So `Messages.wsdl` carries the payload, but `F35_LoadControlMessage.xsd` and its ElementTypes schema define whether the **payload content is valid**.
 
 ```
 Messages.wsdl
