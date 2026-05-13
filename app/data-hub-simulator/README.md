@@ -78,3 +78,63 @@ CamelRoutes
         ├── direct:market-rs.list -> MarketMessagingService.peekMessage()
         └── direct:market-rs.send -> MarketMessagingService.sendMessage()
 ```
+
+```mermaid
+flowchart TD
+    A[SoapUI sends SOAP request] --> B[SOAP Body]
+
+    B --> C[SendMessageRequest or ProcessMessageRequest<br/>from Messages.wsdl]
+
+    C --> D[MessageContainer]
+    D --> E[Payload]
+
+    E --> F[xs:any<br/>Messages.wsdl does not know exact payload type]
+
+    F --> G[Actual XML payload:<br/>LoadControlMessageMessage]
+
+    G --> H[F35_LoadControlMessage.xsd]
+
+    H --> I[LoadControlMessageMessage]
+    I --> J[LoadControlMessage]
+
+    J --> K[Header]
+    J --> L[ProcessEnergyContext]
+    J --> M[Transaction]
+
+    K --> KX[HDR_Header_ElementTypes.xsd]
+    L --> LX[PEC_ProcessEnergyContext_ElementTypes.xsd]
+    M --> MX[F35_LoadControlMessage_ElementTypes.xsd]
+
+    MX --> N[PartyIdentification]
+    MX --> O[MeteringPointUsedDomainLocation]
+    MX --> P[EndDeviceControl]
+
+    P --> Q[Identification]
+    P --> R[RelayIdentification optional]
+    P --> S[ExecutionTimeStamp optional]
+    P --> T[Description optional]
+    P --> U[EndDeviceControlType]
+    P --> V[DeviceTiming optional, max 7]
+    P --> W[CalendarDay optional, max 7]
+    P --> X[ControlDetails optional]
+```
+- Key idea:
+  - WSDL = SOAP API shape
+  - `F35_LoadControlMessage.xsd` = root business message shape
+  - `F35_LoadControlMessage_ElementTypes.xsd` = Transaction body shape
+  - `loadcontrolmessage.xml` = actual message instance
+  - So `Messages.wsdl` carries the payload, but F35_LoadControlMessage.xsd and its ElementTypes schema define whether the payload content is valid.
+
+```
+Messages.wsdl
+  SendMessageRequest / ProcessMessageRequest
+    MessageContainer
+      Payload
+        xs:any
+          loadcontrolmessage.xml
+            rsm:LoadControlMessageMessage
+              validated by F35_LoadControlMessage.xsd
+                Header                  -> HDR schema
+                ProcessEnergyContext    -> PEC schema
+                Transaction             -> F35_LoadControlMessage_ElementTypes.xsd
+```
