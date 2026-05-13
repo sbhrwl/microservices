@@ -141,15 +141,15 @@ Messages.wsdl
 
 ## Soap request flow
 - SoapUI
-  -> http://localhost:9090/soap/FGR
-  -> Camel CXF route
-  -> MarketMessagingSoapService.sendMessage()
-  -> in-memory queue
+  - `http://localhost:9090/soap/FGR`
+  - `Camel CXF route`
+  - `MarketMessagingSoapService.sendMessage()`
+  - `in-memory queue`
 - Relevant files:
   - `CamelRoutes.java`
-    - from("cxf:http://0.0.0.0:9090/soap/FGR?...").bean("webServiceImpl");
+    - `from("cxf:http://0.0.0.0:9090/soap/FGR?...").bean("webServiceImpl");`
   - `Bootstrap.java`
-    - registry.bind("webServiceImpl", new MarketMessagingSoapService());
+    - `registry.bind("webServiceImpl", new MarketMessagingSoapService());`
   - `MarketMessagingSoapService.java`
 ```
 private final LinkedList<Object> messagesInbox = new LinkedList<>();
@@ -168,10 +168,11 @@ if (receivedMessage.getLoadControlMessageMessage() != null) {
 }
 ```
 - F35 LoadControlMessage
-  -> unmarshalled into LoadControlMessageMessageType
-  -> stored in LinkedList messagesInbox
-  -> UUID returned as DocumentReferenceNumber
-- If the app restarts, the message is gone. No DB/file persistence here.
+  - unmarshalled into `LoadControlMessageMessageType`
+  - stored in **`LinkedList messagesInbox`**
+  - UUID returned as `DocumentReferenceNumber`
+- If the app restarts, the message is gone.
+- **No DB/file persistence**.
 
 ```mermaid
 flowchart TD
