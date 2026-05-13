@@ -138,3 +138,86 @@ Messages.wsdl
                 ProcessEnergyContext    -> PEC schema
                 Transaction             -> F35_LoadControlMessage_ElementTypes.xsd
 ```
+
+## Soap request flow
+- SoapUI
+  -> http://localhost:9090/soap/FGR
+  -> Camel CXF route
+  -> MarketMessagingSoapService.sendMessage()
+  -> in-memory queue
+- Relevant files:
+  - `CamelRoutes.java`
+    - from("cxf:http://0.0.0.0:9090/soap/FGR?...").bean("webServiceImpl");
+  - `Bootstrap.java`
+    - registry.bind("webServiceImpl", new MarketMessagingSoapService());
+  - `MarketMessagingSoapService.java`
+```
+private final LinkedList<Object> messagesInbox = new LinkedList<>();
+private final LinkedList<String> documentReferencesNumbers = new LinkedList<>();
+```
+- So persistence is not database persistence. It stores incoming messages only in memory:
+```
+messagesInbox              -> actual message object
+documentReferencesNumbers  -> generated UUID reference
+```
+- For your F35 message, this branch runs:
+```
+MarketMessagingSoapService.java
+if (receivedMessage.getLoadControlMessageMessage() != null) {
+  messagesInbox.offer(receivedMessage.getLoadControlMessageMessage());
+}
+```
+- F35 LoadControlMessage
+  -> unmarshalled into LoadControlMessageMessageType
+  -> stored in LinkedList messagesInbox
+  -> UUID returned as DocumentReferenceNumber
+- If the app restarts, the message is gone. No DB/file persistence here.
+
+```mermaid
+flowchart TD
+    A[SoapUI request<br/>data-hub-api/src/test/resources/sendrequest.xml] --> B[SOAP endpoint<br/>http://localhost:9090/soap/FGR]
+
+    B --> C[data-hub-simulator/src/main/java/.../app/Bootstrap.java<br/>starts Camel + registers webServiceImpl]
+
+    C --> D[data-hub-simulator/src/main/java/.../camel/CamelRoutes.java<br/>CXF route listens on /soap/FGR]
+
+    D --> E[data-hub-api/src/main/resources/test/Messages_test.wsdl<br/>defines SOAP operations + payload shape]
+
+    D --> F[data-hub-simulator/src/main/java/.../api/soap/MarketMessagingSoapService.java<br/>actual Java handler]
+
+    F --> G[sendMessage SendMessageRequestType]
+
+    G --> H[MessageContainer]
+    H --> I[Payload<br/>SendMessageRequestMessageType]
+
+    I --> J[LoadControlMessageMessageType<br/>generated from F35_LoadControlMessage.xsd]
+
+    J --> K[data-hub-api/src/main/resources/masterdata/F35_LoadControlMessage.xsd<br/>root business message]
+
+    K --> L[Header<br/>common header schema]
+    K --> M[ProcessEnergyContext<br/>common PEC schema]
+    K --> N[Transaction]
+
+    N --> O[data-hub-api/src/main/resources/masterdata/elements/F35_LoadControlMessage_ElementTypes.xsd<br/>F35 transaction body]
+
+    F --> P[messagesInbox LinkedList<Object><br/>in-memory storage]
+    F --> Q[documentReferencesNumbers LinkedList<String><br/>generated UUID refs]
+
+    P --> R[peekMessage reads first message]
+    Q --> R
+
+    R --> S[dequeueMessage removes message by DocumentReferenceNumber]
+```
+```
+SoapUI
+ -> Bootstrap.java
+ -> CamelRoutes.java
+ -> Messages_test.wsdl
+ -> MarketMessagingSoapService.java
+ -> SendMessageRequestType
+ -> Payload
+ -> LoadControlMessageMessageType
+ -> F35_LoadControlMessage.xsd
+ -> F35_LoadControlMessage_ElementTypes.xsd
+ -> messagesInbox LinkedList
+```
