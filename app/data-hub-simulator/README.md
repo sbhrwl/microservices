@@ -1,6 +1,8 @@
 # Data hub simulator
 - [Gradle build](#gradle-build)
 - [Camel routes](#camel-routes)
+- [Message structure](#m-structure)
+- [Soap request flow](#soap-request-flow)
 ## Gradle build
 - This Gradle build creates a Docker‑deployable Java simulator application using `Apache Camel` + `CXF to expose SOAP and REST services`, packaged as an executable JAR with external dependencies and embedded Git build metadata.
 ```
@@ -78,7 +80,7 @@ CamelRoutes
         ├── direct:market-rs.list -> MarketMessagingService.peekMessage()
         └── direct:market-rs.send -> MarketMessagingService.sendMessage()
 ```
-
+## Message structure
 ```mermaid
 flowchart TD
     A[SoapUI sends SOAP request] --> B[SOAP Body]
