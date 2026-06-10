@@ -1,4 +1,5 @@
 # Secure Enterprise Hub-and-Spoke Network Architecture in GCP
+- [Introduction](#introduction)
 ## Introduction
 - As enterprise cloud environments scale, managing network security, connectivity, and shared services across multiple business units becomes an operational challenge. Moving every application into a single Virtual Private Cloud (VPC) creates massive blast radiuses, while connecting every VPC to each other creates an unmanageable, web-like mesh.
 - The industry gold standard for solving this is the **Hub-and-Spoke topology**.
