@@ -13,4 +13,4 @@
   - [Import flexibilities](usecases/import-flexibilities/README.md)
   - [Send commands](usecases/send-commands/README.md)
   - [Switching flexibilities](usecases/switching/README.md)
-- [Secure Enterprise Hub-and-Spoke Network Architecture in GCP](app/secure-enterprise-network/README.md)
+- [Secure Enterprise Hub-and-Spoke Network Architecture in GCP](secure-enterprise-network/README.md)
