@@ -1,5 +1,17 @@
 # Secure Enterprise Hub-and-Spoke Network Architecture in GCP
 - [Introduction](#introduction)
+- [Architecture overview](#architecture-overview)
+- [Ingress layer](#ingress-layer)
+- [Core firewall layer checkPoint managed instance groups](#core-firewall-layer-checkpoint-managed-instance-groups)
+- [Nerve center](#nerve-center)
+  - [Subnet cicd services](#subnet-cicd-services)
+  - [Subnet shared services](#subnet-shared-services)
+  - [Subnet active directory ad](#subnet-active-directory-ad)
+- [Spoke layers](#spoke-layers)
+  - [VPC prod and VPC non prod](#vpc-prod-and-vpc-non-prod)
+  - [VPC sandboxes team A B and C](#vpc-sandboxes-team-a-b-and-c)
+- [Takeaways](#takeaways)
+
 ## Introduction
 - As enterprise cloud environments scale, managing network security, connectivity, and shared services across multiple business units becomes an operational challenge. Moving every application into a single Virtual Private Cloud (VPC) creates massive blast radiuses, while connecting every VPC to each other creates an unmanageable, web-like mesh.
 - The industry gold standard for solving this is the **Hub-and-Spoke topology**.
@@ -25,7 +37,8 @@
 - Traffic entering from external boundaries—whether it’s Customer Networks (A, B, and C) via Cloud VPN, or corporate headquarters via Dedicated Interconnect—is terminated inside **VPC DMZ**.
   - **Edge Security:** Google Cloud Armor and External Load Balancers (`ELB Z,Y,Z`) filter out DDoS attacks and malicious web traffic before it penetrates deeper into the network.
   - **Traffic Isolation:** The DMZ subnet holds no application backend workloads. Its sole purpose is to capture north-south traffic and force it through the security appliance layer.
-## Core firewall layer: CheckPoint managed instance groups
+## Core firewall layer
+- Core firewall layer: CheckPoint managed instance groups
 - You cannot rely on basic firewall rules alone when handling enterprise data. To ensure deep packet inspection (DPI) and threat prevention, this architecture sandwiches a layer of **CheckPoint Next-Generation Firewalls (NGFW)** between the DMZ and the Hub.
   - **Multi-Region Resilience:** Firewalls are split into Managed Instance Groups across multiple European regions:
     - `Group EUW4` (europe-west4)
