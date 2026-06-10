@@ -69,3 +69,60 @@
 - **Zero-Trust Ingress:** No external entity talks directly to a database or app backend. Everything passes through Cloud Armor and a CheckPoint NGFW first.
 - **Blast Radius Limitation:** A security breach in `Sandbox Team A` is entirely contained. VPC Peering boundaries prevent it from pivoting into `VPC PROD`.
 - **Cost & Operational Efficiency:** Centralizing identity (Keycloak), monitoring (Prometheus/Grafana), and active directory inside the VPC Hub dramatically slashes licensing costs and maintenance overhead.
+
+| Architectural stage          | Subnet / zone                              | Services & components                                                                               | Purpose / process                                                                                                                                              |
+| ---------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ingress & edge security      | VPC DMZ                                    | Cloud VPN, Interconnect, Cloud Router, Cloud Armor, External Load Balancers (ELB Z, Y, Z)           | Terminates traffic from customer networks (A, B, C) and office network (OLYMPOS). Provides DDoS protection, web filtering, and edge routing before inspection. |
+| Firewall & inspection        | Transit boundary                           | CheckPoint Managed Instance Groups, Internal Load Balancer (ILB A, B, C), ILB 0.0.0.0/0 (EUW4/EUW6) | Forces all north-south traffic through HA firewall clusters across regions for deep packet inspection.                                                         |
+| CI/CD & deployment           | Subnet CICD services (hub)                 | ArgoCD, GitLab Runners                                                                              | Manages CI/CD pipelines. Pulls code from repositories and deploys to GKE clusters using GitOps.                                                                |
+| Observability & monitoring   | Subnet shared services (hub)               | Prometheus, Grafana, Loki                                                                           | Centralized metrics, logs, and monitoring across all workloads and spokes.                                                                                     |
+| Identity & access management | Subnet shared services (hub)               | Keycloak PROD, Keycloak NON-PROD                                                                    | Central authentication and SSO, separated by environment.                                                                                                      |
+| Directory services           | Subnet AD EUW4 / EUW6 (hub)                | Active Directory Primary DC, Secondary DC                                                           | Enterprise identity and domain services with cross-region replication for resilience.                                                                          |
+| Workload spokes (production) | VPC PROD (europe-west4 / europe-west6)     | Subnet App A1/B1 (VM01, VM02), Subnet App A2/B2 (GKE)                                               | Production workloads on VMs and Kubernetes clusters, secured via firewall rules.                                                                               |
+| Workload spokes (non-prod)   | VPC NON-PROD (europe-west4 / europe-west6) | Subnet App A1/B1 (VM01, VM02), Subnet App A2/B2 (GKE)                                               | Staging/QA environments mirroring production topology for testing.                                                                                             |
+| Isolated testing (sandbox)   | VPC SANDBOX TeamA/B/C                      | Subnet App A1 (VM01, VM02), Cloud Firewall Rules                                                    | Isolated developer environments for experimentation without impacting core systems.                                                                            |
+
+```mermaid
+flowchart TD
+
+A["Customer Networks A/B/C + Office OLYMPOS"]
+
+B["VPC DMZ"]
+C["Edge Security: VPN, Interconnect, Cloud Router, Cloud Armor, ELB"]
+
+D["Transit Boundary"]
+E["Firewall Cluster: CheckPoint MIGs + ILBs"]
+
+F["Hub Services"]
+F1["CI/CD: ArgoCD + GitLab Runners"]
+F2["Observability: Prometheus + Grafana + Loki"]
+F3["Identity: Keycloak PROD / NON-PROD"]
+F4["Directory: AD EUW4 / EUW6"]
+
+G["Production VPC"]
+G1["VM Workloads"]
+G2["GKE Clusters"]
+
+H["Non-Prod VPC"]
+H1["VM Workloads"]
+H2["GKE Clusters"]
+
+I["Sandbox VPC"]
+I1["Team Environments"]
+
+A --> B --> D --> F
+D --> G
+D --> H
+D --> I
+
+F --> F1
+F --> F2
+F --> F3
+F --> F4
+
+G --> G1
+G --> G2
+H --> H1
+H --> H2
+I --> I1
+```
