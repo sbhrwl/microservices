@@ -7,9 +7,9 @@
 - [IEC61968 connector](#iec61968-connector)
 - [System design pillars](#system-design-pillars)
 - [Representative trace](#representative-trace)
-- [Key takeaways](#key-takeaways)
+- [Takeaways](#takeaways)
 
-# Overview
+## Overview
 - A single SOAP load-control request travels through multiple microservices before reaching the operational device layer.
 - The flow crosses:
   - **Transport security**
@@ -33,7 +33,7 @@
     - failure scenarios
     - observability needs
     - traceability requirements
-# Request flow
+## Request flow
 - The sample `F35` load-control request moves through four services:
 - **Data Hub Simulator**
   - Receives SOAP message
@@ -58,9 +58,9 @@
 | GFC Core | Business orchestration | gRPC, PostgreSQL | JWT, trusted tenant metadata | Stored command |
 | IEC61968 Connector | Device communication | gRPC, JMS | Tenant metadata, broker credentials | Execution callback |
 
-# Message structure
+## Message structure
 - The SOAP envelope contains multiple identifiers and business fields.
-## Identity fields
+### Identity fields
 - `Identification`
   - Unique business message identifier
 - `DocumentType`
@@ -73,7 +73,7 @@
 - These fields answer:
   - Which business event is this?
   - Where did it originate?
-## Routing fields
+### Routing fields
 - The request contains sender and receiver identities:
   - `PhysicalSenderEnergyParty`
   - `JuridicalSenderEnergyParty`
@@ -83,41 +83,33 @@
   - `PhysicalRecipientEnergyParty`
     - Maps to tenant configuration
     - Example: `gfc1-dev`
-## Control intent
+### Control intent
 - The actual device operation comes from:
   - `EnergyBusinessProcess`
     - Example: `DH-1223-2`
-  
   - `MeteringPointUsedDomainLocation`
     - Flexibility or metering point
-  
   - `EndDeviceControl.Identification`
     - Device command identifier
-  
   - `RelayIdentification`
     - Target relay
-  
   - `Request`
     - Example: `BP02`
     - Converted into internal relay state
-## Identifier separation
+### Identifier separation
 - Different identifiers have different responsibilities:
   - **Business message id**
     - External document identity
-  
   - **Document reference number**
     - Simulator inbox receipt
-  
   - **Tenant id**
     - Internal service identity
-  
   - **Organization user**
     - Simulator lookup key
-  
   - **Correlation id**
     - Connects queue messages and callbacks
 - Mixing these identifiers creates poor traceability.
-# Data hub simulator
+## Data hub simulator
 - The simulator acts as a secure mailbox.
 - It does not execute device commands.
 - Its responsibility:
@@ -125,7 +117,7 @@
   - validate
   - store
   - expose messages for downstream services
-## Transport security
+### Transport security
 `ServerTlsConfig` provides:
   - server keystore
   - trusted client certificates
@@ -133,7 +125,7 @@
   - `TLSv1.3`
   - restricted cipher configuration
 - This creates an mTLS boundary.
-## Message handling
+### Message handling
 - `MarketMessagingSoapService.sendMessage()` performs:
   - Validate message container
   - Validate payload
@@ -146,24 +138,22 @@
   - message accepted
 - It does not mean:
   - device command completed
-## Mailbox model
+### Mailbox model
 - The simulator behaves like a queue:
   - `sendMessage`
-    - Stores message
-  
+    - Stores message  
   - `peekMessage`
-    - Reads pending message
-  
+    - Reads pending message 
   - `dequeueMessage`
     - Removes processed message
-# Flex hub connector
+## Flex hub connector
 - The connector converts external market messages into internal commands.
 - Main responsibilities:
   - Poll simulator
   - Map identities
   - Transform payload
   - Forward command
-## Polling process
+### Polling process
 - `ScheduledCamelRoutes`:
   - Starts periodic polling
   - Default behavior:
@@ -172,24 +162,23 @@
 - `PeekMessagesUseCase`:
   - Iterates tenant registry
   - Requests messages for each tenant
-## Identity mapping
+### Identity mapping
 - The connector translates:
   - tenant id → organization user
   - organization id → recipient organization
   - SOAP payload → internal command
 - Example:
   - Tenant:
-    - `gfc1-dev`
-  
+    - `gfc1-dev`  
   - Organization:
     - `6411802010007`
-## SOAP security
+### SOAP security
 - `SSLContextParameterFactory` creates client TLS configuration:
   - PKCS12 client keystore
   - JKS truststore
   - certificate alias selection
 - The connector becomes an authenticated SOAP client.
-## Message transformation
+### Message transformation
 - `MessageMapper` converts: `LoadControlMessageMessageType` into `SendRelayControlCommand`
 - Mapping:
   - message identification → command id
@@ -198,238 +187,158 @@
   - end device control → relay target
   - `BP02` → relay state
 - This isolates protocol-specific XML from internal business logic.
-## Handoff to core
-
-The connector calls GFC Core using:
-
-- gRPC
-- `Tenant-Id` metadata
-
-The metadata provides tenant context for internal processing.
-
-# GFC core
-
-GFC Core is the orchestration layer.
-
-Responsibilities:
-
-- security validation
-- business processing
-- persistence
-- downstream communication
-
-## Security validation
-
-`AuthorizationInterceptor` supports:
-
-- External requests:
-  - Bearer JWT
-
-- Internal service calls:
-  - Trusted `Tenant-Id` metadata
-
-JWT validation checks:
-
-- issuer
-- audience
-- subject
-- expiration
-- token id
-- authorized party
-
-Trusted tenant metadata depends on:
-
-- secure deployment boundary
-- controlled service communication
-
-## Command processing
-
-`ControlCommandMutationService.sendCommand()`:
-
-- Resolve flexibility targets
-- Calculate aggregate power
-- Mark command initiated
-- Persist command
-- Call IEC61968 Connector
-
-Important design choice:
-
-- Persist before downstream execution
-
-Benefits:
-
-- traceability
-- recovery
-- failure analysis
-
-## Reliability controls
-
-Core provides:
-
-- latency limiting
-- request timing logs
-- exception mapping
-- message size limits
-
-These convert an integration service into an operable production system.
-
-## Downstream communication
-
-Core sends:
-
-- gRPC `SendCommandRequest`
-
-The code uses plaintext channels.
-
-Transport security depends on deployment:
-
-- application layer
-- service mesh
-- network layer
-
-The important point:
-
-- Know where security actually exists.
-
-## Feedback handling
-
-Execution callback flow:
-
-- IEC connector reports result
-- Core receives `notifyCommandExecution`
-- Database state is updated
-
-Lifecycle:
-
-- accepted
-- dispatched
-- executed or failed
-- reconciled
-
-# IEC61968 connector
-
-The IEC connector bridges business commands and device protocols.
-
-Responsibilities:
-
-- Receive command
-- Build IEC message
-- Dispatch through JMS
-- Return execution status
-
-## gRPC input
-
-`TenantIdInterceptor` requires:
-
-- `Tenant-Id` metadata
-
-Processing:
-
-- Convert protobuf request
-- Attach tenant context
-- Pass to command processor
-
-## IEC message creation
-
-`CommandProcessor` and `EndDeviceControlBuilder`:
-
-- Resolve network id
-- Resolve relay control type
-- Group compatible commands
-- Build IEC XML
-- Add correlation id
-- Add message id
-- Configure queue metadata
-
-Grouping improves:
-
-- message efficiency
-- downstream throughput
-
-## JMS dispatch
-
-`RequestDispatcher`:
-
-- Sends request to tenant-specific JMS route
-- Marshals XML
-- Places message on broker queue
-
-The broker becomes the operational boundary.
-
-## Response handling
-
-The connector:
-
-- Receives JMS response
-- Unmarshals XML
-- Maps response
-- Calls Core callback API
-
-The request completes only after state reconciliation.
-
-# System design pillars
-
-## Security
-
+### Handoff to core
+- The connector calls GFC Core using:
+  - gRPC
+    - `Tenant-Id` metadata
+  - The metadata provides tenant context for internal processing.
+## GFC core
+- GFC Core is the orchestration layer.
+- Responsibilities:
+  - security validation
+  - business processing
+  - persistence
+  - downstream communication
+### Security validation
+- `AuthorizationInterceptor` supports:
+  - External requests:
+    - Bearer JWT
+  - Internal service calls:
+    - Trusted `Tenant-Id` metadata
+  - JWT validation checks:
+    - issuer
+    - audience
+    - subject
+    - expiration
+    - token id
+    - authorized party
+- Trusted tenant metadata depends on:
+  - secure deployment boundary
+  - controlled service communication
+### Command processing
+- `ControlCommandMutationService.sendCommand()`:
+  - Resolve flexibility targets
+  - Calculate aggregate power
+  - Mark command initiated
+  - Persist command
+  - Call IEC61968 Connector
+- Important design choice:
+  - Persist before downstream execution
+  - Benefits:
+    - traceability
+    - recovery
+    - failure analysis
+### Reliability controls
+- Core provides:
+  - latency limiting
+  - request timing logs
+  - exception mapping
+  - message size limits
+- These convert an integration service into an operable production system.
+### Downstream communication
+- Core sends:
+  - gRPC `SendCommandRequest`
+- The code uses plaintext channels.
+- Transport security depends on deployment:
+  - application layer
+  - service mesh
+  - network layer
+- The important point:
+  - Know where security actually exists.
+### Feedback handling
+- Execution callback flow:
+  - IEC connector reports result
+  - Core receives `notifyCommandExecution`
+  - Database state is updated
+- Lifecycle:
+  - accepted
+  - dispatched
+  - executed or failed
+  - reconciled
+## IEC61968 connector
+- The IEC connector bridges business commands and device protocols.
+- Responsibilities:
+  - Receive command
+  - Build IEC message
+  - Dispatch through JMS
+  - Return execution status
+### gRPC input
+- `TenantIdInterceptor` requires:
+  - `Tenant-Id` metadata
+- Processing:
+  - Convert protobuf request
+  - Attach tenant context
+  - Pass to command processor
+### IEC message creation
+- `CommandProcessor` and `EndDeviceControlBuilder`:
+  - Resolve network id
+  - Resolve relay control type
+  - Group compatible commands
+  - Build IEC XML
+  - Add correlation id
+  - Add message id
+  - Configure queue metadata
+- Grouping improves:
+  - message efficiency
+  - downstream throughput
+### JMS dispatch
+- `RequestDispatcher`:
+  - Sends request to tenant-specific JMS route
+  - Marshals XML
+  - Places message on broker queue
+- The broker becomes the operational boundary.
+### Response handling
+- The connector:
+  - Receives JMS response
+  - Unmarshals XML
+  - Maps response
+  - Calls Core callback API
+- The request completes only after state reconciliation.
+## System design pillars
+### Security
 - mTLS for SOAP communication
 - TLS 1.3 configuration
 - JWT validation
 - Tenant metadata propagation
 - JMS broker authentication
-
-## Observability
-
+### Observability
 - Structured JSON logs
 - SOAP operation logging
 - gRPC timing
 - Certificate subject logging
 - Correlation identifiers
-
-## Reliability
-
+### Reliability
 - Inbox and dequeue model
 - Persistence before dispatch
 - Callback-based reconciliation
 - Failure status mapping
 - Health management
-
-## Performance
-
+### Performance
 - Scheduled polling
 - Message size limits
 - Command grouping
 - Latency protection
 - Controlled thread pools
-
-## Maintainability
-
+### Maintainability
 - Adapter-based architecture
 - Use-case separation
 - Domain models
 - Dedicated protocol mappers
 - Configuration-driven tenants
-
-## Traceability
-
-Important identifiers:
-
-- business message id
-- document reference
-- command id
-- correlation id
-- tenant id
-- organization user
-
-Traceability allows the system to explain:
-
-- what happened
-- who requested it
-- where it failed
-
-# Representative trace
-
-Example runtime flow:
-
+### Traceability
+- Important identifiers:
+  - business message id
+  - document reference
+  - command id
+  - correlation id
+  - tenant id
+  - organization user
+- Traceability allows the system to explain:
+  - what happened
+  - who requested it
+  - where it failed
+## Representative trace
+- Example runtime flow:
 ```text
 [Simulator] SOAP operation received: sendMessage
 [Simulator] Stored message for organization 6411802010007
@@ -437,3 +346,11 @@ Example runtime flow:
 [Core] Received sendCommand request
 [IEC] Sent message correlation-id=<command-id>
 [Core] Updated execution state
+```
+
+## Takeaways
+- A simple request becomes a distributed workflow.
+- Every protocol transition creates new failure boundaries.
+- Security must exist at every service boundary.
+- Identifiers are the backbone of debugging.
+- Observability is a system capability, not an optional feature.
