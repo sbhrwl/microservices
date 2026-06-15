@@ -1,0 +1,13 @@
+# Application
+- [bff](api-gateway/README.md)
+- [gfc-apis](gfc-apis/README.md)
+- [gfc-core](gfc-service/README.md)
+- [command-orchestrator](command-orchestrator/README.md)
+- [protocol-adapter](protocol-adapter/README.md)
+- [data-hub-simulator](data-hub-simulator/README.md)
+- [flex-hub-connector](flex-hub-connector/README.md)
+- Use cases
+  - [Running the app](usecases/running-app/README.md)
+  - [Import flexibilities](usecases/import-flexibilities/README.md)
+  - [Send commands](usecases/send-commands/README.md)
+  - [Switching flexibilities](usecases/switching/README.md)
