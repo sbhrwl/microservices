@@ -34,7 +34,6 @@
   - [Performance](#performance)
   - [Maintainability](#maintainability)
   - [Traceability](#traceability)
-- [Representative trace](#representative-trace)
 - [Takeaways](#takeaways)
 ## Overview
 - A single SOAP load-control request travels through multiple microservices before reaching the operational device layer.
@@ -364,8 +363,7 @@
   - what happened
   - who requested it
   - where it failed
-## Representative trace
-- Example runtime flow:
+- Example runtime trace:
 ```text
 [Simulator] SOAP operation received: sendMessage
 [Simulator] Stored message for organization 6411802010007
@@ -374,7 +372,6 @@
 [IEC] Sent message correlation-id=<command-id>
 [Core] Updated execution state
 ```
-
 ## Takeaways
 - A simple request becomes a distributed workflow.
 - Every protocol transition creates new failure boundaries.
