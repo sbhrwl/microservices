@@ -144,7 +144,7 @@
   - store
   - expose messages for downstream services
 ### Transport security
-`ServerTlsConfig` provides:
+[`ServerTlsConfig`](ServerTlsConfig.md) provides:
   - server keystore
   - trusted client certificates
   - client authentication
