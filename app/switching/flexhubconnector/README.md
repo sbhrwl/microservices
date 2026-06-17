@@ -6,7 +6,7 @@
 * [Sequence diagram](#sequence-diagram)
 
 ## Overview
-* This describes how ehe JVM application
+* This describes how the JVM application
   * boots
   * builds configuration
   * wires dependencies via Dagger
