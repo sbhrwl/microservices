@@ -30,15 +30,11 @@ public class Main {
   public void run() throws IOException, InterruptedException {
     // Use like: -Dconfig.file=etc/application.conf
     Config config = loadConfig();
-
     ApplicationComponent appComponent = DaggerApplicationComponent.factory().create(config);
-
     Application app = appComponent.application();
-
     appComponent.inject(this);
 
     logger.info("Git Info: {}", gitInfoManager.getGitInfo());
-
     app.start();
   }
 
@@ -48,9 +44,7 @@ public class Main {
         ConfigFactory.systemEnvironmentOverrides().withFallback(ConfigFactory.load());
 
     Config organizations = loadOrganizations();
-
     Config merged = organizations.withFallback(baseConfig).resolve();
-
     ConfigRenderOptions renderOptions =
         ConfigRenderOptions.defaults()
             .setOriginComments(false)
@@ -73,7 +67,6 @@ public class Main {
         Path.of(System.getProperty("config.file")).getParent().resolve("organizations");
 
     File[] files = Optional.ofNullable(tenantsDir.toFile().listFiles()).orElse(new File[0]);
-
     Config merged = ConfigFactory.empty();
     for (File f : files) {
       Config parsedConfig = ConfigFactory.parseFile(f);
