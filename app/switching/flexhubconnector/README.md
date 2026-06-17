@@ -4,7 +4,7 @@
 * [Config loading flow](#config-loading-flow)
 * [Config structure](#config-structure)
 * [Sequence diagram](#sequence-diagram)
-
+* [Daager](dagger/README.md)
 ## Overview
 * This describes how the JVM application
   * boots
