@@ -5,7 +5,7 @@
 * [Standard wiring vs dagger](#standard-wiring-vs-dagger)
 * [Startup sequence](#startup-sequence)
 ## Dagger in flex-hub-connector
-* `Main.java` is the composition root, not where the application is manually assembled.
+* [`Main.java`](Main.java) is the composition root, not where the application is manually assembled.
 * It:
   * loads configuration
   * asks Dagger for an `Application`
