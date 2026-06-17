@@ -6,7 +6,11 @@
 * [Sequence diagram](#sequence-diagram)
 
 ## Overview
-* This describes how the JVM application boots, builds configuration, wires dependencies via Dagger, and hands control to the runtime system (Camel + gRPC), with config assembly as the central spine.
+* This describes how ehe JVM application
+  * boots
+  * builds configuration
+  * wires dependencies via Dagger
+  * hands control to the runtime system (Camel + gRPC) with config assembly as the central spine.
 ## Boot flow
 * JVM entrypoint: `Bootstrap.java`
   * installs SLF4J bridge
