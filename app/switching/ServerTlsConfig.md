@@ -25,6 +25,7 @@
   - [Truststore](#truststore)
   - [Mutual tls](#mutual-tls)
 - [Related files](#related-files)
+- [File extensions](#file-extensions)
 ## Overview
 - ServerTlsConfig` is the server-side TLS configuration component for the Data Hub Simulator.
 - Its responsibility is to prepare the HTTPS security layer.
@@ -279,3 +280,39 @@ tlsParams.setSniHostCheck(false);
 * `CamelRoutes.java`
 * `SSLContextParameterFactory.java`
 * `how-to-manage-certificates.md`
+## File extensions
+### `.jks` (Java Keystore)
+- A `.jks` file is a repository of security certificates and private keys used almost exclusively within the **Java runtime environment**.
+* **What it holds**
+  * It can contain private keys (with their corresponding public certificates) and trusted root certificates (often called a "truststore").
+* **Common Use Cases:**
+  * Securing Java-based web servers (like Tomcat).
+  * Signing Android applications (`.apk` or `.aab`) before uploading them to the Google Play Store.
+* **Security:** The file itself is encrypted and password-protected. Individual keys inside the store can also have their own separate passwords.
+### `.p12` (PKCS #12)
+- A `.p12` file (Public-Key Cryptography Standards #12) is an **industry-standard, portable format** for storing cryptographic keys and certificates.
+- It is functionally very similar to a `.jks` file, but it is universally recognized across almost all operating systems and languages, not just Java.
+- `.pfx` is another extension used for this exact same format.
+* **What it holds:**
+  * A private key paired with its public key certificate, and often the chain of certificates that proves its authenticity.
+* **Common Use Cases:**
+  * Installing personal identity certificates into web browsers for client authentication.
+  * Securing email communications (S/MIME).
+  * Configuring VPN connections.
+* *Tip:* Because it is a universal standard, Java modern frameworks now often use `.p12` instead of the older, proprietary `.jks`.
+* **Security:** Highly encrypted and password-protected.
+### `.secret` (Generic Secret Data)
+- Unlike the other two, `.secret` is **not a standardized cryptographic file format**.
+- It is a generic extension used by developers to store sensitive information in plain text or simple configuration formats.
+* **What it holds:**
+  * It usually contains raw API keys, database passwords, OAuth tokens, or private passphrases. It is often formatted as a simple text file, a `.json`, or a `.env` file inside a project.
+* **Common Use Cases:**
+  * Storing local environment credentials for a software application.
+* *Crucial Warning:* These files are often added to `.gitignore` files so developers don't accidentally leak their passwords on GitHub.
+* **Security:** It relies entirely on the security of the filesystem it resides on. If someone gets access to the file, they can usually read it with a basic text editor.
+
+| Extension | Standardized? | Main Ecosystem | What's usually inside? |
+| --- | --- | --- | --- |
+| **`.jks`** | Yes | Java / Android | Certificates and private keys for Java apps. |
+| **`.p12`** | Yes (Universal) | Windows, Mac, Linux, iOS | Certificates and private keys for browsers, VPNs, and servers. |
+| **`.secret`** | No | General Development | Raw passwords, API keys, or configuration tokens. |
