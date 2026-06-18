@@ -181,7 +181,7 @@
   - Map identities
   - Transform payload
   - Forward command
-### [Polling process](app/switching/flexhubconnector/pollmessages/README.md)
+### [Polling process](flexhubconnector/pollmessages/README.md)
 - `ScheduledCamelRoutes`:
   - Starts periodic polling
   - Default behavior:
