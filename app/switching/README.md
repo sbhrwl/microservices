@@ -174,6 +174,7 @@
     - Removes processed message
 ## Flex hub connector
 - [Boot flow](flexhubconnector/README.md)
+  - [Dagger](flexhubconnector/dagger/README.md)
 - The connector converts external market messages into internal commands.
 - Main responsibilities:
   - Poll simulator
