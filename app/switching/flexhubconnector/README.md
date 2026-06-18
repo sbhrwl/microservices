@@ -44,6 +44,12 @@
   * reads parent directory
   * parses each file in `organizations/`
   * nests results under `flex-hub-connector.organizations`
+  * The final precedence becomes:
+    * organization-specific config files
+    * environment overrides
+    * default loaded config
+    * That means if the same setting exists in all three places, the **organization file wins**.
+    * A simple way to read the original line is: “Start with defaults, then let environment settings override them.”
 * Typed mapping (`ApplicationSetting`)
   * converts merged config into typed objects:
     * gRPC server settings
