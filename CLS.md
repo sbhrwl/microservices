@@ -21,7 +21,7 @@ graph TD
     end
 
     %% Local / HAN Domain
-    subgraph HAN [Local / HAN Domain/ LMN]
+    subgraph HAN [LMN / HAN ]
         CLS["CLS Comm Adapter<br/>(Logical/Physical Interface)"]
 
         subgraph E660 [Analytics]
