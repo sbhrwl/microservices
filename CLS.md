@@ -21,11 +21,11 @@ graph TD
     end
 
     %% Local / HAN Domain
-    subgraph HAN [Local / HAN Domain]
+    subgraph HAN [Local / HAN Domain/ LMN]
         CLS["CLS Comm Adapter<br/>(Logical/Physical Interface)"]
 
         subgraph E660 [Analytics]
-            E66C["Communication module"]
+            E66C["E660\nE66C Communication module"]
         end
         
         subgraph DER [Distributed Energy Resources]
