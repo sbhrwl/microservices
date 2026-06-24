@@ -23,6 +23,10 @@ graph TD
     %% Local / HAN Domain
     subgraph HAN [Local / HAN Domain]
         CLS["CLS Comm Adapter<br/>(Logical/Physical Interface)"]
+
+        subgraph E660 [Analytics]
+            E66C["Communication module"]
+        end
         
         subgraph DER [Distributed Energy Resources]
             Inverter["Solar Inverter"]
@@ -33,6 +37,7 @@ graph TD
         CLS <--> Inverter
         CLS <--> Battery
         CLS <--> HP
+        CLS <--> E66C
     end
 
     %% Operational Orchestration and Data Flow
