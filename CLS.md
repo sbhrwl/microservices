@@ -4,7 +4,7 @@ graph TD
     %% External / WAN Domain
     subgraph WAN [External / WAN Domain]
         subgraph EMT [Active External Market Participant]
-            App["Your Analytics Application<br/>(Cloud Infrastructure)"]
+            App["Analytics Application<br/>(Cloud Infrastructure)"]
             HSM["Hardware Security Module<br/>(SM-PKI Credentials)"]
             App <--> HSM
         end
@@ -12,7 +12,7 @@ graph TD
         GWA["Gateway Administrator<br/>(GWA Cloud)"]
         Operators["Grid Operators<br/>(TSO / DSO)"]
         
-        App -->|Consumes Aggregated Data| Operators
+        App -->|Insights on Aggregated Data| Operators
     end
 
     %% Edge Border
