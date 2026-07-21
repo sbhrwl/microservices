@@ -1,5 +1,18 @@
 # IntelliJ Idea
 
+| Priority | Shortcut | Why |
+|----------|----------|----------|
+| 1 | **Shift + Shift** | Search anything |
+| 2 | **Ctrl + N** | Open class instantly |
+| 3 | **Ctrl + Shift + N** | Open file instantly |
+| 4 | **Ctrl + B** | Jump to source code |
+| 5 | **Alt + Enter** | Fix errors automatically |
+| 6 | **Shift + F6** | Safe rename/refactor |
+| 7 | **Ctrl + Alt + L** | Format code |
+| 8 | **Alt + Insert** | Generate constructor/getters |
+| 9 | **Shift + F9** | Debug |
+| 10 | **Alt + F12** | Open terminal |
+
 | Category | Action | Shortcut |
 |----------|----------|----------|
 | **Navigation** | Search Everywhere | **Shift + Shift** |
