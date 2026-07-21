@@ -40,156 +40,77 @@
   <summary>request</summary>
 
   ```xml
-<soap:Envelope
-    xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
-    xmlns:urn="urn:cms:b2b:v01"
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
-
-    <soap:Header/>
-
-    <soap:Body>
-        <urn:SendMessageRequest>
-            <urn:MessageContainer>
-                <urn:Payload>
-
-                    <rsm:LoadControlMessageMessage
-                        xsi:schemaLocation="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:v1 F35_LoadControlMessage.xsd"
-                        xmlns:p="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
-                        xmlns:rsm="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:v1"
-                        xmlns:rsm1="urn:fi:Datahub:mif:common:HDR_Header:elements:v1"
-                        xmlns:rsm2="urn:fi:Datahub:mif:common:PEC_ProcessEnergyContext:elements:v1"
-                        xmlns:rsm3="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:elements:v1"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-                        <rsm:LoadControlMessage>
-
-                            <rsm:Header>
-
-                                <!-- 8d42f5-2000-4a53-8fff-583b15e3dc83 -->
-                                <rsm1:Identification>
-                                    ${=java.util.UUID.randomUUID().toString()}
-                                </rsm1:Identification>
-
-                                <rsm1:DocumentType>F35</rsm1:DocumentType>
-                                <rsm1:Creation>2026-05-10T10:15:30+03:00</rsm1:Creation>
-
-                                <rsm1:PhysicalSenderEnergyParty>
-                                    <rsm1:Identification schemeAgencyIdentifier="9">
-                                        6430076050014
-                                    </rsm1:Identification>
-                                </rsm1:PhysicalSenderEnergyParty>
-
-                                <rsm1:JuridicalSenderEnergyParty>
-                                    <rsm1:Identification schemeAgencyIdentifier="9">
-                                        6430076050014
-                                    </rsm1:Identification>
-                                </rsm1:JuridicalSenderEnergyParty>
-
-                                <rsm1:JuridicalRecipientEnergyParty>
-                                    <rsm1:Identification schemeAgencyIdentifier="9">
-                                        6429060100002
-                                    </rsm1:Identification>
-                                </rsm1:JuridicalRecipientEnergyParty>
-
-                                <rsm1:PhysicalRecipientEnergyParty>
-                                    <!--
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:cms:b2b:v01" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+<soap:Header/>
+<soap:Body>
+<urn:SendMessageRequest>
+<urn:MessageContainer>
+<urn:Payload>
+<rsm:LoadControlMessageMessage xsi:schemaLocation="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:v1 F35_LoadControlMessage.xsd       " xmlns:p="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:rsm="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:v1" xmlns:rsm1="urn:fi:Datahub:mif:common:HDR_Header:elements:v1" xmlns:rsm2="urn:fi:Datahub:mif:common:PEC_ProcessEnergyContext:elements:v1" xmlns:rsm3="urn:fi:Datahub:mif:masterdata:F35_LoadControlMessage:elements:v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<rsm:LoadControlMessage>
+<rsm:Header>
+<!-- 8d42f5-2000-4a53-8fff-583b15e3dc83 -->
+<rsm1:Identification>${=java.util.UUID.randomUUID().toString()}</rsm1:Identification>
+<rsm1:DocumentType>F35</rsm1:DocumentType>
+<rsm1:Creation>2026-05-10T10:15:30+03:00</rsm1:Creation>
+<rsm1:PhysicalSenderEnergyParty>
+<rsm1:Identification schemeAgencyIdentifier="9">6430076050014</rsm1:Identification>
+</rsm1:PhysicalSenderEnergyParty>
+<rsm1:JuridicalSenderEnergyParty>
+<rsm1:Identification schemeAgencyIdentifier="9">6430076050014</rsm1:Identification>
+</rsm1:JuridicalSenderEnergyParty>
+<rsm1:JuridicalRecipientEnergyParty>
+<rsm1:Identification schemeAgencyIdentifier="9">6429060100002</rsm1:Identification>
+</rsm1:JuridicalRecipientEnergyParty>
+<rsm1:PhysicalRecipientEnergyParty>
+<!--
+ 
                                     Vd008dso6411801 (6411802010007, DSO)  B2BVd008dso6411801Admin
+ 
                                     Vd008dso6411802 (6411802020006, DSO)  B2BVd008dso6411802Admin2
                                     -->
-                                    <rsm1:Identification schemeAgencyIdentifier="9">
-                                        6411802010007
-                                    </rsm1:Identification>
-                                </rsm1:PhysicalRecipientEnergyParty>
-
-                                <rsm1:SenderRoutingInformation>
-                                    SenderRoutingInformation
-                                </rsm1:SenderRoutingInformation>
-
-                                <rsm1:OriginalBusinessDocumentReference>
-                                    6f8d42f5-2000-4a53-8fff-583b15e3dc83
-                                </rsm1:OriginalBusinessDocumentReference>
-
-                                <rsm1:MessageNumber>0</rsm1:MessageNumber>
-                                <rsm1:MessagesTotal>0</rsm1:MessagesTotal>
-
-                                <rsm1:RegistrationTimestamp>
-                                    2026-05-10T10:15:30+03:00
-                                </rsm1:RegistrationTimestamp>
-
-                            </rsm:Header>
-
-                            <rsm:ProcessEnergyContext>
-
-                                <rsm2:EnergyBusinessProcess>
-                                    DH-1223-2
-                                </rsm2:EnergyBusinessProcess>
-
-                                <!-- An accepted load control request is forwarded to the DSO for execution -->
-
-                                <rsm2:EnergyBusinessProcessRole>
-                                    MIA
-                                </rsm2:EnergyBusinessProcessRole>
-
-                                <rsm2:EnergyIndustryClassification>
-                                    23
-                                </rsm2:EnergyIndustryClassification>
-
-                            </rsm:ProcessEnergyContext>
-
-                            <rsm:Transaction>
-
-                                <rsm3:PartyIdentification schemeAgencyIdentifier="9">
-                                    6429060100002
-                                </rsm3:PartyIdentification>
-
-                                <rsm3:MeteringPointUsedDomainLocation>
-                                    <rsm3:Identification schemeAgencyIdentifier="9">
-                                        641180201258602453
-                                    </rsm3:Identification>
-                                </rsm3:MeteringPointUsedDomainLocation>
-
-                                <rsm3:EndDeviceControl>
-
-                                    <rsm3:Identification>
-                                        ${=java.util.UUID.randomUUID().toString()}
-                                    </rsm3:Identification>
-
-                                    <rsm3:RelayIdentification>
-                                        2
-                                    </rsm3:RelayIdentification>
-
-                                    <rsm3:Description>
-                                        rsm3:Description
-                                    </rsm3:Description>
-
-                                    <rsm3:EndDeviceControlType>
-                                        <rsm3:Type>BO01</rsm3:Type>
-                                        <!-- Single control -->
-                                    </rsm3:EndDeviceControlType>
-
-                                    <rsm3:ControlDetails>
-                                        <!--
-                                        BP01 = Relay closed
-                                        BP02 = Relay open
-                                        -->
-                                        <rsm3:Request>
-                                            BP01
-                                        </rsm3:Request>
-                                    </rsm3:ControlDetails>
-
-                                </rsm3:EndDeviceControl>
-
-                            </rsm:Transaction>
-
-                        </rsm:LoadControlMessage>
-
-                    </rsm:LoadControlMessageMessage>
-
-                </urn:Payload>
-            </urn:MessageContainer>
-        </urn:SendMessageRequest>
-    </soap:Body>
-
+ 
+                                    <rsm1:Identification schemeAgencyIdentifier="9">6411802010007</rsm1:Identification>
+</rsm1:PhysicalRecipientEnergyParty>
+<rsm1:SenderRoutingInformation>SenderRoutingInformation</rsm1:SenderRoutingInformation>
+<rsm1:OriginalBusinessDocumentReference>6f8d42f5-2000-4a53-8fff-583b15e3dc83</rsm1:OriginalBusinessDocumentReference>
+<rsm1:MessageNumber>0</rsm1:MessageNumber>
+<rsm1:MessagesTotal>0</rsm1:MessagesTotal>
+<rsm1:RegistrationTimestamp>2026-05-10T10:15:30+03:00</rsm1:RegistrationTimestamp>
+</rsm:Header>
+<rsm:ProcessEnergyContext>
+<rsm2:EnergyBusinessProcess>DH-1223-2</rsm2:EnergyBusinessProcess>
+<!--An accepted load control request is forwarded to the DSO for
+                    execution-->
+<rsm2:EnergyBusinessProcessRole>MIA</rsm2:EnergyBusinessProcessRole>
+<rsm2:EnergyIndustryClassification>23</rsm2:EnergyIndustryClassification>
+</rsm:ProcessEnergyContext>
+<rsm:Transaction>
+<rsm3:PartyIdentification schemeAgencyIdentifier="9">6429060100002</rsm3:PartyIdentification>
+<rsm3:MeteringPointUsedDomainLocation>
+<rsm3:Identification schemeAgencyIdentifier="9">641180201258602453</rsm3:Identification>
+</rsm3:MeteringPointUsedDomainLocation>
+<rsm3:EndDeviceControl>
+<rsm3:Identification>${=java.util.UUID.randomUUID().toString()}</rsm3:Identification>
+<rsm3:RelayIdentification>2</rsm3:RelayIdentification>
+<rsm3:Description>rsm3:Description</rsm3:Description>
+<rsm3:EndDeviceControlType>
+<rsm3:Type>BO01</rsm3:Type>
+<!--Single control-->
+</rsm3:EndDeviceControlType>
+<rsm3:ControlDetails>
+<!-- BP01=Relay closed
+                                             BP02=Relay open-->
+<rsm3:Request>BP01</rsm3:Request>
+</rsm3:ControlDetails>
+</rsm3:EndDeviceControl>
+</rsm:Transaction>
+</rsm:LoadControlMessage>
+</rsm:LoadControlMessageMessage>
+</urn:Payload>
+</urn:MessageContainer>
+</urn:SendMessageRequest>
+</soap:Body>
 </soap:Envelope>
 ```
 </details>
