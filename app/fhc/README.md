@@ -267,8 +267,8 @@ sequenceDiagram
   * Define contracts for external dependencies.
   * Enable dependency inversion.
 * **Outbound adapters**
-  * Implement ports.
-  * Integrate with SOAP and `gRPC`.
+  * Implement ports
+  * Integrate with SOAP and `gRPC`
 * **Domain**
   * Encapsulates business models.
   * Remains framework independent.
