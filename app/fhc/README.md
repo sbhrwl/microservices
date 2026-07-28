@@ -15,7 +15,7 @@
     - [Usecase](#usecase)
   - [Domain](#domain)
 - [Message flow](#message-flow)
-- [Runtime sequence](#runtime-sequence)
+- [Processing lifecycle](#processing-lifecycle)
 - [Layer responsibilities](#layer-responsibilities)
 - [Architecture assessment](#architecture-assessment)
 - [Recommendations](#recommendations)
@@ -190,69 +190,86 @@ flowchart TD
 ```
 
 ## Message flow
-* Scheduler triggers periodic polling.
-* Connector peeks messages from Flex-Hub.
-* SOAP payload is mapped to domain objects.
-* Application use case is invoked.
-* Request is forwarded to **GFC-Core** through `RelayControlCommandPort`.
-* `gRPC` adapter calls **GFC-Core**.
-* Processing result is returned.
-* Domain response is mapped to SOAP.
-* Response is pushed back to Flex-Hub.
+- The connector continuously polls **Flex-Hub** for pending messages.
+- Retrieved SOAP messages are mapped into internal domain models.
+- The application layer orchestrates message processing.
+- Requests are forwarded to **GFC-Core** using `gRPC`.
+- After successful delivery, the original message is removed from the Flex-Hub queue.
+- Once business processing is completed, **GFC-Core** sends an asynchronous confirmation to the connector.
+- The connector processes the confirmation and prepares the corresponding response for **Flex-Hub**.
 
 ```mermaid
 flowchart TD
-    A[Scheduler]
-    B[Peek Flex-Hub]
-    C[SOAP Mapper]
-    D[Use Case]
-    E[gRPC Adapter]
-    F[GFC-Core]
-    G[SOAP Mapper]
-    H[Push Response]
+    A[Flex-Hub]
+    B[SOAP Adapter]
+    C[Application Use Case]
+    D[gRPC Adapter]
+    E[GFC-Core]
 
-    A --> B
+    A -->|Peek message| B
     B --> C
     C --> D
     D --> E
-    E --> F
-    F --> G
-    G --> H
+    E -->|Async confirmation| D
+    D --> B
+    B -->|Response| A
 ```
 
-## Runtime sequence
-* `ScheduledCamelRoutes`
-  * Initiates polling.
-* `PeekMessagesUseCase`
-  * Retrieves pending messages.
-* `PeekMessagesPort`
-  * Delegates retrieval to outbound adapter.
-* `SoapClientAdapter`
-  * Reads message from Flex-Hub.
-* `MessageMapper`
-  * Converts payload into domain model.
-* `RelayControlCommandPort`
-  * Invokes GFC-Core.
-* `ControlCommandGrpcClientAdapter`
-  * Executes `gRPC` request.
-* `SendConfirmationMessageUseCase`
-  * Creates response.
-* `SoapClientAdapter`
-  * Sends confirmation to Flex-Hub.
+## Processing lifecycle
+- **Polling**
+  - `ScheduledCamelRoutes` periodically triggers message polling.
+  - `OutboundCamelRoutes` sends a `PeekMessageRequest` to Flex-Hub.
+- **Message retrieval**
+  - Flex-Hub returns the next available SOAP message.
+  - `MessageMapper` converts the SOAP payload into a domain model.
+- **Application processing**
+  - `PeekMessagesUseCase` receives the mapped message.
+  - The appropriate application workflow is initiated.
+- **Notification relay**
+  - `ControlCommandGrpcClient` maps the domain model into a `gRPC` request.
+  - The request is delivered to **GFC-Core**.
+- **Queue management**
+  - After successful delivery, `OutboundCamelRoutes` sends a `DequeueMessage` request.
+  - The processed message is removed from the Flex-Hub queue.
+- **Asynchronous callback**
+  - After completing business processing, **GFC-Core** invokes `sendLoadControlConfirmation`.
+  - `FlexibilityHubGrpcAdapter` receives the callback.
+  - The connector acknowledges the request and prepares the response for Flex-Hub.
 
 ```mermaid
 sequenceDiagram
     participant Scheduler
-    participant Connector
+    participant Camel as OutboundCamelRoutes
     participant FlexHub
-    participant GFC
-    Scheduler->>Connector: Trigger polling
-    Connector->>FlexHub: Peek messages
-    FlexHub-->>Connector: SOAP message
-    Connector->>GFC: gRPC request
-    GFC-->>Connector: Processing result
-    Connector->>FlexHub: Push response
+    participant Mapper as MessageMapper
+    participant UseCase as PeekMessagesUseCase
+    participant GFC as GFC-Core
+    participant Adapter as FlexibilityHubGrpcAdapter
+
+    Scheduler->>Camel: Trigger polling
+    Camel->>FlexHub: PeekMessageRequest
+    FlexHub-->>Camel: SOAP message
+    Camel->>Mapper: Map SOAP payload
+    Mapper->>UseCase: Domain message
+    UseCase->>GFC: Relay notification (gRPC)
+    GFC-->>UseCase: Notification delivered
+    UseCase->>Camel: Dequeue message
+    Camel->>FlexHub: DequeueMessage
+    GFC->>Adapter: sendLoadControlConfirmation()
+    Adapter-->>GFC: Acknowledgment
 ```
+
+### Runtime log correlation
+
+| Timestamp | Component | Event |
+|-----------|-----------|-------|
+| `13:04:31.700` | `OutboundCamelRoutes` | Send `PeekMessageRequest` to Flex-Hub |
+| `13:04:31.701` | `MessageMapper` | Map incoming `LoadControl` SOAP message |
+| `13:04:31.730` | `PeekMessagesUseCase` | Start application workflow |
+| `13:04:32.372` | `ControlCommandGrpcClient` | Deliver notification to GFC-Core |
+| `13:04:32.409` | `OutboundCamelRoutes` | Dequeue processed message from Flex-Hub |
+| `13:04:39.564` | `FlexibilityHubGrpcAdapter` | Receive `sendLoadControlConfirmation` callback |
+| `13:04:39.578` | `FlexibilityHubGrpcAdapter` | Send acknowledgment |
 
 ## Layer responsibilities
 * **Inbound adapters**
