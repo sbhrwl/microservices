@@ -225,15 +225,15 @@ sequenceDiagram
 
 ### Runtime log correlation
 
-| Timestamp | Component | Event |
-|-----------|-----------|-------|
-| `13:04:31.700` | `OutboundCamelRoutes` | Send `PeekMessageRequest` to Flex-Hub |
-| `13:04:31.701` | `MessageMapper` | Map incoming `LoadControl` SOAP message |
-| `13:04:31.730` | `PeekMessagesUseCase` | Start application workflow |
-| `13:04:32.372` | `ControlCommandGrpcClient` | Deliver notification to GFC-Core |
-| `13:04:32.409` | `OutboundCamelRoutes` | Dequeue processed message from Flex-Hub |
-| `13:04:39.564` | `FlexibilityHubGrpcAdapter` | Receive `sendLoadControlConfirmation` callback |
-| `13:04:39.578` | `FlexibilityHubGrpcAdapter` | Send acknowledgment |
+| Timestamp | Component | Layer | Event |
+|-----------|-----------|-------|-------|
+| `13:04:31.700` | `OutboundCamelRoutes` | **Adapter** (Outbound SOAP) | Send `PeekMessageRequest` to Flex-Hub |
+| `13:04:31.701` | `MessageMapper` | **Adapter** (Outbound SOAP) | Map incoming `LoadControl` SOAP message to a domain model |
+| `13:04:31.730` | `PeekMessagesUseCase` | **Application** | Start application workflow |
+| `13:04:32.372` | `ControlCommandGrpcClient` | **Adapter** (Outbound gRPC) | Deliver notification to GFC-Core |
+| `13:04:32.409` | `OutboundCamelRoutes` | **Adapter** (Outbound SOAP) | Dequeue processed message from Flex-Hub |
+| `13:04:39.564` | `FlexibilityHubGrpcAdapter` | **Adapter** (Inbound gRPC) | Receive `sendLoadControlConfirmation` callback |
+| `13:04:39.578` | `FlexibilityHubGrpcAdapter` | **Adapter** (Inbound gRPC) | Send acknowledgment |
 
 ## Layer responsibilities
 * **Inbound adapters**
