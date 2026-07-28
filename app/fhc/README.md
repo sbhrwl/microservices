@@ -1,22 +1,29 @@
-# Index
-
-* [Service overview](#service-overview)
-* [Architecture](#architecture)
-* [Package structure](#package-structure)
-* [Message flow](#message-flow)
-* [Runtime sequence](#runtime-sequence)
-* [Layer responsibilities](#layer-responsibilities)
-* [Architecture assessment](#architecture-assessment)
-* [Recommendations](#recommendations)
-
+# FHC
+- [Service overview](#service-overview)
+- [Architecture](#architecture)
+- [Package structure](#package-structure)
+  - [Adapters](#adapters)
+    - [Inbound](#inbound)
+      - [Grpc](#grpc)
+      - [Scheduler](#scheduler)
+    - [Outbound](#outbound)
+      - [Grpc](#grpc-1)
+      - [Soap](#soap)
+  - [App](#app)
+    - [Port](#port)
+    - [Service](#service)
+    - [Usecase](#usecase)
+  - [Domain](#domain)
+- [Message flow](#message-flow)
+- [Runtime sequence](#runtime-sequence)
+- [Layer responsibilities](#layer-responsibilities)
+- [Architecture assessment](#architecture-assessment)
+- [Recommendations](#recommendations)
 # Service overview
-
 * **Purpose**
-
   * Acts as an **integration connector** between **Flex-Hub** and **GFC-Core**.
   * Bridges different communication protocols while isolating business processing.
 * **Responsibilities**
-
   * Periodically **peek** messages from **Flex-Hub**.
   * Convert external SOAP payloads into internal domain models.
   * Forward requests to **GFC-Core** using `gRPC`.
@@ -71,6 +78,46 @@ flowchart TD
 ```
 
 # Package structure
+```
+java
+└── com.landisgyr.gfc.flexhub_connector
+    ├── adapters
+    │   ├── inbound
+    │   │   ├── grpc
+    │   │   │   ├── FlexibilityHubGrpcAdapter
+    │   │   │   ├── HealthGrpcService
+    │   │   │   ├── ProtoMapper
+    │   │   │   └── TenantIdInterceptor
+    │   │   └── scheduler
+    │   │       └── ScheduledCamelRoutes
+    │   └── outbound
+    │       ├── grpc
+    │       │   ├── ControlCommandGrpcClient
+    │       │   ├── ControlCommandGrpcClientAdapter
+    │       │   └── ProtoMapper
+    │       └── soap
+    │           ├── MasterDataMPEventMapper
+    │           ├── MessageMapper
+    │           ├── OutboundCamelRoutes
+    │           └── SoapClientAdapter
+    ├── app
+    │   ├── port
+    │   │   ├── PeekMessagesPort
+    │   │   └── RelayControlCommandPort
+    │   ├── service
+    │   │   ├── OrganizationIdLookupService
+    │   │   ├── OrganizationUserLookupService
+    │   │   └── TenantIdLookupService
+    │   ├── usecase
+    │   │   ├── PeekMessagesUseCase
+    │   │   ├── SendConfirmationMessageUseCase
+    │   │   └── UpdateAccountingPointControllabilityUseCase
+    │   └── Main
+    ├── domain
+    │   ├── model
+    │   └── type
+    └── infrastructure
+```
 ## `adapters`
 * Contains all infrastructure-specific implementations.
 * Isolates protocol and framework dependencies.
