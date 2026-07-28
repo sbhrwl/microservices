@@ -23,6 +23,9 @@
   * Connector focuses on **integration**, **orchestration**, **mapping**, and **protocol translation**.
   * Follows **Hexagonal Architecture (Ports & Adapters)**.
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     FH[Flex-Hub]
@@ -34,6 +37,7 @@ flowchart TD
     GC -->|Processing result| FC
     FC -->|SOAP response| FH
 ```
+</details>
 
 ## Architecture
 * **Architectural style**
@@ -51,6 +55,9 @@ flowchart TD
   * Contains business models.
   * Independent of frameworks and transport protocols.
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     A[Inbound adapters]
@@ -64,6 +71,7 @@ flowchart TD
     C --> D
     D --> E
 ```
+</details>
 
 - `Adapters` are the **gates** where messages enter and leave.
 - `Application` is the **controller** deciding where every message goes next.
@@ -143,6 +151,9 @@ java
 |                         | `UpdateAccountingPointControllabilityUseCase` | Updates the controllability status of accounting points.                                                                                       |
 | **Domain**              |                                               | Contains the core business models and business rules. Independent of infrastructure technologies such as SOAP, gRPC, Apache Camel, and Spring. |
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     A[Adapters]
@@ -152,6 +163,7 @@ flowchart TD
     A --> B
     B --> C
 ```
+</details>
 
 ## Message flow
 - The connector continuously polls **Flex-Hub** for pending messages.
@@ -161,6 +173,9 @@ flowchart TD
 - After successful delivery, the original message is removed from the Flex-Hub queue.
 - Once business processing is completed, **GFC-Core** sends an asynchronous confirmation to the connector.
 - The connector processes the confirmation and prepares the corresponding response for **Flex-Hub**.
+
+<details>
+  <summary>prompt</summary>
 
 ```mermaid
 flowchart TD
@@ -178,6 +193,7 @@ flowchart TD
     D --> B
     B -->|Response| A
 ```
+</details>
 
 ## Processing lifecycle
 - **Polling**
@@ -199,6 +215,11 @@ flowchart TD
   - After completing business processing, **GFC-Core** invokes `sendLoadControlConfirmation`.
   - `FlexibilityHubGrpcAdapter` receives the callback.
   - The connector acknowledges the request and prepares the response for Flex-Hub.
+
+<img src="images/processing-lifecycle.png">
+
+<details>
+  <summary>prompt</summary>
 
 ```mermaid
 sequenceDiagram
@@ -222,6 +243,7 @@ sequenceDiagram
     GFC->>Adapter: sendLoadControlConfirmation()
     Adapter-->>GFC: Acknowledgment
 ```
+</details>
 
 ### Runtime log correlation
 
