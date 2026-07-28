@@ -2,18 +2,6 @@
 - [Service overview](#service-overview)
 - [Architecture](#architecture)
 - [Package structure](#package-structure)
-  - [Adapters](#adapters)
-    - [Inbound](#inbound)
-      - [Grpc](#grpc)
-      - [Scheduler](#scheduler)
-    - [Outbound](#outbound)
-      - [Grpc](#grpc-1)
-      - [Soap](#soap)
-  - [App](#app)
-    - [Port](#port)
-    - [Service](#service)
-    - [Usecase](#usecase)
-  - [Domain](#domain)
 - [Message flow](#message-flow)
 - [Processing lifecycle](#processing-lifecycle)
 - [Layer responsibilities](#layer-responsibilities)
@@ -77,6 +65,9 @@ flowchart TD
     D --> E
 ```
 
+- `Adapters` are the **gates** where messages enter and leave.
+- `Application` is the **controller** deciding where every message goes next.
+- `Domain` is the **cargo** being transported. It doesn't know who carries it or where it came from.
 ## Package structure
 ```
 java
@@ -118,66 +109,39 @@ java
     │   └── type
     └── infrastructure
 ```
-### `adapters`
-* Contains all infrastructure-specific implementations.
-* Isolates protocol and framework dependencies.
-#### `adapters.inbound.grpc`
-* `FlexibilityHubGrpcAdapter`
-  * Receives incoming `gRPC` requests.
-* `HealthGrpcService`
-  * Provides health check endpoints.
-* `TenantIdInterceptor`
-  * Handles tenant context propagation.
-* `ProtoMapper`
-  * Maps between `Protobuf` and domain models.
-#### `adapters.inbound.scheduler`
-* `ScheduledCamelRoutes`
-  * Periodically polls Flex-Hub.
-  * Triggers message processing workflows.
-#### `adapters.outbound.grpc`
-* `ControlCommandGrpcClient`
-  * Low-level `gRPC` client.
-* `ControlCommandGrpcClientAdapter`
-  * Implements application port.
-  * Invokes **GFC-Core**.
-* `ProtoMapper`
-  * Converts domain models to `Protobuf`.
-#### `adapters.outbound.soap`
-* `SoapClientAdapter`
-  * Sends responses to Flex-Hub.
-* `OutboundCamelRoutes`
-  * Defines Camel integration routes.
-* `MessageMapper`
-  * Converts domain objects into SOAP messages.
-* `MasterDataMPEventMapper`
-  * Maps master data events.
 
-### `app`
-* Contains orchestration logic.
-#### `app.port`
-* `PeekMessagesPort`
-  * Abstraction for retrieving Flex-Hub messages.
-* `RelayControlCommandPort`
-  * Abstraction for forwarding requests to GFC-Core.
-#### `app.service`
-* Contains reusable application services.
-* Examples:
-  * `OrganizationIdLookupService`
-  * `OrganizationUserLookupService`
-  * `TenantIdLookupService`
-#### `app.usecase`
-* Implements application workflows.
-* Examples:
-  * `PeekMessagesUseCase`
-  * `SendConfirmationMessageUseCase`
-  * `UpdateAccountingPointControllabilityUseCase`
-### `domain`
-* Contains business models.
-* Independent of:
-  * `SOAP`
-  * `gRPC`
-  * `Apache Camel`
-  * Spring infrastructure
+| **Layer**               | **Package / Component**                       | **Purpose / Responsibility**                                                                                                                   |
+| ----------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Adapters**            |                                               | Contains infrastructure-specific implementations and isolates protocol/framework dependencies.                                                 |
+|                         | **adapters.inbound.grpc**                     | Handles inbound gRPC communication.                                                                                                            |
+|                         | `FlexibilityHubGrpcAdapter`                   | Receives incoming gRPC requests.                                                                                                               |
+|                         | `HealthGrpcService`                           | Provides health check endpoints.                                                                                                               |
+|                         | `TenantIdInterceptor`                         | Handles tenant context propagation.                                                                                                            |
+|                         | `ProtoMapper`                                 | Maps between Protobuf messages and domain models.                                                                                              |
+|                         | **adapters.inbound.scheduler**                | Handles scheduled processing.                                                                                                                  |
+|                         | `ScheduledCamelRoutes`                        | Periodically polls Flex-Hub and triggers message processing workflows.                                                                         |
+|                         | **adapters.outbound.grpc**                    | Handles outbound gRPC communication with GFC-Core.                                                                                             |
+|                         | `ControlCommandGrpcClient`                    | Low-level gRPC client.                                                                                                                         |
+|                         | `ControlCommandGrpcClientAdapter`             | Implements the application port and invokes **GFC-Core**.                                                                                      |
+|                         | `ProtoMapper`                                 | Converts domain models into Protobuf messages.                                                                                                 |
+|                         | **adapters.outbound.soap**                    | Handles outbound SOAP communication with Flex-Hub.                                                                                             |
+|                         | `SoapClientAdapter`                           | Sends responses to Flex-Hub.                                                                                                                   |
+|                         | `OutboundCamelRoutes`                         | Defines Apache Camel integration routes.                                                                                                       |
+|                         | `MessageMapper`                               | Converts domain objects into SOAP messages.                                                                                                    |
+|                         | `MasterDataMPEventMapper`                     | Maps master data events into SOAP payloads.                                                                                                    |
+| **Application (`app`)** |                                               | Contains application orchestration logic.                                                                                                      |
+|                         | **app.port**                                  | Defines application ports (interfaces) for external interactions.                                                                              |
+|                         | `PeekMessagesPort`                            | Abstraction for retrieving messages from Flex-Hub.                                                                                             |
+|                         | `RelayControlCommandPort`                     | Abstraction for forwarding control commands to GFC-Core.                                                                                       |
+|                         | **app.service**                               | Provides reusable application services shared across use cases.                                                                                |
+|                         | `OrganizationIdLookupService`                 | Resolves organization identifiers.                                                                                                             |
+|                         | `OrganizationUserLookupService`               | Resolves organization users.                                                                                                                   |
+|                         | `TenantIdLookupService`                       | Resolves tenant identifiers.                                                                                                                   |
+|                         | **app.usecase**                               | Implements business workflows and application use cases.                                                                                       |
+|                         | `PeekMessagesUseCase`                         | Retrieves and processes messages from Flex-Hub.                                                                                                |
+|                         | `SendConfirmationMessageUseCase`              | Sends confirmation messages back to Flex-Hub.                                                                                                  |
+|                         | `UpdateAccountingPointControllabilityUseCase` | Updates the controllability status of accounting points.                                                                                       |
+| **Domain**              |                                               | Contains the core business models and business rules. Independent of infrastructure technologies such as SOAP, gRPC, Apache Camel, and Spring. |
 
 ```mermaid
 flowchart TD
