@@ -19,7 +19,7 @@
 - [Layer responsibilities](#layer-responsibilities)
 - [Architecture assessment](#architecture-assessment)
 - [Recommendations](#recommendations)
-# Service overview
+## Service overview
 * **Purpose**
   * Acts as an **integration connector** between **Flex-Hub** and **GFC-Core**.
   * Bridges different communication protocols while isolating business processing.
@@ -47,7 +47,7 @@ flowchart TD
     FC -->|SOAP response| FH
 ```
 
-# Architecture
+## Architecture
 * **Architectural style**
   * Implements **Hexagonal Architecture**.
   * Separates **Application**, **Domain**, and **Infrastructure** concerns.
@@ -77,7 +77,7 @@ flowchart TD
     D --> E
 ```
 
-# Package structure
+## Package structure
 ```
 java
 └── com.landisgyr.gfc.flexhub_connector
@@ -118,10 +118,10 @@ java
     │   └── type
     └── infrastructure
 ```
-## `adapters`
+### `adapters`
 * Contains all infrastructure-specific implementations.
 * Isolates protocol and framework dependencies.
-### `adapters.inbound.grpc`
+#### `adapters.inbound.grpc`
 * `FlexibilityHubGrpcAdapter`
   * Receives incoming `gRPC` requests.
 * `HealthGrpcService`
@@ -130,11 +130,11 @@ java
   * Handles tenant context propagation.
 * `ProtoMapper`
   * Maps between `Protobuf` and domain models.
-### `adapters.inbound.scheduler`
+#### `adapters.inbound.scheduler`
 * `ScheduledCamelRoutes`
   * Periodically polls Flex-Hub.
   * Triggers message processing workflows.
-### `adapters.outbound.grpc`
+#### `adapters.outbound.grpc`
 * `ControlCommandGrpcClient`
   * Low-level `gRPC` client.
 * `ControlCommandGrpcClientAdapter`
@@ -142,7 +142,7 @@ java
   * Invokes **GFC-Core**.
 * `ProtoMapper`
   * Converts domain models to `Protobuf`.
-### `adapters.outbound.soap`
+#### `adapters.outbound.soap`
 * `SoapClientAdapter`
   * Sends responses to Flex-Hub.
 * `OutboundCamelRoutes`
@@ -152,26 +152,26 @@ java
 * `MasterDataMPEventMapper`
   * Maps master data events.
 
-## `app`
+### `app`
 * Contains orchestration logic.
-### `app.port`
+#### `app.port`
 * `PeekMessagesPort`
   * Abstraction for retrieving Flex-Hub messages.
 * `RelayControlCommandPort`
   * Abstraction for forwarding requests to GFC-Core.
-### `app.service`
+#### `app.service`
 * Contains reusable application services.
 * Examples:
   * `OrganizationIdLookupService`
   * `OrganizationUserLookupService`
   * `TenantIdLookupService`
-### `app.usecase`
+#### `app.usecase`
 * Implements application workflows.
 * Examples:
   * `PeekMessagesUseCase`
   * `SendConfirmationMessageUseCase`
   * `UpdateAccountingPointControllabilityUseCase`
-## `domain`
+### `domain`
 * Contains business models.
 * Independent of:
   * `SOAP`
@@ -189,7 +189,7 @@ flowchart TD
     B --> C
 ```
 
-# Message flow
+## Message flow
 * Scheduler triggers periodic polling.
 * Connector peeks messages from Flex-Hub.
 * SOAP payload is mapped to domain objects.
@@ -220,7 +220,7 @@ flowchart TD
     G --> H
 ```
 
-# Runtime sequence
+## Runtime sequence
 * `ScheduledCamelRoutes`
   * Initiates polling.
 * `PeekMessagesUseCase`
@@ -254,7 +254,7 @@ sequenceDiagram
     Connector->>FlexHub: Push response
 ```
 
-# Layer responsibilities
+## Layer responsibilities
 * **Inbound adapters**
   * Accept external requests.
   * Trigger application workflows.
@@ -272,7 +272,7 @@ sequenceDiagram
 * **Domain**
   * Encapsulates business models.
   * Remains framework independent.
-# Architecture assessment
+## Architecture assessment
 * **Strengths**
   * Clear separation of concerns.
   * Strong adherence to **Hexagonal Architecture**.
@@ -283,7 +283,7 @@ sequenceDiagram
   * Easily testable through port mocking.
   * Supports replacing external systems with minimal impact.
 
-# Recommendations
+## Recommendations
 * Add resilience patterns for external integrations.
   * `Retry`
   * `Circuit Breaker`
