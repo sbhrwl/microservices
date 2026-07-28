@@ -82,13 +82,36 @@ java
     ├── adapters
     │   ├── inbound
     │   │   ├── grpc
+    │   │   │   ├── DeviceInteractionService
+    │   │   │   ├── HealthGrpcService
+    │   │   │   ├── ProtoMapper
+    │   │   │   └── TenantIdInterceptor
     │   │   └── jms
-    │   ├── outbound
-    │   │   ├── grpc
-    │   │   └── jms
+    │   │       ├── helper
+    │   │       │   └── ShortIdGenerator
+    │   │       ├── ControlCommandResponseMapper
+    │   │       ├── CreateTouCalendarResponse
+    │   │       └── InboundCamelRouteBuilder
+    │   └── outbound
+    │       ├── grpc
+    │       │   ├── ControlCommandGrpcClient
+    │       │   └── ProtoMapper
+    │       └── jms
+    │           ├── EndDeviceControlBuilder
+    │           ├── OutboundCamelRouteBuilder
+    │           ├── RequestDispatcher
+    │           ├── RolloutCalendarMapper
+    │           ├── TouCalendarMapper
+    │           └── TouCalendarModel
     ├── app
     │   ├── service
-    │   ├── Main
+    │   │   ├── BrokerIdLookupService
+    │   │   ├── CommandProcessor
+    │   │   ├── CommandResponseProcessor
+    │   │   ├── NetworkIdLookupService
+    │   │   ├── RelayControlTypeResolver
+    │   │   └── TenantIdLookupService
+    │   └── Main
     ├── domain
     │   ├── model
     │   └── types
