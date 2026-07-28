@@ -15,12 +15,12 @@
   <summary>prompt</summary>
 
 **Prompt:**
-* I’ll provide you with a text, your task is to convert it into a **concise Markdown summary** suitable for documentation or technical reference.
+* Your task is to convert the text into a **concise Markdown summary** suitable for documentation or technical reference.
 * Follow these rules carefully:
   * Treat the content as **technical**, assuming you’re a **microservices expert**.
   * **Remove duplicate or redundant text**, keeping only essential technical information.
   * Convert all sections into **clean bullet-point summaries** and feel free to add new sections
-  * Ensure the content follows a **logical flow** and build a story line (problem → motivation → evolution → solution → implementation → takeaway).
+  * Ensure the content follows a **logical flow**
   * Apply the following Markdown formatting standards:
     * **Headings**
       * Only the **first word** of each heading starts with a capital letter; the rest are lowercase.
@@ -44,11 +44,7 @@
       * Use **inline code formatting** (`like this`) for technical keywords, parameters, and code-level references.
       * Avoid horizontal dividers (`---`) between sections.
       * Keep sentences short and purposeful.
-    * **Developer takeaways**
-      * Add a dedicated **“Developer takeaways”** section at the end when relevant.
-      * Summarize key implementation principles or design lessons in concise bullet points.
-      * Use action-oriented phrasing (e.g., “Apply”, “Use”, “Avoid”, “Ensure”).
-      * Keep tone instructive and directly applicable to engineering decisions.
+    * **Diagrams**
       * Add **Visuals (Mermaid UML diagrams)**
       * Include **Mermaid diagrams** to represent flows, architectures, or dependencies.
       * Keep diagrams **minimal and readable** (avoid visual clutter).
