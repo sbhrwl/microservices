@@ -24,6 +24,9 @@
   - Connector focuses on **integration**, **protocol translation**, **mapping**, and **message orchestration**.
   - Implements **Hexagonal Architecture (Ports & Adapters)**.
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     GC[GFC-Core]
@@ -38,6 +41,7 @@ flowchart TD
     JMS --> IC
     IC -->|gRPC notification| GC
 ```
+</details>
 
 ## Architecture
 - **Architectural style**
@@ -56,6 +60,9 @@ flowchart TD
 - **Domain**
   - Contains business models independent of protocols and frameworks.
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     A[Inbound adapters]
@@ -69,13 +76,13 @@ flowchart TD
     B --> D
     D --> E
 ```
+</details>
 
 - **Adapters** isolate transport protocols.
 - **Application** orchestrates command execution.
 - **Domain** contains protocol-independent business models.
 
 ## Package structure
-
 ```text
 java
 └── com.landisgyr.gfc.iec61968_connector
@@ -150,6 +157,9 @@ java
 | | `TenantIdLookupService` | Resolves tenant identifiers. |
 | **Domain** | | Contains protocol-independent business models and types. |
 
+<details>
+  <summary>prompt</summary>
+
 ```mermaid
 flowchart TD
     A[Adapters]
@@ -159,9 +169,9 @@ flowchart TD
     A --> B
     B --> C
 ```
+</details>
 
 ## Message flow
-
 - **GFC-Core** invokes `DeviceInteractionService` using `gRPC`.
 - The connector maps the request into an **IEC61968 RequestMessage**.
 - `RequestDispatcher` publishes the message to **ActiveMQ**.
@@ -170,6 +180,9 @@ flowchart TD
 - The connector maps the response into a domain model.
 - `ControlCommandGrpcClient` forwards the response to **GFC-Core**.
 - Responses may arrive in multiple stages while sharing the same `CorrelationID`.
+
+<details>
+  <summary>prompt</summary>
 
 ```mermaid
 flowchart TD
@@ -190,9 +203,9 @@ flowchart TD
     D --> C
     C -->|Notification| A
 ```
+</details>
 
 ## Processing lifecycle
-
 - **Command reception**
   - `DeviceInteractionService` receives `sendCommand`.
 - **Request creation**
@@ -209,6 +222,11 @@ flowchart TD
   - `ControlCommandGrpcClient` notifies **GFC-Core**.
 - **Correlation**
   - All request and response messages are correlated using `CorrelationID`.
+
+<img src="images/processing-lifecycle.png">
+
+<details>
+  <summary>prompt</summary>
 
 ```mermaid
 sequenceDiagram
@@ -231,6 +249,7 @@ sequenceDiagram
     Camel->>Client: Notify Core
     Client-->>Core: Notification delivered
 ```
+</details>
 
 ## Runtime log correlation
 
@@ -246,7 +265,6 @@ sequenceDiagram
 | `13:04:34.740` | `ControlCommandGrpcClient` | **Outbound gRPC Adapter** | Notify **GFC-Core** of command completion |
 
 ## Layer responsibilities
-
 - **Inbound adapters**
   - Receive `gRPC` commands.
   - Consume asynchronous JMS responses.
@@ -263,7 +281,6 @@ sequenceDiagram
   - Remains independent of messaging protocols and frameworks.
 
 ## Architecture assessment
-
 - **Strengths**
   - Clear separation of integration and business orchestration.
   - Consistent implementation of **Hexagonal Architecture**.
@@ -275,7 +292,6 @@ sequenceDiagram
   - Easily testable through adapter and mapper isolation.
 
 ## Recommendations
-
 - Improve resilience for messaging.
   - `Retry`
   - `Dead Letter Queue (DLQ)`
