@@ -24,7 +24,6 @@
   * Convert responses into Flex-Hub message format.
   * Push responses back to **Flex-Hub**.
 * **Design principles**
-
   * Business logic resides in **GFC-Core**.
   * Connector focuses on **integration**, **orchestration**, **mapping**, and **protocol translation**.
   * Follows **Hexagonal Architecture (Ports & Adapters)**.
@@ -42,24 +41,18 @@ flowchart TD
 ```
 
 # Architecture
-
 * **Architectural style**
-
   * Implements **Hexagonal Architecture**.
   * Separates **Application**, **Domain**, and **Infrastructure** concerns.
 * **Inbound adapters**
-
   * Receive requests or trigger application workflows.
 * **Application layer**
-
   * Coordinates business use cases.
   * Depends only on **Ports**.
 * **Outbound adapters**
-
   * Communicate with external systems.
   * Implement application ports.
 * **Domain**
-
   * Contains business models.
   * Independent of frameworks and transport protocols.
 
@@ -78,98 +71,62 @@ flowchart TD
 ```
 
 # Package structure
-
 ## `adapters`
-
 * Contains all infrastructure-specific implementations.
 * Isolates protocol and framework dependencies.
-
 ### `adapters.inbound.grpc`
-
 * `FlexibilityHubGrpcAdapter`
-
   * Receives incoming `gRPC` requests.
 * `HealthGrpcService`
-
   * Provides health check endpoints.
 * `TenantIdInterceptor`
-
   * Handles tenant context propagation.
 * `ProtoMapper`
-
   * Maps between `Protobuf` and domain models.
-
 ### `adapters.inbound.scheduler`
-
 * `ScheduledCamelRoutes`
-
   * Periodically polls Flex-Hub.
   * Triggers message processing workflows.
-
 ### `adapters.outbound.grpc`
-
 * `ControlCommandGrpcClient`
-
   * Low-level `gRPC` client.
 * `ControlCommandGrpcClientAdapter`
-
   * Implements application port.
   * Invokes **GFC-Core**.
 * `ProtoMapper`
-
   * Converts domain models to `Protobuf`.
-
 ### `adapters.outbound.soap`
-
 * `SoapClientAdapter`
-
   * Sends responses to Flex-Hub.
 * `OutboundCamelRoutes`
-
   * Defines Camel integration routes.
 * `MessageMapper`
-
   * Converts domain objects into SOAP messages.
 * `MasterDataMPEventMapper`
-
   * Maps master data events.
 
 ## `app`
-
 * Contains orchestration logic.
-
 ### `app.port`
-
 * `PeekMessagesPort`
-
   * Abstraction for retrieving Flex-Hub messages.
 * `RelayControlCommandPort`
-
   * Abstraction for forwarding requests to GFC-Core.
-
 ### `app.service`
-
 * Contains reusable application services.
 * Examples:
-
   * `OrganizationIdLookupService`
   * `OrganizationUserLookupService`
   * `TenantIdLookupService`
-
 ### `app.usecase`
-
 * Implements application workflows.
 * Examples:
-
   * `PeekMessagesUseCase`
   * `SendConfirmationMessageUseCase`
   * `UpdateAccountingPointControllabilityUseCase`
-
 ## `domain`
-
 * Contains business models.
 * Independent of:
-
   * `SOAP`
   * `gRPC`
   * `Apache Camel`
@@ -186,7 +143,6 @@ flowchart TD
 ```
 
 # Message flow
-
 * Scheduler triggers periodic polling.
 * Connector peeks messages from Flex-Hub.
 * SOAP payload is mapped to domain objects.
@@ -218,33 +174,23 @@ flowchart TD
 ```
 
 # Runtime sequence
-
 * `ScheduledCamelRoutes`
-
   * Initiates polling.
 * `PeekMessagesUseCase`
-
   * Retrieves pending messages.
 * `PeekMessagesPort`
-
   * Delegates retrieval to outbound adapter.
 * `SoapClientAdapter`
-
   * Reads message from Flex-Hub.
 * `MessageMapper`
-
   * Converts payload into domain model.
 * `RelayControlCommandPort`
-
   * Invokes GFC-Core.
 * `ControlCommandGrpcClientAdapter`
-
   * Executes `gRPC` request.
 * `SendConfirmationMessageUseCase`
-
   * Creates response.
 * `SoapClientAdapter`
-
   * Sends confirmation to Flex-Hub.
 
 ```mermaid
@@ -262,34 +208,25 @@ sequenceDiagram
 ```
 
 # Layer responsibilities
-
 * **Inbound adapters**
-
   * Accept external requests.
   * Trigger application workflows.
   * Perform protocol-specific mapping.
 * **Application**
-
   * Coordinates use cases.
   * Depends only on ports.
   * Contains no transport-specific logic.
 * **Ports**
-
   * Define contracts for external dependencies.
   * Enable dependency inversion.
 * **Outbound adapters**
-
   * Implement ports.
   * Integrate with SOAP and `gRPC`.
 * **Domain**
-
   * Encapsulates business models.
   * Remains framework independent.
-
 # Architecture assessment
-
 * **Strengths**
-
   * Clear separation of concerns.
   * Strong adherence to **Hexagonal Architecture**.
   * External protocols isolated within adapters.
@@ -300,26 +237,12 @@ sequenceDiagram
   * Supports replacing external systems with minimal impact.
 
 # Recommendations
-
-* Introduce a dedicated `ProcessFlexHubMessageUseCase`.
-
-  * Retrieve message.
-  * Validate payload.
-  * Map to domain.
-  * Invoke **GFC-Core**.
-  * Process response.
-  * Send confirmation.
-  * Acknowledge or remove processed message.
-* Keep `PeekMessagesUseCase` focused solely on polling.
-* Centralize retry, timeout, and error handling within orchestration use cases.
 * Add resilience patterns for external integrations.
-
   * `Retry`
   * `Circuit Breaker`
   * `Dead Letter Queue (DLQ)`
   * `Idempotency`
 * Add observability.
-
   * Distributed tracing.
   * Structured logging.
   * Metrics.
