@@ -180,4 +180,3 @@ sequenceDiagram
   * `ScheduledCamelRoutes`
 * **Change notification delivery**
   * `ProcessOutboxUseCase`
-    **Self-review (Part 2)**
