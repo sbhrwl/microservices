@@ -1,4 +1,4 @@
 # GFC core
-- [1](1/README.md)
-- [2](2/README.md)
-- [3](3/README.md)
+- [Overview](1/README.md)
+- [Request flow](2/README.md)
+- [Response flow](response-flow/README.md)
