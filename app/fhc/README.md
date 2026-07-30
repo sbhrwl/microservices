@@ -24,7 +24,7 @@
   * Follows **Hexagonal Architecture (Ports & Adapters)**.
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 ```mermaid
 flowchart TD
@@ -56,7 +56,7 @@ flowchart TD
   * Independent of frameworks and transport protocols.
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 ```mermaid
 flowchart TD
@@ -152,7 +152,7 @@ java
 | **Domain**              |                                               | Contains the core business models and business rules. Independent of infrastructure technologies such as SOAP, gRPC, Apache Camel, and Spring. |
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 ```mermaid
 flowchart TD
@@ -175,7 +175,7 @@ flowchart TD
 - The connector processes the confirmation and prepares the corresponding response for **Flex-Hub**.
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 ```mermaid
 flowchart TD
@@ -219,7 +219,7 @@ flowchart TD
 <img src="images/processing-lifecycle.png">
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 ```mermaid
 sequenceDiagram
