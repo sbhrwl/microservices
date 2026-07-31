@@ -1,6 +1,9 @@
 # Command flow
-
-## Component Responsibilities
+- [Component wise responsibilities](#component-wise-responsibilities)
+- [Sequence of flow](#sequence-of-flow)
+- [Request flow](#request-flow)
+- [Response flow](#response-flow)
+## Component wise responsibilities
 
 | Layer             | Responsibility                                                                                                       |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -11,7 +14,7 @@
 | **Core Response** | Retrieves responses from the outbox, prepares confirmation messages, and forwards them to the Hub.                   |
 | **FHC Response**  | Maps the internal response back into the SOAP market message and sends the confirmation to the external Hub/DataHub. |
 
-## Sequence Summary
+## Sequence of flow
 
 ```text
 Hub
@@ -58,6 +61,7 @@ This architecture follows a layered pattern:
 * **gRPC clients/adapters** provide inter-service communication.
 * **Outbox processing** enables reliable, asynchronous response delivery back to the Hub.
 
+## Request flow
 
 ```text
                         CONTROL COMMAND REQUEST FLOW
@@ -120,7 +124,7 @@ RequestDispatcher
 
 ---
 
-# Control Command Response Flow
+## Response flow
 
 ```text
                      CONTROL COMMAND RESPONSE FLOW
