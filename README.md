@@ -1,6 +1,4 @@
 # Microservices
-- [App](app/README.md): LandisGyr2026RS
-  - Elokuu,202608
 - [Enterprise integration](jaxb-camel/README.md)
 - [Motivation](motivation/README.md)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
@@ -13,7 +11,7 @@
 - [Docker sandboxes](https://share.google/hPJp4kIFGiHAXyrIB)
 
 <details>
-  <summary>prompt</summary>
+  <summary>details</summary>
 
 **Prompt:**
 * Your task is to convert the text into a **concise Markdown summary** suitable for documentation or technical reference.

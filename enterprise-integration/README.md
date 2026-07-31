@@ -1,4 +1,6 @@
 # Enterprise integration learning project
+- [App](app/README.md): LandisGyr2026RS
+  - Elokuu,202608
 - [Introduction](#introduction)
   - [Goal](#goal)
   - [Technology Stack](#technology-stack)
@@ -83,7 +85,8 @@
   * Architectural trade-offs
   * Common production pitfalls
 ## Project Phases
-### Phase 0 – Environment Setup
+
+### [Phase 0 – Environment Setup](phase-0/README.md)
 * Install Java
 * Configure Gradle
 * Create Git repository
@@ -92,7 +95,7 @@
 * Start PostgreSQL
 * Start ActiveMQ
 * Deliverable: A fully working development environment.
-### Phase 1 – Project Skeleton
+### [Phase 1 – Project Skeleton](phase-1/README.md)
 * Create the Gradle project.
 * Modules:
   * contract
@@ -103,7 +106,7 @@
   * persistence
   * common
 * Deliverable: Compilable modular project.
-### Phase 2 – XML & JAXB
+### [Phase 2 – XML & JAXB](phase-2/README.md)
 * Learn:
   * XML
   * XSD
@@ -112,7 +115,7 @@
   * Marshalling
   * Unmarshalling
 * Deliverable: Generate Java classes from XSD and successfully serialize/deserialize XML.
-### Phase 3 – SOAP using Apache CXF
+### [Phase 3 – SOAP using Apache CXF](phase-3/README.md)
 * Learn:
   * SOAP
   * WSDL
@@ -120,7 +123,7 @@
   * SOAP Faults
   * Contract-first development
 * Deliverable: Working SOAP endpoint with generated request and response objects.
-### Phase 4 – Apache Camel
+### [Phase 4 – Apache Camel](phase-4/README.md)
 * Learn:
   * Camel Routes
   * Processors
@@ -128,7 +131,7 @@
   * Error Handling
   * Logging
 * Deliverable: Working Camel routes invoking the SOAP service.
-### Phase 5 – ActiveMQ
+### [Phase 5 – ActiveMQ](phase-5/README.md)
 * Learn:
   * JMS
   * Queues
@@ -137,14 +140,14 @@
   * Request/Reply
   * Transactions
 * Deliverable: Camel publishes and consumes messages through ActiveMQ.
-### Phase 6 – PostgreSQL & Flyway
+### [Phase 6 – PostgreSQL & Flyway](phase-6/README.md)
 * Learn:
   * Database schema design
   * Flyway migrations
   * Spring Data access
   * Transactions
 * Deliverable: Persist requests, responses, and processing status.
-### Phase 7 – Complete Integration Flow
+### [Phase 7 – Complete Integration Flow](phase-7/README.md)
 * End-to-end flow:
 ```text
 SOAP Client
