@@ -50,7 +50,7 @@ Core
  ▼
 FHC
  │
- │ SOAP Confirmation
+ │ SOAP response 
  ▼
 Hub
 ```
