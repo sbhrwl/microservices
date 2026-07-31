@@ -166,18 +166,22 @@ com.landisgyr.gfc.core
     └── Bootstrap
 ```
 
-| Package                             | Responsibilities                                                                                           |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **`adapters.inbound.grpc`**         | • Exposes gRPC APIs.<br>• Maps protobuf requests to domain models.<br>• Entry point for external requests. |
-| **`adapters.inbound.scheduler`**    | • Defines scheduled Camel routes.<br>• Triggers background processing.                                     |
-| **`adapters.inbound.security`**     | • Performs authentication.<br>• Propagates tenant context.                                                 |
-| **`adapters.outbound.grpc`**        | • Sends commands to external services.                                                                     |
-| **`adapters.outbound.persistence`** | • Persists commands, flexibility state, market events, and outbox records.                                 |
-| **`app.service`**                   | • Implements command orchestration.<br>• Separates query and mutation responsibilities.                    |
-| **`app.usecase`**                   | • Implements background processing.<br>• Processes Outbox events.                                          |
-| **`app.port`**                      | • Defines outbound interfaces.                                                                             |
-| **`domain`**                        | • Contains business models.                                                                                |
-| **`infrastructure`**                | • Dependency injection.<br>• Configuration.<br>• Monitoring.                                               |
+| **Layer**               | **Package / Component**             | **Purpose / Responsibility**                                                                                     |
+| ----------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Adapters**            |                                     | Contains protocol-specific implementations and isolates infrastructure concerns.                                 |
+|                         | **`adapters.inbound.grpc`**         | Exposes gRPC APIs, maps Protobuf requests to domain models, and serves as the entry point for external requests. |
+|                         | **`adapters.inbound.scheduler`**    | Defines scheduled Apache Camel routes and triggers background processing.                                        |
+|                         | **`adapters.inbound.security`**     | Performs authentication and propagates tenant context.                                                           |
+|                         | **`adapters.outbound.grpc`**        | Sends commands to external services via gRPC.                                                                    |
+|                         | **`adapters.outbound.persistence`** | Persists commands, flexibility state, market events, and Outbox records.                                         |
+| **Application (`app`)** |                                     | Coordinates application workflows and orchestrates business use cases.                                           |
+|                         | **`app.service`**                   | Implements command orchestration and separates query and mutation responsibilities.                              |
+|                         | **`app.usecase`**                   | Implements background processing and processes Outbox events.                                                    |
+|                         | **`app.port`**                      | Defines outbound ports (interfaces) implemented by infrastructure adapters.                                      |
+| **Domain**              |                                     | Contains protocol-independent business models and business rules.                                                |
+|                         | **`domain`**                        | Defines the core business models, aggregates, value objects, and domain logic.                                   |
+| **Infrastructure**      |                                     | Provides technical capabilities supporting the application.                                                      |
+|                         | **`infrastructure`**                | Configures dependency injection, application configuration, monitoring, and other framework-specific concerns.   |
 
 ## Application startup
 * `Bootstrap.main()`
