@@ -21,35 +21,27 @@
 
 ```text
 Hub
- │
  │ SOAP request 
  ▼
 FHC
- │
  │ gRPC
  ▼
 Core
- │
  │ gRPC
  ▼
 IEC
- │
  │ JMS: IEC request
  ▼
 HES
- │
  │ JMS: IEC response
  ▼
 IEC
- │
  │ gRPC
  ▼
 Core
- │
  │ gRPC
  ▼
 FHC
- │
  │ SOAP response 
  ▼
 Hub
