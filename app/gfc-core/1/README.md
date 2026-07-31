@@ -91,34 +91,94 @@ flowchart TD
 ```
 
 ## Package structure
-* **`adapters.inbound.grpc`**
-  * Exposes gRPC APIs.
-  * Maps protobuf requests to domain models.
-  * Entry point for external requests.
-* **`adapters.inbound.scheduler`**
-  * Defines scheduled Camel routes.
-  * Triggers background processing.
-* **`adapters.inbound.security`**
-  * Performs authentication.
-  * Propagates tenant context.
-* **`adapters.outbound.grpc`**
-  * Sends commands to external services.
-* **`adapters.outbound.persistence`**
-  * Persists commands, flexibility state, market events, and outbox records.
-* **`app.service`**
-  * Implements command orchestration.
-  * Separates query and mutation responsibilities.
-* **`app.usecase`**
-  * Implements background processing.
-  * Processes Outbox events.
-* **`app.port`**
-  * Defines outbound interfaces.
-* **`domain`**
-  * Contains business models.
-* **`infrastructure`**
-  * Dependency injection.
-  * Configuration.
-  * Monitoring.
+```text
+com.landisgyr.gfc.core
+├── adapters
+│   ├── inbound
+│   │   ├── grpc
+│   │   │   ├── support
+│   │   │   ├── ControlCommandServiceImpl
+│   │   │   ├── EventServiceImpl
+│   │   │   ├── FlexibilityServiceImpl
+│   │   │   ├── LatencyLimiterInterceptor
+│   │   │   ├── LoggingInterceptor
+│   │   │   ├── MeteringPointServiceImpl
+│   │   │   ├── MovingAverageLatencyTracker
+│   │   │   ├── ProtoMapper
+│   │   │   └── RevisionServiceImpl
+│   │   ├── scheduler
+│   │   │   └── ScheduledCamelRoutes
+│   │   └── security
+│   │       ├── AuthClaims
+│   │       ├── AuthorizationInterceptor
+│   │       ├── JwtVerifier
+│   │       └── SecurityContext
+│   └── outbound
+│       ├── grpc
+│       │   ├── DeviceInteractionGrpcClient
+│       │   ├── FlexibilityConnectorGrpcAdapter
+│       │   └── ProtoMapper
+│       └── persistence
+│           ├── mapper
+│           ├── AccountingPointDao
+│           ├── CommandDao
+│           ├── DbTransactionContext
+│           ├── FlexibilityDao
+│           ├── ImportFileDao
+│           ├── JobRepositoryAdapter
+│           ├── MarketEventDao
+│           ├── OutboxRepositoryAdapter
+│           ├── PostgresCopyAdapter
+│           └── UnitOfWork
+├── app
+│   ├── exceptions
+│   ├── port
+│   │   ├── DataHubNotificationPort
+│   │   ├── JobRepository
+│   │   └── OutboxRepositoryPort
+│   ├── service
+│   │   ├── helper
+│   │   ├── mapper
+│   │   │   └── FlexibilityDocumentMapper
+│   │   ├── AccountingPointQueryService
+│   │   ├── ControlCommandMutationService
+│   │   ├── ControlCommandQueryService
+│   │   ├── CsvImportService
+│   │   ├── EventQueryService
+│   │   ├── FlexibilityMutationService
+│   │   ├── FlexibilityQueryService
+│   │   └── FlexibilityUploadService
+│   ├── usecase
+│   │   ├── ProcessBatchJobUseCase
+│   │   └── ProcessOutboxUseCase
+│   ├── GracefulShutdownHook
+│   └── Main
+├── domain
+│   ├── accounting_point
+│   ├── command
+│   ├── common
+│   ├── event
+│   ├── flexibility
+│   ├── job
+│   ├── outbox
+│   └── query
+└── infrastructure
+    └── Bootstrap
+```
+
+| Package                             | Responsibility                                                                                                                         |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **`adapters.inbound.grpc`**         | Exposes gRPC APIs, maps Protocol Buffer requests to domain models, and serves as the entry point for external client requests.         |
+| **`adapters.inbound.scheduler`**    | Defines scheduled Apache Camel routes and triggers background processing jobs.                                                         |
+| **`adapters.inbound.security`**     | Performs authentication, authorization, and propagates tenant/security context across requests.                                        |
+| **`adapters.outbound.grpc`**        | Communicates with external services through gRPC clients and connectors.                                                               |
+| **`adapters.outbound.persistence`** | Persists commands, flexibility state, accounting points, market events, jobs, and outbox records using repository/DAO implementations. |
+| **`app.service`**                   | Implements application services that orchestrate business operations and separates command (mutation) and query responsibilities.      |
+| **`app.usecase`**                   | Implements background use cases such as batch job execution and Outbox event processing.                                               |
+| **`app.port`**                      | Defines outbound ports (interfaces) that abstract infrastructure dependencies from the application layer.                              |
+| **`domain`**                        | Contains the core business domain, including entities, value objects, aggregates, and domain-specific models.                          |
+| **`infrastructure`**                | Provides application bootstrapping, dependency injection, configuration, and cross-cutting concerns such as monitoring.                |
+
 
 ## Application startup
 * `Bootstrap.main()`
