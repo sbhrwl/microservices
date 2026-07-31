@@ -4,6 +4,10 @@
 - [Layered architecture pattern](#layered-architecture-pattern)
 - [Request flow](#request-flow)
 - [Response flow](#response-flow)
+- [Package structure](#package-structure)
+  - [FHC](#fhc)
+  - [Core](#core)
+  - [IEC](#iec)
 ## Component wise responsibilities
 
 | Layer             | Responsibility                                                                                                       |
@@ -170,4 +174,166 @@ OutboundCamelRoutes
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ Hub (MarketMessagingSoapService)                                            │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Package structure
+
+### FHC
+```txt
+java
+└── com.landisgyr.gfc.flexhub_connector
+    ├── adapters
+    │   ├── inbound
+    │   │   ├── grpc
+    │   │   │   ├── FlexibilityHubGrpcAdapter
+    │   │   │   ├── HealthGrpcService
+    │   │   │   ├── ProtoMapper
+    │   │   │   └── TenantIdInterceptor
+    │   │   └── scheduler
+    │   │       └── ScheduledCamelRoutes
+    │   └── outbound
+    │       ├── grpc
+    │       │   ├── ControlCommandGrpcClient
+    │       │   ├── ControlCommandGrpcClientAdapter
+    │       │   └── ProtoMapper
+    │       └── soap
+    │           ├── MasterDataMPEventMapper
+    │           ├── MessageMapper
+    │           ├── OutboundCamelRoutes
+    │           └── SoapClientAdapter
+    ├── app
+    │   ├── port
+    │   │   ├── PeekMessagesPort
+    │   │   └── RelayControlCommandPort
+    │   ├── service
+    │   │   ├── OrganizationIdLookupService
+    │   │   ├── OrganizationUserLookupService
+    │   │   └── TenantIdLookupService
+    │   ├── usecase
+    │   │   ├── PeekMessagesUseCase
+    │   │   ├── SendConfirmationMessageUseCase
+    │   │   └── UpdateAccountingPointControllabilityUseCase
+    │   └── Main
+    ├── domain
+    │   ├── model
+    │   └── type
+    └── infrastructure
+```
+### Core
+```txt
+com.landisgyr.gfc.core
+├── adapters
+│   ├── inbound
+│   │   ├── grpc
+│   │   │   ├── support
+│   │   │   ├── ControlCommandServiceImpl
+│   │   │   ├── EventServiceImpl
+│   │   │   ├── FlexibilityServiceImpl
+│   │   │   ├── LatencyLimiterInterceptor
+│   │   │   ├── LoggingInterceptor
+│   │   │   ├── MeteringPointServiceImpl
+│   │   │   ├── MovingAverageLatencyTracker
+│   │   │   ├── ProtoMapper
+│   │   │   └── RevisionServiceImpl
+│   │   ├── scheduler
+│   │   │   └── ScheduledCamelRoutes
+│   │   └── security
+│   │       ├── AuthClaims
+│   │       ├── AuthorizationInterceptor
+│   │       ├── JwtVerifier
+│   │       └── SecurityContext
+│   └── outbound
+│       ├── grpc
+│       │   ├── DeviceInteractionGrpcClient
+│       │   ├── FlexibilityConnectorGrpcAdapter
+│       │   └── ProtoMapper
+│       └── persistence
+│           ├── mapper
+│           ├── AccountingPointDao
+│           ├── CommandDao
+│           ├── DbTransactionContext
+│           ├── FlexibilityDao
+│           ├── ImportFileDao
+│           ├── JobRepositoryAdapter
+│           ├── MarketEventDao
+│           ├── OutboxRepositoryAdapter
+│           ├── PostgresCopyAdapter
+│           └── UnitOfWork
+├── app
+│   ├── exceptions
+│   ├── port
+│   │   ├── DataHubNotificationPort
+│   │   ├── JobRepository
+│   │   └── OutboxRepositoryPort
+│   ├── service
+│   │   ├── helper
+│   │   ├── mapper
+│   │   │   └── FlexibilityDocumentMapper
+│   │   ├── AccountingPointQueryService
+│   │   ├── ControlCommandMutationService
+│   │   ├── ControlCommandQueryService
+│   │   ├── CsvImportService
+│   │   ├── EventQueryService
+│   │   ├── FlexibilityMutationService
+│   │   ├── FlexibilityQueryService
+│   │   └── FlexibilityUploadService
+│   ├── usecase
+│   │   ├── ProcessBatchJobUseCase
+│   │   └── ProcessOutboxUseCase
+│   ├── GracefulShutdownHook
+│   └── Main
+├── domain
+│   ├── accounting_point
+│   ├── command
+│   ├── common
+│   ├── event
+│   ├── flexibility
+│   ├── job
+│   ├── outbox
+│   └── query
+└── infrastructure
+    └── Bootstrap
+```
+
+### IEC
+```txt
+java
+└── com.landisgyr.gfc.iec61968_connector
+    ├── adapters
+    │   ├── inbound
+    │   │   ├── grpc
+    │   │   │   ├── DeviceInteractionService
+    │   │   │   ├── HealthGrpcService
+    │   │   │   ├── ProtoMapper
+    │   │   │   └── TenantIdInterceptor
+    │   │   └── jms
+    │   │       ├── helper
+    │   │       │   └── ShortIdGenerator
+    │   │       ├── ControlCommandResponseMapper
+    │   │       ├── CreateTouCalendarResponse
+    │   │       └── InboundCamelRouteBuilder
+    │   └── outbound
+    │       ├── grpc
+    │       │   ├── ControlCommandGrpcClient
+    │       │   └── ProtoMapper
+    │       └── jms
+    │           ├── EndDeviceControlBuilder
+    │           ├── OutboundCamelRouteBuilder
+    │           ├── RequestDispatcher
+    │           ├── RolloutCalendarMapper
+    │           ├── TouCalendarMapper
+    │           └── TouCalendarModel
+    ├── app
+    │   ├── service
+    │   │   ├── BrokerIdLookupService
+    │   │   ├── CommandProcessor
+    │   │   ├── CommandResponseProcessor
+    │   │   ├── NetworkIdLookupService
+    │   │   ├── RelayControlTypeResolver
+    │   │   └── TenantIdLookupService
+    │   └── Main
+    ├── domain
+    │   ├── model
+    │   └── types
+    └── infrastructure
 ```
