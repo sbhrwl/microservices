@@ -48,6 +48,7 @@ CommandProcessor
         ▼
 RequestDispatcher
         │
+        |JMS
         ▼
 Head End System
 ```
