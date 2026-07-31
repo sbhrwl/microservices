@@ -22,7 +22,7 @@
 ```text
 Hub
  │
- │ SOAP Control Command
+ │ SOAP request 
  ▼
 FHC
  │
