@@ -39,7 +39,7 @@
 * Docker & Docker Compose
 * JUnit 5
 ## Project Scenario
-* **Energy Meter Registration Service**
+* **Energy meter registration service**
   * A SOAP service receives requests containing a GSRN and meter information.
 * The application:
 1. Receives a SOAP request.
