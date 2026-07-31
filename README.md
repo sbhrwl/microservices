@@ -1,5 +1,5 @@
 # Microservices
-- [Enterprise integration](jaxb-camel/README.md)
+- [Enterprise integration](enterprise-integration/README.md)
 - [Motivation](motivation/README.md)
 - [Designing a system](https://github.com/sbhrwl/system_design/blob/main/projects/design/README.md)
 - [Registering sensors](sensorregistration/README.md)
