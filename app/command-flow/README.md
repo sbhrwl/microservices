@@ -49,7 +49,7 @@ CommandProcessor
 RequestDispatcher
         │
         ▼
-IEC Device / External System
+Head End System
 ```
 
 ---
