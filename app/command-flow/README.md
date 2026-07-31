@@ -8,13 +8,14 @@
 
 | Layer             | Responsibility                                                                                                       |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------- |
-|Request||
-| **FHC Request**   | Receives SOAP messages from the market/hub, converts them to internal models, and initiates gRPC requests.               |
-| **Core Request**  | Business logic layer. Validates, persists, and orchestrates control command processing.                              |
-| **IEC Request**   | Converts business requests into IEC/device-specific commands and communicates with the device infrastructure.        |
-| **IEC Response**  | Receives device acknowledgements or execution results and publishes them back through gRPC.                          |
-| **Core Response** | Retrieves responses from the outbox, prepares confirmation messages, and forwards them to the Hub.                   |
-| **FHC Response**  | Maps the internal response back into the SOAP market message and sends the confirmation to the external Hub/DataHub. |
+|**Request**||
+| FHC   | Receives SOAP messages from the market/hub, converts them to internal models, and initiates gRPC requests.               |
+| Core  | Business logic layer. Validates, persists, and orchestrates control command processing.                              |
+| IEC   | Converts business requests into IEC/device-specific commands and communicates with the device infrastructure.        |
+|**Response**||
+| IEC  | Receives device acknowledgements or execution results and publishes them back through gRPC.                          |
+| Core | Retrieves responses from the outbox, prepares confirmation messages, and forwards them to the Hub.                   |
+| FHC  | Maps the internal response back into the SOAP market message and sends the confirmation to the external Hub/DataHub. |
 
 ## Sequence of flow
 
