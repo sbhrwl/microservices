@@ -1,6 +1,7 @@
 # Command flow
 - [Component wise responsibilities](#component-wise-responsibilities)
 - [Sequence of flow](#sequence-of-flow)
+- [Layered architecture pattern](#layered-architecture-pattern)
 - [Request flow](#request-flow)
 - [Response flow](#response-flow)
 ## Component wise responsibilities
@@ -52,8 +53,7 @@ FHC
 Hub
 ```
 
-This architecture follows a layered pattern:
-
+## Layered architecture pattern
 * **Camel Routes** handle message ingestion and scheduling.
 * **Use Cases** orchestrate business workflows.
 * **Adapters** translate between protocols (SOAP ↔ gRPC ↔ IEC).
