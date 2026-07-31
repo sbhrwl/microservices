@@ -2,10 +2,16 @@
 
 ```text
                         CONTROL COMMAND REQUEST FLOW
-
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ Hub                                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
+        │ SOAP
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ FHC                                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │ SOAP
+        ▼
 ScheduledCamelRoutes
         │
         ▼
@@ -19,12 +25,11 @@ MessageMapper
         │
         ▼
 ControlCommandGrpcClientAdapter
-        │
         │ gRPC
         ▼
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ FHC-Core                                                                    │
+│ Core                                                                        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ControlCommandServiceImpl
         │
@@ -38,7 +43,7 @@ DeviceInteractionGrpcClient
         ▼
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ Core-IEC                                                                    │
+│ IEC                                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
 DeviceInteractionService
         │
@@ -47,10 +52,11 @@ CommandProcessor
         │
         ▼
 RequestDispatcher
-        │
-        |JMS
+        │JMS
         ▼
-Head End System
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ HES                                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -59,9 +65,13 @@ Head End System
 
 ```text
                      CONTROL COMMAND RESPONSE FLOW
-
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ IEC-Core                                                                    │
+│ HES                                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+        │JMS
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ IEC                                                                    │
 └─────────────────────────────────────────────────────────────────────────────┘
 InboundCamelRouteBuilder
         │
@@ -75,7 +85,7 @@ ControlCommandGrpcClient
         ▼
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ Core-FHC                                                                    │
+│ Core                                                                        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ControlCommandServiceImpl
         │
@@ -95,7 +105,7 @@ FlexibilityConnectorGrpcAdapter
         ▼
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ FHC-Hub                                                                     │
+│ FHC                                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
 FlexibilityHubGrpcAdapter
         │
@@ -107,21 +117,20 @@ SoapClientAdapter
         │
         ▼
 OutboundCamelRoutes
-        │
+        │SOAP
         ▼
-MarketMessagingSoapService
-        │
-        ▼
-Hub / DataHub
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Hub (MarketMessagingSoapService)                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Component Responsibilities
 
 | Layer                 | Responsibility                                                                                                       |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Hub**               | Receives SOAP messages from the market, converts them to internal models, and initiates gRPC requests.               |
-| **FHC-Core**          | Business logic layer. Validates, persists, and orchestrates control command processing.                              |
-| **Core-IEC**          | Converts business requests into IEC/device-specific commands and communicates with the device infrastructure.        |
+| **Hub Request**       | Receives SOAP messages from the market, converts them to internal models, and initiates gRPC requests.               |
+| **FHC-Core Request**  | Business logic layer. Validates, persists, and orchestrates control command processing.                              |
+| **Core-IEC Request**  | Converts business requests into IEC/device-specific commands and communicates with the device infrastructure.        |
 | **IEC-Core Response** | Receives device acknowledgements or execution results and publishes them back through gRPC.                          |
 | **Core-FHC Response** | Retrieves responses from the outbox, prepares confirmation messages, and forwards them to the Hub.                   |
 | **FHC-Hub Response**  | Maps the internal response back into the SOAP market message and sends the confirmation to the external Hub/DataHub. |
@@ -133,31 +142,31 @@ Hub
  │
  │ SOAP Control Command
  ▼
-FHC-Hub
+FHC
  │
  │ gRPC
  ▼
-FHC-Core
+Core
  │
  │ gRPC
  ▼
-Core-IEC
+IEC
  │
  │ IEC Command
  ▼
-Device
+HES
  │
  │ Execution Result
  ▼
-IEC-Core
+IEC
  │
  │ gRPC
  ▼
-FHC-Core
+Core
  │
  │ gRPC
  ▼
-FHC-Hub
+FHC
  │
  │ SOAP Confirmation
  ▼
