@@ -5,4 +5,5 @@
 - [fhc](fhc/README.md)
 - [gfc-core](gfc-core/README.md)
 - [iec-connector](iec-connector/README.md)
+- [Command flow](command-flow/README.md)
 - [Switching flexibilities](switching/README.md)
