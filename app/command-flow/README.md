@@ -8,6 +8,7 @@
 
 | Layer             | Responsibility                                                                                                       |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------- |
+|Request||
 | **FHC Request**   | Receives SOAP messages from the market/hub, converts them to internal models, and initiates gRPC requests.               |
 | **Core Request**  | Business logic layer. Validates, persists, and orchestrates control command processing.                              |
 | **IEC Request**   | Converts business requests into IEC/device-specific commands and communicates with the device infrastructure.        |
