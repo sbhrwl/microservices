@@ -120,7 +120,7 @@
   * SOAP Faults
   * Contract-first development
 * Deliverable: Working SOAP endpoint with generated request and response objects.
-# ## Phase 4 – Apache Camel
+### Phase 4 – Apache Camel
 * Learn:
   * Camel Routes
   * Processors
