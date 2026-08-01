@@ -9,6 +9,7 @@
 - [Update settingsgradle](#update-settingsgradle)
 - [Build the project](#build-the-project)
   - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
+- [Make modules a java library](#make-modules-a-java-library)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
 - `gradle init`
@@ -375,5 +376,46 @@ A web-based, searchable dependency report is available by adding the --scan opti
 BUILD SUCCESSFUL in 1s
 1 actionable task: 1 executed
 Configuration cache entry stored.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
+## Make modules a java library
+- The previous build run isn't a real `build` yet because none of the modules apply the `java` plugin.
+- We'll make the `common` module a Java library.
+  - In `common/build.gradle`, add:
+```groovy
+plugins {
+    id 'java-library'
+}
+```
+  - Build only `common` module
+```powershell
+.\gradlew :common:build
+```
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew :common:build
+Calculating task graph as no cached configuration is available for tasks: :common:build
+
+BUILD SUCCESSFUL in 3s
+1 actionable task: 1 executed
+Configuration cache entry stored.
+```
+- Now do the same for the remaining modules (Leave `soap-api` **empty** for now. We'll make it a Spring Boot application later.).
+  - Add to each `build.gradle`:
+```groovy
+plugins {
+    id 'java-library'
+}
+```
+- Then run:
+```powershell
+.\gradlew build
+```
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
+Calculating task graph as configuration cache cannot be reused because file 'common\build.gradle' has changed.
+
+BUILD SUCCESSFUL in 2s
+6 actionable tasks: 5 executed, 1 up-to-date
+Configuration cache entry updated for no projects, no projects up-to-date.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
