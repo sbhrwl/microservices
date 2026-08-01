@@ -1,4 +1,14 @@
 # Project structure
+- [Initialize gradle](#initialize-gradle)
+- [Clean up default app module](#clean-up-default-app-module)
+- [Create the root buildgradle file](#create-the-root-buildgradle-file)
+- [Build project](#build-project)
+- [Create common module](#create-common-module)
+  - [Register the module](#register-the-module)
+- [Add more modules](#add-more-modules)
+- [Update settingsgradle](#update-settingsgradle)
+- [Build the project](#build-the-project)
+  - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
 - `gradle init`
@@ -332,6 +342,35 @@ project ':soap-api' - \soap-api
 
 To see a list of the tasks of a project, run gradlew <project-path>:tasks
 For example, try running gradlew :common:tasks
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+Configuration cache entry stored.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
+### Verify that every module participates in the build
+- `.\gradlew build`
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
+Calculating task graph as configuration cache cannot be reused because file 'settings.gradle' has changed.
+
+> Task :buildEnvironment
+Daemon JVM: Eclipse Temurin JDK 21 (21.0.9+10-LTS)
+  | Location:           C:\Users\SabharwalR\.jdks\temurin-21.0.9
+  | Language Version:   21
+  | Vendor:             Eclipse Temurin
+  | Architecture:       amd64
+  | Is JDK:             true
+
+
+------------------------------------------------------------
+Root project 'meter-registration-service'
+------------------------------------------------------------
+
+classpath
+No dependencies
+
+A web-based, searchable dependency report is available by adding the --scan option.
 
 BUILD SUCCESSFUL in 1s
 1 actionable task: 1 executed
