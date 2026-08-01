@@ -220,3 +220,121 @@ BUILD SUCCESSFUL in 2s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
+## Add more modules
+- Create these folders, each with an empty `build.gradle` and `src/main/java`
+```
+contract
+model
+soap-api
+integration
+messaging
+persistence
+```
+```
+phase-1
+├── .gradle
+├── .idea
+├── build
+├── common
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── contract
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── gradle
+├── integration
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── messaging
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── model
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── persistence
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── soap-api
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── .gitattributes
+├── .gitignore
+├── build.gradle
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+└── settings.gradle
+```
+## Update settings.gradle
+- Add these lines to `settings.gradle`
+```
+include(
+    "common",
+    "contract",
+    "model",
+    "soap-api",
+    "integration",
+    "messaging",
+    "persistence"
+)
+```
+## Build the project
+- `.\gradlew projects`
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew projects
+Calculating task graph as configuration cache cannot be reused because file 'settings.gradle' has changed.
+
+> Task :projects
+
+Projects:
+
+------------------------------------------------------------
+Root project 'meter-registration-service'
+------------------------------------------------------------
+
+Location: C:\Git\practice\microservices\enterprise-integration\phase-1
+
+Project hierarchy:
+
+Root project 'meter-registration-service'
++--- Project ':common'
++--- Project ':contract'
++--- Project ':integration'
++--- Project ':messaging'
++--- Project ':model'
++--- Project ':persistence'
+\--- Project ':soap-api'
+
+Project locations:
+
+project ':common' - \common
+project ':contract' - \contract
+project ':integration' - \integration
+project ':messaging' - \messaging
+project ':model' - \model
+project ':persistence' - \persistence
+project ':soap-api' - \soap-api
+
+To see a list of the tasks of a project, run gradlew <project-path>:tasks
+For example, try running gradlew :common:tasks
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+Configuration cache entry stored.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
