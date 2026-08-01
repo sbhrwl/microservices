@@ -502,6 +502,11 @@ toolchain {
     languageVersion = JavaLanguageVersion.of(21)
 }
 ```
+* Why we have both?
+  * `plugins.withId("java") { ... }`
+  * `plugins.withId("java-library") { ... }`
+* Because some modules might use java, while others use java-library. 
+  * The code applies the same Java 21 toolchain configuration to both.
 ## Git commit
 ```git
 git add .
