@@ -481,20 +481,9 @@ subprojects {
     * `integration`
     * `messaging`
     * `persistence`
-* `plugins.withType(JavaPlugin)`
-```groovy
-plugins.withType(JavaPlugin) {
-    ...
-}
-```
-  * Only apply the configuration **if the module uses the Java plugin**. This avoids errors for non-Java modules.
-* `java { ... }`
-  * Configures Java-specific settings provided by the Java plugin.
-```groovy
-java {
-    ...
-}
-```
+* `plugins.withId(...)`
+  * Only apply the configuration **if the module uses the `Java` plugin**. 
+  * This avoids errors for non-Java modules.
 * `toolchain`
   * Tells Gradle to build the project using **Java 21**, regardless of the default JDK on the machine.
 ```groovy
