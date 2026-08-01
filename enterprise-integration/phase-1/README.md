@@ -10,6 +10,7 @@
 - [Build the project](#build-the-project)
   - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Make modules a java library](#make-modules-a-java-library)
+- [Configure all Java modules from the root instead of repeating configuration in every module](#configure-all-java-modules-from-the-root-instead-of-repeating-configuration-in-every-module)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
 - `gradle init`
@@ -417,5 +418,48 @@ Calculating task graph as configuration cache cannot be reused because file 'com
 BUILD SUCCESSFUL in 2s
 6 actionable tasks: 5 executed, 1 up-to-date
 Configuration cache entry updated for no projects, no projects up-to-date.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
+## Configure all Java modules from the root instead of repeating configuration in every module
+- In the **root** `build.gradle`, replace its contents with:
+```groovy
+allprojects {
+    group = 'com.enterprise.integration'
+    version = '1.0.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    plugins.withId('java') {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+    }
+
+    plugins.withId('java-library') {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+    }
+}
+```
+- Then run:
+```powershell
+.\gradlew build
+```
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
+Calculating task graph as configuration cache cannot be reused because file 'build.gradle' has changed.
+
+BUILD SUCCESSFUL in 3s
+6 actionable tasks: 6 up-to-date
+Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
