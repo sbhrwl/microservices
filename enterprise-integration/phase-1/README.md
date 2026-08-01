@@ -11,6 +11,7 @@
   - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Make modules a java library](#make-modules-a-java-library)
 - [Configure all Java modules from the root instead of repeating configuration in every module](#configure-all-java-modules-from-the-root-instead-of-repeating-configuration-in-every-module)
+- [Git commit](#git-commit)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
 - `gradle init`
@@ -462,4 +463,10 @@ BUILD SUCCESSFUL in 3s
 6 actionable tasks: 6 up-to-date
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
+## Git commit
+```git
+git add .
+git commit -m "Phase 1: Create Gradle multi-module project skeleton"
+git push -u origin main
 ```
