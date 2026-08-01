@@ -1,6 +1,10 @@
 # Phase 0
 ## Prerequisites
 ```text
+PS C:\Users\SabharwalR> systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+OS Name:                   Microsoft Windows 11 Enterprise
+OS Version:                10.0.22631 N/A Build 22631
+
 PS C:\Users\SabharwalR> java -version
 openjdk version "21.0.9" 2025-10-21 LTS
 OpenJDK Runtime Environment Temurin-21.0.9+10 (build 21.0.9+10-LTS)
