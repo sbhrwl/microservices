@@ -1,4 +1,5 @@
 # Project structure
+## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
 - `gradle init`
 ```text
@@ -86,4 +87,69 @@ phase-1
 ├── gradlew.bat
 ├── README.md
 └── settings.gradle
+```
+## Clean up default app module
+```
+phase-1
+├── .idea
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── libs.versions.toml
+├── .gitattributes
+├── .gitignore
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+└── settings.gradle
+```
+## Create the root build.gradle file
+```
+phase-1
+├── .idea
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── libs.versions.toml
+├── .gitattributes
+├── .gitignore
+├── build.gradle
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+└── settings.gradle
+```
+- Delete any new `include(...)` lines from `settings.gradle`
+## Build project
+- `.\gradlew build`
+```
+C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
+Calculating task graph as no cached configuration is available for tasks: build
+
+> Task :buildEnvironment
+Daemon JVM: Eclipse Temurin JDK 21 (21.0.9+10-LTS)
+  | Location:           C:\Users\SabharwalR\.jdks\temurin-21.0.9
+  | Language Version:   21
+  | Vendor:             Eclipse Temurin
+  | Architecture:       amd64
+  | Is JDK:             true
+
+
+------------------------------------------------------------
+Root project 'meter-registration-service'
+------------------------------------------------------------
+
+classpath
+No dependencies
+
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed
+Configuration cache entry stored.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
