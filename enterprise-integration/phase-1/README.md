@@ -7,8 +7,8 @@
   - [Register the module](#register-the-module)
 - [Add more modules](#add-more-modules)
 - [Update settingsgradle](#update-settingsgradle)
+- [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Build the project](#build-the-project)
-  - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Make modules a java library](#make-modules-a-java-library)
 - [Configure all Java modules from the root instead of repeating configuration in every module](#configure-all-java-modules-from-the-root-instead-of-repeating-configuration-in-every-module)
   - [Explanation](#explanation)
@@ -307,7 +307,11 @@ include(
     "persistence"
 )
 ```
-## Build the project
+## Verify that every module participates in the build
+- List all projects (modules) in your build.
+  - Verify that all modules are registered in settings.gradle.
+  - Check that Gradle recognizes your project structure.
+  - See the project hierarchy.
 - `.\gradlew projects`
 ```
 C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew projects
@@ -352,7 +356,7 @@ BUILD SUCCESSFUL in 1s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
-### Verify that every module participates in the build
+## Build the project
 - `.\gradlew build`
 ```
 C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
