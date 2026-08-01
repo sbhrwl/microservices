@@ -153,3 +153,70 @@ BUILD SUCCESSFUL in 2s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
+## Create common module
+```
+phase-1
+├── .gradle
+├── .idea
+├── build
+├── common
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   └── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── libs.versions.toml
+├── .gitattributes
+├── .gitignore
+├── build.gradle
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+└── settings.gradle
+```
+### Register the module
+- In `settings.gradle`
+  - add: `include("common")`
+- In **root** `build.gradle`, add
+```
+allprojects {
+    group = 'com.enterprise.integration'
+    version = '1.0.0-SNAPSHOT'
+}
+```
+- Build `.\gradlew build`
+```
+
+Calculating task graph as configuration cache cannot be reused because file 'common\build.gradle' has changed.
+
+> Task :projects
+
+Projects:
+
+------------------------------------------------------------
+Root project 'meter-registration-service'
+------------------------------------------------------------
+
+Location: C:\Git\practice\microservices\enterprise-integration\phase-1
+
+Project hierarchy:
+
+Root project 'meter-registration-service'
+\--- Project ':common'
+
+Project locations:
+
+project ':common' - \common
+
+To see a list of the tasks of a project, run gradlew <project-path>:tasks
+For example, try running gradlew :common:tasks
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed
+Configuration cache entry stored.
+C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
