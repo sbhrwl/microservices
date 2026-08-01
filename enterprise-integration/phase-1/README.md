@@ -56,3 +56,34 @@ BUILD SUCCESSFUL in 4m 38s
 1 actionable task: 1 executed
 PS C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
+
+```
+phase-1
+├── app
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── org
+│   │   │   │       └── example
+│   │   │   │           └── App.java
+│   │   │   └── resources
+│   │   └── test
+│   │       ├── java
+│   │       │   └── org
+│   │       │       └── example
+│   │       │           └── AppTest.java
+│   │       └── resources
+│   └── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── libs.versions.toml
+├── .gitattributes
+├── .gitignore
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── README.md
+└── settings.gradle
+```
