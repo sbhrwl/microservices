@@ -1,5 +1,4 @@
-# Phase 0
-## Prerequisites
+# Prerequisites
 ```text
 PS C:\Users\SabharwalR> systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 OS Name:                   Microsoft Windows 11 Enterprise
