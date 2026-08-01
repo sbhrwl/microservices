@@ -11,6 +11,7 @@
   - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Make modules a java library](#make-modules-a-java-library)
 - [Configure all Java modules from the root instead of repeating configuration in every module](#configure-all-java-modules-from-the-root-instead-of-repeating-configuration-in-every-module)
+  - [Explanation](#explanation)
 - [Git commit](#git-commit)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
@@ -463,6 +464,43 @@ BUILD SUCCESSFUL in 3s
 6 actionable tasks: 6 up-to-date
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
+```
+### Explanation
+* `subprojects`
+```groovy
+subprojects {
+    ...
+}
+```
+  * Runs the enclosed configuration for **every child module**.
+  * Instead of writing the same code in below modules, you write it once.
+    * `common`
+    * `contract`
+    * `model`
+    * `soap-api`
+    * `integration`
+    * `messaging`
+    * `persistence`
+* `plugins.withType(JavaPlugin)`
+```groovy
+plugins.withType(JavaPlugin) {
+    ...
+}
+```
+  * Only apply the configuration **if the module uses the Java plugin**. This avoids errors for non-Java modules.
+* `java { ... }`
+  * Configures Java-specific settings provided by the Java plugin.
+```groovy
+java {
+    ...
+}
+```
+* `toolchain`
+  * Tells Gradle to build the project using **Java 21**, regardless of the default JDK on the machine.
+```groovy
+toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+}
 ```
 ## Git commit
 ```git
