@@ -19,5 +19,5 @@ Business Logic
   * `xsd/` → Data model (types)
   * `wsdl/` → Service contract (operations)
 ## Create meter-registration.wsdl 
-- [meter-registration.xsd](resources/xsd/meter-registration.xsd)
-- [meter-registration.wsdl](resources/wsdl/meter-registration.wsdl)
+- [meter-registration.xsd](contract/src/main/resources/xsd/meter-registration.xsd)
+- [meter-registration.wsdl](contract/src/main/resources/wsdl/meter-registration.wsdl)
