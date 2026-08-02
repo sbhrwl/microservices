@@ -297,7 +297,7 @@ public enum RelayState {
 ## Understanding `ObjectFactory.java`
 Excellent. This is one of the most important JAXB concepts.
 
-## Why does `ObjectFactory` exist?
+### Why does `ObjectFactory` exist?
 * When JAXB needs to create the **root XML element**, it doesn't just need the Java object. 
 * It also needs:
   * Element name
