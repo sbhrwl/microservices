@@ -13,6 +13,8 @@
     - [Configure `model/build.gradle` to generate classes from the XSD in contract](#configure-modelbuildgradle-to-generate-classes-from-the-xsd-in-contract)
   - [Verify the generated files](#verify-the-generated-files)
 - [Understanding `MeterRegistrationRequest.java`](#understanding-meterregistrationrequestjava)
+  - [MeterRegistrationRequest.java](model/build/generated/sources/xjc/java/integration/enterprise/meter_registration/v1/MeterRegistrationRequest.java)
+  - [meter-registration.xsd](contract/src/main/resources/xsd/meter-registration.xsd)
 - [Understanding `RelayState.java`](#understanding-relaystatejava)
 - [Understanding `ObjectFactory.java`](#understanding-objectfactoryjava)
 - [One more important point on XmlRootElement](#one-more-important-point-on-xmlrootelement)
