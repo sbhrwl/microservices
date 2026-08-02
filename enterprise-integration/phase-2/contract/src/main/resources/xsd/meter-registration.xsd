@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://enterprise.integration/meter-registration/v1"
+        xmlns="http://enterprise.integration/meter-registration/v1"
+        elementFormDefault="qualified">
+
+    <xs:simpleType name="RelayState">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ON"/>
+            <xs:enumeration value="OFF"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="GSRN">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{18}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MeterSerialNumber">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="5"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="MeterRegistrationRequest">
+        <xs:sequence>
+            <xs:element name="gsrn" type="GSRN"/>
+            <xs:element name="meterSerialNumber" type="MeterSerialNumber"/>
+            <xs:element name="customerId" type="xs:string"/>
+            <xs:element name="relayNumber" type="xs:int"/>
+            <xs:element name="relayState" type="RelayState"/>
+            <xs:element name="timestamp" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element
+            name="MeterRegistrationRequest"
+            type="MeterRegistrationRequest"/>
+</xs:schema>
