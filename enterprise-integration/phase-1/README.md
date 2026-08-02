@@ -7,10 +7,11 @@
   - [Register the module](#register-the-module)
 - [Add more modules](#add-more-modules)
 - [Update settingsgradle](#update-settingsgradle)
+- [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Build the project](#build-the-project)
-  - [Verify that every module participates in the build](#verify-that-every-module-participates-in-the-build)
 - [Make modules a java library](#make-modules-a-java-library)
 - [Configure all Java modules from the root instead of repeating configuration in every module](#configure-all-java-modules-from-the-root-instead-of-repeating-configuration-in-every-module)
+  - [Explanation](#explanation)
 - [Git commit](#git-commit)
 ## Initialize gradle
 - `cd C:\Git\practice\microservices\enterprise-integration\phase-1`
@@ -306,7 +307,11 @@ include(
     "persistence"
 )
 ```
-## Build the project
+## Verify that every module participates in the build
+- List all projects (modules) in your build.
+  - Verify that all modules are registered in settings.gradle.
+  - Check that Gradle recognizes your project structure.
+  - See the project hierarchy.
 - `.\gradlew projects`
 ```
 C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew projects
@@ -351,7 +356,7 @@ BUILD SUCCESSFUL in 1s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
-### Verify that every module participates in the build
+## Build the project
 - `.\gradlew build`
 ```
 C:\Git\practice\microservices\enterprise-integration\phase-1>.\gradlew build
@@ -464,6 +469,37 @@ BUILD SUCCESSFUL in 3s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-1>
 ```
+### Explanation
+* `subprojects`
+```groovy
+subprojects {
+    ...
+}
+```
+  * Runs the enclosed configuration for **every child module**.
+  * Instead of writing the same code in below modules, you write it once.
+    * `common`
+    * `contract`
+    * `model`
+    * `soap-api`
+    * `integration`
+    * `messaging`
+    * `persistence`
+* `plugins.withId(...)`
+  * Only apply the configuration **if the module uses the `Java` plugin**. 
+  * This avoids errors for non-Java modules.
+* `toolchain`
+  * Tells Gradle to build the project using **Java 21**, regardless of the default JDK on the machine.
+```groovy
+toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+}
+```
+* Why we have both?
+  * `plugins.withId("java") { ... }`
+  * `plugins.withId("java-library") { ... }`
+* Because some modules might use java, while others use java-library. 
+  * The code applies the same Java 21 toolchain configuration to both.
 ## Git commit
 ```git
 git add .
