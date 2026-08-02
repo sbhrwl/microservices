@@ -265,7 +265,8 @@ model
   * Why `RelayState` became a Java `enum`.
 * This understanding is essential before we move to **Apache CXF** in Phase 3.
 * Observation 1: **JAXB annotations**
-  * JAXB serializes the **fields**, not the getters/setters. This is the most common approach in enterprise SOAP applications.
+  * JAXB serializes the **fields**, not the getters/setters. 
+  * This is the most common approach in enterprise SOAP applications.
 ```java
 @XmlAccessorType(XmlAccessType.FIELD)
 ```
