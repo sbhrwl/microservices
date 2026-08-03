@@ -287,7 +287,228 @@ C:\GIT\PRACTICE\MICROSERVICES\ENTERPRISE-INTEGRATION\PHASE-4\SOAP-API\BUILD\GENE
                     MeterRegistrationService.java
 ```
 ## Make Gradle compile the generated CXF sources
+* Update `soap-api/build.gradle`
+```text
+plugins {
+    id 'java-library'
+}
 
+configurations {
+    cxfCodegen
+}
+
+dependencies {
+    api project(':model')
+
+    cxfCodegen libs.cxf.tools
+    cxfCodegen libs.cxf.jaxb
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/sources/wsdl2java")
+        }
+    }
+}
+
+tasks.register('wsdl2java', JavaExec) {
+
+    group = "code generation"
+    description = "Generate Java classes from WSDL using Apache CXF"
+
+    classpath = configurations.cxfCodegen
+
+    mainClass = "org.apache.cxf.tools.wsdlto.WSDLToJava"
+
+    args(
+            "-b",
+            "../contract/src/main/resources/wsdl/meter-registration-bindings.xml",
+
+            "-nexclude",
+            "http://enterprise.integration/meter-registration/v1",
+
+            "-d",
+            layout.buildDirectory.dir("generated/sources/wsdl2java").get().asFile.absolutePath,
+
+            "../contract/src/main/resources/wsdl/meter-registration.wsdl"
+    )
+}
+```
+* Run: `.\gradlew :soap-api:clean :soap-api:build --no-configuration-cache`
+```text
+C:\Git\practice\microservices\enterprise-integration\phase-4>.\gradlew :soap-api:clean :soap-api:build --no-configuration-cache
+
+> Task :model:xjc
+integration\enterprise\meter_registration\v1\MeterRegistrationRequest.java
+integration\enterprise\meter_registration\v1\MeterRegistrationResponse.java
+integration\enterprise\meter_registration\v1\ObjectFactory.java
+integration\enterprise\meter_registration\v1\RelayState.java
+integration\enterprise\meter_registration\v1\package-info.java
+
+BUILD SUCCESSFUL in 3s
+5 actionable tasks: 5 executed
+C:\Git\practice\microservices\enterprise-integration\phase-4>
+```
+### Observations
+* This is a clean build.
+* We have reached the end of the **CXF wsdl2java setup phase**.
+* What just happened:
+```text
+: model:xjc
+        |
+        v
+Generated JAXB classes
+        |
+        v
+: soap-api:wsdl2java
+        |
+        v
+Generated JAX-WS service classes
+        |
+        v
+: soap-api:compileJava
+        |
+        v
+soap-api.jar
+```
+* The important architectural goal is now achieved:
+```text
+                 contract
+              (XSD + WSDL)
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+        model             soap-api
+          |                   |
+          | XJC               | CXF wsdl2java
+          |                   |
+          v                   v
+ JAXB request/response     JAX-WS interface
+ classes                   service endpoint
+```
+### Working version of libs.version.toml
+```text
+[versions]
+jaxb = "4.0.5"
+jaxbPlugin = "1.9.1"
+cxf = "4.1.3"
+
+[libraries]
+jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb" }
+jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime", version.ref = "jaxb" }
+jaxws-api = { module = "jakarta.xml.ws:jakarta.xml.ws-api", version = "4.0.2" }
+
+cxf-tools = { module = "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws", version.ref = "cxf" }
+cxf-jaxb = { module = "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb", version.ref = "cxf" }
+
+[plugins]
+jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }
+```
+### Working version of build.gradle
+```text
+plugins {
+    id 'java-library'
+}
+
+configurations {
+    cxfCodegen
+}
+
+dependencies {
+    api project(':model')
+
+    implementation libs.jaxws.api
+    implementation libs.jaxb.api
+
+    cxfCodegen libs.cxf.tools
+    cxfCodegen libs.cxf.jaxb
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/sources/wsdl2java")
+        }
+    }
+}
+
+tasks.register('wsdl2java', JavaExec) {
+
+    group = "code generation"
+    description = "Generate Java classes from WSDL using Apache CXF"
+
+    classpath = configurations.cxfCodegen
+
+    mainClass = "org.apache.cxf.tools.wsdlto.WSDLToJava"
+
+    args(
+            "-b",
+            "../contract/src/main/resources/wsdl/meter-registration-bindings.xml",
+
+            "-nexclude",
+            "http://enterprise.integration/meter-registration/v1",
+
+            "-d",
+            layout.buildDirectory.dir("generated/sources/wsdl2java").get().asFile.absolutePath,
+
+            "../contract/src/main/resources/wsdl/meter-registration.wsdl"
+    )
+}
+
+tasks.named("compileJava") {
+    dependsOn("wsdl2java")
+}
+```
+### Verify  the generated interface
+* Open: `soap-api/build/generated/sources/wsdl2java/integration/enterprise/meter_registration/v1/MeterRegistrationPortType.java`
+```java
+package integration.enterprise.meter_registration.v1;
+
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebResult;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
+
+/**
+ * This class was generated by Apache CXF 4.1.3
+ * 2026-08-03T14:24:06.348+03:00
+ * Generated source version: 4.1.3
+ *
+ */
+@WebService(targetNamespace = "http://enterprise.integration/meter-registration/v1", name = "MeterRegistrationPortType")
+@XmlSeeAlso({ObjectFactory.class})
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+public interface MeterRegistrationPortType {
+
+    @WebMethod(action = "http://enterprise.integration/meter-registration/v1/registerMeter")
+    @WebResult(name = "MeterRegistrationResponse", targetNamespace = "http://enterprise.integration/meter-registration/v1", partName = "response")
+    public MeterRegistrationResponse registerMeter(
+
+        @WebParam(partName = "request", name = "MeterRegistrationRequest", targetNamespace = "http://enterprise.integration/meter-registration/v1")
+        MeterRegistrationRequest request
+    );
+}
+
+```
+* We want to inspect:
+1. The generated method signature:
+```java
+MeterRegistrationResponse registerMeter(
+    MeterRegistrationRequest request
+)
+```
+2. The annotations:
+```java
+@WebService
+@WebMethod
+@RequestWrapper
+@ResponseWrapper
+```
+3. Whether CXF correctly references the JAXB classes from `model`.
 ## Implement the service
 ## Publish the SOAP endpoint
 ## Test with SoapUI

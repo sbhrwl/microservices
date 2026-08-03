@@ -9,8 +9,19 @@ configurations {
 dependencies {
     api project(':model')
 
+    implementation libs.jaxws.api
+    implementation libs.jaxb.api
+
     cxfCodegen libs.cxf.tools
     cxfCodegen libs.cxf.jaxb
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/sources/wsdl2java")
+        }
+    }
 }
 
 tasks.register('wsdl2java', JavaExec) {
@@ -21,8 +32,6 @@ tasks.register('wsdl2java', JavaExec) {
     classpath = configurations.cxfCodegen
 
     mainClass = "org.apache.cxf.tools.wsdlto.WSDLToJava"
-
-    def outputDir = layout.buildDirectory.dir("generated/sources/wsdl2java")
 
     args(
             "-b",
@@ -36,4 +45,8 @@ tasks.register('wsdl2java', JavaExec) {
 
             "../contract/src/main/resources/wsdl/meter-registration.wsdl"
     )
+}
+
+tasks.named("compileJava") {
+    dependsOn("wsdl2java")
 }
