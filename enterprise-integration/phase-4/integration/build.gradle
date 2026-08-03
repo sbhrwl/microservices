@@ -4,4 +4,7 @@ plugins {
 
 dependencies {
     implementation project(":soap-api")
+
+    implementation libs.cxf.rt.frontend.jaxws
+    implementation libs.cxf.rt.transports.http
 }

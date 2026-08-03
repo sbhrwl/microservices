@@ -11,5 +11,8 @@ jaxws-api = { module = "jakarta.xml.ws:jakarta.xml.ws-api", version = "4.0.2" }
 cxf-tools = { module = "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws", version.ref = "cxf" }
 cxf-jaxb = { module = "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb", version.ref = "cxf" }
 
+cxf-rt-frontend-jaxws = { module = "org.apache.cxf:cxf-rt-frontend-jaxws", version.ref = "cxf" }
+cxf-rt-transports-http = { module = "org.apache.cxf:cxf-rt-transports-http", version.ref = "cxf" }
+
 [plugins]
 jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }
