@@ -9,6 +9,7 @@ rmdir /s /q build
 rmdir /s /q model\build
 rmdir /s /q contract\build
 rmdir /s /q .gradle
+.\gradlew clean
 ```
 ## Generate jaxb from xsd
 ```
