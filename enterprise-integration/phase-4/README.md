@@ -216,13 +216,8 @@ soap-api
 ├── src
 └── build.gradle
 ```
-#### Observations
-Good. Now we have reached an important checkpoint. We **successfully executed CXF wsdl2java**. ✅
-
-Let's record what happened before changing anything.
-
-Current generated output:
-
+### Observations
+* We have **successfully executed CXF wsdl2java**. ✅
 ```text
 soap-api/build/generated/sources/wsdl2java
 └── integration
@@ -238,7 +233,6 @@ soap-api/build/generated/sources/wsdl2java
                 └── RelayState.java
 ```
 
-## Observation
 * CXF generated **both**:
   * `JAX-WS service classes` (expected)
     * These are what we wanted from `soap-api`.
@@ -255,7 +249,7 @@ RelayState.java
 ObjectFactory.java
 package-info.java
 ```
-#### Configure CXF to reuse the existing JAXB model module
+### Configure CXF to reuse the existing JAXB model module
 * Create a CXF JAXB binding file:
   * This will tell CXF: Use existing JAXB classes from `com.enterprise.integration...` instead of generating new ones.
 ```
