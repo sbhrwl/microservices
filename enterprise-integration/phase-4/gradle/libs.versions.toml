@@ -1,10 +1,14 @@
 [versions]
 jaxb = "4.0.5"
 jaxbPlugin = "1.9.1"
+cxf = "4.1.3"
 
 [libraries]
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb" }
 jaxb-runtime = { module = "org.glassfish.jaxb:jaxb-runtime", version.ref = "jaxb" }
+
+cxf-tools = { module = "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws", version.ref = "cxf" }
+cxf-jaxb = { module = "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb", version.ref = "cxf" }
 
 [plugins]
 jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }

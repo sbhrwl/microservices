@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+}
+
+configurations {
+    cxfCodegen
+}
+
+dependencies {
+    api project(':model')
+
+    cxfCodegen libs.cxf.tools
+    cxfCodegen libs.cxf.jaxb
+}
