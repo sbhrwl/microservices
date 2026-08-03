@@ -40,4 +40,16 @@
     <xs:element
             name="MeterRegistrationRequest"
             type="MeterRegistrationRequest"/>
+
+    <xs:complexType name="MeterRegistrationResponse">
+        <xs:sequence>
+            <xs:element name="status" type="xs:string"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="registrationId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element
+            name="MeterRegistrationResponse"
+            type="MeterRegistrationResponse"/>
 </xs:schema>
