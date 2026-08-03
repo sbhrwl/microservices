@@ -15,3 +15,7 @@ rmdir /s /q .gradle
 ```
 .\gradlew :model:xjc --rerun-tasks --no-build-cache
 ```
+## Verify project properties
+```
+.\gradlew :soap-api:properties
+```
