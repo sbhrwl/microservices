@@ -10,13 +10,14 @@
   - [Phase 0 – Environment Setup](#phase-0--environment-setup)
   - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
   - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
-  - [Phase 3 – SOAP using Apache CXF](#phase-3--soap-using-apache-cxf)
-  - [Phase 4 – Apache Camel](#phase-4--apache-camel)
-  - [Phase 5 – ActiveMQ](#phase-5--activemq)
-  - [Phase 6 – PostgreSQL & Flyway](#phase-6--postgresql--flyway)
-  - [Phase 7 – Complete Integration Flow](#phase-7--complete-integration-flow)
-  - [Phase 8 – Production Features](#phase-8--production-features)
-  - [Phase 9 – Testing](#phase-9--testing)
+  - [Phase 3 – SOAP](#phase-3--soap)
+  - [Phase 4 – Apache CXF](#phase-4--apache-cxf)
+  - [Phase 5 – Apache Camel](#phase-5--apache-camel)
+  - [Phase 6 – ActiveMQ](#phase-6--activemq)
+  - [Phase 7 – PostgreSQL & Flyway](#phase-7--postgresql--flyway)
+  - [Phase 8 – Complete Integration Flow](#phase-8--complete-integration-flow)
+  - [Phase 9 – Production Features](#phase-9--production-features)
+  - [Phase 10 – Testing](#phase-10--testing)
 - [Prerequisites](#prerequisites)
   - [Development Tools](#development-tools)
   - [Infrastructure](#infrastructure)
@@ -119,11 +120,13 @@
 * Learn:
   * SOAP
   * WSDL
+### [Phase 4 – Apache CXF](phase-4/README.md)
+* Learn:
   * CXF
   * SOAP Faults
   * Contract-first development
 * Deliverable: Working SOAP endpoint with generated request and response objects.
-### [Phase 4 – Apache Camel](phase-4/README.md)
+### [Phase 5 – Apache Camel](phase-5/README.md)
 * Learn:
   * Camel Routes
   * Processors
@@ -131,7 +134,7 @@
   * Error Handling
   * Logging
 * Deliverable: Working Camel routes invoking the SOAP service.
-### [Phase 5 – ActiveMQ](phase-5/README.md)
+### [Phase 6 – ActiveMQ](phase-6/README.md)
 * Learn:
   * JMS
   * Queues
@@ -140,14 +143,14 @@
   * Request/Reply
   * Transactions
 * Deliverable: Camel publishes and consumes messages through ActiveMQ.
-### [Phase 6 – PostgreSQL & Flyway](phase-6/README.md)
+### [Phase 7 – PostgreSQL & Flyway](phase-7/README.md)
 * Learn:
   * Database schema design
   * Flyway migrations
   * Spring Data access
   * Transactions
 * Deliverable: Persist requests, responses, and processing status.
-### [Phase 7 – Complete Integration Flow](phase-7/README.md)
+### [Phase 8 – Complete Integration Flow](phase-8/README.md)
 * End-to-end flow:
 ```text
 SOAP Client
@@ -172,7 +175,7 @@ SOAP Response
 ```
 
 * Deliverable: Fully functioning enterprise integration application.
-### Phase 8 – Production Features
+### Phase 9 – Production Features
 * Implement:
   * Correlation IDs
   * Structured logging
@@ -182,7 +185,7 @@ SOAP Response
   * Exception handling
   * Configuration management
 * Deliverable: Production-style robustness.
-### Phase 9 – Testing
+### Phase 10 – Testing
 * Implement:
   * Unit tests
   * Integration tests
