@@ -1,16 +1,15 @@
 # Enterprise integration learning project
 - [App](app/README.md): LandisGyr2026RS
   - Elokuu,202608
-- [Introduction](#introduction)
-  - [Goal](#goal)
-  - [Technology Stack](#technology-stack)
-  - [Project Scenario](#project-scenario)
+- [Goal](#goal)
+- [Technology Stack](#technology-stack)
+- [Project Scenario](#project-scenario)
 - [Learning Objectives](#learning-objectives)
 - [Project Phases](#project-phases)
   - [Phase 0 – Environment Setup](#phase-0--environment-setup)
   - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
   - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
-  - [Phase 3 – SOAP](#phase-3--soap)
+  - [Phase 3 – SOAP using Apache CXF](#phase-3--soap-using-apache-cxf)
   - [Phase 4 – Apache CXF](#phase-4--apache-cxf)
   - [Phase 5 – Apache Camel](#phase-5--apache-camel)
   - [Phase 6 – ActiveMQ](#phase-6--activemq)
