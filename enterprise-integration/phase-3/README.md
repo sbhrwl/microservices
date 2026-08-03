@@ -1,4 +1,4 @@
-# SOAP using Apache CXF
+# SOAP
 - [Overview](#overview)
 - [Create wsdl directory](#create-wsdl-directory)
 - [Create meter-registration.wsdl](#create-meter-registrationwsdl)
@@ -506,7 +506,7 @@ Implement Service
 Test SOAP
 ```
 
-## Apache CXF
+## [Apache CXF](https://github.com/sbhrwl/microservices/blob/main/enterprise-integration/phase-4/README.md)
 - Instead of hand written wsdl, use Apache CXF 
   - Validate this WSDL.
   - Generate Java interfaces and JAXB classes.
