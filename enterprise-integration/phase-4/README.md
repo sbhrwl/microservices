@@ -5,7 +5,7 @@
   - [Why depend on model](#why-depend-on-model)
   - [Why api instead of implementation](#why-api-instead-of-implementation)
 - [Verify CXF tooling setup](#verify-cxf-tooling-setup)
-- [Add the Gradle task that runs Apache CXF WSDLToJava](#add-the-gradle-task-that-runs-apache-cxf-wsdlto-java)
+- [Add the Gradle task that runs Apache CXF WSDLToJava](#add-the-gradle-task-that-runs-apache-cxf-wsdltojava)
   - [Configure the CXF wsdl2java task](#configure-the-cxf-wsdl2java-task)
   - [Observations](#observations)
   - [Configure CXF to reuse the existing JAXB model module](#configure-cxf-to-reuse-the-existing-jaxb-model-module)
