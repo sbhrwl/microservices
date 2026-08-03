@@ -9,8 +9,8 @@ configurations {
 dependencies {
     api project(':model')
 
-    implementation libs.jaxws.api
-    implementation libs.jaxb.api
+    api libs.jaxws.api
+    api libs.jaxb.api
 
     cxfCodegen libs.cxf.tools
     cxfCodegen libs.cxf.jaxb
