@@ -15,6 +15,7 @@ cxf-jaxb = { module = "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb", versio
 
 cxf-rt-frontend-jaxws = { module = "org.apache.cxf:cxf-rt-frontend-jaxws", version.ref = "cxf" }
 cxf-rt-transports-http = { module = "org.apache.cxf:cxf-rt-transports-http", version.ref = "cxf" }
+cxf-spring-boot-starter = { module = "org.apache.cxf:cxf-spring-boot-starter-jaxws", version.ref = "cxf" }
 
 [plugins]
 jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }
