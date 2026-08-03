@@ -1,10 +1,14 @@
 plugins {
-    id 'java-library'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    id 'java'
 }
 
 dependencies {
-    implementation project(":soap-api")
+    implementation project(':soap-api')
 
     implementation libs.cxf.rt.frontend.jaxws
     implementation libs.cxf.rt.transports.http
+
+    implementation 'org.springframework.boot:spring-boot-starter'
 }
