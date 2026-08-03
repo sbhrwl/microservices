@@ -1,5 +1,23 @@
 # Apache CXF
-
+- [Goal](#goal)
+- [Add Apache CXF plugin](#add-apache-cxf-plugin)
+- [Configure buildgradle of project soap-api](#configure-buildgradle-of-project-soap-api)
+  - [Why depend on model](#why-depend-on-model)
+  - [Why api instead of implementation](#why-api-instead-of-implementation)
+- [Verify CXF tooling setup](#verify-cxf-tooling-setup)
+- [Add the Gradle task that runs Apache CXF WSDLToJava](#add-the-gradle-task-that-runs-apache-cxf-wsdlt-java)
+- [Configure the CXF wsdl2java task](#configure-the-cxf-wsdl2java-task)
+- [Observations](#observations)
+- [Configure CXF to reuse the existing JAXB model module](#configure-cxf-to-reuse-the-existing-jaxb-model-module)
+- [Make Gradle compile the generated CXF sources](#make-gradle-compile-the-generated-cxf-sources)
+  - [Observations](#observations-1)
+- [Working version of libsversion.toml](#working-version-of-libsversion-toml)
+- [Working version of buildgradle](#working-version-of-buildgradle)
+- [Verify the generated interface](#verify-the-generated-interface)
+- [Implement the service](#implement-the-service)
+- [Configure Integration module](#configure-integration-module)
+- [Publish the SOAP endpoint](#publish-the-soap-endpoint)
+- [Test with SoapUI](#test-with-soapui)
 ## Goal
 * Generate Java code **from the WSDL** (WSDL-first approach).
 
@@ -510,5 +528,6 @@ MeterRegistrationResponse registerMeter(
 ```
 3. Whether CXF correctly references the JAXB classes from `model`.
 ## Implement the service
+### Configure Integration module
 ## Publish the SOAP endpoint
 ## Test with SoapUI
