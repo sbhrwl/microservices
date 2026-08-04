@@ -12,6 +12,7 @@
     - [publish()](#publish)
 - [Run the spring boot application](#run-the-spring-boot-application)
 - [Refactoring](#refactoring)
+- 
 ## Add the CXF Spring Boot Starter
 * Update `gradle/libs.versions.toml`, Add under `[libraries]`
 ```toml
@@ -202,3 +203,52 @@ Checkpoint 7
 * ✅ Published SOAP endpoint
 * ✅ End-to-end SoapUI test
 * ✅ Business logic separated from transport layer
+### Reasoning
+#### Why did we introduce `MeterRegistrationProcessor`?
+* Originally your code looked like this:
+
+```text
+SOAP Endpoint
+      │
+      ▼
+Business Logic
+```
+* Everything was inside `MeterRegistrationServiceImpl`.
+* We extracted the business logic into a separate component because that's how enterprise applications are typically structured:
+
+```text
+SOAP Endpoint
+      │
+      ▼
+Processor Interface
+      │
+      ▼
+Processor Implementation
+```
+
+* The benefits are:
+  * The SOAP endpoint only handles transport concerns (SOAP, logging, validation).
+  * Business logic is independent of SOAP.
+  * The same processor can later be reused by:
+    * Apache Camel routes
+    * REST endpoints
+    * JMS consumers (ActiveMQ)
+    * Scheduled jobs
+    * Unit tests
+* This separation becomes even more valuable in the next step. Once Camel is introduced, the flow becomes:
+
+```text
+SOAP Endpoint
+      │
+      ▼
+Apache Camel Route
+      │
+      ▼
+Processor Interface
+      │
+      ▼
+Processor Implementation
+```
+
+* At that point, the SOAP endpoint won't know anything about the business logic.
+* It will simply hand the request to Camel, and Camel will decide what happens next.
