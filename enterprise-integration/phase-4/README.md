@@ -1281,3 +1281,22 @@ Target namespace: http://service.enterprise.integration/
    </soap:Body>
 </soap:Envelope>
 ```
+
+## Refactoring
+```text
+SoapUI
+   │
+   ▼
+Apache CXF
+   │
+   ▼
+MeterRegistrationServiceImpl
+   │
+   ▼
+MeterRegistrationProcessor
+   │
+   ▼
+MeterRegistrationProcessorImpl
+```
+- Clean build: `.\gradlew clean build --no-configuration-cache`
+- Start application: `.\gradlew :integration:bootRun`
