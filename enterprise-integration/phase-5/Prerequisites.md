@@ -22,6 +22,7 @@ rmdir /s /q .gradle
 - Verify `tasks` for model module `.\gradlew :model:tasks --all`
 - Verify `properties` for model module `.\gradlew :model:properties`
 ## Build
+- [libs.versions.toml](meter-registration-service/gradle/libs.versions.toml)
 - Build the project and modules underneath it `.\gradlew build`
 ## Verification
 ### Contract
