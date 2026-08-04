@@ -92,7 +92,7 @@ soap-api
 ### Integration
 - Implements [MeterRegistrationPortTypeImpl.java](meter-registration-service/integration/src/main/java/enterprise/meter_registration/v1/MeterRegistrationPortTypeImpl.java)
 - Configure endpoint [CxfConfig.java](meter-registration-service/integration/src/main/java/integration/enterprise/config/CxfConfig.java)
-- Publishes SOAP endpoint [EndpointPublisher.java](enterprise-integration/phase-5/meter-registration-service/integration/src/main/java/integration/EndpointPublisher.java)
+- Publishes SOAP endpoint [EndpointPublisher.java](meter-registration-service/integration/src/main/java/integration/EndpointPublisher.java)
 - [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
 - [MeterRegistrationProcessorImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessorImpl.java)
 - [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
