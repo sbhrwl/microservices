@@ -8,21 +8,3 @@
 | **[4. Spring Boot Migration](SpringBootMigration.md)**    | Convert integration module to Spring Boot                     | Spring Boot application starts                                                                                    |
 | **[5. Integrate Apache CXF](IntegrateApacheCXF.md)**      | Replace standalone publisher with Spring-managed CXF endpoint | Production-style SOAP service, testable with SoapUI                                                               |
 | **[6. Test](Test.md)**                                    | Test Soap requests                                            | Verify logs and Soap response                                                               |
-
-### Next step
-* The next logical step is to stop returning a hardcoded response and introduce the application's business layer properly.
-
-```text
-SOAP Endpoint
-      │
-      ▼
-Processor
-      │
-      ▼
-Repository (stub)
-      │
-      ▼
-Database (later in Phase 6)
-```
-* Initially the repository will be an in-memory stub so that when we introduce PostgreSQL and Flyway later, we only replace the repository implementation, leaving the endpoint and processor unchanged.
-* This is the same layering you'll find in many production Spring applications and sets us up nicely for the remaining phases.
