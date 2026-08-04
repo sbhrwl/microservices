@@ -95,7 +95,7 @@ soap-api
 - [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
 - [MeterRegistrationProcessorImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessorImpl.java)
 - [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
-- [build.gradle](meter-registration-service/model/build.gradle) 
+- [build.gradle](meter-registration-service/integration/build.gradle) 
   - `.\gradlew :integration:dependencies --configuration runtimeClasspath --no-configuration-cache`
 ```text
 integration
