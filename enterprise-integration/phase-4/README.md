@@ -1287,7 +1287,7 @@ Target namespace: http://service.enterprise.integration/
 SoapUI
    │
    ▼
-Apache CXF
+CXF Endpoint
    │
    ▼
 MeterRegistrationServiceImpl
@@ -1297,6 +1297,34 @@ MeterRegistrationProcessor
    │
    ▼
 MeterRegistrationProcessorImpl
+   │
+   ▼
+Response
 ```
 - Clean build: `.\gradlew clean build --no-configuration-cache`
 - Start application: `.\gradlew :integration:bootRun`
+### Where we are now
+* ✅ WSDL-first contract
+* ✅ JAXB model generation
+* ✅ CXF service interface generation
+* ✅ Spring Boot integration
+* ✅ Published SOAP endpoint
+* ✅ End-to-end SoapUI test
+* ✅ Business logic separated from transport layer
+### Next step
+* The next logical step is to stop returning a hardcoded response and introduce the application's business layer properly.
+
+```text
+SOAP Endpoint
+      │
+      ▼
+Processor
+      │
+      ▼
+Repository (stub)
+      │
+      ▼
+Database (later in Phase 6)
+```
+* Initially the repository will be an in-memory stub so that when we introduce PostgreSQL and Flyway later, we only replace the repository implementation, leaving the endpoint and processor unchanged.
+* This is the same layering you'll find in many production Spring applications and sets us up nicely for the remaining phases.
