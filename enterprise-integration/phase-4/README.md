@@ -43,6 +43,15 @@
     - [Create the Spring Boot main class](#create-the-spring-boot-main-class)
   - [Checkpoint 5](#checkpoint-5)
   - [Integrate Apache CXF with Spring Boot](#integrate-apache-cxf-with-spring-boot)
+    - [Add the CXF Spring Boot Starter](#add-the-cxf-spring-boot-starter)
+      - [Update `gradle/libs.versions.toml`](#update-gradlelibsversionstoml)
+      - [Update `integration/build.gradle`](#update-integrationbuildgradle)
+      - [Verify](#verify)
+      - [Implement the generated service interface](#implement-the-generated-service-interface)
+      - [Publish the service with Apache CXF](#publish-the-service-with-apache-cxf)
+        - [Bus](#bus)
+        - [`EndpointImpl`](#endpointimpl)
+        - [`publish()`](#publish)
 - [Test with SoapUI](#test-with-soapui)
 ## Goal
 * Generate Java code **from the WSDL** (WSDL-first approach).
