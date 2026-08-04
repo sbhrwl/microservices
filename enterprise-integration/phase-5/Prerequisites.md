@@ -22,21 +22,15 @@ rmdir /s /q .gradle
 - Verify `tasks` for model module `.\gradlew :model:tasks --all`
 - Verify `properties` for model module `.\gradlew :model:properties`
 ## Build
+- [libs.versions.toml](meter-registration-service/gradle/libs.versions.toml)
 - Build the project and modules underneath it `.\gradlew build`
 ## Verification
 ### Contract
+- [meter-registration.xsd](meter-registration-service/contract/src/main/resources/xsd/meter-registration.xsd)
+- [meter-registration.wsdl](meter-registration-service/contract/src/main/resources/wsdl/meter-registration.wsdl)
+- [meter-registration-bindings.xml](meter-registration-service/contract/src/main/resources/wsdl/meter-registration-bindings.xml)
 ```text
 contract
-├── build
-│   ├── libs
-│   ├── resources
-│   │   └── main
-│   │       ├── wsdl
-│   │       │   ├── meter-registration.wsdl
-│   │       │   └── meter-registration-bindings.xml
-│   │       └── xsd
-│   │           └── meter-registration.xsd
-│   └── tmp
 ├── src
 │   └── main
 │       ├── java
@@ -49,6 +43,8 @@ contract
 └── build.gradle
 ```
 ### Model
+- [JAXB plugin - XJC Gradle configuration](meter-registration-service/model/build.gradle)
+- Generate java classes: `.\gradlew :model:xjc`
 ```text
 model
 ├── build
@@ -73,6 +69,8 @@ model
 │       └── model-1.0.0-SNAPSHOT.jar
 ```
 ### Soap api
+- [CXF Gradle configuration](meter-registration-service/soap-api/build.gradle)
+- Task `wsdl2java` generates java classes MeterRegistrationPortType.java and MeterRegistrationService.java from WSDL using Apache CXF
 ```text
 soap-api
 ├── build
@@ -92,6 +90,14 @@ soap-api
 │       └── soap-api-1.0.0-SNAPSHOT.jar
 ```
 ### Integration
+- Implements [MeterRegistrationPortTypeImpl.java](meter-registration-service/integration/src/main/java/enterprise/meter_registration/v1/MeterRegistrationPortTypeImpl.java)
+- Configure endpoint [CxfConfig.java](meter-registration-service/integration/src/main/java/integration/enterprise/config/CxfConfig.java)
+- Publishes SOAP endpoint [EndpointPublisher.java](enterprise-integration/phase-5/meter-registration-service/integration/src/main/java/integration/EndpointPublisher.java)
+- [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
+- [MeterRegistrationProcessorImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessorImpl.java)
+- [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
+- [build.gradle](meter-registration-service/integration/build.gradle) 
+  - `.\gradlew :integration:dependencies --configuration runtimeClasspath --no-configuration-cache`
 ```text
 integration
 ├── build
