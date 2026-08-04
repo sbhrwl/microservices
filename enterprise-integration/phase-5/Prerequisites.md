@@ -25,18 +25,11 @@ rmdir /s /q .gradle
 - Build the project and modules underneath it `.\gradlew build`
 ## Verification
 ### Contract
+- [meter-registration.xsd](enterprise-integration/phase-5/meter-registration-service/contract/src/main/resources/xsd/meter-registration.xsd)
+- [meter-registration.wsdl](enterprise-integration/phase-5/meter-registration-service/contract/src/main/resources/wsdl/meter-registration.wsdl)
+- [meter-registration-bindings.xml](enterprise-integration/phase-5/meter-registration-service/contract/src/main/resources/wsdl/meter-registration-bindings.xml)
 ```text
 contract
-├── build
-│   ├── libs
-│   ├── resources
-│   │   └── main
-│   │       ├── wsdl
-│   │       │   ├── meter-registration.wsdl
-│   │       │   └── meter-registration-bindings.xml
-│   │       └── xsd
-│   │           └── meter-registration.xsd
-│   └── tmp
 ├── src
 │   └── main
 │       ├── java
