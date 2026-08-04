@@ -204,7 +204,7 @@ Checkpoint 7
 * ✅ End-to-end SoapUI test
 * ✅ Business logic separated from transport layer
 ### Reasoning
-#### Why did we introduce `MeterRegistrationProcessor`?
+* Why did we introduce `MeterRegistrationProcessor`?
 * Originally your code looked like this:
 
 ```text
