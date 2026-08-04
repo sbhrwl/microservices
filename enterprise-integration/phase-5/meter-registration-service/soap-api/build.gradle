@@ -1,0 +1,52 @@
+plugins {
+    id 'java-library'
+}
+
+configurations {
+    cxfCodegen
+}
+
+dependencies {
+    api project(':model')
+
+    api libs.jaxws.api
+    api libs.jaxb.api
+
+    cxfCodegen libs.cxf.tools
+    cxfCodegen libs.cxf.jaxb
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated/sources/wsdl2java")
+        }
+    }
+}
+
+tasks.register('wsdl2java', JavaExec) {
+
+    group = "code generation"
+    description = "Generate Java classes from WSDL using Apache CXF"
+
+    classpath = configurations.cxfCodegen
+
+    mainClass = "org.apache.cxf.tools.wsdlto.WSDLToJava"
+
+    args(
+            "-b",
+            "../contract/src/main/resources/wsdl/meter-registration-bindings.xml",
+
+            "-nexclude",
+            "http://enterprise.integration/meter-registration/v1",
+
+            "-d",
+            layout.buildDirectory.dir("generated/sources/wsdl2java").get().asFile.absolutePath,
+
+            "../contract/src/main/resources/wsdl/meter-registration.wsdl"
+    )
+}
+
+tasks.named("compileJava") {
+    dependsOn("wsdl2java")
+}

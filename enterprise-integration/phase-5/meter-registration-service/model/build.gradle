@@ -1,0 +1,8 @@
+plugins {
+    id 'java-library'
+    alias(libs.plugins.jaxb)
+}
+
+xjc {
+    xsdDir.set(file("../contract/src/main/resources/xsd"))
+}

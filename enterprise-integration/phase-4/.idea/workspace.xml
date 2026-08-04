@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e35b06fd-6025-4c04-a1f6-ee225a43f308" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/IntegrateApacheCXF.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SpringBootMigration.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
