@@ -8,6 +8,7 @@
     - [Integration](#integration)
 - [Run Spring Boot application](#run-spring-boot-application)
 - [Verify logs](#verify-logs)
+- [Summary](#summary)
 ## Cleanup
 - Remove all build folders from all directories
 ```
@@ -158,3 +159,13 @@ integration
 > IDLE
 > :integration:bootRun
 ```
+## Summary
+
+| Class                            | Created by               | Purpose                       |
+| -------------------------------- | ------------------------ | ----------------------------- |
+| `MeterRegistrationRequest`       | JAXB (XJC) from the XSD  | Request DTO                   |
+| `MeterRegistrationResponse`      | JAXB (XJC) from the XSD  | Response DTO                  |
+| `MeterRegistrationPortType`      | Apache CXF (`wsdl2java`) | SOAP service interface        |
+| `MeterRegistrationServiceImpl`   | **You**                  | SOAP endpoint implementation  |
+| `MeterRegistrationProcessor`     | **You**                  | Business logic abstraction (refactoring)    |
+| `MeterRegistrationProcessorImpl` | **You**                  | Business logic implementation (refactoring) |
