@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @WebService(
         serviceName = "MeterRegistrationService",
@@ -22,6 +20,12 @@ public class MeterRegistrationServiceImpl implements MeterRegistrationPortType {
     private static final Logger log =
             LoggerFactory.getLogger(MeterRegistrationServiceImpl.class);
 
+    private final MeterRegistrationProcessor processor;
+
+    public MeterRegistrationServiceImpl(MeterRegistrationProcessor processor) {
+        this.processor = processor;
+    }
+
     @Override
     public MeterRegistrationResponse registerMeter(MeterRegistrationRequest request) {
 
@@ -33,10 +37,7 @@ public class MeterRegistrationServiceImpl implements MeterRegistrationPortType {
         log.info("Relay State       : {}", request.getRelayState());
         log.info("Timestamp         : {}", request.getTimestamp());
 
-        MeterRegistrationResponse response = new MeterRegistrationResponse();
-        response.setStatus("SUCCESS");
-        response.setMessage("Meter registered successfully");
-        response.setRegistrationId(UUID.randomUUID().toString());
+        MeterRegistrationResponse response = processor.register(request);
 
         log.info("Sending SOAP response");
         log.info("Status            : {}", response.getStatus());
