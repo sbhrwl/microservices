@@ -10,4 +10,7 @@ dependencies {
     implementation libs.cxf.spring.boot.starter
 
     implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation libs.camel.spring.boot
+    implementation libs.camel.core
 }

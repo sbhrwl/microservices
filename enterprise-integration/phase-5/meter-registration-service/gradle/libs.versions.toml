@@ -4,6 +4,7 @@ jaxbPlugin = "1.9.1"
 cxf = "4.1.3"
 springBoot = "3.5.5"
 springDependencyManagement = "1.1.7"
+camel = "4.14.0"
 
 [libraries]
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb" }
@@ -16,6 +17,9 @@ cxf-jaxb = { module = "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb", versio
 cxf-rt-frontend-jaxws = { module = "org.apache.cxf:cxf-rt-frontend-jaxws", version.ref = "cxf" }
 cxf-rt-transports-http = { module = "org.apache.cxf:cxf-rt-transports-http", version.ref = "cxf" }
 cxf-spring-boot-starter = { module = "org.apache.cxf:cxf-spring-boot-starter-jaxws", version.ref = "cxf" }
+
+camel-spring-boot = { module = "org.apache.camel.springboot:camel-spring-boot-starter", version.ref = "camel" }
+camel-core = { module = "org.apache.camel:camel-core", version.ref = "camel" }
 
 [plugins]
 jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }
