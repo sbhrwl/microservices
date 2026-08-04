@@ -1,4 +1,4 @@
-# SOAP
+# Creating a wsdl
 - [Overview](#overview)
 - [Create wsdl directory](#create-wsdl-directory)
 - [Create meter-registration.wsdl](#create-meter-registrationwsdl)
