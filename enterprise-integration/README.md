@@ -10,7 +10,7 @@
   - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
   - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
   - [Phase 3 – Creating a wsdl](#phase-3--creating-a-wsdl)
-  - [Phase 4 – Apache CXF](#phase-4--apache-cxf)
+  - [Phase 4 – Soap with Apache CXF](#phase-4--soap-with-apache-cxf)
   - [Phase 5 – Apache Camel](#phase-5--apache-camel)
   - [Phase 6 – ActiveMQ](#phase-6--activemq)
   - [Phase 7 – PostgreSQL & Flyway](#phase-7--postgresql--flyway)
