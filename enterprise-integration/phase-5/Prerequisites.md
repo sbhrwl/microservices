@@ -42,7 +42,7 @@ contract
 └── build.gradle
 ```
 ### Model
-- [XJC Gradle configuration] (meter-registration-service/model/build.gradle)
+- [XJC Gradle configuration](meter-registration-service/model/build.gradle)
 - Generate java classes: `.\gradlew :model:xjc`
 ```text
 model
