@@ -69,7 +69,7 @@ model
 ```
 ### Soap api
 - [CXF Gradle configuration](meter-registration-service/soap-api/build.gradle)
-- Task `wsdl2java` generates MeterRegistrationPortType.java and MeterRegistrationService.java
+- Task `wsdl2java` generates java classes MeterRegistrationPortType.java and MeterRegistrationService.java from WSDL using Apache CXF
 ```text
 soap-api
 ├── build
