@@ -24,7 +24,7 @@ rmdir /s /q .gradle
 - Verify `properties` for model module `.\gradlew :model:properties`
 ## Build
 - [libs.versions.toml](meter-registration-service/gradle/libs.versions.toml)
-- Build the project and modules underneath it `.\gradlew build`
+- Build the project and modules underneath it [`.\gradlew build`](build.gradle)
 ## Verification
 ### Contract
 - [meter-registration.xsd](meter-registration-service/contract/src/main/resources/xsd/meter-registration.xsd)
