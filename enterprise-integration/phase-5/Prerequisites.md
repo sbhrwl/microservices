@@ -42,6 +42,8 @@ contract
 └── build.gradle
 ```
 ### Model
+- [XJC Gradle configuration] (meter-registration-service/model/build.gradle)
+- Generate java classes: `.\gradlew :model:xjc`
 ```text
 model
 ├── build
@@ -66,6 +68,8 @@ model
 │       └── model-1.0.0-SNAPSHOT.jar
 ```
 ### Soap api
+- [CXF Gradle configuration](meter-registration-service/soap-api/build.gradle)
+- Task `wsdl2java` generates MeterRegistrationPortType.java and MeterRegistrationService.java
 ```text
 soap-api
 ├── build
@@ -85,6 +89,12 @@ soap-api
 │       └── soap-api-1.0.0-SNAPSHOT.jar
 ```
 ### Integration
+- Implements [MeterRegistrationPortTypeImpl.java](meter-registration-service/integration/src/main/java/enterprise/meter_registration/v1/MeterRegistrationPortTypeImpl.java)
+- Configure endpoint [CxfConfig.java](meter-registration-service/integration/src/main/java/integration/enterprise/config/CxfConfig.java)
+- Publishes SOAP endpoint [EndpointPublisher.java](enterprise-integration/phase-5/meter-registration-service/integration/src/main/java/integration/EndpointPublisher.java)
+- [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
+- [MeterRegistrationProcessorImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessorImpl.java)
+- [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
 ```text
 integration
 ├── build
