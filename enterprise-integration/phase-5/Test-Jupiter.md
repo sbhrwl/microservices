@@ -26,3 +26,31 @@ BUILD SUCCESSFUL in 7s
 Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>
 ```
+## Add test
+- [`MeterRegistrationProcessorImplTest`](meter-registration-service/integration/src/test/java/integration/enterprise/service/MeterRegistrationProcessorImplTest.java)
+- Run: `.\gradlew :integration:test --rerun-tasks`
+```text
+C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>.\gradlew :integration:test --rerun-tasks
+Reusing configuration cache.
+
+> Task :soap-api:wsdl2java
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+
+> Task :model:xjc
+integration\enterprise\meter_registration\v1\MeterRegistrationRequest.java
+integration\enterprise\meter_registration\v1\MeterRegistrationResponse.java
+integration\enterprise\meter_registration\v1\ObjectFactory.java
+integration\enterprise\meter_registration\v1\RelayState.java
+integration\enterprise\meter_registration\v1\package-info.java
+
+> Task :integration:test
+
+MeterRegistrationProcessorImplTest > shouldRegisterMeterSuccessfully() PASSED
+
+BUILD SUCCESSFUL in 8s
+9 actionable tasks: 9 executed
+Configuration cache entry reused.
+C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>
+```
