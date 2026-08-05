@@ -1,17 +1,16 @@
 # Testing
-- [Prerequisites](enterprise-integration/phase-5/Prerequisites.md)
 - [Jupiter setup](#jupiter-setup)
 ## Jupiter setup
 * Add JUnit dependencies
 * Since you're using Spring Boot 3.5.5, the easiest approach is to use Spring Boot's test starter.
 * It already includes:
-  * JUnit Jupiter
-  * Mockito
-  * AssertJ
-  * Spring Test
+    * JUnit Jupiter
+    * Mockito
+    * AssertJ
+    * Spring Test
 * Update [`integration/build.gradle`](meter-registration-service/integration/build.gradle)
-  * Add this dependency: `    testImplementation "org.springframework.boot:spring-boot-starter-test"`
-  * Add a task: `useJUnitPlatform`
+    * Add this dependency: `testImplementation "org.springframework.boot:spring-boot-starter-test"`
+    * Add a task: `useJUnitPlatform`
 * Run: `.\gradlew :integration:test`
 ```text
 C:\Git\practice\microservices\enterprise-integration\phase-6\meter-registration-service>.\gradlew :integration:test

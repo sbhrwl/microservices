@@ -13,4 +13,10 @@ dependencies {
 
     implementation libs.camel.spring.boot
     implementation libs.camel.core
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
 }

@@ -120,7 +120,7 @@
   * Logging
   * Content based routing
 * Deliverable: Working Camel routes invoking the SOAP service.
-### [Phase 6 – Testing](phase-6/README.md)
+### [Phase 6 – Testing](phase-5/Test-Jupiter.md)
 * Implement:
   * Unit tests
   * Integration tests
