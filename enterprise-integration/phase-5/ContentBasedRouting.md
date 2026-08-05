@@ -1,0 +1,2 @@
+# Content-based routing
+You're now using several of Camel's foundational building blocks. After this, we can move on to ** (`choice()`, `when()`, `otherwise()`)**, which is one of Camel's signature Enterprise Integration Patterns.

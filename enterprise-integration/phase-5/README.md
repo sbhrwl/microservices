@@ -1,10 +1,11 @@
 # Apache camel
 
-| Milestone                                              | Goal                                                                  | Result                                                                                                            |
-|--------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| **[1. Prerequisites](Prerequisites.md)**               |    | Soap endpoint serves requests and delivers response        |
-| **[2. Camel setup](CamelSetup.md)**                    |    | Create route `MeterRegistrationRoute.java` and inject producer template in `MeterRegistrationServiceImpl.java`    |
-| **[3. Camel processor](CamelProcessor.md)**            |    |  |
+| Milestone                                              | Goal                                                                  | Result                                                                                                                              |
+|--------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| **[1. Prerequisites](Prerequisites.md)**               |    | Soap endpoint serves requests and delivers response                                                                                 |
+| **[2. Camel setup](CamelSetup.md)**                    |    | Create route `MeterRegistrationRoute.java` and inject producer template in `MeterRegistrationServiceImpl.java`                      |
+| **[3. Camel processor](CamelProcessor.md)**            |    | Create processors `MeterRegistrationValidationProcessor.java` (exception handling) and `MeterRegistrationEnrichmentProcessor.java`) |
+| **[4. Content-based routing](ContentBasedRouting.md)** |    |                                                                                                                                     |
 
 - [Orchestration](#orchestration)
 - [Flow](#flow)
