@@ -4,6 +4,7 @@ import integration.enterprise.meter_registration.v1.MeterRegistrationPortType;
 import integration.enterprise.meter_registration.v1.MeterRegistrationRequest;
 import integration.enterprise.meter_registration.v1.MeterRegistrationResponse;
 import jakarta.jws.WebService;
+import org.apache.camel.ProducerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ public class MeterRegistrationServiceImpl implements MeterRegistrationPortType {
     private static final Logger log =
             LoggerFactory.getLogger(MeterRegistrationServiceImpl.class);
 
-    private final MeterRegistrationProcessor processor;
+    private final ProducerTemplate producerTemplate;
 
-    public MeterRegistrationServiceImpl(MeterRegistrationProcessor processor) {
-        this.processor = processor;
+    public MeterRegistrationServiceImpl(ProducerTemplate producerTemplate) {
+        this.producerTemplate = producerTemplate;
     }
 
     @Override
@@ -37,7 +38,11 @@ public class MeterRegistrationServiceImpl implements MeterRegistrationPortType {
         log.info("Relay State       : {}", request.getRelayState());
         log.info("Timestamp         : {}", request.getTimestamp());
 
-        MeterRegistrationResponse response = processor.register(request);
+        MeterRegistrationResponse response =
+                producerTemplate.requestBody(
+                        "direct:registerMeter",
+                        request,
+                        MeterRegistrationResponse.class);
 
         log.info("Sending SOAP response");
         log.info("Status            : {}", response.getStatus());
