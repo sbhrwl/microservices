@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://enterprise.integration/meter-registration/v1"
+        xmlns:mr="http://enterprise.integration/meter-registration/v1"
+        targetNamespace="http://enterprise.integration/meter-registration/v1">
+
+    <wsdl:types>
+        <xs:schema>
+            <xs:import
+                    namespace="http://enterprise.integration/meter-registration/v1"
+                    schemaLocation="../xsd/meter-registration.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="MeterRegistrationRequestMessage">
+        <wsdl:part
+                name="request"
+                element="mr:MeterRegistrationRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="MeterRegistrationResponseMessage">
+        <wsdl:part
+                name="response"
+                element="mr:MeterRegistrationResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="MeterRegistrationPortType">
+
+        <wsdl:operation name="registerMeter">
+
+            <wsdl:input
+                    message="tns:MeterRegistrationRequestMessage"/>
+
+            <wsdl:output
+                    message="tns:MeterRegistrationResponseMessage"/>
+
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding
+            name="MeterRegistrationBinding"
+            type="tns:MeterRegistrationPortType">
+
+        <soap:binding
+                style="document"
+                transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="registerMeter">
+
+            <soap:operation
+                    soapAction="http://enterprise.integration/meter-registration/v1/registerMeter"/>
+
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="MeterRegistrationService">
+
+        <wsdl:port
+                name="MeterRegistrationPort"
+                binding="tns:MeterRegistrationBinding">
+
+            <soap:address
+                    location="http://localhost:8080/services/meter-registration"/>
+
+        </wsdl:port>
+
+    </wsdl:service>
+
+</wsdl:definitions>
