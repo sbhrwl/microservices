@@ -18,8 +18,8 @@ public class MeterRegistrationRoute extends RouteBuilder {
 
         from("direct:registerMeter")
                 .routeId("meter-registration-route")
-                .log("Camel route invoked")
+                .log("Camel received request for GSRN=${body.gsrn}")
                 .bean(processor, "register")
-                .log("Camel route completed");
+                .log("Camel completed registration. Response=${body.status}");
     }
 }
