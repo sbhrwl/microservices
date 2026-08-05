@@ -29,7 +29,7 @@ C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-
 ## Add test
 - [`MeterRegistrationProcessorImplTest`](meter-registration-service/integration/src/test/java/integration/enterprise/service/MeterRegistrationProcessorImplTest.java)
 - Run: `.\gradlew :integration:test --rerun-tasks`
-  - Open [html](meter-registration-service/integration/build/reports/tests/test/index.html) report 
+  - Open html report at location: `meter-registration-service/integration/build/reports/tests/test/index.html` 
 ```text
 C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>.\gradlew :integration:test --rerun-tasks
 Reusing configuration cache.
