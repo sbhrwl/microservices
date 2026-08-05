@@ -13,7 +13,7 @@
     * Add a task: `useJUnitPlatform`
 * Run: `.\gradlew :integration:test`
 ```text
-C:\Git\practice\microservices\enterprise-integration\phase-6\meter-registration-service>.\gradlew :integration:test
+C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>.\gradlew :integration:test
 Calculating task graph as no cached configuration is available for tasks: :integration:test
 
 > Task :soap-api:wsdl2java
@@ -21,8 +21,8 @@ SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 
-BUILD SUCCESSFUL in 14s
+BUILD SUCCESSFUL in 7s
 7 actionable tasks: 2 executed, 5 up-to-date
 Configuration cache entry stored.
-C:\Git\practice\microservices\enterprise-integration\phase-6\meter-registration-service>
+C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>
 ```
