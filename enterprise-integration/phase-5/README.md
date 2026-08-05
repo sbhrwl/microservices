@@ -175,6 +175,39 @@ Camel Route
 Processor
 ```
 ## Checkpoint
+- Send a SOAP request and verify logs
+```text
+2026-08-05T10:34:55.270+03:00  INFO 41664 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-08-05T10:34:55.445+03:00  INFO 41664 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 4.14.0 (camel-1) is starting
+2026-08-05T10:34:55.453+03:00  INFO 41664 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Routes startup (total:1)
+2026-08-05T10:34:55.453+03:00  INFO 41664 --- [           main] o.a.c.impl.engine.AbstractCamelContext   :     Started meter-registration-route (direct://registerMeter)
+2026-08-05T10:34:55.453+03:00  INFO 41664 --- [           main] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 4.14.0 (camel-1) started in 7ms (build:0ms init:0ms start:7ms boot:1s500ms)
+2026-08-05T10:34:55.455+03:00  INFO 41664 --- [           main] i.enterprise.IntegrationApplication      : Started IntegrationApplication in 4.117 seconds (process running for 4.729)
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : ========== SOAP REQUEST RECEIVED ==========
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : GSRN              : 735999123456789011
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Meter Serial      : MS-123456
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Customer ID       : CUST-1001
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Relay Number      : 1
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Relay State       : ON
+2026-08-05T10:34:58.359+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Timestamp         : 2026-08-03T18:30:00Z
+2026-08-05T10:34:58.369+03:00  INFO 41664 --- [nio-8080-exec-1] meter-registration-route                 : Camel received request for GSRN=735999123456789011
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] meter-registration-route                 : Camel completed registration. Response=SUCCESS
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Sending SOAP response
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Status            : SUCCESS
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Message           : Meter registered successfully
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : Registration ID   : 4708a665-ef86-416f-a63a-dd6a25674708
+2026-08-05T10:34:58.370+03:00  INFO 41664 --- [nio-8080-exec-1] i.e.s.MeterRegistrationServiceImpl       : ===========================================
+<============-> 93% EXECUTING [21s]
+```
+```text
+SOAP REQUEST RECEIVED
+        ↓
+Camel route invoked
+        ↓
+Camel route completed
+        ↓
+Sending SOAP response
+```
 - From here onward we can insert anything into the route:
   - Logging
   - Validation
