@@ -2,9 +2,9 @@
 
 | Milestone                                              | Goal                                                                  | Result                                                                                                            |
 |--------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| **[1. Prerequisites](Prerequisites.md)**               | SOAP endpoint                                                         | Soap endpoint serves requests        |
-| **[2. Camel setup](CamelSetup.md)**                    | Create route and inject producer template | Update `MeterRegistrationServiceImpl.java` and `MeterRegistrationRoute.java`                                    |
-| **[3. Camel processor](CamelProcessor.md)**            |                         |  |
+| **[1. Prerequisites](Prerequisites.md)**               |    | Soap endpoint serves requests and delivers response        |
+| **[2. Camel setup](CamelSetup.md)**                    |    | Update  and Create route `MeterRegistrationRoute.java` and inject producer template in `MeterRegistrationServiceImpl.java`    |
+| **[3. Camel processor](CamelProcessor.md)**            |    |  |
 
 - [Orchestration](#orchestration)
 - [Flow](#flow)
