@@ -147,3 +147,42 @@ direct:registerMeter
 2026-08-04T14:49:11.788+03:00  INFO 28712 --- [           main] i.enterprise.IntegrationApplication      : Started IntegrationApplication in 2.993 seconds (process running for 3.585)
 <============-> 93% EXECUTING [1m 7s]
 ```
+## Inject Camel's ProducerTemplate
+- Update [`MeterRegistrationServiceImpl.java`](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationServiceImpl.java)
+- Update [`MeterRegistrationRoute.java`](meter-registration-service/integration/src/main/java/enterprise/route/MeterRegistrationRoute.java)
+### Change in flow
+- Instead of
+```text
+SOAP
+  │
+  ▼
+Processor
+```
+- Now
+```text
+SOAP
+  │
+  ▼
+ProducerTemplate
+  │
+  ▼
+direct:registerMeter
+  │
+  ▼
+Camel Route
+  │
+  ▼
+Processor
+```
+## Checkpoint
+- From here onward we can insert anything into the route:
+  - Logging
+  - Validation
+  - Transformation
+  - Routing
+  - JMS/ActiveMQ
+  - Database
+  - REST calls
+  - Error handling
+  - Retry logic
+- without changing the SOAP service
