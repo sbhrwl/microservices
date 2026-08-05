@@ -91,9 +91,9 @@ soap-api
 │       └── soap-api-1.0.0-SNAPSHOT.jar
 ```
 ### Integration
-- Configure endpoint [CxfConfig.java](meter-registration-service/integration/src/main/java/integration/enterprise/config/CxfConfig.java)
 - Publishes SOAP endpoint [EndpointPublisher.java](meter-registration-service/integration/src/main/java/integration/EndpointPublisher.java)
 - [MeterRegistrationPortTypeImpl.java](meter-registration-service/integration/src/main/java/enterprise/meter_registration/v1/MeterRegistrationPortTypeImpl.java)
+- Configure endpoint [CxfConfig.java](meter-registration-service/integration/src/main/java/integration/enterprise/config/CxfConfig.java)
 - [MeterRegistrationServiceImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationServiceImpl.java)
 - [MeterRegistrationProcessor.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessor.java)
 - [MeterRegistrationProcessorImpl.java](meter-registration-service/integration/src/main/java/integration/enterprise/service/MeterRegistrationProcessorImpl.java)
