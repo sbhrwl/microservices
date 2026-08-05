@@ -2,7 +2,7 @@
 
 | Milestone                                              | Goal                                                                  | Result                                                                                                            |
 |--------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| **[1. Prerequisites](Prerequisites.md)**               | SOAP endpoint                                                         | `wsdl2java` works (`MeterRegistrationPortType.java` and `MeterRegistrationService.java` classes generated)        |
+| **[1. Prerequisites](Prerequisites.md)**               | SOAP endpoint                                                         | Soap endpoint serves requests        |
 | **[2. Camel setup](CamelSetup.md)**                    | Create route and inject producer template | Update `MeterRegistrationServiceImpl.java` and `MeterRegistrationRoute.java`                                    |
 | **[3. Camel processor](CamelProcessor.md)**            |                         |  |
 
