@@ -16,6 +16,9 @@
                  SoapUI
                     │
                     ▼
+                CXF Endpoint
+                    │
+                    ▼
           MeterRegistrationPortType
                     │
                     ▼
