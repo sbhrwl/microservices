@@ -85,7 +85,21 @@ SOAP Response
 Expected log:
 
 ```text
+2026-08-05T12:47:43.517+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : ========== SOAP REQUEST RECEIVED ==========
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : GSRN              : 735999123456789011
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Meter Serial      : MS-123456
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Customer ID       : CUST-1001
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Relay Number      : 1
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Relay State       : ON
+2026-08-05T12:47:43.518+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Timestamp         : 2026-08-03T18:30:00Z
+2026-08-05T12:47:43.520+03:00  INFO 13296 --- [nio-8080-exec-2] meter-registration-route                 : Camel received request for GSRN=735999123456789011
 Relay ON requested for MS-123456
+2026-08-05T12:47:43.523+03:00  INFO 13296 --- [nio-8080-exec-2] meter-registration-route                 : Camel completed registration. Response=SUCCESS
+2026-08-05T12:47:43.524+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Sending SOAP response
+2026-08-05T12:47:43.524+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Status            : SUCCESS
+2026-08-05T12:47:43.524+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Message           : Meter registered successfully
+2026-08-05T12:47:43.524+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : Registration ID   : 1b0afa42-53a5-461d-924b-49e300dab595
+2026-08-05T12:47:43.524+03:00  INFO 13296 --- [nio-8080-exec-2] i.e.s.MeterRegistrationServiceImpl       : ===========================================
 ```
 
 ### Request 2
@@ -96,5 +110,19 @@ Relay ON requested for MS-123456
 Expected log:
 
 ```text
+2026-08-05T12:48:23.247+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : ========== SOAP REQUEST RECEIVED ==========
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : GSRN              : 735999123456789011
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Meter Serial      : MS-123456
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Customer ID       : CUST-1001
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Relay Number      : 1
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Relay State       : OFF
+2026-08-05T12:48:23.248+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Timestamp         : 2026-08-03T18:30:00Z
+2026-08-05T12:48:23.249+03:00  INFO 13296 --- [nio-8080-exec-4] meter-registration-route                 : Camel received request for GSRN=735999123456789011
 Relay OFF requested for MS-123456
+2026-08-05T12:48:23.252+03:00  INFO 13296 --- [nio-8080-exec-4] meter-registration-route                 : Camel completed registration. Response=SUCCESS
+2026-08-05T12:48:23.253+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Sending SOAP response
+2026-08-05T12:48:23.253+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Status            : SUCCESS
+2026-08-05T12:48:23.253+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Message           : Meter registered successfully
+2026-08-05T12:48:23.253+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : Registration ID   : 9d66eb47-be21-4150-a3dd-706e68ce16c7
+2026-08-05T12:48:23.253+03:00  INFO 13296 --- [nio-8080-exec-4] i.e.s.MeterRegistrationServiceImpl       : ===========================================
 ```

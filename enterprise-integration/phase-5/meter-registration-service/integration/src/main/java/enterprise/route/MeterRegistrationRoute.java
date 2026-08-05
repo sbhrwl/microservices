@@ -3,6 +3,8 @@ package integration.enterprise.route;
 import integration.enterprise.processor.MeterRegistrationValidationProcessor;
 import integration.enterprise.processor.MeterRegistrationEnrichmentProcessor;
 import integration.enterprise.service.MeterRegistrationProcessor;
+import integration.enterprise.processor.RelayOnProcessor;
+import integration.enterprise.processor.RelayOffProcessor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
