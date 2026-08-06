@@ -6,7 +6,7 @@
 | **[2. Camel setup](CamelSetup.md)**                    |    | Create route `MeterRegistrationRoute.java` and inject producer template in `MeterRegistrationServiceImpl.java`                      |
 | **[3. Camel processor](CamelProcessor.md)**            |    | Create processors `MeterRegistrationValidationProcessor.java` (exception handling) and `MeterRegistrationEnrichmentProcessor.java`) |
 | **[4. Content-based routing](ContentBasedRouting.md)** |    | Create processors `RelayOnProcessor.java` and `RelayOffProcessor.java`                                                              |
-| **[5. Testing](Test-Jupiter.md)**               |    | Verify processor and the SOAP endpoint, Camel route testing                                                                                |
+| **[5. Testing](Test-Jupiter.md)**                      |    | Verify processor and the SOAP endpoint, Camel route testing                                                                                |
 
 - [Orchestration](#orchestration)
 - [Flow](#flow)
