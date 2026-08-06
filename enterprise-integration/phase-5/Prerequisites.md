@@ -28,8 +28,10 @@ rmdir /s /q .gradle
 ## Verification
 ### Contract
 - [meter-registration.xsd](meter-registration-service/contract/src/main/resources/xsd/meter-registration.xsd)
+  - [XML & JAXB](https://github.com/sbhrwl/microservices/blob/main/enterprise-integration/phase-2/README.md)
 - [meter-registration.wsdl](meter-registration-service/contract/src/main/resources/wsdl/meter-registration.wsdl)
 - [meter-registration-bindings.xml](meter-registration-service/contract/src/main/resources/wsdl/meter-registration-bindings.xml)
+  - [WSDl and SOAP binding](https://github.com/sbhrwl/microservices/blob/main/enterprise-integration/phase-3/README.md)
 ```text
 contract
 ├── src
