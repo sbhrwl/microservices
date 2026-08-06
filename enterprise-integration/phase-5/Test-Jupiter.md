@@ -1,5 +1,10 @@
 # Testing
 - [Jupiter setup](#jupiter-setup)
+- [Add test](#add-test)
+  - [Verify processor and the SOAP endpoint](#verify-processor-and-the-soap-endpoint)
+  - [Camel route testing](#camel-route-testing)
+    - [Test case](#test-case)
+    - [What this test proves](#what-this-test-proves)
 ## Jupiter setup
 * Add JUnit dependencies
 * Since you're using Spring Boot 3.5.5, the easiest approach is to use Spring Boot's test starter.
