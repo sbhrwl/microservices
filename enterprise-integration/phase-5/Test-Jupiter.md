@@ -27,6 +27,7 @@ Configuration cache entry stored.
 C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>
 ```
 ## Add test
+### Verify processor and the SOAP endpoint
 - [`MeterRegistrationProcessorImplTest`](meter-registration-service/integration/src/test/java/integration/enterprise/service/MeterRegistrationProcessorImplTest.java)
 - Run: `.\gradlew :integration:test --rerun-tasks`
   - Open html report at location: `meter-registration-service/integration/build/reports/tests/test/index.html` 
@@ -55,3 +56,69 @@ BUILD SUCCESSFUL in 8s
 Configuration cache entry reused.
 C:\Git\practice\microservices\enterprise-integration\phase-5\meter-registration-service>
 ```
+### Camel route testing
+- Flow
+```text
+JUnit Test
+     │
+ProducerTemplate
+     │
+direct:registerMeter
+     │
+Camel Route
+     │
+Processor
+     │
+Response
+```
+- Add Camel's JUnit 5 testing library to [`libs.versions.toml`](meter-registration-service/gradle/libs.versions.toml)
+- Update [`integration/build.gradle`](meter-registration-service/integration/build.gradle)
+#### Test case
+- Camel route test will
+  - start only a lightweight Camel context,
+  - send a MeterRegistrationRequest to direct:registerMeter,
+  - verify that the returned MeterRegistrationResponse contains the expected values.
+- From there, we'll learn Camel testing features like `MockEndpoint`, `AdviceWith`, route replacement, and route coverage, which are heavily used in production integration projects.
+- Create [`MeterRegistrationRouteTest.java`](meter-registration-service/integration/src/test/java/integration/enterprise/service/MeterRegistrationRouteTest.java)
+- What this test proves
+```text
+JUnit
+   │
+ProducerTemplate
+   │
+direct:registerMeter
+   │
+MeterRegistrationRoute
+   │
+MeterRegistrationProcessor
+   │
+MeterRegistrationResponse
+```
+- Run: `.\gradlew :integration:test --rerun-tasks`
+  - Open html report at location: `meter-registration-service/integration/build/reports/tests/test/index.html`
+```text
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-08-06T10:10:50.022+03:00  INFO 44012 --- [ionShutdownHook] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 4.14.0 (camel-1) is shutting down (timeout:45s)
+2026-08-06T10:10:50.027+03:00  INFO 44012 --- [ionShutdownHook] o.a.c.impl.engine.AbstractCamelContext   : Routes stopped (total:1)
+2026-08-06T10:10:50.027+03:00  INFO 44012 --- [ionShutdownHook] o.a.c.impl.engine.AbstractCamelContext   :     Stopped meter-registration-route (direct://registerMeter)
+2026-08-06T10:10:50.031+03:00  INFO 44012 --- [ionShutdownHook] o.a.c.impl.engine.AbstractCamelContext   : Apache Camel 4.14.0 (camel-1) shutdown in 9ms (uptime:1s)
+
+> Task :integration:test
+
+MeterRegistrationRouteTest > shouldProcessMeterRegistrationRoute() PASSED
+
+MeterRegistrationRouteTest > contextLoads() PASSED
+
+MeterRegistrationProcessorImplTest > shouldRegisterMeterSuccessfully() PASSED
+
+BUILD SUCCESSFUL in 24s
+9 actionable tasks: 4 executed, 5 up-to-date
+```
+
+| Test                                                               | Purpose                             | Type                   |
+| ------------------------------------------------------------------ | ----------------------------------- | ---------------------- |
+| `MeterRegistrationProcessorImplTest`                               | Tests business logic only           | Unit test              |
+| `MeterRegistrationRouteTest.contextLoads()`                        | Verifies Spring Boot + Camel wiring | Context test           |
+| `MeterRegistrationRouteTest.shouldProcessMeterRegistrationRoute()` | Sends a real message through Camel  | Route integration test |

@@ -21,6 +21,8 @@ cxf-spring-boot-starter = { module = "org.apache.cxf:cxf-spring-boot-starter-jax
 camel-spring-boot = { module = "org.apache.camel.springboot:camel-spring-boot-starter", version.ref = "camel" }
 camel-core = { module = "org.apache.camel:camel-core", version.ref = "camel" }
 
+camel-test-junit5 = { module = "org.apache.camel:camel-test-spring-junit5", version.ref = "camel" }
+
 [plugins]
 jaxb = { id = "com.github.bjornvester.xjc", version.ref = "jaxbPlugin" }
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
