@@ -30,102 +30,15 @@
 * Flyway
 * Docker & Docker Compose
 * JUnit 5
-## Project Scenario
-* **Energy meter registration service**
-  * A SOAP service receives requests containing a GSRN and meter information.
-* The application:
-1. Receives a SOAP request.
-2. Validates the XML.
-3. Converts XML into Java objects using JAXB.
-4. Stores the request in PostgreSQL.
-5. Sends a message to ActiveMQ.
-6. Processes the message through Camel routes.
-7. Updates the database.
-8. Returns an appropriate SOAP response.
-9. Handles retries, failures, and dead-letter scenarios.
 
-## Learning Objectives
-* XML fundamentals
-* XML Namespaces
-* XSD
-* WSDL
-* SOAP Messaging
-* JAXB
-* Apache CXF
-* Apache Camel
-* Enterprise Integration Patterns (EIPs)
-* JMS
-* ActiveMQ
-* PostgreSQL integration
-* Flyway database migrations
-* Spring Boot integration
-* Docker Compose
-* Exception handling
-* Transactions
-* Correlation IDs
-* Logging
-* Dead Letter Queues (DLQ)
-* Unit Testing
-* Integration Testing
-* Most importantly:
-  * Why each technology exists
-  * When to use it
-  * Architectural trade-offs
-  * Common production pitfalls
-## Project Phases
-### [Phase 0 – Environment Setup](phase-0/README.md)
-* Install Java
-* Configure Gradle
-* Create Git repository
-* Configure IntelliJ
-* Create Docker Compose
-* Start PostgreSQL
-* Start ActiveMQ
-* Deliverable: A fully working development environment.
-### [Phase 1 – Project Skeleton](phase-1/README.md)
-* Create the Gradle project.
-* Modules:
-  * contract
-  * model
-  * soap-api
-  * integration
-  * messaging
-  * persistence
-  * common
-* Deliverable: Compilable modular project.
-### [Phase 2 – XML & JAXB](phase-2/README.md)
-* Learn:
-  * XML
-  * XSD
-  * Namespaces
-  * JAXB
-  * Marshalling
-  * Unmarshalling
-* Deliverable: Generate Java classes from XSD and successfully serialize/deserialize XML.
-### [Phase 3 – Creating a wsdl](phase-3/README.md)
-* Learn:
-  * SOAP
-  * WSDL
-### [Phase 4 – Soap with Apache CXF](phase-4/README.md)
-* Learn:
-  * CXF
-  * SOAP Faults
-  * Contract-first development
-* Deliverable: Working SOAP endpoint with generated request and response objects.
-### [Phase 5 – Apache Camel](phase-5/README.md)
-* Learn:
-  * Camel Routes
-  * Processors
-  * Error Handling
-  * Logging
-  * Content based routing
-* Deliverable: Working Camel routes invoking the SOAP service.
-### [Phase 6 – Testing](phase-5/Test-Jupiter.md)
-* Implement:
-  * Unit tests
-  * Integration tests
-  * SOAP endpoint testing
-  * Camel route testing
-  * Database testing
-  * JMS testing
-* Deliverable: High-confidence automated test suite.
+| Phase | Title                                         | Learning Objectives / Tasks                                                                                                                                                      | Deliverable                                                               |
+| ----: | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **0** | **[Environment Setup](phase-0/README.md)**    | • Install Java<br>• Configure Gradle<br>• Create Git repository<br>• Configure IntelliJ<br>• Create Docker Compose<br>• Start PostgreSQL<br>• Start ActiveMQ                     | Fully working development environment                                     |
+| **1** | **[Project Skeleton](phase-1/README.md)**     | • Create the Gradle project<br>• Create modules:<br>    • contract<br>    • model<br>    • soap-api<br>    • integration<br>    • messaging<br>    • persistence<br>    • common | Compilable modular project                                                |
+| **2** | **[XML & JAXB](phase-2/README.md)**           | • XML<br>• XSD<br>• Namespaces<br>• JAXB<br>• Marshalling<br>• Unmarshalling                                                                                                     | Generate Java classes from XSD and successfully serialize/deserialize XML |
+| **3** | **[Creating a WSDL](phase-3/README.md)**      | • SOAP fundamentals<br>• WSDL                                                                                                                                                    | Create a complete WSDL contract for the service                           |
+| **4** | **[SOAP with Apache CXF](phase-4/README.md)** | • Apache CXF<br>• SOAP Faults<br>• Contract-first development                                                                                                                    | Working SOAP endpoint with generated request and response objects         |
+| **5** | **[Apache Camel](phase-5/README.md)**         | • Camel Routes<br>• Processors<br>• Error Handling<br>• Logging<br>• Content-Based Routing                                                                                       | Working Camel routes invoking the SOAP service                            |
+| **6** | **[Testing](phase-6/Test-Jupiter.md)**        | • Unit tests<br>• Integration tests<br>• SOAP endpoint testing<br>• Camel route testing<br>• Database testing<br>• JMS testing                                                   | High-confidence automated test suite                                      |
+
+
