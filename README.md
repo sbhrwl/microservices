@@ -6,9 +6,9 @@
 - [Analytics on sensor data](analytics/README.md)
 - [Saving sensor data via gRPC](gRPC/README.md)
 - [Hub to Sensor](hubToSensor/README.md)
+- [Integration methodology](enterprise-integration/README.md)
 - [frnds IPaaS](frnds/README.md)
 - [Docker sandboxes](https://share.google/hPJp4kIFGiHAXyrIB)
-- [Integration methodology](enterprise-integration/README.md)
 
 <details>
   <summary>details</summary>
