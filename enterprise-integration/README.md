@@ -1,8 +1,7 @@
 # Enterprise integration learning project
 - [App](app/README.md): LandisGyr2026RS
   - Elokuu,202608
-- [Goal](#goal)
-- [Project phases](#project-phases)
+- [Phases](#phases)
   - [Phase 0 – Environment Setup](#phase-0--environment-setup)
   - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
   - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
@@ -10,11 +9,7 @@
   - [Phase 4 – Soap with Apache CXF](#phase-4--soap-with-apache-cxf)
   - [Phase 5 – Apache Camel](#phase-5--apache-camel)
   - [Phase 6 – Testing](#phase-6--testing)
-## Goal
-- Build a production-style enterprise integration application from scratch using modern Java technologies while understanding the architectural reasoning behind every design decision.
-- The objective is not simply to learn APIs, but to understand how enterprise integration systems are designed, implemented, tested, and maintained.
-
-## Project phases
+## Phases
 
 | Phase | Title                                         | Learning Objectives / Tasks                                                                                                                                                      | Deliverable                                                               |
 | ----: | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
