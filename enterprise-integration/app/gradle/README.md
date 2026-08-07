@@ -1,9 +1,9 @@
 # Gradle
 
 ## Build
-- `./gradlew build`
+- `.\gradlew build`
 ## Run
-- `./gradlew run`
+- `.\gradlew run`
 
 ## Cleanup
 - `.\gradlew clean`
