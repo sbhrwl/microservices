@@ -1,4 +1,4 @@
-# Enterprise integration learning project
+# Integration methodology
 - [App](app/README.md): LandisGyr2026RS
   - Elokuu,202608
 - [Phases](#phases)
