@@ -2,10 +2,7 @@
 - [App](app/README.md): LandisGyr2026RS
   - Elokuu,202608
 - [Goal](#goal)
-- [Technology Stack](#technology-stack)
-- [Project Scenario](#project-scenario)
-- [Learning Objectives](#learning-objectives)
-- [Project Phases](#project-phases)
+- [Project phases](#project-phases)
   - [Phase 0 – Environment Setup](#phase-0--environment-setup)
   - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
   - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
@@ -16,20 +13,8 @@
 ## Goal
 - Build a production-style enterprise integration application from scratch using modern Java technologies while understanding the architectural reasoning behind every design decision.
 - The objective is not simply to learn APIs, but to understand how enterprise integration systems are designed, implemented, tested, and maintained.
-## Technology Stack
-* Java 21
-* Gradle
-* Spring Boot 3
-* Apache Camel 4
-* Apache CXF 4
-* SOAP
-* WSDL
-* JAXB
-* ActiveMQ (JMS)
-* PostgreSQL
-* Flyway
-* Docker & Docker Compose
-* JUnit 5
+
+## Project phases
 
 | Phase | Title                                         | Learning Objectives / Tasks                                                                                                                                                      | Deliverable                                                               |
 | ----: | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
