@@ -1,5 +1,5 @@
 # Gradle
-## version
+## Version
 - `gradle -v`
 ## Build
 - `.\gradlew build`
