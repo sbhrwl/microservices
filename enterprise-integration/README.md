@@ -1,14 +1,6 @@
 # Integration methodology
 - [App](app/README.md): LandisGyr2026RS
   - Elokuu,202608
-- [Phases](#phases)
-  - [Phase 0 – Environment Setup](#phase-0--environment-setup)
-  - [Phase 1 – Project Skeleton](#phase-1--project-skeleton)
-  - [Phase 2 – XML & JAXB](#phase-2--xml--jaxb)
-  - [Phase 3 – Creating a wsdl](#phase-3--creating-a-wsdl)
-  - [Phase 4 – Soap with Apache CXF](#phase-4--soap-with-apache-cxf)
-  - [Phase 5 – Apache Camel](#phase-5--apache-camel)
-  - [Phase 6 – Testing](#phase-6--testing)
 ## Phases
 
 | Phase | Title                                         | Learning Objectives / Tasks                                                                                                                                                      | Deliverable                                                               |
