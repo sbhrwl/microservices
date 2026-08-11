@@ -441,7 +441,7 @@ Generated Java classes
 Your service implementation
 ```
 * That's the bridge between the contract you've just created and a working SOAP service.
-## IMprovements 
+## Improvements 
 ### Using a URI for soapaction
 - Instead of `soapAction` as this:
 ```xml
