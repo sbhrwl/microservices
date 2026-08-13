@@ -1,8 +1,13 @@
 ## Summary
 
-The existing Saga orchestrates **multi-step load-control commands** in `gfc-core`. Today it is fully wired for **week-ahead calendar control (`DH-1221-2`)**: step 1 creates a TOU calendar on HES via the IEC connector; step 2 rolls it out after HES confirms step 1. Single relay commands (`DH-1223-2`) use the same machinery but are **one step only**. Step advancement is **not event-driven internally** — it is driven by **HES responses** arriving back through the IEC connector as gRPC `notifyCommandExecution` callbacks. Saga state lives in PostgreSQL (`saga_instance` + linked `command` rows); cross-service hops use gRPC ports to IEC connector and flex-hub-connector.
-
----
+- The existing Saga orchestrates **multi-step load-control commands** in `gfc-core`.
+- Today it is fully wired for **week-ahead calendar control (`DH-1221-2`)**
+  - Step 1 creates a TOU calendar on HES via the IEC connector;
+  - Step 2 rolls it out after HES confirms step 1.
+  - Single relay commands (`DH-1223-2`) use the same machinery but are **one step only**.
+  - Step advancement is **not event-driven internally**
+    - it is driven by **HES responses** arriving back through the IEC connector as gRPC `notifyCommandExecution` callbacks.
+  - Saga state lives in PostgreSQL (`saga_instance` + linked `command` rows); cross-service hops use gRPC ports to IEC connector and flex-hub-connector.
 
 ## Execution chain (with file paths and methods)
 
