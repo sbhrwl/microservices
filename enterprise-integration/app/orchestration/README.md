@@ -1,54 +1,118 @@
-## Summary
+# Summary
+## Overall system flow
 
-- The existing Saga orchestrates **multi-step load-control commands** in `gfc-core`.
-- Today it is fully wired for **week-ahead calendar control (`DH-1221-2`)**
-  - Step 1 creates a TOU calendar on HES via the IEC connector;
-  - Step 2 rolls it out after HES confirms step 1.
-  - Single relay commands (`DH-1223-2`) use the same machinery but are **one step only**.
-  - Step advancement is **not event-driven internally**
-    - it is driven by **HES responses** arriving back through the IEC connector as gRPC `notifyCommandExecution` callbacks.
-  - Saga state lives in PostgreSQL (`saga_instance` + linked `command` rows); cross-service hops use gRPC ports to IEC connector and flex-hub-connector.
+| Stage                          | What is happening                                   | Representation                                                                 |
+| ------------------------------ | --------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **1. Message Entry**           | Where does the message enter the system?            | `PeekMessagesUseCase` / `UI → API Gateway`                                     |
+| **2. Translation & Transport** | Convert the message and move it across the boundary | `Domain Command → Proto → gRPC → Tenant-Id metadata`                           |
+| **3. Core Orchestration**      | Request enters the GFC-Core business flow           | `ControlCommandServiceImpl → ControlCommand → SagaOrchestrationService → Saga` |
 
-## Execution chain (with file paths and methods)
+## Command → Saga
 
-### A. Flow start — incoming command
+| Stage                     | What happens                                           | Representation                               |
+| ------------------------- | ------------------------------------------------------ | -------------------------------------------- |
+| **1. Receive**            | gRPC request enters GFC-Core                           | `ControlCommandServiceImpl`                  |
+| **2. Translate**          | Proto request becomes domain command                   | `ProtoMapper.fromProto()` → `ControlCommand` |
+| **3. Prepare**            | Command is validated/enriched and targets are resolved | `CommandPreparationService.prepare()`        |
+| **4. Create Saga**        | Saga context is created and persisted                  | `SagaContext` → `saga_instance`              |
+| **5. Persist Command**    | Prepared command is stored and linked to Saga          | `command` + `command.saga_id`                |
+| **6. Execute First Step** | Command is forwarded to IEC connector                  | `deviceInteractionPort.forwardCommand()`     |
+| **7. Track**              | Saga moves to in-progress                              | `sagaRepository.markInProgress()`            |
+
+## Inside `startSaga()`
+
+| Order | Operation                                   | Result                                      |
+| ----- | ------------------------------------------- | ------------------------------------------- |
+| **1** | `SagaContextFactory.fromPreparedCommand()`  | Creates `SagaContext`                       |
+| **2** | `sagaRepository.create(...)`                | **INSERT `saga_instance`** → gets `sagaId`  |
+| **3** | `commandRepository.save(prepared, sagaId)`  | **INSERT `command`** with `command.saga_id` |
+| **4** | `deviceInteractionPort.forwardCommand(...)` | Sends command to IEC connector              |
+| **5** | `sagaRepository.markInProgress(...)`        | Saga → `IN_PROGRESS`                        |
+
+### Core mental model
 
 ```text
-flex-hub-connector/.../PeekMessagesUseCase.java
-PeekMessagesUseCase.peekMessages(String tenantId)
-    ↓  (F35 load control message mapped to domain command)
-flex-hub-connector/.../ControlCommandGrpcClientAdapter.java
-ControlCommandGrpcClientAdapter.send(SendSingleControlCommand | SendWeekAheadControlCommand)
-    ↓  ProtoMapper.toProto → ControlCommandPb.SendCommandRequest
-flex-hub-connector/.../ControlCommandGrpcClient.java
-ControlCommandGrpcClient.sendRelayControlCmd(tenantId, request)
-    ↓  gRPC SendCommand + Tenant-Id metadata
+MESSAGE ENTRY
+      ↓
+TRANSLATION & TRANSPORT
+      ↓
+CORE ORCHESTRATION
+      ↓
+PREPARE
+      ↓
+CREATE SAGA
+      ↓
+SAVE COMMAND
+      ↓
+SEND FIRST STEP
+      ↓
+SAGA IN PROGRESS
 ```
 
-*(Same entry point exists from UI via api-gateway → gfc-core gRPC.)*
+Yes. This part is basically the **recipe book for the Saga engine**.
+
+The easiest way to understand it is to separate **what a Saga is**, **what its steps are**, and **how the system chooses which Saga to run**.
+
+## Saga definition
+Think of:
 
 ```text
-gfc-core/.../ControlCommandServiceImpl.java
-ControlCommandServiceImpl.sendCommand(request, responseObserver)
-    ↓  ProtoMapper.fromProto(request) → ControlCommand
-gfc-core/.../SagaOrchestrationService.java
-SagaOrchestrationService.startSaga(ControlCommand command)
+SagaDefinition
+    │
+    ├── Saga type
+    │
+    └── List of steps
 ```
 
-**What `startSaga` does:**
+For example:
 
-1. **`CommandPreparationService.prepare(command)`** — resolves flexibilities, sets `INITIATED` state, and for week-ahead commands rewrites `instanceId` to a short calendar ID and stores `correlationId`.
-2. **`transactionPort.execute(...)`** (via `UnitOfWork`):
-   - `SagaContextFactory.fromPreparedCommand(prepared)` → `SagaContext` (e.g. `WeekAheadControlContext`)
-   - `sagaRepository.create(sagaType, sagaInstanceId, context)` → INSERT `saga_instance`
-   - `commandRepository.save(prepared, sagaId)` → INSERT `command` + `flexibility_commands`
-3. **`deviceInteractionPort.forwardCommand(tenantId, prepared)`** — sends first step to IEC connector
-4. **`sagaRepository.markInProgress(sagaId, 0)`**
-5. Returns `prepared.getInstanceId()` to caller
+```text
+DH-1223-2
+    │
+    └── Step 0: SingleControlCommand
+```
 
-**Data passed forward at start:** `ControlCommand` (parameters, target flexibilities, market process ID), serialized into `SagaContext` JSONB, linked via `command.saga_id`.
+Whereas:
+
+```text
+DH-1221-2
+    │
+    ├── Step 0: CreateTOUCalendarCommand
+    └── Step 1: RolloutTouCalendarCommand
+```
+
+So `SagaDefinition` does **not execute anything**.
+
+It simply says:
+
+> "For this type of Saga, these are the steps and this is their order."
 
 ---
+
+## 2. The three classes
+
+| Class                                   | Responsibility                 | Think of it as                    |
+| --------------------------------------- | ------------------------------ | --------------------------------- |
+| `InMemorySagaDefinitionRegistryAdapter` | Stores all Saga definitions    | **Recipe book**                   |
+| `SagaDefinition`                        | Defines one Saga and its steps | **One recipe**                    |
+| `SagaStepDefinition`                    | Defines one step               | **One instruction in the recipe** |
+
+So the structure is:
+
+```text
+InMemorySagaDefinitionRegistryAdapter
+              │
+              │ DEFINITIONS
+              ▼
+       SagaDefinition
+              │
+              ├── Step 0
+              │     └── SagaStepDefinition
+              │
+              └── Step 1
+                    └── SagaStepDefinition
+```
+
 
 ### B. Saga definition — where steps are declared
 
