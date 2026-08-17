@@ -14,17 +14,18 @@ In [`ControlCommandServiceImpl.notifyMPLoadControl`](gfc-core/src/main/java/com/
 
 ```mermaid
 sequenceDiagram
-  participant gRPC as ControlCommandServiceImpl
-  participant Orch as SagaOrchestrationService
-  participant DB as Saga_and_Command_repos
-  participant Device as DeviceInteractionPort
+    participant gRPC as ControlCommandServiceImpl
+    participant Orch as SagaOrchestrationService
+    participant DB as Saga_and_Command_repos
+    participant Device as DeviceInteractionPort
 
-  gRPC->>Orch: startSaga(command)
-  Orch->>Orch: prepare command
-  Orch->>DB: create saga STARTED step 0, save command
-  Orch->>Device: forwardCommand(ReadTou)
-  Orch->>DB: markInProgress step 1
-  Note over Orch: Returns immediately; waits for async callback
+    gRPC->>Orch: startSaga(command)
+    Orch->>Orch: prepare command
+    Orch->>DB: create saga STARTED step 0
+    Orch->>DB: save command
+    Orch->>Device: forwardCommand(ReadTou)
+    Orch->>DB: markInProgress step 1
+    Note over Orch: Returns immediately and waits for async callback
 ```
 
 Inside `SagaOrchestrationService.startSaga`:
