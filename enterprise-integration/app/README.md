@@ -8,3 +8,4 @@
 - [iec-connector](iec-connector/README.md)
 - [Command flow](command-flow/README.md)
 - [Orchestration](orchestration/README.md)
+- [Production readiness](productionreadiness/README.md)
