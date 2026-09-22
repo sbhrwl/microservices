@@ -18,4 +18,3 @@
   - [Pain points](dagger/pain_points/README.md)
   - [Features](dagger/features/README.md)
 - [Flyway](flyway/README.md)
-- [Saga continues](saga_continues/README.md)
