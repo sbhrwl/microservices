@@ -39,7 +39,6 @@ DH message arrives (XML)
                                               ▼ (later)
                                     notifyCommandExecution → back to Orchestrator
 ```
-
 | Key File / Location | What to Understand | Primary Question |
 | --- | --- | --- |
 | `SagaType.java` | Saga inventory | What sagas exist in the system? |
@@ -49,6 +48,7 @@ DH message arrives (XML)
 ## Layer 1 — What sagas exist?
 - `SagaType.java`
 - Incoming message carries a DH code resolved to a `SagaType`
+
 | Control ID | |
 | --- | --- |
 | `ACCOUNTING_POINT_CONTROLLABILITY_UPDATE` | DH-129-1 |
@@ -97,6 +97,7 @@ public enum SagaType {
 ## Layer 3 — What steps does each saga run?
 - `SagaDefinitionRegistryAdapter.java`
 - It as a recipe book: saga name → ordered steps
+
 | Saga type | Steps (in order) |
 | --- | --- |
 | `ACCOUNTING_POINT_CONTROLLABILITY_UPDATE` | `UpdateControllabilityStep` |
@@ -183,6 +184,7 @@ public class RestoreLoadControlTouStep implements AsyncDeviceStep<LoadControlEnd
 ## Types of steps
 - `gfc\core\domain\saga\step\SyncStep.java`
 - `gfc\core\domain\saga\step\AsyncDeviceStep.java`
+
 | Comparison | SyncStep | AsyncDeviceStep |
 | --- | --- | --- |
 | Kind | Sync | Async |
@@ -198,6 +200,7 @@ public class RestoreLoadControlTouStep implements AsyncDeviceStep<LoadControlEnd
 - `gfc\core\domain\saga\step\StepOutcome.java`
 ## Step implementation
 - Steps are defined here: `gfc\core\app\saga\step`
+
 | Class | Type | Role |
 | --- | --- | --- |
 | `UpdateControllabilityStep` | SyncStep | Notify Data Hub |
@@ -235,6 +238,7 @@ handleCommandExecutionResult()
 - Every saga journey is just start → (outcome loop) → Complete/Fail
 ## Outcomes
 - After a step runs, everything goes through `applyOutcome`. There are five outcomes:
+
 | Outcome | Meaning |
 | --- | --- |
 | Continue | Run the next step immediately |
@@ -287,6 +291,7 @@ private void applyOutcome(SagaInstance saga, StepOutcome outcome, int completedS
 | `app/saga/step/*.java` | HOW each step behaves |
 | `SagaOrchestrationService.java` | RUNS the steps |
 ## Layer 6 — Context & persistence
+
 | Concept | Role | Mental model |
 | --- | --- | --- |
 | `SagaContext` | Data carried through steps | Saga’s notepad (metering point, TOU id, etc.) |
