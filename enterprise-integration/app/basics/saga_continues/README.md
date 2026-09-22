@@ -39,6 +39,7 @@ DH message arrives (XML)
                                               ▼ (later)
                                     notifyCommandExecution → back to Orchestrator
 ```
+
 | Key File / Location | What to Understand | Primary Question |
 | --- | --- | --- |
 | `SagaType.java` | Saga inventory | What sagas exist in the system? |
