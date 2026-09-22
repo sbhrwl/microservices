@@ -17,11 +17,11 @@
 ## Data fetch chain
 ```text
 SidePanelMessagesList mounts
-SetSidePanelMessagesList()
-SidePanelMessagesEffects
-applyMessagesFilter(..., expandedMeteringPointId, ...)
-GraphQL marketMessages with filter.meteringPointEq = "641180201669796567"
-api-gateway → gRPC queryMarketMessages
-gfc-core → saga_repository.findByCriteria (filtered by MP)
-SagaInstance → MarketMessage
+  → SetSidePanelMessagesList()
+  → SidePanelMessagesEffects
+  → applyMessagesFilter(..., expandedMeteringPointId, ...)
+  → GraphQL marketMessages with filter.meteringPointEq = "641180201669796567"
+  → api-gateway → gRPC queryMarketMessages
+  → gfc-core saga_repository.findByCriteria (filtered by MP)
+  → SagaInstance → MarketMessage
 ```
