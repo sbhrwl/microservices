@@ -3,7 +3,7 @@
 - [Client keystore](#client-keystore)
 - [Truststore](#truststore)
 - [mTLS](#mtls)
-## Certificates
+## [Certificates](https://github.com/sbhrwl/system_design/blob/main/docs/designprinciples/security/foundations/README.md)
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\datahub-connector-dev-keystore.p12`
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\datahub-connector-dev-keystore.p12.secret`
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\gfc-ca-truststore.p12`
