@@ -4,6 +4,8 @@
 - [Truststore](#truststore)
 - [mTLS](#mtls)
 ## [Certificates](https://github.com/sbhrwl/system_design/blob/main/docs/designprinciples/security/foundations/README.md)
+- **Digital certificates** – bind a public key to an identity (domain, service, or user).
+- Digital certificates are for **sharing public keys to be used for encryption and authentication**
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\datahub-connector-dev-keystore.p12`
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\datahub-connector-dev-keystore.p12.secret`
 - `C:\Git\gfc-app\flex-hub-connector\src\main\dist\etc\system\certs\gfc-ca-truststore.p12`
