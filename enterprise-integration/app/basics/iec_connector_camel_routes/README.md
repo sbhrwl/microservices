@@ -38,36 +38,34 @@
 - Support multiple brokers and hosted networks through dynamic route generation.
 ### Camel routes
 - The route builder dynamically creates the following routes.
+
 | Route ID | From | To | Purpose |
 | --- | --- | --- | --- |
 | `request-to:<networkId>:<requestQueue>` | `direct:request-<networkId>` | `jms:<requestQueue>` | Publish IEC61968 XML requests to the network request queue |
 | `create-tou-calendar:<brokerName>` | `direct:create-tou-calendar-<brokerName>` | `jms:touXmlUploadRoute` | Publish TOU calendar creation requests |
 
 ### Route overview
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
+
+    Route["direct:* Route"]
+    Headers["Set SOAP Headers"]
+    Context["Build Request Context"]
+    User["Add organisationUser"]
+    CXF["CXF Endpoint"]
+    FH["Flex-Hub"]
+
+    Route --> Headers
+    Headers --> Context
+    Context --> User
+    User --> CXF
+    CXF --> FH
 ```
-@startuml
-top to bottom direction
+</details>
 
-rectangle "Application\nUse Case" as App
-
-rectangle "direct:request-<networkId>" as Direct1
-rectangle "Marshal XML\n(JAXB)" as Xml
-rectangle "JMS Request Queue" as Queue1
-
-rectangle "direct:create-tou-calendar-<brokerName>" as Direct2
-rectangle "Marshal JSON\n(Jackson)" as Json
-rectangle "JMS TOU Queue" as Queue2
-
-App --> Direct1
-Direct1 --> Xml
-Xml --> Queue1
-
-App --> Direct2
-Direct2 --> Json
-Json --> Queue2
-
-@enduml
-```
 ## Dynamic route generation
 - One request route is created for every configured hosted network.
 - Queue names are obtained from `ApplicationSetting`.
@@ -90,41 +88,53 @@ jms-<broker>:queue:touXmlUploadRoute
 ```
 
 ### Request processing
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
+
+    Start([Start])
+
+    Receive["Receive request from<br/>direct:request-&lt;networkId&gt;"]
+    Marshal["Marshal XML (JAXB)"]
+    Log["Log outgoing message"]
+    Send["Send to JMS request queue"]
+
+    End([Stop])
+
+    Start --> Receive
+    Receive --> Marshal
+    Marshal --> Log
+    Log --> Send
+    Send --> End
 ```
-@startuml
-start
+</details>
 
-:Receive request from
-direct:request-<networkId>;
+#### TOU calendar requests
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
 
-:Marshal XML (JAXB);
+    Start([Start])
 
-:Log outgoing message;
+    Receive["Receive request from<br/>direct:create-tou-calendar-&lt;brokerName&gt;"]
+    Marshal["Marshal JSON (Jackson)"]
+    Log["Log outgoing message"]
+    Send["Send to TOU JMS queue"]
 
-:Send to JMS request queue;
+    End([Stop])
 
-stop
-@enduml
-{plantuml}
-
-##### TOU calendar requests
-
-{plantuml}
-@startuml
-start
-
-:Receive request from
-direct:create-tou-calendar-<brokerName>;
-
-:Marshal JSON (Jackson);
-
-:Log outgoing message;
-
-:Send to TOU JMS queue;
-
-stop
-@enduml
+    Start --> Receive
+    Receive --> Marshal
+    Marshal --> Log
+    Log --> Send
+    Send --> End
 ```
+</details>
+
 ### Layer interaction
 | Layer | Component | Responsibility |
 | --- | --- | --- |
@@ -174,6 +184,7 @@ from(createTouCalendarEndpoint)
 - Handle processing failures without stopping message consumption.
 ### Camel routes
 - The route builder defines the following Camel routes.
+
 | Route ID | From | To | Purpose |
 | --- | --- | --- | --- |
 | `response-from:<networkId>:<responseQueue>` | `jms:<responseQueue>` | `direct:response-stream` | Consume XML command responses from ActiveMQ |
@@ -182,30 +193,29 @@ from(createTouCalendarEndpoint)
 | `forward-to-tou-response-stream` | `direct:tou-creation-response-stream` | `reactive-streams:tou-response-stream` | Forward TOU responses to the Reactive Stream |
 
 ### Route overview
-```
-@startuml
-top to bottom direction
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
 
-rectangle "JMS Queue\n(ResponseMessageType)" as JMS1
-rectangle "JMS Queue\n(CreateTouCalendarResponse)" as JMS2
+    JMS1["JMS Queue<br/>(ResponseMessageType)"]
+    D1["direct:response-stream"]
+    RS1["reactive-streams:<br/>response-stream"]
 
-rectangle "direct:response-stream" as D1
-rectangle "direct:tou-creation-response-stream" as D2
+    JMS2["JMS Queue<br/>(CreateTouCalendarResponse)"]
+    D2["direct:tou-creation-response-stream"]
+    RS2["reactive-streams:<br/>tou-response-stream"]
 
-rectangle "reactive-streams:\nresponse-stream" as RS1
-rectangle "reactive-streams:\ntou-response-stream" as RS2
+    Processor["CommandResponseProcessor"]
 
-rectangle "CommandResponseProcessor" as Processor
+    JMS1 --> D1
+    D1 --> RS1
+    RS1 --> Processor
 
-JMS1 --> D1
-D1 --> RS1
-RS1 --> Processor
-
-JMS2 --> D2
-D2 --> RS2
-RS2 --> Processor
-
-@enduml
+    JMS2 --> D2
+    D2 --> RS2
+    RS2 --> Processor
 ```
 ### Supported message types
 | Message type | Format | Reactive stream |
@@ -214,26 +224,28 @@ RS2 --> Processor
 | `CreateTouCalendarResponse` | JSON | `tou-response-stream` |
 
 ### Processing pipeline
-```
-@startuml
-top to bottom direction
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
 
-rectangle "JMS Queue" as JMS
-rectangle "Camel Route" as Route
-rectangle "Unmarshaller\n(JAXB / Jackson)" as Unmarshal
-rectangle "Validate Message Type" as Choice
-rectangle "Reactive Stream" as Stream
-rectangle "Dead Letter Queue" as DLQ
-rectangle "CommandResponseProcessor" as Processor
+    JMS["JMS Queue"]
+    Route["Camel Route"]
+    Unmarshal["Unmarshaller<br/>(JAXB / Jackson)"]
+    Choice{"Validate Message Type"}
+    Stream["Reactive Stream"]
+    DLQ["Dead Letter Queue"]
+    Processor["CommandResponseProcessor"]
 
-JMS --> Route
-Route --> Unmarshal
-Unmarshal --> Choice
-Choice --> Stream : Supported
-Choice --> DLQ : Unsupported
-Stream --> Processor
+    JMS --> Route
+    Route --> Unmarshal
+    Unmarshal --> Choice
 
-@enduml
+    Choice -->|Supported| Stream
+    Choice -->|Unsupported| DLQ
+
+    Stream --> Processor
 ```
 ### Dynamic route creation
 - Routes are created automatically for every configured broker.
@@ -253,39 +265,41 @@ response-from:<networkId>:<responseQueue>
 - Backpressure buffering prevents message loss.
 - Processing errors are logged and ignored to keep consumers active.
 ### Processing pipeline
-```
-@startuml
-top to bottom direction
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
 
-rectangle "Reactive Stream" as Stream
-rectangle "Flux" as Flux
-rectangle "Map Response" as Mapper
-rectangle "CommandResponseProcessor" as Processor
+    Stream["Reactive Stream"]
+    Flux["Flux"]
+    Mapper["Map Response"]
+    Processor["CommandResponseProcessor"]
 
-Stream --> Flux
-Flux --> Mapper
-Mapper --> Processor
-
-@enduml
+    Stream --> Flux
+    Flux --> Mapper
+    Mapper --> Processor
 ```
 ### Runtime flow
+<details>
+  <summary>mermaid</summary>
+  
+```mermaid
+flowchart TB
+
+    MQ["ActiveMQ"]
+    Camel["Camel JMS Route"]
+    Unmarshal["Unmarshaller"]
+    Stream["Reactive Stream"]
+    Service["Application Service<br/>(CommandResponseProcessor)"]
+
+    MQ --> Camel
+    Camel --> Unmarshal
+    Unmarshal --> Stream
+    Stream --> Service
 ```
-@startuml
-top to bottom direction
+</details>
 
-rectangle "ActiveMQ" as MQ
-rectangle "Camel JMS Route" as Camel
-rectangle "Unmarshaller" as Unmarshal
-rectangle "Reactive Stream" as Stream
-rectangle "Application Service\n(CommandResponseProcessor)" as Service
-
-MQ --> Camel
-Camel --> Unmarshal
-Unmarshal --> Stream
-Stream --> Service
-
-@enduml
-```
 ### Error handling
 - Unsupported message types are routed to the broker DLQ.
 - Processing exceptions are logged.
