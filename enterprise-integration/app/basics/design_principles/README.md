@@ -35,10 +35,10 @@
 ## Dependencies
 | Dependency | Why it exists | Architecture role |
 | --- | --- | --- |
-| `flex-hub-connector` → `data-hub-api` | Needs generated SOAP client/server classes and JAXB models. | **Contract reuse** |
 | `data-hub-simulator` → `data-hub-api` | Simulates the real DataHub using the exact same SOAP contract. | **Testability** |
-| `gfc-core` → `gfc-apis` | Exposes and consumes internal gRPC services. | **Internal service contract** |
+| `flex-hub-connector` → `data-hub-api` | Needs generated SOAP client/server classes and JAXB models. | **Contract reuse** |
 | `flex-hub-connector` → `gfc-apis` | Sends requests to Core via gRPC. | **Client contract** |
+| `gfc-core` → `gfc-apis` | Exposes and consumes internal gRPC services. | **Internal service contract** |
 | `iec61968-connector` → `gfc-apis` | Exchanges gRPC messages with Core. | **Client contract** |
 ### Dependency graph with intent
 ```text
