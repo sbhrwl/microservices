@@ -252,6 +252,7 @@ ControlCommandPb.SendCommandRequest request =
     .build();
 ```
 - Similarly:
+
 | Proto message | Generated Java type |
 | --- | --- |
 | `SendCommandRequest` | `ControlCommandPb.SendCommandRequest` |
@@ -280,6 +281,7 @@ enum DesiredTarget {
 - So you can write:
   - `ControlCommandPb.DesiredTarget.ON`
 - Likewise:
+
 | Proto enum | Java |
 | --- | --- |
 | `CommandTargetType` | `ControlCommandPb.CommandTargetType` |
