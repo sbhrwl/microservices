@@ -2,11 +2,11 @@
 - [XSD files](#xsd-files)
 - [Flow](#flow)
 ## XSD files
-- `C:\Git\gfc-app\data-hub-api\src\main\resources\masterdata\F35_LoadControlMessage.xsd`
-  - `C:\Git\gfc-app\data-hub-api\src\main\resources\masterdata\elements\F35_LoadControlMessage_ElementTypes.xsd`
-  - `C:\Git\gfc-app\data-hub-api\src\main\resources\common\elements\PEC_ProcessEnergyContext_ElementTypes.xsd`
-  - `C:\Git\gfc-app\data-hub-api\src\main\resources\common\elements\HDR_Header_ElementTypes.xsd`
-  - `C:\Git\gfc-app\data-hub-api\src\main\resources\common\DataTypes.xsd`
+- C:\Git\gfc-app\data-hub-api\src\main\resources\masterdata\`F35_LoadControlMessage.xsd`
+- C:\Git\gfc-app\data-hub-api\src\main\resources\masterdata\elements\`F35_LoadControlMessage_ElementTypes.xsd`
+- C:\Git\gfc-app\data-hub-api\src\main\resources\common\elements\`PEC_ProcessEnergyContext_ElementTypes.xsd`
+- C:\Git\gfc-app\data-hub-api\src\main\resources\common\elements\`HDR_Header_ElementTypes.xsd`
+- C:\Git\gfc-app\data-hub-api\src\main\resources\common\`DataTypes.xsd`
 - JAXB/XJC follows the `xs:include` and `xs:import` directives automatically, **as long as all referenced XSD files are available at the specified locations**.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
