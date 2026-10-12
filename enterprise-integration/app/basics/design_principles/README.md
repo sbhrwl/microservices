@@ -1,11 +1,19 @@
-# Gradle build
-- [Build summary](#build-summary)
-- [Observations](#observations)
-- [Design principal](#design-principal)
+# Design principal
+- [Overview](#overview)
+- [Services](#services)
+  - [Observations](#observations)
 - [Dependencies](#dependencies)
-- [Dependency graph with intent](#dependency-graph-with-intent)
+  - [Dependency graph with intent](#dependency-graph-with-intent)
 - [Shared libraries](#shared-libraries)
-## Build summary
+## Overview
+- No application depends directly on another application's code.
+- They depend only on shared contracts.
+- `flex-hub-connector` **does not** depend on `gfc-core`.
+  - Instead it depends on `gfc-apis`, which defines the gRPC interface.
+- `data-hub-simulator` **does not** depend on `flex-hub-connector`.
+  - Both simply share the SOAP contract from `data-hub-api`.
+- This keeps services independently deployable and avoids tight coupling.
+## Services
 | Module | Type | Depends On | Primary Purpose | Code Generation | Deployable |
 | --- | --- | --- | --- | --- | --- |
 | `data-hub-api` | Shared library | None | SOAP contract library (WSDL/JAXB classes) | **CXF wsdl2java** from WSDL | ❌ |
@@ -14,7 +22,7 @@
 | `gfc-apis` | Shared library | None | Shared Protobuf/gRPC contracts | **Protobuf + gRPC plugin** | ❌ |
 | `gfc-core` | Application | `gfc-apis` | Core business service, persistence, orchestration | Dagger annotation processing | ✅ |
 | `iec61968-connector` (IEC) | Application | `gfc-apis` | Bridges Core gRPC ↔ IEC/JMS | **JAXB XJC** + Dagger | ✅ |
-## Observations
+### Observations
 | Concern | Used By |
 | --- | --- |
 | SOAP / CXF | `data-hub-api`, `data-hub-simulator`, `flex-hub-connector` |
@@ -23,14 +31,7 @@
 | Dagger DI | `gfc-core`, `flex-hub-connector`, `iec61968-connector` |
 | JAXB/XSD | `data-hub-api`, `iec61968-connector` |
 | Version Catalog (`libs.versions.toml`) | Shared by all modules |
-## Design principal
-- No application depends directly on another application's code.
-- They depend only on shared contracts.
-- `flex-hub-connector` **does not** depend on `gfc-core`.
-  - Instead it depends on `gfc-apis`, which defines the gRPC interface.
-- `data-hub-simulator` **does not** depend on `flex-hub-connector`.
-  - Both simply share the SOAP contract from `data-hub-api`.
-- This keeps services independently deployable and avoids tight coupling.
+
 ## Dependencies
 | Dependency | Why it exists | Architecture role |
 | --- | --- | --- |
@@ -39,7 +40,7 @@
 | `gfc-core` → `gfc-apis` | Exposes and consumes internal gRPC services. | **Internal service contract** |
 | `flex-hub-connector` → `gfc-apis` | Sends requests to Core via gRPC. | **Client contract** |
 | `iec61968-connector` → `gfc-apis` | Exchanges gRPC messages with Core. | **Client contract** |
-## Dependency graph with intent
+### Dependency graph with intent
 ```text
                  SOAP Contract
                  data-hub-api
