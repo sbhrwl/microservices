@@ -61,6 +61,7 @@
 - Applications communicate through:
   - **SOAP contracts** externally (`data-hub-api`)
   - **gRPC contracts** internally (`gfc-apis`)
+
 | Library | Shares |
 | --- | --- |
 | `data-hub-api` | **External contract** (SOAP/WSDL) |
