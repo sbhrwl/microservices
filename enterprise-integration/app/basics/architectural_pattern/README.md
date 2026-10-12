@@ -16,12 +16,12 @@
 | Message Translator | FHC, IEC | Maps between external and internal models. |
 | Simulation/Test Double | DataHub Simulator | Mimics the real DataHub. |
 ## Pipeline
-- CXF handles communication.
-- Camel handles orchestration.
-- Dagger handles construction.
-- gRPC/SOAP/JMS handle transport.
-- Core handles business.
-- JDBI handles storage.
+- **CXF** handles communication.
+- **Camel** handles orchestration.
+- **Dagger** handles construction.
+- **gRPC/SOAP/JMS** handle transport.
+- **Core** handles business.
+- **JDBI** handles storage.
 ```text
 External Contract
       │
