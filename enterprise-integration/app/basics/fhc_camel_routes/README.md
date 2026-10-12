@@ -1,4 +1,4 @@
-<img width="3046" height="2268" alt="image" src="https://github.com/user-attachments/assets/4da11bfb-1319-45fc-9831-d74f02588636" /># FHC camel routes
+# FHC camel routes
 - [Inbound routes](#inbound-routes)
   - [Responsibilities](#responsibilities)
   - [Execution flow](#execution-flow)
