@@ -16,10 +16,10 @@ wsdl2java {
 }
 ```
 ## Flow
-- Read `Messages_test.wsdl`
+- Read **`Messages_test.wsdl`**
 - Follow all `xs:import` and `xs:include` references.
-- Invoke JAXB (XJC) to generate Java classes for all schema types.
-- Apply your JAXB customizations from `bindings.xjc`
+- Invoke **JAXB (XJC)** to generate Java classes for all schema types.
+- Apply your JAXB customizations from **`bindings.xjc`**
 - Write the generated classes to: `build/generated/sources/wsdl`
 ```text
 Messages_test.wsdl
@@ -28,7 +28,7 @@ JAXB (XJC)
 Generates Java classes
 build/generated/sources/wsdl
 ```
-- The binding file is applied here: `"-b", "$projectDir/src/main/resources/xjb/bindings.xjc"`
+- The **binding file is applied here**: `"-b", "$projectDir/src/main/resources/xjb/bindings.xjc"`
 - So your `LocalDate` and `ZonedDateTime` mappings will be used during generation.
 ## Summary
 | Item | Purpose |
