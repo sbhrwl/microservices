@@ -73,7 +73,7 @@ Core
 | Services | Lookup/business helpers |
 | Domain | Internal models |
 | Infrastructure | Bootstrap/configuration |
-- Its job is protocol translation, not business decisions.
+- Its job is **protocol translation**, not business decisions.
 ## gfc-core
 ```text
 gRPC
@@ -93,7 +93,8 @@ Database
 | Domain | Core business model |
 | Outbound adapters | DB + gRPC clients |
 | Infrastructure | Bootstrap |
-- This is the heart of the platform. Almost every business decision belongs here.
+- This is the **heart of the platform**.
+  - Almost every business decision belongs here.
 ## iec61968-connector
 ```text
 gRPC
@@ -113,4 +114,4 @@ IEC/HES
 | Outbound | JMS + gRPC |
 | Domain | IEC models |
 | Infrastructure | Bootstrap |
-- This is an integration service, not a business service.
+- This is an **integration service**, not a business service.
