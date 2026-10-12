@@ -102,7 +102,7 @@ flowchart TB
 
     Start([Start])
 
-    Receive["Receive request from<br/>direct:request-&lt;networkId&gt;"]
+    Receive["Receive request from<br/>direct:request-networkId"]
     Marshal["Marshal XML (JAXB)"]
     Log["Log outgoing message"]
     Send["Send to JMS request queue"]
