@@ -1,4 +1,4 @@
-# FHC camel routes
+<img width="3046" height="2268" alt="image" src="https://github.com/user-attachments/assets/4da11bfb-1319-45fc-9831-d74f02588636" /># FHC camel routes
 - [Inbound routes](#inbound-routes)
   - [Responsibilities](#responsibilities)
   - [Execution flow](#execution-flow)
@@ -53,12 +53,12 @@
                             ▼
                          Flex-Hub
 ```
-### Inbound routes
+## Inbound routes
 | Camel route | Purpose |
 | --- | --- |
 | `ScheduledCamelRoutes` | Camel route responsible for scheduled polling |
 - `C:\Git\gfc-app\flex-hub-connector\src\main\java\com\landisgyr\gfc\flexhub_connector\adapters\inbound\scheduler\ScheduledCamelRoutes.java`
-- Acts as the entry point of the outbound processing workflow.
+- Acts as the **entry point** of the outbound processing workflow.
 - Triggers `PeekMessagesUseCase` at a configurable interval.
 - Does not contain business logic.
 - Delegates all processing to the application layer.
@@ -122,8 +122,8 @@ Repeat every periodMillis
 | Domain | Not involved at this stage | |
 ## Outbound routes
 - `C:\Git\gfc-app\flex-hub-connector\src\main\java\com\landisgyr\gfc\flexhub_connector\adapters\outbound\soap\OutboundCamelRoutes.java`
-- Defines all outbound Camel routes for communicating with *Flex-Hub* using *SOAP*.
-- Creates and configures the shared *Apache CXF* SOAP endpoint.
+- Defines all outbound Camel routes for communicating with **Flexibility-Hub** using *SOAP*.
+- Creates and configures the shared **Apache CXF** SOAP endpoint.
 - Exposes reusable Camel `direct:` endpoints for SOAP operations.
 - Performs protocol-specific request preparation before invoking Flex-Hub.
 - Centralizes common SOAP communication logic for all outbound operations.
@@ -148,28 +148,31 @@ Repeat every periodMillis
 | `direct:soap` | Generic SOAP endpoint | Shared route used by all SOAP operations |
 
 ### Route architecture
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TB
+
+    Peek["direct:peek"]
+    Send["direct:send"]
+    Dequeue["direct:dequeueMessage"]
+
+    Soap["direct:soap"]
+    Prepare["Prepare SOAP Request"]
+    CXF["CXF Endpoint"]
+    FH["Flex-Hub"]
+
+    Peek --> Soap
+    Send --> Soap
+    Dequeue --> Soap
+
+    Soap --> Prepare
+    Prepare --> CXF
+    CXF --> FH
 ```
-@startuml
-top to bottom direction
+</details>
 
-rectangle "direct:peek" as Peek
-rectangle "direct:send" as Send
-rectangle "direct:dequeueMessage" as Dequeue
-
-rectangle "direct:soap" as Soap
-rectangle "Prepare SOAP Request" as Prepare
-rectangle "CXF Endpoint" as CXF
-rectangle "Flex-Hub" as FH
-
-Peek --> Soap
-Send --> Soap
-Dequeue --> Soap
-
-Soap --> Prepare
-Prepare --> CXF
-CXF --> FH
-@enduml
-```
 ### SOAP endpoint configuration
 | Configuration | Purpose |
 | --- | --- |
@@ -188,25 +191,26 @@ CXF --> FH
   - Invoke the Apache CXF endpoint.
   - Return the SOAP response to the caller.
 ## Execution flow
+<details>
+  <summary>mermaid</summary>
+
+```mermaid
+flowchart TB
+
+    Route["direct:* Route"]
+    Headers["Set SOAP Headers"]
+    Context["Build Request Context"]
+    User["Add organisationUser"]
+    CXF["CXF Endpoint"]
+    FH["Flex-Hub"]
+
+    Route --> Headers
+    Headers --> Context
+    Context --> User
+    User --> CXF
+    CXF --> FH
 ```
-@startuml
-top to bottom direction
-
-rectangle "direct:* Route" as Route
-rectangle "Set SOAP Headers" as Headers
-rectangle "Build Request Context" as Context
-rectangle "Add organisationUser" as User
-rectangle "CXF Endpoint" as CXF
-rectangle "Flex-Hub" as FH
-
-Route --> Headers
-Headers --> Context
-Context --> User
-User --> CXF
-CXF --> FH
-
-@enduml
-```
+</details>
 
 ### Logging
 - Logs every fifth `PeekMessageRequestType` request to reduce log volume.
@@ -230,13 +234,15 @@ CXF --> FH
   - Exception handling
 - This design minimizes code duplication and simplifies the addition of new SOAP operations.
 ## Difference between ScheduledCamelRoutes and direct:peek
-- `ScheduledCamelRoutes` acts as the polling trigger.
-- It creates the `timer:peek-messages` route and invokes `PeekMessagesUseCase.peekMessages()` at scheduled intervals, based on the configuration defined in `application.conf` (`ScheduledCamelRoutes.java`, `application.conf`).
-- `ScheduledCamelRoutes` does not do the peek itself. It just fires on the timer and calls `PeekMessagesUseCase.peekMessages()`.
-- Then `PeekMessagesUseCase` calls `SoapClientAdapter.peekMessage()`, and that adapter uses `direct:peek`.
-- `direct:peek` handles the outbound SOAP request.
-- When `SoapClientAdapter.peekMessage()` is called, it sends a `PeekMessageRequestType` to the `direct:peek` route.
-- `OutboundCamelRoutes` then enriches the exchange with the required SOAP headers and forwards the request to `direct:soap`, where the actual SOAP operation is executed (`peekMessage`, `SoapClientAdapter.java`, `OutboundCamelRoutes.java`).
-- `direct:peek` is actively used in the `"peek messages from Data Hub"` flow.
-- This flow can be triggered either by the scheduled polling mechanism or through the gRPC `peekMessages` endpoint (`FlexibilityHubGrpcAdapter.java`, `PeekMessagesUseCase.java`).
-- In summary: `ScheduledCamelRoutes` initiates the polling cycle, while `direct:peek` performs the SOAP `peekMessage` request as part of that polling workflow.
+- **`ScheduledCamelRoutes`** acts as the polling trigger.
+  - It creates the `timer:peek-messages` route and invokes `PeekMessagesUseCase.peekMessages()` at scheduled intervals, based on the configuration defined in `application.conf` (`ScheduledCamelRoutes.java`, `application.conf`).
+  - `ScheduledCamelRoutes` does not do the peek itself. It just fires on the timer and calls `PeekMessagesUseCase.peekMessages()`.
+  - Then `PeekMessagesUseCase` calls `SoapClientAdapter.peekMessage()`, and that adapter uses `direct:peek`.
+- **`direct:peek`** handles the outbound SOAP request.
+  - When `SoapClientAdapter.peekMessage()` is called, it sends a `PeekMessageRequestType` to the `direct:peek` route.
+  - `OutboundCamelRoutes` then enriches the exchange with the required SOAP headers and forwards the request to `direct:soap`, where the actual SOAP operation is executed (`peekMessage`, `SoapClientAdapter.java`, `OutboundCamelRoutes.java`).
+  - `direct:peek` is actively used in the `"peek messages from Data Hub"` flow.
+  - This flow can be triggered either by the scheduled polling mechanism or through the gRPC `peekMessages` endpoint (`FlexibilityHubGrpcAdapter.java`, `PeekMessagesUseCase.java`).
+- In summary:
+  - `ScheduledCamelRoutes` initiates the polling cycle, while
+  - `direct:peek` performs the SOAP `peekMessage` request as part of that polling workflow.
