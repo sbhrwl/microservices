@@ -16,6 +16,7 @@
 - Download Kreya from `kreya.app`.
 - File → New project (e.g. `gfc-grpc`).
 - Add three Environments (Project → Environments):
+
 | Name | API URL | Metadata (all operations) |
 | --- | --- | --- |
 | `gfc-core-local` | `localhost:50051` | `Tenant-Id: tenant-6411802010007` |
@@ -23,6 +24,7 @@
 | `flexhub-local` | `localhost:50053` | `Tenant-Id: tenant-6411802010007` |
 ## Import protobuf definitions
 - Project → Importers → Add importer → gRPC proto directories
+
 | Setting | Value |
 | --- | --- |
 | Proto directories | `gfc-apis/proto` |
