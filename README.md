@@ -51,7 +51,3 @@
       * Ensure arrows and node labels match the textual explanation.
       * Place diagrams **after** the relevant descriptive section.
 </details>
-
-
-
-
