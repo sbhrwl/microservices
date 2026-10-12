@@ -7,12 +7,12 @@
 ## Pattern
 | Pattern | Where | Why |
 | --- | --- | --- |
-| Ports & Adapters (Hexagonal) | All deployable services | Isolates business logic from transport protocols. |
+| **Ports & Adapters** (Hexagonal) | All deployable services | Isolates business logic from transport protocols. |
+| **Contract-first** | `data-hub-api`, `gfc-apis` | APIs are defined before implementation. |
+| **Dependency Injection** | Core, FHC, IEC | Dagger wires components together. |
+| **Repository** | Core | Database access abstraction (JDBI). |
+| **Gateway** | FHC | Single entry point to the DataHub. |
 | Adapter | FHC, IEC | Converts one protocol into another (SOAP ↔ gRPC, gRPC ↔ JMS). |
-| Contract-First | `data-hub-api`, `gfc-apis` | APIs are defined before implementation. |
-| Dependency Injection | Core, FHC, IEC | Dagger wires components together. |
-| Repository | Core | Database access abstraction (JDBI). |
-| Gateway / Facade | FHC | Single entry point to the DataHub. |
 | Message Translator | FHC, IEC | Maps between external and internal models. |
 | Simulation/Test Double | DataHub Simulator | Mimics the real DataHub. |
 ## Pipeline
@@ -52,13 +52,21 @@ Database
 | CXF | Publish SOAP endpoint |
 | gRPC | Connect to Core |
 ## Dependency injection
-- Core, FHC, and IEC all use Dagger.
+- Core, FHC, and IEC all use **Dagger**.
 - This keeps object creation separate from business logic.
 ```text
 Bootstrap
+    │
+    ▼
 Dagger Component
+    │
+    ▼
 Application
+    │
+    ▼
 Services
+    │
+    ▼
 Repositories / Clients
 ```
 ## Architectural decisions and trade-offs
