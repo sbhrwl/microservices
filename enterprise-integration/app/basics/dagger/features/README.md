@@ -140,6 +140,7 @@ service.registerMeter();
 - `@Singleton` = HOW MANY
 - `@Binds` = WHO
 - `@Provides` = HOW
+
 | Annotation | Simple meaning | Think of it as | Example |
 | --- | --- | --- | --- |
 | `@Singleton` | Create one instance per Dagger Component | One shared resource | `@Singleton Database` |
