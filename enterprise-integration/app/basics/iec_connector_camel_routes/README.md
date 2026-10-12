@@ -51,18 +51,24 @@
 ```mermaid
 flowchart TB
 
-    Route["direct:* Route"]
-    Headers["Set SOAP Headers"]
-    Context["Build Request Context"]
-    User["Add organisationUser"]
-    CXF["CXF Endpoint"]
-    FH["Flex-Hub"]
+    App["Application<br/>Use Case"]
 
-    Route --> Headers
-    Headers --> Context
-    Context --> User
-    User --> CXF
-    CXF --> FH
+    Direct1["direct:request-&lt;networkId&gt;"]
+    Xml["Marshal XML<br/>(JAXB)"]
+    Queue1["JMS Request Queue"]
+
+    Direct2["direct:create-tou-calendar-&lt;brokerName&gt;"]
+    Json["Marshal JSON<br/>(Jackson)"]
+    Queue2["JMS TOU Queue"]
+
+    App --> Direct1
+    App --> Direct2
+
+    Direct1 --> Xml
+    Xml --> Queue1
+
+    Direct2 --> Json
+    Json --> Queue2
 ```
 </details>
 
