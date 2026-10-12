@@ -53,7 +53,7 @@ flowchart TB
 
     App["Application<br/>Use Case"]
 
-    Direct1["direct:request-&lt;networkId&gt;"]
+    Direct1["direct:request-<networkId>"]
     Xml["Marshal XML<br/>(JAXB)"]
     Queue1["JMS Request Queue"]
 
