@@ -196,6 +196,7 @@ ORDER BY ..., current_step DESC
 - `ORDER BY ... current_step DESC` — within one saga, step 2 appears before step 1 (newest step first).
 ## Filters (how they bind)
 - From `SearchFilterBindingVisitor` — filter property name = template flag name:
+
 | Filter (from GraphQL) | SQL clause |
 | --- | --- |
 | `meteringPointEq` | `si.accounting_point = :meteringPointId` + JOIN branch |
@@ -208,6 +209,7 @@ ORDER BY ..., current_step DESC
   - c step 1: Create TOU — initiated 14:20:00, completed 14:20:02
   - c step 2: Rollout TOU — initiated 14:20:03, completed 14:20:05
 - Query returns 2 rows (same `si.id`, different `c` data):
+
 | current_step | initiated_at | completed_at | duration in UI |
 | --- | --- | --- | --- |
 | 2 | 14:20:03 | 14:20:05 | ~2s |
