@@ -1,9 +1,9 @@
 # IntelliJ Idea
 
 ## Configuration for running a service
-- JDK: `java 25`
+- module: JDK `java 25`
 - module: `-cp gfc-app.iec61968-connector.main`
-- main class: `com.landisgyr.gfc.iec61968_connector.Bootstrap`
+- main class: `com.eykonsolutions.gfc.iec61968_connector.Bootstrap`
 - VM option: `-Dconfig.file=iec61968-connector/src/main/dist/etc/application.conf -Dlogback.configurationFile=iec61968-connector/src/main/dist/etc/logback.xml -Dlog.appender=STDOUT --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED`
 - Program arguments:
 - Working directory: `C:\Git\gfc-app`
