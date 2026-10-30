@@ -18,3 +18,4 @@
   - [Pain points](dagger/pain_points/README.md)
   - [Features](dagger/features/README.md)
 - [Flyway](flyway/README.md)
+- [Playwright](playwright/README.md)
